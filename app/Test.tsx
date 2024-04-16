@@ -2,6 +2,7 @@
 import React from "react";
 import { useAppContext } from "./context";
 import Link from "next/link";
+import Button from "./components/Button";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -70,6 +71,10 @@ const Test = () => {
           <h1 className="font-semibold">Semi Bold</h1>
           <h1 className="font-bold">Bold</h1>
         </section>
+      </div>
+
+      <div className="test">
+        <Button>Testing</Button>
       </div>
     </div>
   );
