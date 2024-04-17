@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useAppContext } from "./context";
 import Link from "next/link";
 import Button from "./components/Button";
+import Toggle from "./components/Toggle";
 
 const Test = () => {
+
   const { color, colors, setColor } = useAppContext();
   console.log("color", color);
   const handleColorChange = (e: any) => {
@@ -101,6 +103,9 @@ const Test = () => {
         </section>
         {/* <Button variant="filled" intent="primary-outlined">Filled</Button>
         <Button variant="outlined" intent="primary-outlined">Outlined</Button> */}
+      </div>
+      <div>
+        <Toggle size="lg" onClick={()=>alert("dddd")} intent="primary" />
       </div>
     </div>
   );
