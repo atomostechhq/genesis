@@ -16,7 +16,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     "rose",
     "orange",
   ];
-  const [color, setColor] = useState("indigo");
+  const [color, setColor] = useState("brand");
 
   return (
     <AppContext.Provider value={{ color, colors, setColor }}>

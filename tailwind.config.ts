@@ -20,6 +20,7 @@ const config: Config = {
         "primary-700": "var(--primary-700)",
         "primary-800": "var(--primary-800)",
         "primary-900": "var(--primary-900)",
+        kajal: "#FBEEDA",
 
         gray: {
           25: "#fff",
@@ -75,17 +76,17 @@ const config: Config = {
         },
       },
       fontSize: {
-        "display-2xl": "4.5rem",
-        "display-xl": "3.75rem",
-        "display-lg": "3rem",
-        "display-md": "2.25rem",
-        "display-sm": "1.875rem",
-        "display-xs": "1.5rem",
-        "text-xl": "1.25rem",
-        "text-lg": "1.125rem",
-        "text-md": "1rem",
-        "text-sm": "0.875rem",
-        "text-xs": "0.75rem",
+        "display-2xl": "4.5rem", // 72px
+        "display-xl": "3.75rem", // 60px
+        "display-lg": "3rem", // 48px
+        "display-md": "2.25rem", // 36px
+        "display-sm": "1.875rem", // 30px
+        "display-xs": "1.5rem", // 24px
+        "text-xl": "1.25rem", // 20px
+        "text-lg": "1.125rem", // 18px
+        "text-md": "1rem", // 16px
+        "text-sm": "0.875rem", // 14px
+        "text-xs": "0.75rem", // 12px
       },
       fontWeight: {
         regular: "400",
@@ -96,7 +97,7 @@ const config: Config = {
       boxShadow: {
         sm: "0px 1px 3px 0px rgba(16, 24, 40, 0.10), 0px 1px 2px 0px rgba(16, 24, 40, 0.06)",
         md: "1px 2px 12px 0px rgba(112, 112, 112, 0.25)",
-        lg: "0px 1px 3px 0px rgba(16, 24, 40, 0.10), 0px 1px 2px 0px rgba(16, 24, 40, 0.06)",
+        lg: "0px 4px 12px 0px rgba(16, 24, 40, 0.25)",
       },
     },
   },

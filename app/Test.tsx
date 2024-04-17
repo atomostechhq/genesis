@@ -1,14 +1,27 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useAppContext } from "./context";
 import Link from "next/link";
 import Button from "./components/Button";
+import Chip from "./components/Chip";
+import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
+import AlertLineIcon from "remixicon-react/AlertLineIcon";
+import AlertFillIcon from "remixicon-react/AlertFillIcon";
+import ListCheckIcon from "remixicon-react/ListCheckIcon";
+import { Tooltip } from "./components/Tooltip";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
-  console.log("color", color);
   const handleColorChange = (e: any) => {
     setColor(e.target.value);
+  };
+
+  // tabs
+  const [activeTab, setActiveTab] = useState("tab1");
+  // console.log("active", activeTab);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
   };
 
   return (
@@ -56,16 +69,21 @@ const Test = () => {
 
       <div className="mt-10 flex gap-10">
         <section>
-          <h1 className="text-primary-400 border-b border-primary-900 w-fit">Typography - Font Size</h1>
+          <h1 className="text-primary-400 border-b border-primary-900 w-fit">
+            Typography - Font Size
+          </h1>
           <h1 className="text-display-2xl">Display 2xl</h1>
           <h1 className="text-display-xl">Display xl</h1>
           <h1 className="text-display-lg">Display lg</h1>
           <h1 className="text-display-md">Display md</h1>
           <h1 className="text-display-sm">Display sm</h1>
           <h1 className="text-display-xs">Display xs</h1>
+          <h1 className="text-text-xl">Text Xl</h1>
         </section>
         <section>
-          <h1 className="text-primary-400 border-b border-primary-900 w-fit">Typography - Font Weight</h1>
+          <h1 className="text-primary-400 border-b border-primary-900 w-fit">
+            Typography - Font Weight
+          </h1>
           <h1 className="font-regular">Regular</h1>
           <h1 className="font-medium">Medium</h1>
           <h1 className="font-semibold">Semi Bold</h1>
@@ -73,8 +91,59 @@ const Test = () => {
         </section>
       </div>
 
-      <div className="test">
-        <Button>Testing</Button>
+      {/* <div className="my-5 flex items-center gap-4">
+        <Chip intent="warning">warning</Chip>
+        <Chip intent="error" size="sm">
+          error
+        </Chip>
+      </div> */}
+
+      <div className="test flex justify-center items-center gap-5">
+        <Tooltip
+          position="top"
+          content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
+        >
+          Top
+        </Tooltip>
+        <Tooltip
+          position="right"
+          content="Right"
+        >
+          Right
+        </Tooltip>
+        <Tooltip
+          position="bottom"
+          content="Tooltips are used to describe or identify an element. In most scenarios"
+        >
+          Bottom
+        </Tooltip>
+        <Tooltip
+          position="left"
+          content="Tooltips are used"
+        >
+          Left
+        </Tooltip>
+      </div>
+
+      <div className="my-5">
+        <TabContext value={activeTab} position="top" onChange={handleTabChange}>
+          <TabList>
+            <Tab value="tab1">
+              <ListCheckIcon size={16} color="#1765dc" /> Tab 1
+            </Tab>
+            <Tab value="tab2">Tab 2</Tab>
+            <Tab value="tab3">Tab 3</Tab>
+          </TabList>
+          <TabPanel value="tab1">
+            <div className="m-4">Content for Tab 1</div>
+          </TabPanel>
+          <TabPanel value="tab2">
+            <div className="m-4"> Content for Tab 2</div>{" "}
+          </TabPanel>
+          <TabPanel value="tab3">
+            <div className="m-4"> Content for Tab 3 </div>
+          </TabPanel>
+        </TabContext>
       </div>
     </div>
   );

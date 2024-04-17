@@ -13,7 +13,6 @@ const buttonVariants = cva("rounded-full px-4 py-2", {
     intent: {
       filled: "bg-primary-400",
       outline: "bg-emerald-700",
-    //   danger: "bg-red-500",
     },
     size: {
       sm: "text-sm px-2 py-1",
