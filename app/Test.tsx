@@ -101,7 +101,8 @@ const Test = () => {
         </Chip>
       </div> */}
 
-      <div className="test flex justify-center items-center gap-5">
+      <div className="flex items-center gap-5 my-5">
+        <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
         <Tooltip
           position="top"
           content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
@@ -123,6 +124,7 @@ const Test = () => {
       </div>
 
       <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Tabs:</h1>
         <TabContext value={activeTab} position="top" onChange={handleTabChange}>
           <TabList>
             <Tab value="tab1">
@@ -142,11 +144,29 @@ const Test = () => {
           </TabPanel>
         </TabContext>
       </div>
-      <div className="test flex flex-col gap-5">
+      <div className="flex flex-col gap-5">
+        <h1 className="text-display-sm text-primary-400">Button:</h1>
         <section className="flex items-center gap-4 my-2">
           <h1>Variants:</h1>
           <Button variant="filled">Filled</Button>
           <Button variant="outlined">Outlined</Button>
+        </section>
+        <section className="flex items-center gap-4 my-2">
+          <h1>Disabled:</h1>
+          <Button variant="filled" disabled>Filled</Button>
+          <Button variant="outlined" disabled>Outlined</Button>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Size:</h1>
+          <Button variant="filled" intent={"default"} size="sm">
+            Default
+          </Button>
+          <Button variant="filled" intent={"error"} size="md">
+            Error
+          </Button>
+          <Button variant="filled" intent={"primary"} size="lg">
+            Primary
+          </Button>
         </section>
         <section className="flex items-center gap-4">
           <h1>States Filled:</h1>
@@ -184,8 +204,14 @@ const Test = () => {
             Warning
           </Button>
         </section>
-        {/* <Button variant="filled" intent="primary-outlined">Filled</Button>
-        <Button variant="outlined" intent="primary-outlined">Outlined</Button> */}
+        <section className="flex items-center gap-4">
+          <Button variant="filled" startIcon={<AlertFillIcon size={16} />}>
+            Filled
+          </Button>
+          <Button variant="outlined" endIcon={<ListCheckIcon size={16} />}>
+            Outlined
+          </Button>
+        </section>
       </div>
     </div>
   );
