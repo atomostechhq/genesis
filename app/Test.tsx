@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useAppContext } from "./context";
 import Link from "next/link";
 import Button from "./components/Button";
+import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
 import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
 import AlertLineIcon from "remixicon-react/AlertLineIcon";
@@ -10,6 +11,7 @@ import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
 import { Tooltip } from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
+import Label from "./components/Label";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -233,6 +235,31 @@ const Test = () => {
             progress={50}
             progressText={`${50}%`}
           />
+        </section>
+      </div>
+      <div className="flex flex-col gap-5">
+        <h1 className="text-display-sm text-primary-400">Toggle:</h1>
+        <section className="flex items-center gap-4">
+          <h1>Size:</h1>
+          <Toggle size="sm" />
+          <Toggle size="md" />
+          <Toggle size="lg" />
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Variants:</h1>
+          <Toggle size="md" intent={"primary"} />
+          <Toggle size="md" intent={"success"} />
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>With Labels:</h1>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="primary">Primary</Label>
+            <Toggle size="md" id="primary" intent={"primary"} />
+          </div>
+          <div className="flex items-center gap-2">
+            <Toggle size="md" id="success" intent={"success"} />
+            <Label htmlFor="success">Success</Label>
+          </div>
         </section>
       </div>
     </div>
