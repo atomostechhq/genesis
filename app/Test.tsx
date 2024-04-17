@@ -4,18 +4,30 @@ import { useAppContext } from "./context";
 import Link from "next/link";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
+import Chip from "./components/Chip";
+import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
+import AlertLineIcon from "remixicon-react/AlertLineIcon";
+import AlertFillIcon from "remixicon-react/AlertFillIcon";
+import ListCheckIcon from "remixicon-react/ListCheckIcon";
+import { Tooltip } from "./components/Tooltip";
+import Label from "./components/Label";
 
 const Test = () => {
-
   const { color, colors, setColor } = useAppContext();
-  console.log("color", color);
   const handleColorChange = (e: any) => {
     setColor(e.target.value);
   };
 
- const test = (e:number) => {
-  console.log("okay: ", e )
- }
+  // tabs
+  const [activeTab, setActiveTab] = useState("tab1");
+  // console.log("active", activeTab);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+  };
+  const test = (e: number) => {
+    console.log("okay: ", e);
+  };
 
   return (
     <div className={["m-5", color && `theme-${color}`].join(" ")}>
@@ -62,16 +74,21 @@ const Test = () => {
 
       <div className="mt-10 flex gap-10">
         <section>
-          <h1 className="text-primary-400 border-b border-primary-900 w-fit">Typography - Font Size</h1>
+          <h1 className="text-primary-400 border-b border-primary-900 w-fit">
+            Typography - Font Size
+          </h1>
           <h1 className="text-display-2xl">Display 2xl</h1>
           <h1 className="text-display-xl">Display xl</h1>
           <h1 className="text-display-lg">Display lg</h1>
           <h1 className="text-display-md">Display md</h1>
           <h1 className="text-display-sm">Display sm</h1>
           <h1 className="text-display-xs">Display xs</h1>
+          <h1 className="text-text-xl">Text Xl</h1>
         </section>
         <section>
-          <h1 className="text-primary-400 border-b border-primary-900 w-fit">Typography - Font Weight</h1>
+          <h1 className="text-primary-400 border-b border-primary-900 w-fit">
+            Typography - Font Weight
+          </h1>
           <h1 className="font-regular">Regular</h1>
           <h1 className="font-medium">Medium</h1>
           <h1 className="font-semibold">Semi Bold</h1>
@@ -79,33 +96,153 @@ const Test = () => {
         </section>
       </div>
 
-      <div className="test flex flex-col gap-5">
-        <section className="flex items-center gap-4 my-2" >
-          <h1>Variants:</h1>
-        <Button variant="filled">Filled</Button>
-        <Button variant="outlined">Outlined</Button>
-        </section>
-        <section className="flex items-center gap-4" >
-          <h1>States Filled:</h1>
-        <Button variant="filled" intent={"default"}>Default</Button>
-        <Button variant="filled" intent={"error"}>Error</Button>
-        <Button variant="filled" intent={"primary"}>Primary</Button>
-        <Button variant="filled" intent={"success"}>Success</Button>
-        <Button variant="filled" intent={"warning"}>Warning</Button>
-        </section>
-        <section className="flex items-center gap-4" >
-          <h1>States Outlined:</h1>
-        <Button variant="outlined" intent="default-outlined">Default</Button>
-        <Button variant="outlined" intent="error-outlined">Error</Button>
-        <Button variant="outlined" intent="primary-outlined">Primary</Button>
-        <Button variant="outlined" intent="success-outlined">Success</Button>
-        <Button variant="outlined" intent="warning-outlined">Warning</Button>
-        </section>
-        {/* <Button variant="filled" intent="primary-outlined">Filled</Button>
-        <Button variant="outlined" intent="primary-outlined">Outlined</Button> */}
+      {/* <div className="my-5 flex items-center gap-4">
+        <Chip intent="warning">warning</Chip>
+        <Chip intent="error" size="sm">
+          error
+        </Chip>
+      </div> */}
+
+      <div className="flex items-center gap-5 my-5">
+        <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
+        <Tooltip
+          position="top"
+          content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
+        >
+          Top
+        </Tooltip>
+        <Tooltip position="right" content="Right">
+          Right
+        </Tooltip>
+        <Tooltip
+          position="bottom"
+          content="Tooltips are used to describe or identify an element. In most scenarios"
+        >
+          Bottom
+        </Tooltip>
+        <Tooltip position="left" content="Tooltips are used">
+          Left
+        </Tooltip>
       </div>
-      <div>
-        <Toggle size="lg" onClick={()=>alert("dddd")} intent="primary" />
+
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Tabs:</h1>
+        <TabContext value={activeTab} position="top" onChange={handleTabChange}>
+          <TabList>
+            <Tab value="tab1">
+              <ListCheckIcon size={16} color="#1765dc" /> Tab 1
+            </Tab>
+            <Tab value="tab2">Tab 2</Tab>
+            <Tab value="tab3">Tab 3</Tab>
+          </TabList>
+          <TabPanel value="tab1">
+            <div className="m-4">Content for Tab 1</div>
+          </TabPanel>
+          <TabPanel value="tab2">
+            <div className="m-4"> Content for Tab 2</div>{" "}
+          </TabPanel>
+          <TabPanel value="tab3">
+            <div className="m-4"> Content for Tab 3 </div>
+          </TabPanel>
+        </TabContext>
+      </div>
+      <div className="flex flex-col gap-5">
+        <h1 className="text-display-sm text-primary-400">Button:</h1>
+        <section className="flex items-center gap-4 my-2">
+          <h1>Variants:</h1>
+          <Button variant="filled">Filled</Button>
+          <Button variant="outlined">Outlined</Button>
+        </section>
+        <section className="flex items-center gap-4 my-2">
+          <h1>Disabled:</h1>
+          <Button variant="filled" disabled>
+            Filled
+          </Button>
+          <Button variant="outlined" disabled>
+            Outlined
+          </Button>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Size:</h1>
+          <Button variant="filled" intent={"default"} size="sm">
+            Default
+          </Button>
+          <Button variant="filled" intent={"error"} size="md">
+            Error
+          </Button>
+          <Button variant="filled" intent={"primary"} size="lg">
+            Primary
+          </Button>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States Filled:</h1>
+          <Button variant="filled" intent={"default"}>
+            Default
+          </Button>
+          <Button variant="filled" intent={"error"}>
+            Error
+          </Button>
+          <Button variant="filled" intent={"primary"}>
+            Primary
+          </Button>
+          <Button variant="filled" intent={"success"}>
+            Success
+          </Button>
+          <Button variant="filled" intent={"warning"}>
+            Warning
+          </Button>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States Outlined:</h1>
+          <Button variant="outlined" intent="default-outlined">
+            Default
+          </Button>
+          <Button variant="outlined" intent="error-outlined">
+            Error
+          </Button>
+          <Button variant="outlined" intent="primary-outlined">
+            Primary
+          </Button>
+          <Button variant="outlined" intent="success-outlined">
+            Success
+          </Button>
+          <Button variant="outlined" intent="warning-outlined">
+            Warning
+          </Button>
+        </section>
+        <section className="flex items-center gap-4">
+          <Button variant="filled" startIcon={<AlertFillIcon size={16} />}>
+            Filled
+          </Button>
+          <Button variant="outlined" endIcon={<ListCheckIcon size={16} />}>
+            Outlined
+          </Button>
+        </section>
+      </div>
+      <div className="flex flex-col gap-5">
+        <h1 className="text-display-sm text-primary-400">Toggle:</h1>
+        <section className="flex items-center gap-4">
+          <h1>Size:</h1>
+          <Toggle size="sm" />
+          <Toggle size="md" />
+          <Toggle size="lg" />
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Variants:</h1>
+          <Toggle size="md" intent={"primary"} />
+          <Toggle size="md" intent={"success"} />
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>With Labels:</h1>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="primary">Primary</Label>
+            <Toggle size="md" id="primary" intent={"primary"} />
+          </div>
+          <div className="flex items-center gap-2">
+            <Toggle size="md" id="success" intent={"success"} />
+            <Label htmlFor="success">Success</Label>
+          </div>
+        </section>
       </div>
     </div>
   );

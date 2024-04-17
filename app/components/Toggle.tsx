@@ -29,11 +29,11 @@ const toggleVariants = cva("", {
 const Toggle = ({
   size = "sm",
   className,
-  intent,
+  intent ="primary",
   disabled,
   ...props
 }: ToggleProps) => {
-  const sizeClasses = toggleVariants({ size });
+  const togglesVariant = toggleVariants({ size, intent });
 
   return (
     <label className="inline-flex items-center cursor-pointer">
@@ -46,11 +46,10 @@ const Toggle = ({
       <span
         className={cn(
           "relative w-11 h-7 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full  after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all",toggleVariants({
-
               intent,
-              className
+              className,
+              size
             }),
-            sizeClasses,
         )}
       ></span>
     </label>

@@ -12,6 +12,10 @@
 "rose",
 "orange", */
 
+.test {
+  border: 1px solid red;
+}
+
 @layer base {
   :root {
     .theme-brand {
