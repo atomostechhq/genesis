@@ -23,6 +23,9 @@ const Test = () => {
   const handleTabChange = (value: string) => {
     setActiveTab(value);
   };
+  const test = (e: number) => {
+    console.log("okay: ", e);
+  };
 
   return (
     <div className={["m-5", color && `theme-${color}`].join(" ")}>
@@ -105,10 +108,7 @@ const Test = () => {
         >
           Top
         </Tooltip>
-        <Tooltip
-          position="right"
-          content="Right"
-        >
+        <Tooltip position="right" content="Right">
           Right
         </Tooltip>
         <Tooltip
@@ -117,10 +117,7 @@ const Test = () => {
         >
           Bottom
         </Tooltip>
-        <Tooltip
-          position="left"
-          content="Tooltips are used"
-        >
+        <Tooltip position="left" content="Tooltips are used">
           Left
         </Tooltip>
       </div>
@@ -144,6 +141,51 @@ const Test = () => {
             <div className="m-4"> Content for Tab 3 </div>
           </TabPanel>
         </TabContext>
+      </div>
+      <div className="test flex flex-col gap-5">
+        <section className="flex items-center gap-4 my-2">
+          <h1>Variants:</h1>
+          <Button variant="filled">Filled</Button>
+          <Button variant="outlined">Outlined</Button>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States Filled:</h1>
+          <Button variant="filled" intent={"default"}>
+            Default
+          </Button>
+          <Button variant="filled" intent={"error"}>
+            Error
+          </Button>
+          <Button variant="filled" intent={"primary"}>
+            Primary
+          </Button>
+          <Button variant="filled" intent={"success"}>
+            Success
+          </Button>
+          <Button variant="filled" intent={"warning"}>
+            Warning
+          </Button>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States Outlined:</h1>
+          <Button variant="outlined" intent="default-outlined">
+            Default
+          </Button>
+          <Button variant="outlined" intent="error-outlined">
+            Error
+          </Button>
+          <Button variant="outlined" intent="primary-outlined">
+            Primary
+          </Button>
+          <Button variant="outlined" intent="success-outlined">
+            Success
+          </Button>
+          <Button variant="outlined" intent="warning-outlined">
+            Warning
+          </Button>
+        </section>
+        {/* <Button variant="filled" intent="primary-outlined">Filled</Button>
+        <Button variant="outlined" intent="primary-outlined">Outlined</Button> */}
       </div>
     </div>
   );
