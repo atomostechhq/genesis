@@ -8,7 +8,7 @@ interface ButtonProps
   children?: ReactNode;
   startIcon?: JSX.Element;
   endIcon?: JSX.Element;
-  disabled?:true | false;
+  disabled?: boolean;
 }
 
 const buttonVariants = cva("rounded-lg cursor-pointer", {

@@ -6,9 +6,13 @@ interface TabContextData {
   handleTabChange: (value: string) => void;
 }
 
-const TabsContainerContext = createContext<TabContextData | undefined>(
-  undefined
-);
+const defaultContextData: TabContextData = {
+  position: 'top',
+  selectedTabValue: '',
+  handleTabChange: () => {},
+};
+
+const TabsContainerContext = createContext<TabContextData>(defaultContextData);
 
 type TabContextProps = {
   value: string;
