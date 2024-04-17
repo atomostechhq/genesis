@@ -222,9 +222,17 @@ const Test = () => {
       {/* progress */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Progress:</h1>
-        <ProgressBar progress={30} progressText={`${30}%`} />
+        <ProgressBar
+          progressColor="bg-primary-600"
+          progress={30}
+          progressText={`${30}%`}
+        />
         <section className="w-[320px]">
-          <ProgressBar progress={50} progressText={`${50}%`} />
+          <ProgressBar
+            progressColor="bg-success-300"
+            progress={50}
+            progressText={`${50}%`}
+          />
         </section>
       </div>
     </div>
