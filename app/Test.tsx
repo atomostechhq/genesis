@@ -9,6 +9,7 @@ import AlertLineIcon from "remixicon-react/AlertLineIcon";
 import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
 import { Tooltip } from "./components/Tooltip";
+import ProgressBar from "./components/Progress";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -153,8 +154,12 @@ const Test = () => {
         </section>
         <section className="flex items-center gap-4 my-2">
           <h1>Disabled:</h1>
-          <Button variant="filled" disabled>Filled</Button>
-          <Button variant="outlined" disabled>Outlined</Button>
+          <Button variant="filled" disabled>
+            Filled
+          </Button>
+          <Button variant="outlined" disabled>
+            Outlined
+          </Button>
         </section>
         <section className="flex items-center gap-4">
           <h1>Size:</h1>
@@ -211,6 +216,15 @@ const Test = () => {
           <Button variant="outlined" endIcon={<ListCheckIcon size={16} />}>
             Outlined
           </Button>
+        </section>
+      </div>
+
+      {/* progress */}
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Progress:</h1>
+        <ProgressBar progress={30} progressText={`${30}%`} />
+        <section className="w-[320px]">
+          <ProgressBar progress={50} progressText={`${50}%`} />
         </section>
       </div>
     </div>
