@@ -10,6 +10,7 @@ import AlertLineIcon from "remixicon-react/AlertLineIcon";
 import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
 import { Tooltip } from "./components/Tooltip";
+import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
 
 const Test = () => {
@@ -220,6 +221,23 @@ const Test = () => {
           <Button variant="outlined" endIcon={<ListCheckIcon size={16} />}>
             Outlined
           </Button>
+        </section>
+      </div>
+
+      {/* progress */}
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Progress:</h1>
+        <ProgressBar
+          progressColor="bg-primary-600"
+          progress={30}
+          progressText={`${30}%`}
+        />
+        <section className="w-[320px]">
+          <ProgressBar
+            progressColor="bg-success-300"
+            progress={50}
+            progressText={`${50}%`}
+          />
         </section>
       </div>
       <div className="flex flex-col gap-5">
