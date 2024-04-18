@@ -96,12 +96,15 @@ const Test = () => {
         </section>
       </div>
 
-      {/* <div className="my-5 flex items-center gap-4">
+      <div className="my-5 flex items-center gap-4">
+        <Chip intent="primary">primary</Chip>
         <Chip intent="warning">warning</Chip>
-        <Chip intent="error" size="sm">
-          error
+        <Chip intent="success">success</Chip>
+        <Chip intent="error">error</Chip>
+        <Chip intent="default">
+          default
         </Chip>
-      </div> */}
+      </div>
 
       <div className="flex items-center gap-5 my-5">
         <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
