@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "./context";
-import Link from "next/link";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
 import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
-import AlertLineIcon from "remixicon-react/AlertLineIcon";
 import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
 import { Tooltip } from "./components/Tooltip";
@@ -21,6 +19,9 @@ import StepperContext, {
 } from "./components/Stepper";
 import Sidebar from "./components/sidebar";
 import Skeleton from "./components/Skeleton";
+import Checkbox from "./components/Checkbox";
+import HelperText from "./components/HelperText";
+import Radio from "./components/Radio";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -30,12 +31,9 @@ const Test = () => {
 
   // tabs
   const [activeTab, setActiveTab] = useState("tab1");
-
+  
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-  };
-  const test = (e: number) => {
-    console.log("okay: ", e);
   };
 
   // stepper
@@ -102,6 +100,7 @@ const Test = () => {
 
   return (
     <div className={["m-5", color && `theme-${color}`].join(" ")}>
+      {/* select a color  */}
       <div>
         <label className="block mt-5">Select a color:</label>
         <div className="flex justify-between space-x-8 mt-2">
@@ -193,6 +192,7 @@ const Test = () => {
         </Notice> */}
       </div>
 
+      {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
           <h1 className="text-primary-400 border-b border-primary-900 w-fit">
@@ -216,7 +216,7 @@ const Test = () => {
           <h1 className="font-bold">Bold</h1>
         </section>
       </div>
-
+      {/* Chips  */}
       <div className="my-5 flex items-center gap-4">
         <Chip intent="primary">primary</Chip>
         <Chip intent="warning">warning</Chip>
@@ -225,6 +225,7 @@ const Test = () => {
         <Chip intent="default">default</Chip>
       </div>
 
+      {/* Tooltip */}
       <div className="flex items-center gap-5 my-5">
         <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
         <Tooltip
@@ -246,7 +247,7 @@ const Test = () => {
           Left
         </Tooltip>
       </div>
-
+      {/* Tabs */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Tabs:</h1>
         <TabContext value={activeTab} position="top" onChange={handleTabChange}>
@@ -268,6 +269,7 @@ const Test = () => {
           </TabPanel>
         </TabContext>
       </div>
+      {/* Buttons  */}
       <div className="flex flex-col gap-5">
         <h1 className="text-display-sm text-primary-400">Button:</h1>
         <section className="flex items-center gap-4 my-2">
@@ -349,7 +351,6 @@ const Test = () => {
           </Button>
         </section>
       </div>
-
       {/* progress */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Progress:</h1>
@@ -366,7 +367,8 @@ const Test = () => {
           />
         </section>
       </div>
-      <div className="flex flex-col gap-5 my-5">
+      {/* toggle  */}
+      <div className="flex flex-col gap-5">
         <h1 className="text-display-sm text-primary-400">Toggle:</h1>
         <section className="flex items-center gap-4">
           <h1>Size:</h1>
@@ -434,7 +436,93 @@ const Test = () => {
         <h2>Card Skeleton</h2>
         <div className="cardBlock">{cardBlockData()}</div>
       </div>
+      {/* checkbox */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-400">Checkbox:</h1>
+        <section className="flex items-center gap-4">
+          <h1>Size with Text:</h1>
+          <div className="flex items-center gap-2">
+            <Checkbox id="large" size="lg" />
+            <Label htmlFor="large">Large</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox id="small" size="sm" />
+            <Label htmlFor="small">Small</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States:</h1>
+          <div className="flex items-center gap-2">
+            <Checkbox id="disable" size="lg" disabled />
+            <Label htmlFor="disable">Disabled</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox id="check" size="lg" checked />
+            <Label htmlFor="check">Checked</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Checkbox with Text and Subtext: </h1>
+          <div className="flex items-start gap-2">
+            <Checkbox  id="smallText" size="sm" />
+            <div className="flex flex-col">
+              <Label htmlFor="smallText">Text with small checkbox</Label>
+              <HelperText size="sm">This is a helper text</HelperText>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Checkbox id="largeText" size="lg" />
+            <div className="flex flex-col">
+              <Label htmlFor="largeText">Text with large checkbox</Label>
+              <HelperText size="lg">This is a helper text</HelperText>
+            </div>
+          </div>
+        </section>
       </div>
+      {/* Radio */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-400">Radio:</h1>
+        <section className="flex items-center gap-4">
+          <h1>Size with Text:</h1>
+          <div className="flex items-center gap-2">
+            <Radio id="radioTextLarge" size="lg" />
+            <Label htmlFor="radioTextLarge">Large</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Radio id="radioTextSmall" size="sm" />
+            <Label htmlFor="radioTextSmall">Small</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States:</h1>
+          <div className="flex items-center gap-2">
+            <Radio id="disable" size="lg" disabled />
+            <Label htmlFor="disable">Disabled</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Radio id="check" size="lg" checked />
+            <Label htmlFor="check">Checked</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Radio with Text and Subtext: </h1>
+          <div className="flex items-start gap-2">
+            <Radio name="radioWithText"  id="smallRadio" size="sm" />
+            <div className="flex flex-col">
+              <Label htmlFor="smallRadio">Text with small radio button</Label>
+              <HelperText size="sm">This is a helper text</HelperText>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Radio name="radioWithText" id="largeRadio" size="lg" />
+            <div className="flex flex-col">
+              <Label htmlFor="largeRadio">Text with large radio button</Label>
+              <HelperText size="lg">This is a helper text</HelperText>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
     </div>
   );
 };
