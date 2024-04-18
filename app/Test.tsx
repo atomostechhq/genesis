@@ -21,7 +21,6 @@ const Test = () => {
 
   // tabs
   const [activeTab, setActiveTab] = useState("tab1");
-  // console.log("active", activeTab);
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -212,10 +211,18 @@ const Test = () => {
           </Button>
         </section>
         <section className="flex items-center gap-4">
-          <Button variant="filled" startIcon={<AlertFillIcon size={16} />}>
+          <Button
+            variant="filled"
+            startIcon={<AlertFillIcon size={16} />}
+            endIcon={<ListCheckIcon size={16} />}
+          >
             Filled
           </Button>
-          <Button variant="outlined" endIcon={<ListCheckIcon size={16} />}>
+          <Button
+            variant="outlined"
+            startIcon={<AlertFillIcon size={16} />}
+            endIcon={<ListCheckIcon size={16} />}
+          >
             Outlined
           </Button>
         </section>
