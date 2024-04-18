@@ -28,13 +28,12 @@ const toggleVariants = cva("", {
 });
 
 const Toggle = ({
-  size = "sm",
+  size,
   className,
-  intent ="primary",
+  intent,
   disabled,
   ...props
 }: ToggleProps) => {
-  const togglesVariant = toggleVariants({ size, intent });
 
   return (
     <label className="inline-flex items-center cursor-pointer">
