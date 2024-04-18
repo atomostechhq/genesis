@@ -1,12 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { useAppContext } from "./context";
-import Link from "next/link";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
 import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
-import AlertLineIcon from "remixicon-react/AlertLineIcon";
 import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
 import { Tooltip } from "./components/Tooltip";
@@ -14,6 +12,7 @@ import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
 import Checkbox from "./components/Checkbox";
 import HelperText from "./components/HelperText";
+import Radio from "./components/Radio";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -21,12 +20,9 @@ const Test = () => {
     setColor(e.target.value);
   };
 
-  const num = 4;
-  const isChecked = num === 4;
-
   // tabs
   const [activeTab, setActiveTab] = useState("tab1");
-
+  
   const handleTabChange = (value: string) => {
     setActiveTab(value);
   };
@@ -313,6 +309,49 @@ const Test = () => {
             <Checkbox id="largeText" size="lg" />
             <div className="flex flex-col">
               <Label htmlFor="largeText">Text with large checkbox</Label>
+              <HelperText size="lg">This is a helper text</HelperText>
+            </div>
+          </div>
+        </section>
+      </div>
+      {/* Radio */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-400">Radio:</h1>
+        <section className="flex items-center gap-4">
+          <h1>Size with Text:</h1>
+          <div className="flex items-center gap-2">
+            <Radio id="radioTextLarge" size="lg" />
+            <Label htmlFor="radioTextLarge">Large</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Radio id="radioTextSmall" size="sm" />
+            <Label htmlFor="radioTextSmall">Small</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States:</h1>
+          <div className="flex items-center gap-2">
+            <Radio id="disable" size="lg" disabled />
+            <Label htmlFor="disable">Disabled</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Radio id="check" size="lg" checked />
+            <Label htmlFor="check">Checked</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Radio with Text and Subtext: </h1>
+          <div className="flex items-start gap-2">
+            <Radio name="radioWithText"  id="smallRadio" size="sm" />
+            <div className="flex flex-col">
+              <Label htmlFor="smallRadio">Text with small radio button</Label>
+              <HelperText size="sm">This is a helper text</HelperText>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Radio name="radioWithText" id="largeRadio" size="lg" />
+            <div className="flex flex-col">
+              <Label htmlFor="largeRadio">Text with large radio button</Label>
               <HelperText size="lg">This is a helper text</HelperText>
             </div>
           </div>
