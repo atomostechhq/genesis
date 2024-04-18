@@ -1,31 +1,3 @@
-"use client";
-
-import { HTMLAttributes, ReactNode, useState } from "react";
-
-// interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
-//   //   children: ReactNode;
-//   progressText: string;
-//   progress: number;
-// }
-
-// const ProgressBar = ({ progress, progressText }: ProgressProps) => {
-//   const [style, setStyle] = useState({});
-//   setTimeout(() => {
-//     const newStyle = {
-//       opacity: 1,
-//       width: `${progress}%`,
-//     };
-
-//     setStyle(newStyle);
-//   }, 200);
-
-//   return (
-//     <div className="">
-//       <div className={`${progress && "bg-primary-400"}`} style={style}></div>
-//     </div>
-//   );
-// };
-
 export type ProgressBarProps = {
   progress: number;
   progressText?: string;
