@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppContext } from "./context";
 import Link from "next/link";
 import Button from "./components/Button";
@@ -12,6 +12,15 @@ import ListCheckIcon from "remixicon-react/ListCheckIcon";
 import { Tooltip } from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
+import { Notice } from "./components/Notice";
+import StepperContext, {
+  StepperList,
+  Step,
+  StepContent,
+  NextButton,
+} from "./components/Stepper";
+import Sidebar from "./components/sidebar";
+import Skeleton from "./components/Skeleton";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -27,6 +36,68 @@ const Test = () => {
   };
   const test = (e: number) => {
     console.log("okay: ", e);
+  };
+
+  // stepper
+  const [activeStep, setActiveStep] = useState(1);
+
+  const handleStepChange = (value: any) => {
+    setActiveStep(value);
+  };
+
+  // notice
+  const [open, setOpen] = useState(false);
+
+  // skeleton
+  const [loadingState, setLoadingState] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadingState(true);
+    }, 2000);
+  });
+
+  // skeleton data
+  const cardBlockData = () => {
+    if (loadingState) {
+      return [...Array(4)].map((item, index) => {
+        return (
+          <div>
+            <div>
+              <h2>What is Lorem ?</h2>
+            </div>
+            <div>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letra
+              </p>
+            </div>
+          </div>
+        );
+      });
+    } else {
+      return [...Array(4)].map((index, item) => {
+        return (
+          <div className="cardSkeleton">
+            <div className="cardSkeletonImage">
+              <Skeleton width="80px" height="80px" variant="circle" />
+              <Skeleton width="100%" height="20px" />
+            </div>
+            <div className="cardSkeletonTitle">
+              <Skeleton width="100%" height="30px" />
+            </div>
+            <div className="cardSkeletonBody">
+              <Skeleton width="250px" height="300px" />
+            </div>
+          </div>
+        );
+      });
+    }
   };
 
   return (
@@ -72,6 +143,56 @@ const Test = () => {
         <span className="bg-primary-900">{color} Primary 900</span>
       </div>
 
+      <Button variant="filled" onClick={() => setOpen(true)}>
+        Show Notice
+      </Button>
+      <div className="flex flex-col gap-5 my-5">
+        <h1 className="text-display-sm text-primary-400">Notice:</h1>
+        <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="success"
+          noticeTitle="Notice Header"
+          position="bottom"
+        >
+          This is a success Alert with an encouraging title and both icons.
+        </Notice>
+        {/* <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="success"
+          noticeTitle="false"
+          showIcon={false}
+        >
+          This is a success Alert with an encouraging title without icon.
+        </Notice>
+        <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="success"
+          noticeTitle=""
+          showIcon={true}
+        >
+          <div>
+            <span>
+              Lorem ipsum dolor sit amet consectetur. Imperdiet accumsan
+              habitant mi mus. Morbi feugiat placerat eu aliquam aenean lobortis
+              semper amet. Diam duis sit donec volutpat bibendum dolor nullam
+              pharetra etiam. Aliquet lorem pulvinar egestas amet eu semper
+              condimentum. Massa pharetra commodo adipiscing nulla in. Varius
+              etiam adipiscing risus tempor risus velit consectetur sed mattis.
+            </span>
+            <Button
+              variant="filled"
+              startIcon={<AlertFillIcon size={16} />}
+              endIcon={<ListCheckIcon size={16} />}
+            >
+              Filled
+            </Button>
+          </div>
+        </Notice> */}
+      </div>
+
       <div className="mt-10 flex gap-10">
         <section>
           <h1 className="text-primary-400 border-b border-primary-900 w-fit">
@@ -101,9 +222,7 @@ const Test = () => {
         <Chip intent="warning">warning</Chip>
         <Chip intent="success">success</Chip>
         <Chip intent="error">error</Chip>
-        <Chip intent="default">
-          default
-        </Chip>
+        <Chip intent="default">default</Chip>
       </div>
 
       <div className="flex items-center gap-5 my-5">
@@ -247,13 +366,13 @@ const Test = () => {
           />
         </section>
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 my-5">
         <h1 className="text-display-sm text-primary-400">Toggle:</h1>
         <section className="flex items-center gap-4">
           <h1>Size:</h1>
           <Toggle size="sm" />
           <Toggle size="md" />
-          <Toggle size="lg" />
+          <Toggle size="lg" checked />
         </section>
         <section className="flex items-center gap-4">
           <h1>Variants:</h1>
@@ -271,6 +390,50 @@ const Test = () => {
             <Label htmlFor="success">Success</Label>
           </div>
         </section>
+      </div>
+      <Button variant="filled" onClick={() => setOpen(true)}>
+        Show Notice
+      </Button>
+      <div className="flex flex-col gap-5 my-5">
+        <h1 className="text-display-sm text-primary-400">Notice:</h1>
+        <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="success"
+          noticeTitle="Notice Header"
+          position="top"
+        >
+          This is a success Alert with an encouraging title and both icons.
+        </Notice>
+      </div>
+
+      {/* stepper */}
+      <div>
+        <h1 className="text-display-sm text-primary-400">Stepper:</h1>
+        <StepperContext
+          value={activeStep}
+          position="horizontal"
+          onChange={handleStepChange}
+        >
+          <StepperList>
+            <Step value={1}>Step 1</Step>
+            <Step value={2}>Step 2</Step>
+            <Step value={3}>Step 3</Step>
+            <Step value={4}>Step 4</Step>
+          </StepperList>
+          <StepContent value={1}>content for step 1</StepContent>
+          {/* <NextButton/> */}
+        </StepperContext>
+      </div>
+      {/* <Sidebar /> */}
+
+      {/* skeleton */}
+      <div className="my-5">
+      <Skeleton width="200px" height="38px" />
+      <div>
+        <h2>Card Skeleton</h2>
+        <div className="cardBlock">{cardBlockData()}</div>
+      </div>
       </div>
     </div>
   );

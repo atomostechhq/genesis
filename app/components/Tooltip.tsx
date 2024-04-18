@@ -2,12 +2,6 @@ import { VariantProps, cva } from "class-variance-authority";
 import { HTMLAttributes, ReactNode } from "react";
 import { cn } from "../utils/utils";
 
-// interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
-//   children: ReactNode;
-//   position: string;
-//   content: string;
-// }
-
 interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof tooltupVariants> {

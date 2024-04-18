@@ -7,8 +7,8 @@ const AppContext = createContext<any>("");
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const colors = [
     "brand",
-    "blue-gray",
-    "blue-light",
+    "bluegray",
+    "bluelight",
     "indigo",
     "purple",
     "violet",

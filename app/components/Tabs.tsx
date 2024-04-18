@@ -77,7 +77,7 @@ type TabPanelProps = {
 export const TabPanel = ({ value, children }: TabPanelProps) => {
   const { selectedTabValue } = useContext(TabsContainerContext) || {};
   return value === selectedTabValue ? (
-    <div className="tab-panel">{children}</div>
+    <div className="">{children}</div>
   ) : null;
 };
 
