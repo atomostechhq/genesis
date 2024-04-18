@@ -6,7 +6,7 @@ interface ToggleProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof toggleVariants> {
   size?: "sm" | "md" | "lg";
-  disabled?: true | false;
+  disabled?: boolean;
 }
 
 const toggleVariants = cva("", {
@@ -23,6 +23,7 @@ const toggleVariants = cva("", {
   },
   defaultVariants: {
     size: "sm",
+    intent: "primary",
   },
 });
 

@@ -1,6 +1,6 @@
 export type ProgressBarProps = {
   progress: number;
-  progressText?: any;
+  progressText?: string;
   progressColor: string;
 };
 
@@ -12,7 +12,7 @@ const ProgressBar = ({
   const _progress = Math.min(Math.max(0, progress), 100);
   return (
     <div className=" rounded">
-      <div className="w-full h-2 rounded bg-gray-200">
+      <div className="w-full h-2 rounded bg-gray-200" role="progressbar" aria-valuenow={_progress} aria-valuemin={0} aria-valuemax={100}>
         <div
           className={`${progressColor} h-full transition-all duration-250 rounded`}
           style={{ width: `${_progress}%` }}
