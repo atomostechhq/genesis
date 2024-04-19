@@ -13,6 +13,8 @@ import Label from "./components/Label";
 import Checkbox from "./components/Checkbox";
 import HelperText from "./components/HelperText";
 import Radio from "./components/Radio";
+import Input from "./components/Input";
+import { cn } from "./utils/utils";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -22,6 +24,20 @@ const Test = () => {
 
   // tabs
   const [activeTab, setActiveTab] = useState("tab1");
+  const [inputValue, setInputValue] = useState('');
+  const [error, setError] = useState('');
+
+  const handleChange = (e:any) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    // Validate the input value
+    if (value.length < 5) {
+      setError('Input must be at least 5 characters long');
+    } else {
+      setError('');
+    }
+  };
   
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -356,6 +372,12 @@ const Test = () => {
             </div>
           </div>
         </section>
+      </div>
+      <div>
+      <Input startIcon={<AlertFillIcon size={16} />} size="sm" endIcon={<ListCheckIcon size={16} />} placeholder="okay" />
+        <Input disabled size="lg" value={inputValue}
+        onChange={handleChange} endIcon={<ListCheckIcon size={16} className={cn(error && " text-error-500") || (inputValue ? 'text-primary' : 'text-gray-400')} />} className={cn(error && "focus:border-error-500 hover:border-error-500")} placeholder="okay" />
+        {error && <HelperText className="text-error-500">{error}</HelperText>}
       </div>
     </div>
   );
