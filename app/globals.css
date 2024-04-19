@@ -32,7 +32,7 @@
       --primary-900: #194185;
     }
 
-    .theme-blue-gray {
+    .theme-bluegray {
       --primary-25: #fcfcfd;
       --primary-50: #f8f9fc;
       --primary-100: #eaecf5;
@@ -46,7 +46,7 @@
       --primary-900: #101323;
     }
 
-    .theme-blue-light {
+    .theme-bluelight {
       --primary-25: #f5fbff;
       --primary-50: #f0f9ff;
       --primary-100: #e0f2fe;
@@ -138,4 +138,34 @@
       --primary-900: #7e2410;
     }
   }
+}
+
+.skeleton {
+  border-radius: 2px;
+  display: inline-block;
+  line-height: 100%;
+  width: 100%;
+  background-color: #fff;
+  background-size: 1000px 1000px;
+  background-image: linear-gradient(
+    100deg,
+    #e8e8e8 20%,
+    #fafafa 50%,
+    #e8e8e8 60%
+  );
+  animation: placeholderShimmer 1.5s linear infinite forwards;
+}
+
+/* Skeleton animation*/
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -500px 0;
+  }
+  100% {
+    background-position: 500px 0;
+  }
+}
+
+.skeleton.circle {
+  border-radius: 50%;
 }
