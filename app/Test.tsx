@@ -4,6 +4,7 @@ import { useAppContext } from "./context";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
+import MailLineIcon from "remixicon-react/MailLineIcon";
 import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
 import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
@@ -17,6 +18,8 @@ import Checkbox from "./components/Checkbox";
 import HelperText from "./components/HelperText";
 import Radio from "./components/Radio";
 import Stepper from "./components/Stepper";
+import Input from "./components/Input";
+import { cn } from "./utils/utils";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -26,6 +29,19 @@ const Test = () => {
 
   // tabs
   const [activeTab, setActiveTab] = useState("tab1");
+  const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState("");
+
+  const handleChange = (e: any) => {
+    const value = e.target.value;
+    setInputValue(value);
+    // Validate the input value
+    if (value.length < 5) {
+      setError("Input must be at least 5 characters long");
+     } else {
+      setError("");
+    }
+  };
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -152,7 +168,6 @@ const Test = () => {
         <span className="bg-primary-800">{color} Primary 800</span>
         <span className="bg-primary-900">{color} Primary 900</span>
       </div>
-
       <Button variant="filled" onClick={() => setOpen(true)}>
         Show Notice
       </Button>
@@ -419,7 +434,6 @@ const Test = () => {
           This is a success Alert with an encouraging title and both icons.
         </Notice>
       </div>
-
       {/* stepper */}
       <div>
         <h1 className="text-display-sm text-primary-400">Stepper:</h1>
@@ -467,7 +481,6 @@ const Test = () => {
         </div>
       </div>
       {/* <Sidebar /> */}
-
       {/* skeleton */}
       <div className="my-5">
       <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
@@ -562,6 +575,55 @@ const Test = () => {
             </div>
           </section>
         </div>
+      </div>
+        {/* <Input /> */}
+      <div className="flex flex-col gap-1">
+      <h1 className="text-display-sm text-primary-400">Input Field:</h1>
+      <section className="flex items-center gap-4">
+      <h1>Size with Text:</h1>
+        <div>
+        <Label required htmlFor="">Email</Label>
+          <Input type="text"  size="sm" placeholder="olivia@untitledui.com" />
+          <HelperText size="sm">
+          This is a hint text to help user.
+          </HelperText>
+        </div>
+        <div>
+        <Label required htmlFor="">Email</Label>
+          <Input type="text" size="lg" placeholder="olivia@untitledui.com" />
+          <HelperText size="lg">
+          This is a hint text to help user.
+          </HelperText>
+        </div>
+      </section>
+      <section className="flex items-center gap-4">
+            <h1>States:</h1>
+            <Input type="text" startIcon={<MailLineIcon size={16} />} size="lg" placeholder="olivia@untitledui.com" />
+            <Input type="text" disabled size="lg" placeholder="olivia@untitledui.com" />
+            <div>
+        <Label required htmlFor="">Email</Label>
+        <Input
+          size="lg"
+          value={inputValue}
+          type="text"
+          onChange={handleChange}
+         endIcon={
+            <ListCheckIcon
+              size={16}
+              className={cn(error && "text-error-500")}
+            />
+          }
+          className={cn(
+            error &&
+              "focus-within:border-error-500"
+          )}
+          placeholder="olivia@untitledui.com"
+        />
+          {error && <HelperText className="text-error-500">{error}</HelperText>}
+        </div>
+            </section>
+            
+        
       </div>
     </div>
   );
