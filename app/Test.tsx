@@ -12,17 +12,12 @@ import { Tooltip } from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
 import { Notice } from "./components/Notice";
-import StepperContext, {
-  StepperList,
-  Step,
-  StepContent,
-  NextButton,
-} from "./components/Stepper";
 import Sidebar from "./components/sidebar";
 import Skeleton from "./components/Skeleton";
 import Checkbox from "./components/Checkbox";
 import HelperText from "./components/HelperText";
 import Radio from "./components/Radio";
+import Stepper from "./components/Stepper";
 import Input from "./components/Input";
 import { cn } from "./utils/utils";
 import FileUpload from "./components/FileUpload";
@@ -60,18 +55,40 @@ const Test = () => {
     setSelectedFile(file);
   };
 
-  // stepper
-  const [activeStep, setActiveStep] = useState(1);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleStepChange = (value: any) => {
-    setActiveStep(value);
+  const handleFileChange = (file: File | null) => {
+    setSelectedFile(file);
+  };
+
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+
+  const stepsConfig = [
+    { name: "Step One", Component: () => <div>Step 1 Component</div> },
+    { name: "Step Two", Component: () => <div>Step 2 Component</div> },
+    { name: "Step Three", Component: () => <div>Step 3 Component</div> },
+  ];
+
+  const handleNext = () => {
+    setCurrentStep((prevStep) => {
+      if (prevStep === stepsConfig.length) {
+        setIsComplete(true);
+        return prevStep;
+      } else {
+        return prevStep + 1;
+      }
+    });
+  };
+
+  const handlePrev = () => {
+    setCurrentStep((prevStep) => prevStep - 1);
   };
 
   const handleFileSelect = (file: File) => {
     // Handle file upload logic here, like sending the file to a server
     console.log("Selected file:", file);
   };
-
   // notice
   const [open, setOpen] = useState(false);
 
@@ -442,10 +459,10 @@ const Test = () => {
       {/* stepper */}
       <div>
         <h1 className="text-display-sm text-primary-400">Stepper:</h1>
-        <StepperContext
-          value={activeStep}
+        {/* <StepperContext
+          initialStep={activeStep}
           position="horizontal"
-          onChange={handleStepChange}
+          handleStepChange={handleStepChange}
         >
           <StepperList>
             <Step value={1}>Step 1</Step>
@@ -453,13 +470,42 @@ const Test = () => {
             <Step value={3}>Step 3</Step>
             <Step value={4}>Step 4</Step>
           </StepperList>
-          <StepContent value={1}>content for step 1</StepContent>
-          {/* <NextButton/> */}
-        </StepperContext>
+          <StepContent value={1}>Content for Step 1</StepContent>
+          <StepContent value={2}>Content for Step 2</StepContent>
+          <StepContent value={3}>Content for Step 3</StepContent>
+          <StepContent value={4}>Content for Step 4</StepContent>
+          <NextButton />
+          <PreviousButton />
+        </StepperContext> */}
+
+        <div className="w-[50%] mx-auto">
+          <Stepper
+            stepsConfig={stepsConfig}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            isComplete={isComplete}
+            setIsComplete={setIsComplete}
+            // position="vertical"
+            position="horizontal"
+          />
+          <section className="my-5 flex justify-end items-center gap-4">
+          <Button
+            variant="outlined"
+            onClick={handlePrev}
+            disabled={currentStep === 1}
+          >
+            Prev
+          </Button>
+          <Button variant="filled" onClick={handleNext}>
+            {currentStep === stepsConfig.length ? "Finish" : "Next"}
+          </Button>
+          </section>
+        </div>
       </div>
       {/* <Sidebar /> */}
       {/* skeleton */}
       <div className="my-5">
+      <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
         <Skeleton width="200px" height="38px" />
         <div>
           <h2>Card Skeleton</h2>
