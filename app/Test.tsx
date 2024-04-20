@@ -25,6 +25,8 @@ import HelperText from "./components/HelperText";
 import Radio from "./components/Radio";
 import Input from "./components/Input";
 import { cn } from "./utils/utils";
+import FileUpload from "./components/FileUpload";
+import Trial from "./components/Trial";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -43,7 +45,7 @@ const Test = () => {
     // Validate the input value
     if (value.length < 5) {
       setError("Input must be at least 5 characters long");
-     } else {
+    } else {
       setError("");
     }
   };
@@ -52,11 +54,22 @@ const Test = () => {
     setActiveTab(value);
   };
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (file: File | null) => {
+    setSelectedFile(file);
+  };
+
   // stepper
   const [activeStep, setActiveStep] = useState(1);
 
   const handleStepChange = (value: any) => {
     setActiveStep(value);
+  };
+
+  const handleFileSelect = (file: File) => {
+    // Handle file upload logic here, like sending the file to a server
+    console.log("Selected file:", file);
   };
 
   // notice
@@ -206,7 +219,10 @@ const Test = () => {
           </div>
         </Notice> */}
       </div>
-
+      <div>
+        <FileUpload />
+        <Trial />
+      </div>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
@@ -536,55 +552,63 @@ const Test = () => {
           </section>
         </div>
       </div>
-        {/* <Input /> */}
+      {/* <Input /> */}
       <div className="flex flex-col gap-1">
-      <h1 className="text-display-sm text-primary-400">Input Field:</h1>
-      <section className="flex items-center gap-4">
-      <h1>Size with Text:</h1>
-        <div>
-        <Label required htmlFor="">Email</Label>
-          <Input type="text"  size="sm" placeholder="olivia@untitledui.com" />
-          <HelperText size="sm">
-          This is a hint text to help user.
-          </HelperText>
-        </div>
-        <div>
-        <Label required htmlFor="">Email</Label>
-          <Input type="text" size="lg" placeholder="olivia@untitledui.com" />
-          <HelperText size="lg">
-          This is a hint text to help user.
-          </HelperText>
-        </div>
-      </section>
-      <section className="flex items-center gap-4">
-            <h1>States:</h1>
-            <Input type="text" startIcon={<MailLineIcon size={16} />} size="lg" placeholder="olivia@untitledui.com" />
-            <Input type="text" disabled size="lg" placeholder="olivia@untitledui.com" />
-            <div>
-        <Label required htmlFor="">Email</Label>
-        <Input
-          size="lg"
-          value={inputValue}
-          type="text"
-          onChange={handleChange}
-         endIcon={
-            <ListCheckIcon
-              size={16}
-              className={cn(error && "text-error-500")}
+        <h1 className="text-display-sm text-primary-400">Input Field:</h1>
+        <section className="flex items-center gap-4">
+          <h1>Size with Text:</h1>
+          <div>
+            <Label required htmlFor="">
+              Email
+            </Label>
+            <Input type="text" size="sm" placeholder="olivia@untitledui.com" />
+            <HelperText size="sm">This is a hint text to help user.</HelperText>
+          </div>
+          <div>
+            <Label required htmlFor="">
+              Email
+            </Label>
+            <Input type="text" size="lg" placeholder="olivia@untitledui.com" />
+            <HelperText size="lg">This is a hint text to help user.</HelperText>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States:</h1>
+          <Input
+            type="text"
+            startIcon={<MailLineIcon size={16} />}
+            size="lg"
+            placeholder="olivia@untitledui.com"
+          />
+          <Input
+            type="text"
+            disabled
+            size="lg"
+            placeholder="olivia@untitledui.com"
+          />
+          <div>
+            <Label required htmlFor="">
+              Email
+            </Label>
+            <Input
+              size="lg"
+              value={inputValue}
+              type="text"
+              onChange={handleChange}
+              endIcon={
+                <ListCheckIcon
+                  size={16}
+                  className={cn(error && "text-error-500")}
+                />
+              }
+              className={cn(error && "focus-within:border-error-500")}
+              placeholder="olivia@untitledui.com"
             />
-          }
-          className={cn(
-            error &&
-              "focus-within:border-error-500"
-          )}
-          placeholder="olivia@untitledui.com"
-        />
-          {error && <HelperText className="text-error-500">{error}</HelperText>}
-        </div>
-            </section>
-            
-        
-        
+            {error && (
+              <HelperText className="text-error-500">{error}</HelperText>
+            )}
+          </div>
+        </section>
       </div>
     </div>
   );
