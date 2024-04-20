@@ -35,7 +35,7 @@ const Radio = ({
         disabled={disabled}
         type="radio"
         className={cn(
-          "peer relative cursor-pointer appearance-none rounded-full border border-gray-300 hover:border-primary-600 hover:bg-primary-50 transition-all checked:border-primary-600 checked:bg-primary-50 disabled:opacity-30 disabled:cursor-not-allowed",
+          "peer relative cursor-pointer appearance-none rounded-full border border-gray-300 hover:border-primary-600 hover:bg-primary-50 transition-all checked:border-primary-600 checked:bg-primary-50 disabled:opacity-30 disabled:pointer-events-none",
           radioVariants({size,
           className})
         )}

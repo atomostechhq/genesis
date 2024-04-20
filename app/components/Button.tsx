@@ -14,8 +14,8 @@ interface ButtonProps
 const buttonVariants = cva("rounded-lg cursor-pointer", {
   variants: {
     variant: {
-      filled: "bg-primary-600 text-white active:bg-primary-900 active:border-primary-900 hover:bg-primary-700 hover:border-primary-700 border border-primary-600 disabled:opacity-[30%] disabled:cursor-not-allowed",
-      outlined: "border border-primary-600 bg-white disabled:opacity-[30%] disabled:cursor-not-allowed text-primary-600 hover:bg-primary-100 active:bg-primary-200 active:border-primary-700",
+      filled: "bg-primary-600 text-white active:bg-primary-900 active:border-primary-900 hover:bg-primary-700 hover:border-primary-700 border border-primary-600 disabled:opacity-[30%] disabled:pointer-events-none",
+      outlined: "border border-primary-600 bg-white disabled:opacity-[30%] disabled:pointer-events-none text-primary-600 hover:bg-primary-100 active:bg-primary-200 active:border-primary-700",
     },
     intent: {
       primary:"bg-primary-600 border-primary-600 active:bg-primary-900 active:border-primary-900 hover:bg-primary-700 hover:border-primary-700",
