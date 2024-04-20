@@ -8,7 +8,7 @@ interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>,"size
   checked?: boolean;
 }
 
-const checkboxVariant = cva("peer relative cursor-pointer appearance-none rounded-[4px] border border-gray-300 transition-all checked:border-primary-600 checked:bg-primary-50 hover:bg-primary-50 disabled:opacity-30 disabled:cursor-not-allowed",{
+const checkboxVariant = cva("peer relative cursor-pointer appearance-none rounded-[4px] border border-gray-300 transition-all checked:border-primary-600 checked:bg-primary-50 hover:bg-primary-50 disabled:opacity-30 disabled:pointer-events-none",{
   variants:{
     size:{
       sm:"h-3 w-3",

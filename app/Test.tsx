@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useAppContext } from "./context";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
@@ -21,7 +21,7 @@ import Stepper from "./components/Stepper";
 import Input from "./components/Input";
 import { cn } from "./utils/utils";
 import FileUpload from "./components/FileUpload";
-import Trial from "./components/Trial";
+import Textarea from "./components/Textarea";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -49,16 +49,13 @@ const Test = () => {
     setActiveTab(value);
   };
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const handleFileChange = (file: File | null) => {
-    setSelectedFile(file);
-  };
-
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const handleFileChange = (file: File | null) => {
-    setSelectedFile(file);
+  const [selectedFile, setSelectedFile] = useState<string[]>([]);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const fileNames = Array.from(files).map((file) => file.name);
+      setSelectedFile(fileNames);
+    }
   };
 
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -85,10 +82,6 @@ const Test = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const handleFileSelect = (file: File) => {
-    // Handle file upload logic here, like sending the file to a server
-    console.log("Selected file:", file);
-  };
   // notice
   const [open, setOpen] = useState(false);
 
@@ -235,10 +228,6 @@ const Test = () => {
             </Button>
           </div>
         </Notice> */}
-      </div>
-      <div>
-        <FileUpload />
-        <Trial />
       </div>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
@@ -489,23 +478,23 @@ const Test = () => {
             position="horizontal"
           />
           <section className="my-5 flex justify-end items-center gap-4">
-          <Button
-            variant="outlined"
-            onClick={handlePrev}
-            disabled={currentStep === 1}
-          >
-            Prev
-          </Button>
-          <Button variant="filled" onClick={handleNext}>
-            {currentStep === stepsConfig.length ? "Finish" : "Next"}
-          </Button>
+            <Button
+              variant="outlined"
+              onClick={handlePrev}
+              disabled={currentStep === 1}
+            >
+              Prev
+            </Button>
+            <Button variant="filled" onClick={handleNext}>
+              {currentStep === stepsConfig.length ? "Finish" : "Next"}
+            </Button>
           </section>
         </div>
       </div>
       {/* <Sidebar /> */}
       {/* skeleton */}
       <div className="my-5">
-      <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
+        <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
         <Skeleton width="200px" height="38px" />
         <div>
           <h2>Card Skeleton</h2>
@@ -654,6 +643,32 @@ const Test = () => {
               <HelperText className="text-error-500">{error}</HelperText>
             )}
           </div>
+        </section>
+      </div>
+      {/* File Upload */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-400">File Upload</h1>
+        <FileUpload
+          selectedFile={selectedFile}
+          setSelectedFile={setSelectedFile}
+          onChange={handleFileChange}
+        />
+      </div>
+      {/* Textarea */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-400">Textarea</h1>
+        <section className="flex items-center gap-4">
+          <h1>States</h1>
+          <Textarea
+            placeholder="This is a placeholder"
+            rows={4}
+            size="lg"
+          ></Textarea>
+          <Textarea
+            placeholder="This is a placeholder"
+            size="sm"
+            disabled
+          ></Textarea>
         </section>
       </div>
     </div>
