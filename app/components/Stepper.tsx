@@ -65,7 +65,7 @@ const Stepper = ({
 
   const ActiveComponent = stepsConfig[currentStep - 1]?.Component;
 
-  console.log("currentStep", currentStep);
+  // console.log("currentStep", currentStep);
 
   return (
     <>
