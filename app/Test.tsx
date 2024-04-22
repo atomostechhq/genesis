@@ -23,6 +23,7 @@ import { cn } from "./utils/utils";
 import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Table from "./components/Table";
+import Dropdown from "./components/Dropdown";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -82,6 +83,21 @@ const Test = () => {
   const handlePrev = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
+
+  // dropdown
+  const [selected, setSelected] = useState<Option[]>([]);
+  console.log("selected", selected);
+
+  const data = [
+    { label: "apple", value: "apple" },
+    { label: "banana", value: "banana" },
+    { label: "strawberry", value: "strawberry" },
+    { label: "kiwi", value: "kiwi" },
+    { label: "orange", value: "orange" },
+    { label: "grapes", value: "grapes" },
+    { label: "melon", value: "melon" },
+    { label: "mango", value: "mango" },
+  ];
 
   // notice
   const [open, setOpen] = useState(false);
@@ -452,25 +468,6 @@ const Test = () => {
       {/* stepper */}
       <div>
         <h1 className="text-display-sm text-primary-400">Stepper:</h1>
-        {/* <StepperContext
-          initialStep={activeStep}
-          position="horizontal"
-          handleStepChange={handleStepChange}
-        >
-          <StepperList>
-            <Step value={1}>Step 1</Step>
-            <Step value={2}>Step 2</Step>
-            <Step value={3}>Step 3</Step>
-            <Step value={4}>Step 4</Step>
-          </StepperList>
-          <StepContent value={1}>Content for Step 1</StepContent>
-          <StepContent value={2}>Content for Step 2</StepContent>
-          <StepContent value={3}>Content for Step 3</StepContent>
-          <StepContent value={4}>Content for Step 4</StepContent>
-          <NextButton />
-          <PreviousButton />
-        </StepperContext> */}
-
         <div className="w-[50%] mx-auto">
           <Stepper
             stepsConfig={stepsConfig}
@@ -674,6 +671,15 @@ const Test = () => {
             disabled
           ></Textarea>
         </section>
+      </div>
+
+      <div>
+        <h1 className="text-display-sm text-primary-400">Dropdown</h1>
+        <Dropdown
+          options={data}
+          selected={selected}
+          setSelected={setSelected}
+        />
       </div>
     </div>
   );
