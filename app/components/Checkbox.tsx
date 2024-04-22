@@ -1,8 +1,8 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { HTMLAttributes, InputHTMLAttributes } from "react";
 import { cn } from "../utils/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
-interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>,"size">, VariantProps<typeof checkboxVariant> {
+interface CheckboxProps extends Omit<HTMLAttributes<HTMLInputElement>,"size">, VariantProps<typeof checkboxVariant> {
   size?: "sm" | "lg";
   disabled?:boolean;
   checked?: boolean;

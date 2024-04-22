@@ -22,6 +22,7 @@ import Input from "./components/Input";
 import { cn } from "./utils/utils";
 import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
+import Table from "./components/Table";
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -228,6 +229,9 @@ const Test = () => {
             </Button>
           </div>
         </Notice> */}
+      </div>
+      <div>
+        <Table />
       </div>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
