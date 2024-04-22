@@ -1,106 +1,155 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Checkbox from "./Checkbox";
-import Label from "./Label";
-import Input from "./Input";
 
-export interface Option {
+interface Option {
   label: string;
   value: string;
 }
 
-interface DropdownProps {
-  options?: Option[];
-  selected: Option[];
-  setSelected: React.Dispatch<React.SetStateAction<Option[]>>;
+interface MenuItemProps {
+  label?: string;
+  value: string;
+  children?: React.ReactNode;
 }
 
-const Dropdown = ({ options, selected, setSelected }: DropdownProps) => {
+interface DropdownProps {
+  options: Option[];
+  selected?: Option[];
+  setSelected?: React.Dispatch<React.SetStateAction<Option[]>>;
+  dropdownText?: string;
+  search?: boolean;
+  multiple?: boolean;
+  renderItem?: (option: Option) => React.ReactNode;
+  children?: React.ReactNode;
+}
+
+const defaultRenderItem = (option: Option) => {
+  return <MenuItem label={option.label} value={option.value} />;
+};
+
+const Dropdown: React.FC<DropdownProps> = ({
+  options,
+  selected,
+  setSelected,
+  search = false,
+  multiple = false,
+  dropdownText = "Select...",
+  renderItem = defaultRenderItem,
+  children,
+}) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filteredOptions, setFilteredOptions] = useState<Option[]>(
     options || []
   );
 
   useEffect(() => {
-    const filtered = options?.filter(
-      (option, index, self) =>
-        option.value.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        index === self.findIndex((t) => t.label === option.label)
-    );
-
-    setFilteredOptions(filtered || []);
-  }, [searchQuery, options]);
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setSearchQuery(value);
-  };
-
-  const toggleOption = ({ label, value }: Option) => {
-    setSelected((prevSelected) => {
-      const isSelected = prevSelected.some((item) => item.label === label);
-      if (isSelected) {
-        return prevSelected?.filter((item) => item.label !== label);
-      } else {
-        return [...prevSelected, { label, value }];
-      }
-    });
-  };
-
-  const handleSelectAll = () => {
-    if (selected.length === filteredOptions.length) {
-      setSelected([]);
-    } else {
-      setSelected(filteredOptions);
+    if (options) {
+      setFilteredOptions(options);
     }
-  };
+  }, [options]);
+
+  const memoizedFilteredOptions = useMemo(() => {
+    if (!search) return filteredOptions;
+    return filteredOptions.filter((option) =>
+      option.label.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [search, searchQuery, filteredOptions]);
+
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(e.target.value);
+    },
+    []
+  );
+
+  const toggleOption = useCallback(
+    (option: Option) => {
+      if (multiple && setSelected) {
+        setSelected((prevSelected) =>
+          prevSelected.some((item) => item.value === option.value)
+            ? prevSelected.filter((item) => item.value !== option.value)
+            : [...prevSelected, option]
+        );
+      } else if (setSelected) {
+        setSelected([option]);
+      }
+    },
+    [multiple, setSelected]
+  );
+
+  const handleCheckboxChange = useCallback(
+    (option: Option) => {
+      if (multiple && setSelected) {
+        setSelected((prevSelected) =>
+          prevSelected.some((item) => item.value === option.value)
+            ? prevSelected.filter((item) => item.value !== option.value)
+            : [...prevSelected, option]
+        );
+      } else if (setSelected) {
+        setSelected([option]);
+      }
+    },
+    [multiple, setSelected]
+  );
 
   return (
     <div className="c-multi-select-dropdown">
-      <div>
-        <div>
-          <Input
+      <div className="test">
+        {multiple
+          ? `${selected?.length || dropdownText}`
+          : selected?.[0]?.label
+          ? selected?.[0]?.label
+          : dropdownText}
+      </div>
+      <ul className="">
+        {search && (
+          <input
             type="text"
-            size="sm"
-            placeholder="Search"
+            placeholder="Search..."
             value={searchQuery}
             onChange={handleSearchChange}
+            className="h-[40px] test"
           />
-        </div>
-      </div>
-      <ul className="c-multi-select-dropdown__options">
-        <div className="flex items-center gap-1">
-          <Checkbox
-            id="select all"
-            checked={selected.length === filteredOptions.length}
-            onChange={handleSelectAll}
-            size="lg"
-          />
-          <Label htmlFor="select all">Select all</Label>
-        </div>
-        {filteredOptions?.map((option: Option) => {
-          const isSelected = selected?.some(
-            (item) => item.label === option.label
-          );
-          return (
-            <li
-              key={option.label}
-              className="c-multi-select-dropdown__option"
-              onClick={() => toggleOption(option)}
-            >
-              <Checkbox
-                id={`checkbox-${option.label}`}
-                checked={isSelected}
-                onChange={() => toggleOption(option)}
-              />
-              <Label htmlFor={`checkbox-${option.label}`}>
-                {option.label}
-              </Label>
-            </li>
-          );
-        })}
+        )}
+        {options
+          ? memoizedFilteredOptions.map((option) => (
+              <>
+                {multiple ? (
+                  <li key={option.label} className="flex gap-2 items-center">
+                    <Checkbox
+                      id={`checkbox-${option.value}`}
+                      checked={selected?.some(
+                        (item) => item.value === option.value
+                      )}
+                      onChange={() => handleCheckboxChange(option)}
+                    />
+                    <label htmlFor={`checkbox-${option.value}`}>
+                      {renderItem(option)}
+                    </label>
+                  </li>
+                ) : (
+                  <li
+                    key={option.label}
+                    className=""
+                    onClick={() => toggleOption(option)}
+                  >
+                    {renderItem(option)}
+                  </li>
+                )}
+              </>
+            ))
+          : children}
       </ul>
     </div>
   );
+};
+
+export const MenuItem: React.FC<MenuItemProps> = ({
+  label,
+  value,
+  children,
+}) => {
+  return <p>{label || children}</p>;
 };
 
 export default Dropdown;

@@ -22,7 +22,12 @@ import Input from "./components/Input";
 import { cn } from "./utils/utils";
 import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
-import Dropdown from "./components/Dropdown";
+import Dropdown, { MenuItem } from "./components/Dropdown";
+
+interface Option {
+  label: string;
+  value: string;
+}
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -84,10 +89,20 @@ const Test = () => {
   };
 
   // dropdown
-  const [selected, setSelected] = useState<Option[]>([]);
-  console.log("selected", selected);
 
-  const data = [
+  const [multiSelect, setMultiSelect] = useState<Option[]>([]);
+  console.log("multiSelect", multiSelect);
+
+  const [singleSelect, setSingleSelect] = useState<Option[]>([]);
+  console.log("singleSelect", singleSelect);
+
+  const singleOptions = [
+    { label: "Option 1", value: "1" },
+    { label: "Option 2", value: "2" },
+    { label: "Option 3", value: "3" },
+  ];
+
+  const multiOptions = [
     { label: "apple", value: "apple" },
     { label: "banana", value: "banana" },
     { label: "strawberry", value: "strawberry" },
@@ -669,13 +684,30 @@ const Test = () => {
         </section>
       </div>
 
-      <div>
-        <h1 className="text-display-sm text-primary-400">Dropdown</h1>
-        <Dropdown
-          options={data}
-          selected={selected}
-          setSelected={setSelected}
-        />
+      <h1 className="text-display-sm text-primary-400">Dropdown</h1>
+      <div className="flex gap-10">
+        <section>
+          <h1 className="text-display-sm text-primary-400">
+            Multiple Dropdown
+          </h1>
+          <Dropdown
+            options={multiOptions}
+            selected={multiSelect}
+            setSelected={setMultiSelect}
+            search={true}
+            multiple={true}
+          />
+        </section>
+        <section>
+          <h1 className="text-display-sm text-primary-400">Single Dropdown</h1>
+          <Dropdown
+            options={singleOptions}
+            selected={singleSelect}
+            setSelected={setSingleSelect}
+            search={true}
+            multiple={false}
+          />
+        </section>
       </div>
     </div>
   );
