@@ -168,6 +168,18 @@
   border-radius: 50%;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .c-multi-select-dropdown {
   font-family: "Roboto", sans-serif;
   position: relative;

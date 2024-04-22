@@ -22,12 +22,14 @@ import Input from "./components/Input";
 import { cn } from "./utils/utils";
 import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
-import Dropdown, { MenuItem } from "./components/Dropdown";
+import Table from "./components/Table";
+import Dropdown from "./components/Dropdown";
 
 interface Option {
   label: string;
   value: string;
 }
+
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -259,6 +261,9 @@ const Test = () => {
             </Button>
           </div>
         </Notice> */}
+      </div>
+      <div>
+        <Table />
       </div>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
