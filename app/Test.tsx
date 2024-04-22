@@ -24,6 +24,7 @@ import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Table from "./components/Table";
 import Dropdown from "./components/Dropdown";
+import Trial from './components/Trial';
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -247,6 +248,7 @@ const Test = () => {
         </Notice> */}
       </div>
       <div>
+        <Trial />
         <Table />
       </div>
       {/* Typography */}
