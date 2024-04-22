@@ -31,7 +31,6 @@
       --primary-800: #1849a9;
       --primary-900: #194185;
     }
-
     .theme-bluegray {
       --primary-25: #fcfcfd;
       --primary-50: #f8f9fc;
@@ -45,7 +44,6 @@
       --primary-800: #293056;
       --primary-900: #101323;
     }
-
     .theme-bluelight {
       --primary-25: #f5fbff;
       --primary-50: #f0f9ff;
@@ -183,7 +181,6 @@ input[type=number] {
 }
 
 .c-multi-select-dropdown {
-  margin: 100px auto;
   font-family: "Roboto", sans-serif;
   position: relative;
   width: 300px;
@@ -212,7 +209,7 @@ input[type=number] {
     position: absolute;
     box-sizing: border-box;
     left: 0;
-    width: 100%;
+    width: inherit;
     list-style: none;
     padding-left: 0px;
     border: solid 1px #eee;
