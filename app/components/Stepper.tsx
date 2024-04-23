@@ -1,5 +1,4 @@
 "use client";
-
 import { VariantProps, cva } from "class-variance-authority";
 import React, {
   HtmlHTMLAttributes,
@@ -64,8 +63,6 @@ const Stepper = ({
   // };
 
   const ActiveComponent = stepsConfig[currentStep - 1]?.Component;
-
-  // console.log("currentStep", currentStep);
 
   return (
     <>

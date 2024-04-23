@@ -310,7 +310,11 @@ const Test = () => {
             search={true}
             multiple={true}
             dropDownTooltip={true}
-            tooltipContent="qwertyuio"
+            tooltipContent="info"
+            dropdownFooter={true}
+            onApply={() => {
+              console.log("Apply button clicked");
+            }}
           />
         </section>
         <section>
@@ -321,6 +325,8 @@ const Test = () => {
             setSelected={setSingleSelect}
             search={true}
             multiple={false}
+            dropDownTooltip={true}
+            tooltipContent="info"
           />
         </section>
       </div>
