@@ -1,6 +1,7 @@
 import React, { InputHTMLAttributes, ReactNode } from "react";
 import File3LineIcon from "remixicon-react/File3LineIcon";
 import Upload2LineIcon from "remixicon-react/Upload2LineIcon";
+import DeleteBinLineIcon from "remixicon-react/DeleteBinLineIcon";
 import { cn } from "../utils/utils";
 
 interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -46,12 +47,15 @@ const FileUpload = ({
         {selectedFile?.map((file, index) => (
           <div
             key={index}
-            className="p-4 border border-gray-200 rounded-lg w-[512px] h-[72px] flex items-center gap-2"
+            className="p-4 border border-gray-200 rounded-lg w-[512px] h-[72px] flex items-center justify-between gap-2"
           >
+            <div className="flex items-center gap-2">
             <File3LineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
             <div className="flex flex-col gap-2">
               <p className="text-sm">{file}</p>
             </div>
+            </div>
+<DeleteBinLineIcon  className="text-error-600 w-5 h-5" />
           </div>
         ))}
       </div>

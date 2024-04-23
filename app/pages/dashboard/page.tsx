@@ -3,6 +3,7 @@ import Button from "@/app/components/Button";
 import Sidebar from "@/app/components/Sidebar";
 import React, { useState } from "react";
 
+
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   console.log("collapsed", collapsed);
