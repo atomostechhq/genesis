@@ -134,14 +134,14 @@ const Test = () => {
     if (loadingState) {
       return [...Array(4)].map((item, index) => {
         return (
-          <div>
+          <div key={index}>
             <div>
               <h2>What is Lorem ?</h2>
             </div>
             <div>
               <p>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
+                industry. Lorem Ipsum has been the industry&apos;s standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen book. It has
                 survived not only five centuries, but also the leap into
@@ -155,7 +155,7 @@ const Test = () => {
     } else {
       return [...Array(4)].map((index, item) => {
         return (
-          <div className="cardSkeleton">
+          <div key={item} className="cardSkeleton">
             <div className="cardSkeletonImage">
               <Skeleton width="80px" height="80px" variant="circle" />
               <Skeleton width="100%" height="20px" />
@@ -724,11 +724,19 @@ const Test = () => {
           ></Textarea>
         </section>
       </div>
-      <div>
-        {/* <Table /> */}
-        <TableFixedColumn />
-        <TableExpanding />
-        <TableSorting />
+      <div className="py-5 px-3 mx-auto">
+        <div className="space-y-2">
+          <h1>Table With Fixed Column</h1>
+          <TableFixedColumn />
+        </div>
+        <div className="space-y-2">
+          <h1>Table With Fixed Column</h1>
+          <TableExpanding />
+        </div>
+        <div className="space-y-2">
+          <h1>Table With Fixed Column</h1>
+          <TableSorting />
+        </div>
       </div>
     </div>
   );

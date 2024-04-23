@@ -23,7 +23,6 @@ import Input from "../Input";
 import Chip from "../Chip";
 import Button from "../Button";
 import { cn } from "@/app/utils/utils";
-import { faker } from "@faker-js/faker";
 import { TableBody, TableDataCell, TableHead, TableHeadCell, Table as TableMain, TableRow}  from "../TableComponents";
 
 const getCommonPinningStyles = (column: Column<Person>): CSSProperties => {
@@ -405,7 +404,7 @@ function IndeterminateCheckbox({
     if (typeof indeterminate === "boolean") {
       ref.current.indeterminate = !rest.checked && indeterminate;
     }
-  }, [ref, indeterminate]);
+  }, [ref, indeterminate, rest.checked]);
 
   return (
     <>

@@ -5,6 +5,7 @@ import CloseLineIcon from "remixicon-react/CloseLineIcon";
 import SidebarItem from "./item";
 import { useState } from "react";
 import MenuFoldFillIcon from "remixicon-react/MenuFoldFillIcon";
+import Image from "next/image";
 
 interface ISidebarItem {
   name: string;
@@ -72,7 +73,7 @@ const Sidebar = () => {
     >
       <div className="flex flex-col space-y-10 w-full">
         <section className="flex justify-between items-center">
-          <img className="h-10 w-fit" src="/logo-expanded.png" alt="Logo" />
+          <Image className="h-10 w-fit" src="/logo-expanded.png" alt="Logo" />
           <MenuFoldFillIcon onClick={() => setCollapse((prev) => !prev)} />
         </section>
         <div className="flex flex-col space-y-2">
