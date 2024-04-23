@@ -65,22 +65,11 @@ const Sidebar: React.FC<SidebarProps> & {
 } = ({ children, collapsed, setCollapsed }) => {
   return (
     <div
-      //   className={cn({
-      //     "grid min-h-screen": true,
-      //     "grid-cols-sidebar": !collapsed,
-      //     "grid-cols-sidebar-collapsed": collapsed,
-      //     "transition-[grid-template-columns] duration-300 ease-in-out": true,
-      //   })}
       className={cn(
         "border border-gray-200 shadow-md relative flex flex-col min-h-screen transition-all duration-300 ease-in-out",
         collapsed ? "w-[80px] py-[21px] px-[17px] " : "w-[308px] py-[22px] px-6"
       )}
     >
-      {/* <div className="">
-        <button onClick={() => setCollapsed(true)}>
-          <AlertFillIcon className="w-10 h-10" />
-        </button>
-      </div> */}
       <div className="">{children}</div>
     </div>
   );
@@ -92,8 +81,6 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
   setCollapsed,
   children,
 }) => {
-  const currentPath = usePathname();
-
   return (
     <div
       className={cn({
@@ -174,7 +161,6 @@ const Footer: React.FC<SidebarProps> = ({ children, setCollapsed }) => {
   );
 };
 
-// Assign SidebarHeader, SidebarMenu, and Footer to Sidebar component
 Sidebar.Header = SidebarHeader;
 Sidebar.Menu = SidebarMenu;
 Sidebar.Footer = Footer;
