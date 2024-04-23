@@ -1,4 +1,4 @@
-import React, { CSSProperties, InputHTMLAttributes } from "react";
+import React, { CSSProperties, InputHTMLAttributes, useRef } from "react";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
 import ArrowLeftLineIcon from "remixicon-react/ArrowLeftLineIcon";
 import ArrowRightSLineIcon from "remixicon-react/ArrowRightSLineIcon";
@@ -24,6 +24,7 @@ import Chip from "../Chip";
 import Button from "../Button";
 import { cn } from "@/app/utils/utils";
 import { faker } from "@faker-js/faker";
+import { TableBody, TableDataCell, TableHead, TableHeadCell, Table as TableMain, TableRow}  from "../TableComponents";
 
 const getCommonPinningStyles = (column: Column<Person>): CSSProperties => {
   const isPinned = column.getIsPinned();
@@ -47,90 +48,7 @@ const getCommonPinningStyles = (column: Column<Person>): CSSProperties => {
   };
 };
 
-// const columns = React.useMemo<ColumnDef<Person>[]>(
-//   () => [
-//     {
-//       accessorKey: "firstName",
-//       header: ({ table }) => (
-//         <div className="flex items-center gap-2">
-//           <IndeterminateCheckbox
-//             {...{
-//               checked: table.getIsAllRowsSelected(),
-//               indeterminate: table.getIsSomeRowsSelected(),
-//               onChange: table.getToggleAllRowsSelectedHandler(),
-//             }}
-//           />{" "}
-//           <div className="flex items-center justify-between">
-//             <span>First Name</span>
-//             <button
-//               {...{
-//                 onClick: table.getToggleAllRowsExpandedHandler(),
-//               }}
-//             >
-//               {table.getIsAllRowsExpanded() ? (
-//                 <ArrowDownSLineIcon />
-//               ) : (
-//                 <ArrowRightSLineIcon />
-//               )}
-//             </button>{" "}
-//           </div>
-//         </div>
-//       ),
-//       cell: ({ row, getValue }) => (
-//         <div className="w-[259.25px] px-5 flex items-center justify-start h-10">
-//           <IndeterminateCheckbox
-//             {...{
-//               checked: row.getIsSelected(),
-//               indeterminate: row.getIsSomeSelected(),
-//               onChange: row.getToggleSelectedHandler(),
-//             }}
-//           />{" "}
-//           {getValue<boolean>()}
-//           {row.getCanExpand() ? (
-//             <button
-//               {...{
-//                 onClick: row.getToggleExpandedHandler(),
-//                 style: { cursor: "pointer" },
-//               }}
-//             >
-//               {row.getIsExpanded() ? (
-//                 <ArrowDownSLineIcon />
-//               ) : (
-//                 <ArrowRightSLineIcon />
-//               )}
-//             </button>
-//           ) : (
-//             ""
-//           )}{" "}
-//         </div>
-//       ),
-//       footer: (props) => props.column.id,
-//     },
-//     {
-//       accessorFn: (row) => row.lastName,
-//       id: "lastName",
-//       cell: (info) => info.getValue(),
-//       header: () => <span>Last Name</span>,
-//       footer: (props) => props.column.id,
-//     },
-//     {
-//       accessorKey: "age",
-//       header: () => "Age",
-//       footer: (props) => props.column.id,
-//     },
-//     {
-//       accessorKey: "visits",
-//       header: () => <span>Visits</span>,
-//       footer: (props) => props.column.id,
-//     },
-//     {
-//       accessorKey: "status",
-//       header: "Status",
-//       footer: (props) => props.column.id,
-//     },
-//   ],
-//   []
-// )
+
 //custom sorting logic for one of our enum columns
 const sortStatusFn: SortingFn<Person> = (rowA, rowB, _columnId) => {
   const statusA = rowA.original.status
@@ -247,13 +165,6 @@ const defaultColumns: ColumnDef<Person>[] = [
   },
 ];
 
-// const randomizeColumns = () => {
-//   table.setColumnOrder(
-//     faker.helpers.shuffle(table.getAllLeafColumns().map((d) => d.id))
-//   );
-// };
-
-
 
 const Table = () => {
   const [data, setData] = React.useState(() => makeData(100, 5, 3));
@@ -276,10 +187,8 @@ const Table = () => {
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    getSortedRowModel: getSortedRowModel(), //client-side sorting
+    getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
-    // filterFromLeafRows: true,
-    // maxLeafRowFilterDepth: 0,
     debugTable: true,
     debugHeaders: true,
     debugColumns: true,
@@ -311,23 +220,23 @@ const Table = () => {
         </div>
       </div>
       {/* table content */}
-      <table
+      <TableMain
         style={{ width: table.getTotalSize() }}
         className={cn("max-w-[1000px] px-6 py-2 bg-white w-full h-[91px]")}
       >
-        <thead className="bg-gray-50 sticky top-0">
+        <TableHead className="sticky top-0">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 const { column } = header;
                 return (
-                  <th
+                  <TableHeadCell
                     className="px-5"
                     key={header.id}
                     style={{ ...getCommonPinningStyles(column) }}
                     colSpan={header.colSpan}
                   >
-                    <div className={cn("whitespace-nowrap", header.column.getCanSort()
+                    <div className={cn(header.column.getCanSort()
                             ? 'cursor-pointer select-none'
                             : '')}
                             onClick={header.column.getToggleSortingHandler()}
@@ -397,33 +306,33 @@ const Table = () => {
                           }`,
                         }}
                       />
-                  </th>
+                  </TableHeadCell>
                 );
               })}
-            </tr>
+            </TableRow>
           ))}
-        </thead>
-        <tbody className="">
+        </TableHead>
+        <TableBody className="">
           {table.getRowModel().rows.map((row) => {
             return (
-              <tr key={row.id}>
+              <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => {
                   const { column } = cell
                   return (
-                    <td 
+                    <TableDataCell 
                     style={{ ...getCommonPinningStyles(column) }} key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                    </td>
+                    </TableDataCell>
                   );
                 })}
-              </tr>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </TableMain>
       {/* pagination */}
       <div className="flex flex-wrap justify-between items-center gap-2 max-w-[1216px] w-full h-[60px] border-t border-gray-200 px-6 py-1">
         <div className="flex items-center gap-1">

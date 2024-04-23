@@ -22,15 +22,16 @@ import Input from "./components/Input";
 import { cn } from "./utils/utils";
 import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
-import Table from "./components/Table";
 import Dropdown from "./components/Dropdown";
-import Trial from './components/Trial';
+import TableSorting from "./components/Table/TableSorting";
+import TableExpanding from "./components/Table/TableExpanding";
+import TableFixedColumn from "./components/Table/TableFixedColumn";
+import Table from "./components/Table";
 
 interface Option {
   label: string;
   value: string;
 }
-
 
 const Test = () => {
   const { color, colors, setColor } = useAppContext();
@@ -262,10 +263,6 @@ const Test = () => {
             </Button>
           </div>
         </Notice> */}
-      </div>
-      <div>
-        <Trial />
-        <Table />
       </div>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
@@ -715,6 +712,12 @@ const Test = () => {
             multiple={false}
           />
         </section>
+      </div>
+      <div>
+        {/* <Table /> */}
+        <TableFixedColumn />
+        <TableExpanding />
+        <TableSorting />
       </div>
     </div>
   );
