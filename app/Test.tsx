@@ -744,19 +744,20 @@ const Test = () => {
             </Button>
           </Sidebar.Footer>
         </Sidebar>
-        <div className="py-5 px-3 mx-auto">
-          <div className="space-y-2">
-            <h1>Table With Fixed Column</h1>
-            <TableFixedColumn />
-          </div>
-          <div className="space-y-2">
-            <h1>Table With Fixed Column</h1>
-            <TableExpanding />
-          </div>
-          <div className="space-y-2">
-            <h1>Table With Fixed Column</h1>
-            <TableSorting />
-          </div>
+      </div>
+
+      <div className="py-5 px-3 mx-auto">
+        <div className="space-y-2">
+          <h1>Table With Fixed Column</h1>
+          <TableFixedColumn />
+        </div>
+        <div className="space-y-2">
+          <h1>Table With Fixed Column</h1>
+          <TableExpanding />
+        </div>
+        <div className="space-y-2">
+          <h1>Table With Fixed Column</h1>
+          <TableSorting />
         </div>
       </div>
     </div>
