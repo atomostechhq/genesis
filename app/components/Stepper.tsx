@@ -1,5 +1,4 @@
 "use client";
-
 import { VariantProps, cva } from "class-variance-authority";
 import React, {
   HtmlHTMLAttributes,
@@ -65,8 +64,6 @@ const Stepper = ({
 
   const ActiveComponent = stepsConfig[currentStep - 1]?.Component;
 
-  // console.log("currentStep", currentStep);
-
   return (
     <>
       <div
@@ -123,7 +120,7 @@ const Stepper = ({
                 </div>
                 {index !== stepsConfig?.length -1 && <div className={cn("w-[80%] mx-auto h-2 rounded-lg bg-gray-200")}>
                   <p
-                    className={cn("h-full rounded-lg ", (currentStep > index + 1 ? "bg-blue-600" : ""))}
+                    className={cn("h-full rounded-lg ", (currentStep > index + 1 ? "bg-primary-600" : ""))}
                   ></p>
                 </div>}
               </div>

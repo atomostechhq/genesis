@@ -264,6 +264,9 @@ const Test = () => {
           </div>
         </Notice> */}
       </div>
+      {/* <div>
+        <Table />
+      </div> */}
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
@@ -295,6 +298,40 @@ const Test = () => {
         <Chip intent="success">success</Chip>
         <Chip intent="error">error</Chip>
         <Chip intent="default">default</Chip>
+      </div>
+
+      <h1 className="text-display-sm text-primary-400">Dropdown</h1>
+      <div className="flex gap-10">
+        <section>
+          <h1 className="text-display-sm text-primary-400">
+            Multiple Dropdown
+          </h1>
+          <Dropdown
+            options={multiOptions}
+            selected={multiSelect}
+            setSelected={setMultiSelect}
+            search={true}
+            multiple={true}
+            dropDownTooltip={true}
+            tooltipContent="info"
+            dropdownFooter={true}
+            onApply={() => {
+              console.log("Apply button clicked");
+            }}
+          />
+        </section>
+        <section>
+          <h1 className="text-display-sm text-primary-400">Single Dropdown</h1>
+          <Dropdown
+            options={singleOptions}
+            selected={singleSelect}
+            setSelected={setSingleSelect}
+            search={true}
+            multiple={false}
+            dropDownTooltip={true}
+            tooltipContent="info"
+          />
+        </section>
       </div>
 
       {/* Tooltip */}
@@ -685,32 +722,6 @@ const Test = () => {
             size="sm"
             disabled
           ></Textarea>
-        </section>
-      </div>
-
-      <h1 className="text-display-sm text-primary-400">Dropdown</h1>
-      <div className="flex gap-10">
-        <section>
-          <h1 className="text-display-sm text-primary-400">
-            Multiple Dropdown
-          </h1>
-          <Dropdown
-            options={multiOptions}
-            selected={multiSelect}
-            setSelected={setMultiSelect}
-            search={true}
-            multiple={true}
-          />
-        </section>
-        <section>
-          <h1 className="text-display-sm text-primary-400">Single Dropdown</h1>
-          <Dropdown
-            options={singleOptions}
-            selected={singleSelect}
-            setSelected={setSingleSelect}
-            search={true}
-            multiple={false}
-          />
         </section>
       </div>
       <div>
