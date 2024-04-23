@@ -12,7 +12,6 @@ import { Tooltip } from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
 import { Notice } from "./components/Notice";
-import Sidebar from "./components/sidebar";
 import Skeleton from "./components/Skeleton";
 import Checkbox from "./components/Checkbox";
 import HelperText from "./components/HelperText";
@@ -24,6 +23,7 @@ import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Table from "./components/Table";
 import Dropdown from "./components/Dropdown";
+import Sidebar from "./components/Sidebar";
 
 interface Option {
   label: string;
@@ -119,6 +119,10 @@ const Test = () => {
 
   // skeleton
   const [loadingState, setLoadingState] = useState(false);
+
+  // sidebar
+  const [collapsed, setCollapsed] = useState(false);
+  console.log("collapsed", collapsed);
 
   useEffect(() => {
     setTimeout(() => {
@@ -720,6 +724,24 @@ const Test = () => {
             disabled
           ></Textarea>
         </section>
+      </div>
+
+      <div className="">
+        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
+          <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
+            <span>Logo</span>
+          </Sidebar.Header>
+          <Sidebar.Menu collapsed={collapsed} setCollapsed={setCollapsed} />
+          <Sidebar.Footer collapsed={collapsed} setCollapsed={setCollapsed}>
+            <Button
+              className="w-full"
+              variant="outlined"
+              intent="default-outlined"
+            >
+              Log out
+            </Button>
+          </Sidebar.Footer>
+        </Sidebar>
       </div>
     </div>
   );
