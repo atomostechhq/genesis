@@ -10,7 +10,7 @@ interface SidebarProps {
   children: React.ReactNode;
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
-  navItems: {
+  navItems?: {
     label: string;
     items: {
       label: string;
@@ -29,7 +29,7 @@ interface SidebarHeaderProps {
 interface SidebarMenuProps {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
-  navItems: {
+  navItems?: {
     label: string;
     items: {
       label: string;
@@ -43,7 +43,7 @@ interface FooterProps {
   children: React.ReactNode;
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
-  navItems: {
+  navItems?: {
     label: string;
     items: {
       label: string;
@@ -57,7 +57,7 @@ interface FooterProps {
 const Sidebar: React.FC<SidebarProps> & {
   Header: React.FC<SidebarHeaderProps>;
   Menu: React.FC<SidebarMenuProps>;
-  Footer: React.FC<SidebarProps>;
+  Footer: React.FC<FooterProps>;
 } = ({ children, collapsed, setCollapsed }) => {
   return (
     <div

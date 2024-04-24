@@ -12,7 +12,7 @@ const BreadCrumb = () => {
     let url = "";
     const links = segments.map((segment, i) => {
       url += `/${segment}`;
-      const isActive = i === segments.length - 1; // Check if this segment is the last one
+      const isActive = i === segments.length - 1;
       return (
         <Link
           className={`"text-gray-700 text-text-xs font-semibold px-3 py-[6px] rounded-lg", ${isActive ? "bg-gray-200 rounded-lg" : ""}`}

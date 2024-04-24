@@ -162,18 +162,17 @@ const Test = () => {
 
   const footerItems = [
     {
-      label: "Footer Menu",
+      label: "Footer Item 1",
       items: [
-        {
-          label: "API Integration Request",
-          href: "/api",
-          icon: <AlertFillIcon size={18} />,
-        },
-        {
-          label: "Support",
-          href: "/support",
-          icon: <AlertFillIcon size={18} />,
-        },
+        { label: "Subitem 1", href: "/subitem1", icon: <AlertFillIcon /> },
+        { label: "Subitem 2", href: "/subitem2", icon: <AlertFillIcon /> },
+      ],
+    },
+    {
+      label: "Footer Item 2",
+      items: [
+        { label: "Subitem 3", href: "/subitem3", icon: <AlertFillIcon /> },
+        { label: "Subitem 4", href: "/subitem4", icon: <AlertFillIcon /> },
       ],
     },
   ];
@@ -385,7 +384,7 @@ const Test = () => {
             options={singleOptions}
             selected={singleSelect}
             setSelected={setSingleSelect}
-            search={true}
+            // search={true}
             multiple={false}
             dropDownTooltip={true}
             tooltipContent="info"
@@ -529,7 +528,7 @@ const Test = () => {
         />
         <section className="w-[320px]">
           <ProgressBar
-            progressColor="bg-success-300"
+            progressColor="bg-success-600"
             progress={50}
             progressText={`${50}%`}
           />
@@ -552,7 +551,7 @@ const Test = () => {
         <section className="flex items-center gap-4">
           <h1>With Labels:</h1>
           <div className="flex items-center gap-2">
-            <Label htmlFor="primary">Primary</Label>
+            <Label htmlFor="primary">On</Label>
             <Toggle size="md" id="primary" intent={"primary"} />
           </div>
           <div className="flex items-center gap-2">
@@ -808,14 +807,6 @@ const Test = () => {
               <LogoutBoxRLineIcon size={20} />
               {collapsed ? "" : "Logout"}
             </p>
-            {/* <Button
-              className="w-full"
-              variant="outlined"
-              startIcon={<LogoutBoxRLineIcon size={18}/>}
-              intent="default-outlined"
-            >
-              Log out
-            </Button> */}
           </Sidebar.Footer>
         </Sidebar>
       </div>
@@ -838,8 +829,13 @@ const Test = () => {
         <EmptyState>
           <EmptyImageSVG />
           <Text>Something went wrong</Text>
-          <Desc>We are aware of the issue and are working to fix it. Please try again later.</Desc>
-          <Button intent="default-outlined" variant="outlined">Reload Page</Button>
+          <Desc>
+            We are aware of the issue and are working to fix it. Please try
+            again later.
+          </Desc>
+          <Button intent="default-outlined" variant="outlined">
+            Reload Page
+          </Button>
         </EmptyState>
       </div>
     </div>
