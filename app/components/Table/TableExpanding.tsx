@@ -106,8 +106,8 @@ const TableExpanding = () => {
     debugTable: true,
   });
   return (
-    <div className="border shadow-md rounded-xl">
-      <div className="max-w-7xl relative px-6 py-2 w-full h-[91px] border-b border-gray-200 flex items-center justify-between gap-2">
+    <div className="border shadow-md rounded-xl max-w-7xl w-full">
+      <div className=" relative px-6 py-2 h-[91px] max-w-7xl w-full border-b border-gray-200 flex flex-wrap items-center justify-between gap-2">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-lg font-medium">Heading</h1>
@@ -117,7 +117,6 @@ const TableExpanding = () => {
             Keep track of vendor and their security ratings.
           </p>
         </div>
-
         <div className="flex items-center gap-2">
           <Button variant={"outlined"} intent={"primary-outlined"}>
             Button CTA
@@ -167,14 +166,14 @@ const TableExpanding = () => {
           })}
         </TableBody>
       </Table>
-      <div className="flex flex-wrap justify-between items-center gap-2 max-w-[1216px] w-full h-[60px] border-t border-gray-200 px-6 py-1">
+      <div className="flex flex-wrap justify-between items-center gap-2 w-full h-[60px] border-t border-gray-200 px-6 py-1">
         <div className="flex items-center gap-1">
           <span className="font-medium text-sm text-gray-800">
             Items per page
           </span>
           <select
             value={table.getState().pagination.pageSize}
-            className="border border-gray-700 rounded text-xs w-[88px] h-[27px] px-1"
+            className="border border-gray-700 rounded text-xs outline-none w-[88px] h-[27px] px-1"
             onChange={(e) => {
               table.setPageSize(Number(e.target.value));
             }}
@@ -206,13 +205,15 @@ const TableExpanding = () => {
             <span>of {table.getPageCount()}</span>
           </span>
           <div className="flex items-center">
-            <button
-              className="border-r-0 border px-3.5 w-12 h-8 border-gray-400 shadow-xs rounded-ss-lg rounded-es-lg flex justify-center items-center py-1.5"
+            <Button
+            intent="default-outlined"
+            variant="outlined"
+              className="border-r-0 border px-3.5 w-12 h-8 border-gray-400 shadow-xs rounded-ss-lg rounded-se-none rounded-ee-none rounded-es-lg flex justify-center items-center py-1.5"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
               <ArrowLeftLineIcon className="w-5 h-5 text-gray-700" />
-            </button>
+            </Button>
             <button
               className="border px-3.5 w-12 h-8 border-gray-400 shadow-xs rounded-se-lg rounded-ee-lg flex justify-center items-center py-1.5"
               onClick={() => table.nextPage()}
