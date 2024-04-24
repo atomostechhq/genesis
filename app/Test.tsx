@@ -12,7 +12,6 @@ import { Tooltip } from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
 import { Notice } from "./components/Notice";
-import Sidebar from "./components/sidebar";
 import Skeleton from "./components/Skeleton";
 import Checkbox from "./components/Checkbox";
 import HelperText from "./components/HelperText";
@@ -23,6 +22,7 @@ import { cn } from "./utils/utils";
 import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Dropdown from "./components/Dropdown";
+import Sidebar from "./components/Sidebar";
 import TableSorting from "./components/Table/TableSorting";
 import TableExpanding from "./components/Table/TableExpanding";
 import TableFixedColumn from "./components/Table/TableFixedColumn";
@@ -123,6 +123,9 @@ const Test = () => {
   // skeleton
   const [loadingState, setLoadingState] = useState(false);
 
+  // sidebar
+  const [collapsed, setCollapsed] = useState(false);
+
   useEffect(() => {
     setTimeout(() => {
       setLoadingState(true);
@@ -141,10 +144,10 @@ const Test = () => {
             <div>
               <p>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry&apos;s standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
+                industry. Lorem Ipsum has been the industry&apos;s standard
+                dummy text ever since the 1500s, when an unknown printer took a
+                galley of type and scrambled it to make a type specimen book. It
+                has survived not only five centuries, but also the leap into
                 electronic typesetting, remaining essentially unchanged. It was
                 popularised in the 1960s with the release of Letra
               </p>
@@ -724,6 +727,25 @@ const Test = () => {
           ></Textarea>
         </section>
       </div>
+
+      <div className="">
+        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
+          <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
+            <span>Logo</span>
+          </Sidebar.Header>
+          <Sidebar.Menu collapsed={collapsed} setCollapsed={setCollapsed} />
+          <Sidebar.Footer collapsed={collapsed} setCollapsed={setCollapsed}>
+            <Button
+              className="w-full"
+              variant="outlined"
+              intent="default-outlined"
+            >
+              Log out
+            </Button>
+          </Sidebar.Footer>
+        </Sidebar>
+      </div>
+
       <div className="py-5 px-3 mx-auto">
         <div className="space-y-2">
           <h1>Table With Fixed Column</h1>

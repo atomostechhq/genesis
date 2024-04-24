@@ -58,7 +58,7 @@ const Button = ({
       disabled={disabled}
       className={cn(
         buttonVariants({ intent, className, variant, size }),
-        "flex items-center gap-2"
+        "flex items-center text-center justify-center gap-2"
       )}
     >
       {startIcon}
