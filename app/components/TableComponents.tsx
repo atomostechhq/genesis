@@ -33,7 +33,7 @@ import React, {
     return (
       <table
         {...props}
-        className={cn("max-w-7xl bg-whitw w-full relative overflow-x-scroll border border-collapse", className)}
+        className={cn("max-w-7xl bg-white w-full relative overflow-x-scroll border border-collapse", className)}
       >
         {children}
       </table>
