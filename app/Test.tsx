@@ -27,6 +27,9 @@ import TableSorting from "./components/Table/TableSorting";
 import TableExpanding from "./components/Table/TableExpanding";
 import TableFixedColumn from "./components/Table/TableFixedColumn";
 import Table from "./components/Table";
+import LogoutBoxRLineIcon from "remixicon-react/LogoutBoxRLineIcon";
+import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
+import BreadCrumb from "./components/Breadcrumbs";
 
 interface Option {
   label: string;
@@ -95,10 +98,8 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
-  console.log("multiSelect", multiSelect);
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
-  console.log("singleSelect", singleSelect);
 
   const singleOptions = [
     { label: "Option 1", value: "1" },
@@ -125,6 +126,56 @@ const Test = () => {
 
   // sidebar
   const [collapsed, setCollapsed] = useState(false);
+  const navItems = [
+    {
+      label: "Home",
+      items: [
+        {
+          label: "Dashboard",
+          href: "/",
+          icon: <CircleFillIcon size={18} />,
+        },
+        {
+          label: "Team",
+          href: "/pages/team",
+          icon: <AlertFillIcon size={18} />,
+        },
+      ],
+    },
+    {
+      label: "Settings",
+      items: [
+        {
+          label: "Setting 1",
+          href: "/setting1",
+          icon: <AlertFillIcon size={18} />,
+        },
+        {
+          label: "Setting 2",
+          href: "/setting2",
+          icon: <CircleFillIcon size={18} />,
+        },
+      ],
+    },
+  ];
+
+  const footerItems = [
+    {
+      label: "Footer Menu",
+      items: [
+        {
+          label: "API Integration Request",
+          href: "/api",
+          icon: <AlertFillIcon size={18} />,
+        },
+        {
+          label: "Support",
+          href: "/support",
+          icon: <AlertFillIcon size={18} />,
+        },
+      ],
+    },
+  ];
 
   useEffect(() => {
     setTimeout(() => {
@@ -176,7 +227,7 @@ const Test = () => {
   };
 
   return (
-    <div className={["m-5", color && `theme-${color}`].join(" ")}>
+    <div className="m-5">
       {/* select a color  */}
       <div>
         <label className="block mt-5">Select a color:</label>
@@ -283,6 +334,10 @@ const Test = () => {
           <h1 className="text-display-sm">Display sm</h1>
           <h1 className="text-display-xs">Display xs</h1>
           <h1 className="text-text-xl">Text Xl</h1>
+          <h1 className="text-text-lg">Text Lg</h1>
+          <h1 className="text-text-md">Text Md</h1>
+          <h1 className="text-text-sm">Text Sm</h1>
+          <h1 className="text-text-xs">Text Xs</h1>
         </section>
         <section>
           <h1 className="text-primary-400 border-b border-primary-900 w-fit">
@@ -728,20 +783,38 @@ const Test = () => {
         </section>
       </div>
 
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
+        <BreadCrumb />
+      </div>
+
       <div className="">
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
           <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
             <span>Logo</span>
           </Sidebar.Header>
-          <Sidebar.Menu collapsed={collapsed} setCollapsed={setCollapsed} />
-          <Sidebar.Footer collapsed={collapsed} setCollapsed={setCollapsed}>
-            <Button
+          <Sidebar.Menu
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+            navItems={navItems}
+          />
+          <Sidebar.Footer
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+            navItems={footerItems}
+          >
+            <p className="flex justify-center items-center gap-2">
+              <LogoutBoxRLineIcon size={20} />
+              {collapsed ? "" : "Logout"}
+            </p>
+            {/* <Button
               className="w-full"
               variant="outlined"
+              startIcon={<LogoutBoxRLineIcon size={18}/>}
               intent="default-outlined"
             >
               Log out
-            </Button>
+            </Button> */}
           </Sidebar.Footer>
         </Sidebar>
       </div>

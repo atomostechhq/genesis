@@ -10,6 +10,14 @@ interface SidebarProps {
   children: React.ReactNode;
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
+  navItems: {
+    label: string;
+    items: {
+      label: string;
+      href: string;
+      icon: React.ReactElement;
+    }[];
+  }[];
 }
 
 interface SidebarHeaderProps {
@@ -21,41 +29,29 @@ interface SidebarHeaderProps {
 interface SidebarMenuProps {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
+  navItems: {
+    label: string;
+    items: {
+      label: string;
+      href: string;
+      icon: React.ReactElement;
+    }[];
+  }[];
 }
 
-// Define the navItems array
-const navItems = [
-  {
-    label: "Home",
-    items: [
-      {
-        label: "Dashboard",
-        href: "/",
-        icon: <AlertFillIcon size={18} />,
-      },
-      {
-        label: "Team",
-        href: "/team",
-        icon: <AlertFillIcon size={18} />,
-      },
-    ],
-  },
-  {
-    label: "Settings",
-    items: [
-      {
-        label: "Setting 1",
-        href: "/setting1",
-        icon: <AlertFillIcon size={18} />,
-      },
-      {
-        label: "Setting 2",
-        href: "/setting2",
-        icon: <AlertFillIcon size={18} />,
-      },
-    ],
-  },
-];
+interface FooterProps {
+  children: React.ReactNode;
+  collapsed: boolean;
+  setCollapsed: (collapsed: boolean) => void;
+  navItems: {
+    label: string;
+    items: {
+      label: string;
+      href: string;
+      icon: React.ReactElement;
+    }[];
+  }[];
+}
 
 // Sidebar component
 const Sidebar: React.FC<SidebarProps> & {
@@ -105,36 +101,40 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
 };
 
 // SidebarMenu component
-const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed }) => {
+const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
   const currentPath = usePathname();
-  console.log("currentPath", currentPath);
 
   return (
     <nav className="flex-grow">
       <ul className="my-2 flex flex-col gap-2 items-stretch">
-        {navItems.map((parentItem, parentIndex) => (
+        {navItems?.map((parentItem, parentIndex) => (
           <li key={parentIndex} className="flex flex-col gap-3 mb-6">
-            <p className="text-text-sm text-gray-500 w-[320x] text-ellipsis whitespace-nowrap overflow-hidden">
+            <p
+              className={cn({
+                "text-text-sm text-gray-500": true,
+                "w-[37px] text-ellipsis whitespace-nowrap overflow-hidden":
+                  collapsed,
+              })}
+            >
               {parentItem.label}
             </p>
+
             {
               <ul className="">
-                {parentItem.items.map((item, index) => (
+                {parentItem?.items.map((item, index) => (
                   <li
                     key={index}
                     className={cn({
-                      "hover:bg-gray-100 flex px-3 py-2 mb-[6px] items-center cursor-pointer rounded-md transition-colors duration-300":
+                      "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300":
                         true,
+                      "text-white font-semibold bg-primary-600":
+                        currentPath === `${item?.href}`,
+                      "text-slate-600": currentPath !== `${item?.href}`,
+                      "hover:bg-primary-600": currentPath === `${item?.href}`,
                     })}
                   >
                     <Link
-                      className={`flex items-center gap-2,
-                           ${
-                             currentPath === `${item?.href}`
-                               ? "text-white font-semibold bg-primary-600"
-                               : "text-slate-600"
-                           }
-                          `}
+                      className={`flex items-center gap-2`}
                       href={item.href}
                       passHref
                     >
@@ -153,9 +153,64 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed }) => {
 };
 
 // Footer component
-const Footer: React.FC<SidebarProps> = ({ children, setCollapsed }) => {
+const Footer: React.FC<FooterProps> = ({
+  children,
+  setCollapsed,
+  collapsed,
+  navItems,
+}) => {
+  const currentPath = usePathname();
   return (
-    <div className="absolute bottom-0 py-3" onClick={() => setCollapsed(true)}>
+    <div
+      className={cn({
+        "absolute bottom-0 py-3 w-[85%]": true,
+        "w-[55%]": collapsed,
+      })}
+      onClick={() => setCollapsed(true)}
+    >
+      <nav className="flex-grow w-full">
+        <ul className="my-2 flex flex-col gap-2 items-stretch">
+          {navItems?.map((parentItem, parentIndex) => (
+            <li key={parentIndex} className="flex flex-col gap-3 mb-1">
+              <p
+                className={cn({
+                  "text-text-sm text-gray-500": true,
+                  "w-[37px] text-ellipsis whitespace-nowrap overflow-hidden":
+                    collapsed,
+                })}
+              >
+                {parentItem.label}
+              </p>
+              {
+                <ul className="">
+                  {parentItem?.items.map((item, index) => (
+                    <li
+                      key={index}
+                      className={cn({
+                        "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300":
+                          true,
+                        "text-white font-semibold bg-primary-600":
+                          currentPath === `${item?.href}`,
+                        "text-slate-600": currentPath !== `${item?.href}`,
+                        "hover:bg-primary-600": currentPath === `${item?.href}`,
+                      })}
+                    >
+                      <Link
+                        className={`flex items-center gap-2`}
+                        href={item.href}
+                        passHref
+                      >
+                        <span className="text-text-sm"> {item.icon}</span>
+                        {!collapsed && <span className="">{item.label}</span>}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              }
+            </li>
+          ))}
+        </ul>
+      </nav>
       {children}
     </div>
   );

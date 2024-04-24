@@ -20,7 +20,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <AppContext.Provider value={{ color, colors, setColor }}>
-      {children}
+     <div className={["", color && `theme-${color}`].join(" ")}> {children}</div>
     </AppContext.Provider>
   );
 }
