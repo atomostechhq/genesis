@@ -30,6 +30,7 @@ import Table from "./components/Table";
 import LogoutBoxRLineIcon from "remixicon-react/LogoutBoxRLineIcon";
 import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
 import BreadCrumb from "./components/Breadcrumbs";
+import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 
 interface Option {
   label: string;
@@ -825,13 +826,21 @@ const Test = () => {
           <TableFixedColumn />
         </div>
         <div className="space-y-2">
-          <h1>Table With Fixed Column</h1>
+          <h1>Table With Row Expanding, Header and Pagination</h1>
           <TableExpanding />
         </div>
         <div className="space-y-2">
-          <h1>Table With Fixed Column</h1>
+          <h1>Table With Sorting and Checkbox</h1>
           <TableSorting />
         </div>
+      </div>
+      <div>
+        <EmptyState>
+          <EmptyImageSVG />
+          <Text>Something went wrong</Text>
+          <Desc>We are aware of the issue and are working to fix it. Please try again later.</Desc>
+          <Button intent="default-outlined" variant="outlined">Reload Page</Button>
+        </EmptyState>
       </div>
     </div>
   );
