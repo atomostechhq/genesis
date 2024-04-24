@@ -52,11 +52,7 @@ const Dashboard = () => {
           setCollapsed={setCollapsed}
           navItems={navItems}
         />
-        <Sidebar.Footer
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
-          navItems={navItems}
-        >
+        <Sidebar.Footer collapsed={collapsed} setCollapsed={setCollapsed}>
           <p className="flex justify-center items-center gap-2">
             {collapsed ? "" : "Logout"}
           </p>

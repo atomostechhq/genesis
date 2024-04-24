@@ -15,7 +15,7 @@ interface SidebarProps {
     items: {
       label: string;
       href: string;
-      icon: React.ReactElement;
+      icon?: React.ReactElement;
     }[];
   }[];
 }
@@ -34,7 +34,7 @@ interface SidebarMenuProps {
     items: {
       label: string;
       href: string;
-      icon: React.ReactElement;
+      icon?: React.ReactElement;
     }[];
   }[];
 }
@@ -48,7 +48,7 @@ interface FooterProps {
     items: {
       label: string;
       href: string;
-      icon: React.ReactElement;
+      icon?: React.ReactElement;
     }[];
   }[];
 }
