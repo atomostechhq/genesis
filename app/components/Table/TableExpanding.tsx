@@ -22,6 +22,11 @@ import {
 } from "../TableComponents";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import ArrowUpSLineIcon from "remixicon-react/ArrowUpSLineIcon";
+import Chip from "../Chip";
+import Button from "../Button";
+import ArrowLeftLineIcon from "remixicon-react/ArrowLeftLineIcon";
+import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
+import Input from "../Input";
 
 const TableExpanding = () => {
   const columns = React.useMemo<ColumnDef<Person>[]>(
@@ -101,7 +106,27 @@ const TableExpanding = () => {
     debugTable: true,
   });
   return (
-    <div>
+    <div className="border shadow-md rounded-xl">
+      <div className="max-w-7xl relative px-6 py-2 w-full h-[91px] border-b border-gray-200 flex items-center justify-between gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-medium">Heading</h1>
+            <Chip intent={"primary"}>Label</Chip>
+          </div>
+          <p className="text-sm text-gray-600">
+            Keep track of vendor and their security ratings.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Button variant={"outlined"} intent={"primary-outlined"}>
+            Button CTA
+          </Button>
+          <Button variant={"filled"} intent="primary">
+            Button CTA
+          </Button>
+        </div>
+      </div>
       <Table>
         <TableHead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -142,6 +167,62 @@ const TableExpanding = () => {
           })}
         </TableBody>
       </Table>
+      <div className="flex flex-wrap justify-between items-center gap-2 max-w-[1216px] w-full h-[60px] border-t border-gray-200 px-6 py-1">
+        <div className="flex items-center gap-1">
+          <span className="font-medium text-sm text-gray-800">
+            Items per page
+          </span>
+          <select
+            value={table.getState().pagination.pageSize}
+            className="border border-gray-700 rounded text-xs w-[88px] h-[27px] px-1"
+            onChange={(e) => {
+              table.setPageSize(Number(e.target.value));
+            }}
+          >
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option
+                key={pageSize}
+                value={pageSize}
+                className="bg-gray-50 shadow-md"
+              >
+                {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="flex items-center gap-1 text-sm font-medium">
+            page
+            <Input
+              type="number"
+              defaultValue={table.getState().pagination.pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                table.setPageIndex(page);
+              }}
+              value={table.getState().pagination.pageIndex + 1}
+              className="w-[52px] bg-gray-25 px-2 h-7"
+            />
+            <span>of {table.getPageCount()}</span>
+          </span>
+          <div className="flex items-center">
+            <button
+              className="border-r-0 border px-3.5 w-12 h-8 border-gray-400 shadow-xs rounded-ss-lg rounded-es-lg flex justify-center items-center py-1.5"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <ArrowLeftLineIcon className="w-5 h-5 text-gray-700" />
+            </button>
+            <button
+              className="border px-3.5 w-12 h-8 border-gray-400 shadow-xs rounded-se-lg rounded-ee-lg flex justify-center items-center py-1.5"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <ArrowRightLineIcon className="w-5 h-5 text-gray-700" />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
