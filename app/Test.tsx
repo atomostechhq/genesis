@@ -99,6 +99,7 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
+  console.log("multiSelect", multiSelect)
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
 
@@ -127,6 +128,7 @@ const Test = () => {
 
   // sidebar
   const [collapsed, setCollapsed] = useState(false);
+  console.log("collapsed", collapsed)
   const navItems = [
     {
       label: "Home",
@@ -373,6 +375,7 @@ const Test = () => {
             dropDownTooltip={true}
             tooltipContent="info"
             dropdownFooter={true}
+            info="info"
             onApply={() => {
               console.log("Apply button clicked");
             }}
@@ -386,6 +389,7 @@ const Test = () => {
             setSelected={setSingleSelect}
             // search={true}
             multiple={false}
+            info="info"
             dropDownTooltip={true}
             tooltipContent="info"
           />
@@ -805,7 +809,7 @@ const Test = () => {
           >
             <p className="flex justify-center items-center gap-2">
               <LogoutBoxRLineIcon size={20} />
-              {collapsed ? "" : "Logout"}
+              {!collapsed ? "" : "Logout"}
             </p>
           </Sidebar.Footer>
         </Sidebar>

@@ -287,3 +287,7 @@ input[type=number] {
   background-color: #28a745;
   transition: 0.2s ease;
 } */
+
+.sidebarWidth {
+  width: 320px;
+}

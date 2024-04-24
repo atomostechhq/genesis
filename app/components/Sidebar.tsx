@@ -61,9 +61,13 @@ const Sidebar: React.FC<SidebarProps> & {
 } = ({ children, collapsed, setCollapsed }) => {
   return (
     <div
+      onMouseEnter={() => setCollapsed(true)}
+      onMouseLeave={() => setCollapsed(false)}
       className={cn(
-        "border border-gray-200 shadow-md relative flex flex-col min-h-screen transition-all duration-300 ease-in-out",
-        collapsed ? "w-[80px] py-[21px] px-[17px] " : "w-[308px] py-[22px] px-6"
+        "border border-gray-200 shadow-md relative flex flex-col min-h-screen transition-all duration-300 ease-in-out ",
+        !collapsed
+          ? "w-[80px] py-[21px] px-[17px]"
+          : "w-[308px] py-[22px] px-6"
       )}
     >
       <div className="">{children}</div>
@@ -84,7 +88,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
       })}
     >
       <div className="flex justify-between items-center">
-        {!collapsed && <span className="whitespace-nowrap">{children}</span>}
+        {collapsed && <span className="whitespace-nowrap">{children}</span>}
         <button
           className={cn({
             "grid place-content-center": true,
@@ -111,9 +115,9 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
           <li key={parentIndex} className="flex flex-col gap-3 mb-6">
             <p
               className={cn({
-                "text-text-sm text-gray-500": true,
+                "text-[14px] text-gray-500": true,
                 "w-[37px] text-ellipsis whitespace-nowrap overflow-hidden":
-                  collapsed,
+                  !collapsed,
               })}
             >
               {parentItem.label}
@@ -125,11 +129,11 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
                   <li
                     key={index}
                     className={cn({
-                      "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300":
+                      "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold":
                         true,
-                      "text-white font-semibold bg-primary-600":
+                      "text-white bg-primary-600":
                         currentPath === `${item?.href}`,
-                      "text-slate-600": currentPath !== `${item?.href}`,
+                      "text-gray-700": currentPath !== `${item?.href}`,
                       "hover:bg-primary-600": currentPath === `${item?.href}`,
                     })}
                   >
@@ -139,7 +143,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
                       passHref
                     >
                       <span className="text-text-sm"> {item.icon}</span>
-                      {!collapsed && <span className="">{item.label}</span>}
+                      {collapsed && <span className="">{item.label}</span>}
                     </Link>
                   </li>
                 ))}
@@ -164,7 +168,7 @@ const Footer: React.FC<FooterProps> = ({
     <div
       className={cn({
         "absolute bottom-0 py-3 w-[85%]": true,
-        "w-[55%]": collapsed,
+        "w-[55%]": !collapsed,
       })}
       onClick={() => setCollapsed(true)}
     >
@@ -174,9 +178,9 @@ const Footer: React.FC<FooterProps> = ({
             <li key={parentIndex} className="flex flex-col gap-3 mb-1">
               <p
                 className={cn({
-                  "text-text-sm text-gray-500": true,
+                  "text-[14px] text-gray-500": true,
                   "w-[37px] text-ellipsis whitespace-nowrap overflow-hidden":
-                    collapsed,
+                    !collapsed,
                 })}
               >
                 {parentItem.label}
@@ -187,11 +191,11 @@ const Footer: React.FC<FooterProps> = ({
                     <li
                       key={index}
                       className={cn({
-                        "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300":
+                        "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold":
                           true,
-                        "text-white font-semibold bg-primary-600":
+                        "text-white bg-primary-600":
                           currentPath === `${item?.href}`,
-                        "text-slate-600": currentPath !== `${item?.href}`,
+                        "text-gray-700": currentPath !== `${item?.href}`,
                         "hover:bg-primary-600": currentPath === `${item?.href}`,
                       })}
                     >
@@ -201,7 +205,7 @@ const Footer: React.FC<FooterProps> = ({
                         passHref
                       >
                         <span className="text-text-sm"> {item.icon}</span>
-                        {!collapsed && <span className="">{item.label}</span>}
+                        {collapsed && <span className="">{item.label}</span>}
                       </Link>
                     </li>
                   ))}

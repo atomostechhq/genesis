@@ -10,7 +10,7 @@ const BreadCrumb = () => {
     const segments = pathname.split("/").filter((segment) => segment !== "");
 
     let url = "";
-    const links = segments.map((segment, i) => {
+    const links = segments?.map((segment, i) => {
       url += `/${segment}`;
       const isActive = i === segments.length - 1;
       return (
