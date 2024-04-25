@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Input from './Input';
 import Button from './Button';
 import ArrowLeftLineIcon from 'remixicon-react/ArrowLeftLineIcon';
+import Dropdown from './Dropdown';
 
-const Pagination = () => {
+
+interface PaginationProps {
+  currentPage: number;
+  onPageChange: (value:number) => void;
+  totalPages: number;
+}
+const Pagination = ({ currentPage, totalPages, onPageChange }:PaginationProps) => {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+
   return (
     <div className="flex flex-wrap justify-between items-center gap-2 max-w-[1216px] w-full h-[60px] border-t border-gray-200 px-6 py-1">
     {/* <div className="flex items-center gap-1">
@@ -27,8 +41,8 @@ const Pagination = () => {
           </option>
         ))}
       </select>
-    </div>
-    <div className="flex items-center gap-2">
+    </div> */}
+    {/* <div className="flex items-center gap-2">
       <span className="flex items-center gap-1 text-sm font-medium">
         page
         <Input

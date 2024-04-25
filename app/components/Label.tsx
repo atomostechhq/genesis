@@ -8,6 +8,7 @@ interface LabelProps
   htmlFor?: string;
   children: ReactNode;
   required?: boolean;
+  disabled?:boolean;
 }
 
 const labelVariants = cva("flex item-start", {
@@ -28,13 +29,14 @@ const Label = ({
   htmlFor,
   size,
   required,
+  disabled,
   className,
   ...props
 }: LabelProps) => {
   return (
     <label
       htmlFor={htmlFor}
-      className={cn(labelVariants({ className, size }))}
+      className={cn(labelVariants({ className, size }),disabled === true ? "opacity-30":"opacity-100")}
       {...props}
     >
       {children}

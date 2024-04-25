@@ -511,15 +511,15 @@ const Test = () => {
         <section className="flex items-center gap-4">
           <Button
             variant="filled"
-            startIcon={<AlertFillIcon size={16} />}
-            endIcon={<ListCheckIcon size={16} />}
+            startIcon={<AlertFillIcon size={20} />}
+            endIcon={<ListCheckIcon size={20} />}
           >
             Filled
           </Button>
           <Button
             variant="outlined"
-            startIcon={<AlertFillIcon size={16} />}
-            endIcon={<ListCheckIcon size={16} />}
+            startIcon={<AlertFillIcon size={20} />}
+            endIcon={<ListCheckIcon size={20} />}
           >
             Outlined
           </Button>
@@ -636,7 +636,7 @@ const Test = () => {
             <h1>States:</h1>
             <div className="flex items-center gap-2">
               <Checkbox id="disable" size="lg" disabled />
-              <Label htmlFor="disable">Disabled</Label>
+              <Label disabled htmlFor="disable">Disabled</Label>
             </div>
             <div className="flex items-center gap-2">
               <Checkbox id="check" size="lg" checked />
@@ -679,7 +679,7 @@ const Test = () => {
             <h1>States:</h1>
             <div className="flex items-center gap-2">
               <Radio id="disable" size="lg" disabled />
-              <Label htmlFor="disable">Disabled</Label>
+              <Label disabled htmlFor="disable">Disabled</Label>
             </div>
             <div className="flex items-center gap-2">
               <Radio id="check" size="lg" checked />
@@ -777,6 +777,7 @@ const Test = () => {
       <div className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
+        onDelete={()=>alert("deleted")}
           selectedFile={selectedFile}
           setSelectedFile={setSelectedFile}
           onChange={handleFileChange}
