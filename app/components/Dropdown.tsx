@@ -159,7 +159,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       >
         <section>
           {multiple
-            ? `${ `${selected?.length} Options Selected` || dropdownText}`
+            ? `${ `${selected?.length} Selected` || dropdownText}`
             : selected?.[0]?.label
             ? selected?.[0]?.label
             : dropdownText}

@@ -99,7 +99,7 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
-  console.log("multiSelect", multiSelect)
+  console.log("multiSelect", multiSelect);
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
 
@@ -128,7 +128,7 @@ const Test = () => {
 
   // sidebar
   const [collapsed, setCollapsed] = useState(false);
-  console.log("collapsed", collapsed)
+  console.log("collapsed", collapsed);
   const navItems = [
     {
       label: "Home",
@@ -254,10 +254,8 @@ const Test = () => {
         </div>
       </div>
       <div
-        className={[
-          "flex gap-4 items-center mt-5",
-          color && `theme-${color}`,
-        ].join(" ")}
+        className={
+          "flex gap-4 items-center mt-5"}
       >
         <span className="bg-primary-25">{color} Primary 25</span>
         <span className="bg-primary-50">{color} Primary 50</span>
@@ -279,21 +277,27 @@ const Test = () => {
         <Notice
           open={open}
           setOpen={setOpen}
-          variant="success"
+          variant="default"
           noticeTitle="Notice Header"
           position="bottom"
         >
           This is a success Alert with an encouraging title and both icons.
+          <section className="flex gap-2 items-center mt-3">
+            <Button variant="outlined" intent="error-outlined">Cancel</Button>
+            <Button>Apply</Button>
+          </section>
         </Notice>
-        {/* <Notice
+       {/* <Notice
           open={open}
           setOpen={setOpen}
           variant="success"
           noticeTitle="false"
           showIcon={false}
+          position="bottom"
         >
           This is a success Alert with an encouraging title without icon.
-        </Notice>
+        </Notice> */}
+         {/* 
         <Notice
           open={open}
           setOpen={setOpen}
@@ -359,7 +363,6 @@ const Test = () => {
         <Chip intent="error">error</Chip>
         <Chip intent="default">default</Chip>
       </div>
-
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <div className="flex gap-10">
         <section>
@@ -643,14 +646,14 @@ const Test = () => {
           <section className="flex items-center gap-4">
             <h1>Checkbox with Text and Subtext: </h1>
             <div className="flex items-start gap-2">
-              <Checkbox id="smallText" size="sm" />
+              <Checkbox id="smallText" size="sm" className="mt-1" />
               <div className="flex flex-col">
                 <Label htmlFor="smallText">Text with small checkbox</Label>
                 <HelperText size="sm">This is a helper text</HelperText>
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <Checkbox id="largeText" size="lg" />
+              <Checkbox id="largeText" size="lg" className="mt-1" />
               <div className="flex flex-col">
                 <Label htmlFor="largeText">Text with large checkbox</Label>
                 <HelperText size="lg">This is a helper text</HelperText>
@@ -686,14 +689,24 @@ const Test = () => {
           <section className="flex items-center gap-4">
             <h1>Radio with Text and Subtext: </h1>
             <div className="flex items-start gap-2">
-              <Radio name="radioWithText" id="smallRadio" size="sm" />
+              <Radio
+                name="radioWithText"
+                id="smallRadio"
+                size="sm"
+                className="mt-1"
+              />
               <div className="flex flex-col">
                 <Label htmlFor="smallRadio">Text with small radio button</Label>
                 <HelperText size="sm">This is a helper text</HelperText>
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <Radio name="radioWithText" id="largeRadio" size="lg" />
+              <Radio
+                name="radioWithText"
+                id="largeRadio"
+                size="lg"
+                className="mt-1"
+              />
               <div className="flex flex-col">
                 <Label htmlFor="largeRadio">Text with large radio button</Label>
                 <HelperText size="lg">This is a helper text</HelperText>

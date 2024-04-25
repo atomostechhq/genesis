@@ -4,6 +4,10 @@ import { cn } from "../utils/utils";
 import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
 import CloseLineIcon from "remixicon-react/CloseLineIcon";
+import ErrorWarningLineIcon from "remixicon-react/ErrorWarningLineIcon";
+import QuestionLineIcon from "remixicon-react/QuestionLineIcon";
+import ThumbUpLineIcon from "remixicon-react/ThumbUpLineIcon";
+import ShieldCheckLineIcon from "remixicon-react/ShieldCheckLineIcon";
 
 interface VariantIconProps {
   variant: "success" | "warning" | "info" | "error" | "default";
@@ -14,31 +18,31 @@ const VariantIcon = ({ variant }: VariantIconProps) => {
     case "success":
       return (
         <span>
-          <AlertFillIcon size={20} color="green" />
+          <ThumbUpLineIcon size={20} color="#039855" />
         </span>
       );
     case "warning":
       return (
         <span>
-          <ListCheckIcon size={20} />
+          <QuestionLineIcon color="#F79009" size={20} />
         </span>
       );
     case "info":
       return (
         <span>
-          <AlertFillIcon size={20} />
+          <ErrorWarningLineIcon color="#1570EF" size={20} />
         </span>
       );
     case "error":
       return (
         <span>
-          <ListCheckIcon size={20} />
+          <AlertFillIcon color="#F04438" size={20} />
         </span>
       );
     default:
       return (
         <span>
-          <AlertFillIcon size={20} />
+          <ShieldCheckLineIcon color="#475467" size={20} />
         </span>
       );
   }
@@ -87,32 +91,32 @@ export const Notice = ({
         <div
           className={cn(
             noticeVariants({ variant, position }),
-            "fixed transition-all duration-500"
+            "fixed transition-all duration-500 z-10"
           )}
         >
           <div className="relative">
             {showIcon ? (
               noticeTitle == "" ? (
-                <div className="flex">
+                <div className="flex items-start">
                   <VariantIcon variant={variant} />
-                  <span className="ml-2 mr-4 text-text-sm">{children}</span>
+                  <span className="ml-2 mr-8 text-text-sm">{children}</span>
                   <span className="" onClick={(prev) => setOpen(!prev)}>
                     <CloseLineIcon size={20} />
                   </span>
                 </div>
               ) : (
                 <div className="">
-                  <section className="flex">
+                  <section className="flex items-start">
                     <VariantIcon variant={variant} />
-                    <div className="ml-2 mr-4">
+                    <div className="ml-2 mr-8 -mt-[3px]">
                       <span className="font-bold text-gray-800 mb-1">
                         {noticeTitle}
                       </span>
-                      <p className="text-text-sm">{children}</p>
+                      <p className="text-text-sm text-gray-700">{children}</p>
                     </div>
                   </section>
                   <span
-                    className="absolute top-0 right-1 cursor-pointer"
+                    className="absolute top-0 right-0 cursor-pointer"
                     onClick={(prev) => setOpen(!prev)}
                   >
                     <CloseLineIcon size={20} />
@@ -120,12 +124,12 @@ export const Notice = ({
                 </div>
               )
             ) : (
-              <div className="mr-4">
+              <div className="mr-8">
                 <section className="flex items-center">
                   <p className="font-bold text-gray-800 mb-1">{noticeTitle}</p>
                 </section>
                 <span
-                  className="absolute top-0 right-1 cursor-pointer"
+                  className="absolute top-0 right-0 cursor-pointer"
                   onClick={(prev) => setOpen(!prev)}
                 >
                   <CloseLineIcon size={20} />
