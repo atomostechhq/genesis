@@ -1,6 +1,7 @@
 "use client"
 import Chip from "@/app/components/Chip";
-import { tableData } from "@/app/components/Table/table";
+import CombinedTable from "@/app/components/Table/BasicTable";
+import { tableData, User } from "@/app/components/Table/table";
 import {
   Table,
   TableBody,
@@ -11,6 +12,67 @@ import {
 } from "@/app/components/TableComponents";
 import TablePagination from "@/app/components/TablePagination";
 import React, { useState } from "react";
+
+
+interface Props {
+  subRows: User[];
+}
+
+const ExpandedRow: React.FC<Props> = ({ subRows }) => (
+  <>
+    {subRows &&
+      subRows.map((row) => (
+        <tr key={row.id}>
+          <td>{row.id}</td>
+          <td>{row.firstName}</td>
+          <td>{row.lastName}</td>
+          <td>{row.age}</td>
+          <td>{row.visits}</td>
+          <td>{row.progress}</td>
+          <td>{row.status}</td>
+        </tr>
+      ))}
+  </>
+);
+
+const defaultColumns = [
+  {
+    header: "ID",
+    accessorKey: "id",
+    width: 60,
+  },
+  {
+    header: "Age",
+    accessorKey: "age",
+    width: 250,
+  },
+  {
+    header: "First Name",
+    accessorKey: "firstName",
+    width: 200,
+  },
+  {
+    header: "Last Name",
+    accessorKey: "lastName",
+    width: 200,
+  },
+  {
+    header: "Progress",
+    accessorKey: "progress",
+    width: 200,
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+    width: 200,
+  },
+  {
+    header: "Visits",
+    accessorKey: "visits",
+    width: 200,
+  },
+];
+
 
 const Page = () => {
   const [page, setPage] = useState(0);
@@ -32,7 +94,8 @@ const Page = () => {
 
   return (
     <div>
-      <Table>
+      <CombinedTable ExpandedRow={ExpandedRow} defaultColumns={defaultColumns} />
+      {/* <Table>
         <TableHead>
           <TableRow>
             <TableHeadCell>First Name</TableHeadCell>
@@ -65,7 +128,7 @@ const Page = () => {
         rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      /> */}
     </div>
   );
 };
