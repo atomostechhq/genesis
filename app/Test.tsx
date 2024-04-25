@@ -166,15 +166,15 @@ const Test = () => {
     {
       label: "Footer Item 1",
       items: [
-        { label: "Subitem 1", href: "/subitem1", icon: <AlertFillIcon /> },
-        { label: "Subitem 2", href: "/subitem2", icon: <AlertFillIcon /> },
+        { label: "Subitem 1", href: "/subitem1", icon: <AlertFillIcon size={18} /> },
+        { label: "Subitem 2", href: "/subitem2", icon: <AlertFillIcon size={18} /> },
       ],
     },
     {
       label: "Footer Item 2",
       items: [
-        { label: "Subitem 3", href: "/subitem3", icon: <AlertFillIcon /> },
-        { label: "Subitem 4", href: "/subitem4", icon: <AlertFillIcon /> },
+        { label: "Subitem 3", href: "/subitem3", icon: <AlertFillIcon size={18} /> },
+        { label: "Subitem 4", href: "/subitem4", icon: <AlertFillIcon size={18} /> },
       ],
     },
   ];
