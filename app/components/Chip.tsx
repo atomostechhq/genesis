@@ -8,7 +8,7 @@ interface ChipProps
   children: ReactNode;
 }
 
-const chipVariants = cva("rounded-full capitalize flex items-center gap-2", {
+const chipVariants = cva("rounded-full capitalize flex items-center w-fit gap-2", {
   variants: {
     intent: {
       default: "bg-gray-50 text-gray-600",

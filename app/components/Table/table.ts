@@ -23,16 +23,16 @@ export const tableData: User[] = [
     visits: 100,
     progress: 50,
     status: "Married",
-    subRows: [
-      {
-        firstName: "Sarah",
-        lastName: "Miller",
-        age: 35,
-        visits: 220,
-        progress: 80,
-        status: "Married",
-      },
-    ],
+    // subRows: [
+    //   {
+    //     firstName: "Sarah",
+    //     lastName: "Miller",
+    //     age: 35,
+    //     visits: 220,
+    //     progress: 80,
+    //     status: "Married",
+    //   },
+    // ],
   },
   {
     firstName: "Kevin",
