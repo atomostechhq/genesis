@@ -57,10 +57,10 @@ export const Tab = ({ value, children }: TabProps) => {
 
   return (
     <li
-      className={`flex items-center px-4 py-3 text-text-sm font-medium active:bg-primary-50 hover:bg-primary-50 cursor-pointer ${
+      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium hover:bg-gray-100 cursor-pointer ${
         value === selectedTabValue
           ? "text-primary-700 border-b-2 border-primary-700"
-          : "border-b-2 border-transparent"
+          : "border-b-2 border-transparent text-gray-700"
       } `}
       onClick={handleClick}
     >

@@ -28,7 +28,7 @@ const Radio = ({
   ...props
 }: RadioProps) => {
   return (
-    <div className="relative inline-flex mt-1 items-center cursor-pointer">
+    <div className="relative inline-flex items-center cursor-pointer">
       <input
         {...props}
         checked={checked}

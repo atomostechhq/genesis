@@ -26,6 +26,10 @@ import Sidebar from "./components/Sidebar";
 import TableSorting from "./components/Table/TableSorting";
 import TableExpanding from "./components/Table/TableExpanding";
 import TableFixedColumn from "./components/Table/TableFixedColumn";
+import Table from "./components/Table";
+import LogoutBoxRLineIcon from "remixicon-react/LogoutBoxRLineIcon";
+import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
+import BreadCrumb from "./components/Breadcrumbs";
 import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 
 interface Option {
@@ -98,7 +102,6 @@ const Test = () => {
   console.log("multiSelect", multiSelect);
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
-  console.log("singleSelect", singleSelect);
 
   const singleOptions = [
     { label: "Option 1", value: "1" },
@@ -125,6 +128,56 @@ const Test = () => {
 
   // sidebar
   const [collapsed, setCollapsed] = useState(false);
+  console.log("collapsed", collapsed);
+  const navItems = [
+    {
+      label: "Home",
+      items: [
+        {
+          label: "Dashboard",
+          href: "/",
+          icon: <CircleFillIcon size={18} />,
+        },
+        {
+          label: "Team",
+          href: "/pages/team",
+          icon: <AlertFillIcon size={18} />,
+        },
+      ],
+    },
+    {
+      label: "Settings",
+      items: [
+        {
+          label: "Setting 1",
+          href: "/setting1",
+          icon: <AlertFillIcon size={18} />,
+        },
+        {
+          label: "Setting 2",
+          href: "/setting2",
+          icon: <CircleFillIcon size={18} />,
+        },
+      ],
+    },
+  ];
+
+  const footerItems = [
+    {
+      label: "Footer Item 1",
+      items: [
+        { label: "Subitem 1", href: "/subitem1", icon: <AlertFillIcon /> },
+        { label: "Subitem 2", href: "/subitem2", icon: <AlertFillIcon /> },
+      ],
+    },
+    {
+      label: "Footer Item 2",
+      items: [
+        { label: "Subitem 3", href: "/subitem3", icon: <AlertFillIcon /> },
+        { label: "Subitem 4", href: "/subitem4", icon: <AlertFillIcon /> },
+      ],
+    },
+  ];
 
   useEffect(() => {
     setTimeout(() => {
@@ -176,7 +229,7 @@ const Test = () => {
   };
 
   return (
-    <div className={["m-5", color && `theme-${color}`].join(" ")}>
+    <div className="m-5">
       {/* select a color  */}
       <div>
         <label className="block mt-5">Select a color:</label>
@@ -201,10 +254,8 @@ const Test = () => {
         </div>
       </div>
       <div
-        className={[
-          "flex gap-4 items-center mt-5",
-          color && `theme-${color}`,
-        ].join(" ")}
+        className={
+          "flex gap-4 items-center mt-5"}
       >
         <span className="bg-primary-25">{color} Primary 25</span>
         <span className="bg-primary-50">{color} Primary 50</span>
@@ -226,21 +277,27 @@ const Test = () => {
         <Notice
           open={open}
           setOpen={setOpen}
-          variant="success"
+          variant="default"
           noticeTitle="Notice Header"
           position="bottom"
         >
           This is a success Alert with an encouraging title and both icons.
+          <section className="flex gap-2 items-center mt-3">
+            <Button variant="outlined" intent="error-outlined">Cancel</Button>
+            <Button>Apply</Button>
+          </section>
         </Notice>
-        {/* <Notice
+       {/* <Notice
           open={open}
           setOpen={setOpen}
           variant="success"
           noticeTitle="false"
           showIcon={false}
+          position="bottom"
         >
           This is a success Alert with an encouraging title without icon.
-        </Notice>
+        </Notice> */}
+         {/* 
         <Notice
           open={open}
           setOpen={setOpen}
@@ -283,6 +340,10 @@ const Test = () => {
           <h1 className="text-display-sm">Display sm</h1>
           <h1 className="text-display-xs">Display xs</h1>
           <h1 className="text-text-xl">Text Xl</h1>
+          <h1 className="text-text-lg">Text Lg</h1>
+          <h1 className="text-text-md">Text Md</h1>
+          <h1 className="text-text-sm">Text Sm</h1>
+          <h1 className="text-text-xs">Text Xs</h1>
         </section>
         <section>
           <h1 className="text-primary-400 border-b border-primary-900 w-fit">
@@ -302,7 +363,6 @@ const Test = () => {
         <Chip intent="error">error</Chip>
         <Chip intent="default">default</Chip>
       </div>
-
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <div className="flex gap-10">
         <section>
@@ -318,6 +378,7 @@ const Test = () => {
             dropDownTooltip={true}
             tooltipContent="info"
             dropdownFooter={true}
+            info="info"
             onApply={() => {
               console.log("Apply button clicked");
             }}
@@ -329,8 +390,9 @@ const Test = () => {
             options={singleOptions}
             selected={singleSelect}
             setSelected={setSingleSelect}
-            search={true}
+            // search={true}
             multiple={false}
+            info="info"
             dropDownTooltip={true}
             tooltipContent="info"
           />
@@ -473,7 +535,7 @@ const Test = () => {
         />
         <section className="w-[320px]">
           <ProgressBar
-            progressColor="bg-success-300"
+            progressColor="bg-success-600"
             progress={50}
             progressText={`${50}%`}
           />
@@ -496,7 +558,7 @@ const Test = () => {
         <section className="flex items-center gap-4">
           <h1>With Labels:</h1>
           <div className="flex items-center gap-2">
-            <Label htmlFor="primary">Primary</Label>
+            <Label htmlFor="primary">On</Label>
             <Toggle size="md" id="primary" intent={"primary"} />
           </div>
           <div className="flex items-center gap-2">
@@ -584,14 +646,14 @@ const Test = () => {
           <section className="flex items-center gap-4">
             <h1>Checkbox with Text and Subtext: </h1>
             <div className="flex items-start gap-2">
-              <Checkbox id="smallText" size="sm" />
+              <Checkbox id="smallText" size="sm" className="mt-1" />
               <div className="flex flex-col">
                 <Label htmlFor="smallText">Text with small checkbox</Label>
                 <HelperText size="sm">This is a helper text</HelperText>
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <Checkbox id="largeText" size="lg" />
+              <Checkbox id="largeText" size="lg" className="mt-1" />
               <div className="flex flex-col">
                 <Label htmlFor="largeText">Text with large checkbox</Label>
                 <HelperText size="lg">This is a helper text</HelperText>
@@ -627,14 +689,24 @@ const Test = () => {
           <section className="flex items-center gap-4">
             <h1>Radio with Text and Subtext: </h1>
             <div className="flex items-start gap-2">
-              <Radio name="radioWithText" id="smallRadio" size="sm" />
+              <Radio
+                name="radioWithText"
+                id="smallRadio"
+                size="sm"
+                className="mt-1"
+              />
               <div className="flex flex-col">
                 <Label htmlFor="smallRadio">Text with small radio button</Label>
                 <HelperText size="sm">This is a helper text</HelperText>
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <Radio name="radioWithText" id="largeRadio" size="lg" />
+              <Radio
+                name="radioWithText"
+                id="largeRadio"
+                size="lg"
+                className="mt-1"
+              />
               <div className="flex flex-col">
                 <Label htmlFor="largeRadio">Text with large radio button</Label>
                 <HelperText size="lg">This is a helper text</HelperText>
@@ -729,20 +801,30 @@ const Test = () => {
         </section>
       </div>
 
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
+        <BreadCrumb />
+      </div>
+
       <div className="">
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
           <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
             <span>Logo</span>
           </Sidebar.Header>
-          <Sidebar.Menu collapsed={collapsed} setCollapsed={setCollapsed} />
-          <Sidebar.Footer collapsed={collapsed} setCollapsed={setCollapsed}>
-            <Button
-              className="w-full"
-              variant="outlined"
-              intent="default-outlined"
-            >
-              Log out
-            </Button>
+          <Sidebar.Menu
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+            navItems={navItems}
+          />
+          <Sidebar.Footer
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+            navItems={footerItems}
+          >
+            <p className="flex justify-center items-center gap-2">
+              <LogoutBoxRLineIcon size={20} />
+              {!collapsed ? "" : "Logout"}
+            </p>
           </Sidebar.Footer>
         </Sidebar>
       </div>
@@ -765,8 +847,13 @@ const Test = () => {
         <EmptyState>
           <EmptyImageSVG />
           <Text>Something went wrong</Text>
-          <Desc>We are aware of the issue and are working to fix it. Please try again later.</Desc>
-          <Button intent="default-outlined" variant="outlined">Reload Page</Button>
+          <Desc>
+            We are aware of the issue and are working to fix it. Please try
+            again later.
+          </Desc>
+          <Button intent="default-outlined" variant="outlined">
+            Reload Page
+          </Button>
         </EmptyState>
       </div>
     </div>
