@@ -214,13 +214,15 @@ const TableExpanding = () => {
             >
               <ArrowLeftLineIcon className="w-5 h-5 text-gray-700" />
             </Button>
-            <button
-              className="border px-3.5 w-12 h-8 border-gray-400 shadow-xs rounded-se-lg rounded-ee-lg flex justify-center items-center py-1.5"
+            <Button
+              className="border px-3.5 w-12 h-8 border-gray-400 shadow-xs rounded-se-lg rounded-es-none rounded-ee-lg rounded-ss-none flex justify-center items-center py-1.5"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
+              intent="default-outlined"
+            variant="outlined"
             >
               <ArrowRightLineIcon className="w-5 h-5 text-gray-700" />
-            </button>
+            </Button>
           </div>
         </div>
       </div>

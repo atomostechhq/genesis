@@ -5,7 +5,6 @@ import ArrowRightSLineIcon from "remixicon-react/ArrowRightSLineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import {
   Column,
-  Table as OG,
   ExpandedState,
   useReactTable,
   SortingFn,
@@ -18,14 +17,14 @@ import {
   ColumnDef,
   flexRender,
 } from "@tanstack/react-table";
-import { makeData, Person } from "./data";
 import Input from "../Input";
 import Chip from "../Chip";
 import Button from "../Button";
 import { cn } from "@/app/utils/utils";
 import { TableBody, TableDataCell, TableHead, TableHeadCell, Table as TableMain, TableRow}  from "../TableComponents";
+import { tableData, User } from "./table";
 
-const getCommonPinningStyles = (column: Column<Person>): CSSProperties => {
+const getCommonPinningStyles = (column: Column<User>): CSSProperties => {
   const isPinned = column.getIsPinned();
   const isLastLeftPinnedColumn =
     isPinned === "left" && column.getIsLastColumn("left");
@@ -49,7 +48,7 @@ const getCommonPinningStyles = (column: Column<Person>): CSSProperties => {
 
 
 //custom sorting logic for one of our enum columns
-const sortStatusFn: SortingFn<Person> = (rowA, rowB, _columnId) => {
+const sortStatusFn: SortingFn<User> = (rowA, rowB, _columnId) => {
   const statusA = rowA.original.status
   const statusB = rowB.original.status
   const statusOrder = ['single', 'complicated', 'relationship']
@@ -57,7 +56,7 @@ const sortStatusFn: SortingFn<Person> = (rowA, rowB, _columnId) => {
   }
   
 
-const defaultColumns: ColumnDef<Person>[] = [
+const defaultColumns: ColumnDef<User>[] = [
   {
     accessorKey: "firstName",
     id: "firstName",
@@ -166,7 +165,7 @@ const defaultColumns: ColumnDef<Person>[] = [
 
 
 const Table = () => {
-  const [data, setData] = React.useState(() => makeData(100, 5, 3));
+  const [data, setData] = React.useState(tableData);
   console.log("data", data)
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [columns] = React.useState(() => [...defaultColumns]);
@@ -327,7 +326,21 @@ const Table = () => {
                     </TableDataCell>
                   );
                 })}
-              </TableRow>
+               </TableRow>
+              // <TableRow>
+              //   <TableDataCell>
+              //     one
+              //   </TableDataCell>
+              //   <TableDataCell>
+              //     two
+              //   </TableDataCell>
+              //   <TableDataCell>
+              //     three
+              //   </TableDataCell>
+              //   <TableDataCell>
+              //     four
+              //   </TableDataCell>
+              // </TableRow>
             );
           })}
         </TableBody>

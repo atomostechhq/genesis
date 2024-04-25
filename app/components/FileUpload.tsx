@@ -8,6 +8,7 @@ interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
   selectedFile: string[];
   setSelectedFile: (files: string[]) => void;
   children?: ReactNode;
+  onDelete?: (value:any) => void;
 }
 
 const FileUpload = ({
@@ -15,6 +16,7 @@ const FileUpload = ({
   onChange,
   multiple,
   setSelectedFile,
+  onDelete,
   children,
   className,
   ...props
@@ -31,7 +33,7 @@ const FileUpload = ({
       />
       <label
         htmlFor="custom-input"
-        className={cn("max-w-lg w-full h-[126px] border border-dashed border-gray-200 rounded-lg px-6 py-4 flex flex-col items-center gap-2",className)}
+        className={cn("max-w-lg w-full h-[126px] border border-dashed border-gray-200 hover:bg-gray-200 cursor-pointer rounded-lg px-6 py-4 flex flex-col items-center gap-2",className)}
       >
         <div className="w-10 h-10 border-[6px] border-gray-50 bg-gray-200 rounded-full p-1 flex justify-center items-center">
           <Upload2LineIcon className="w-5 h-5" />
@@ -55,7 +57,7 @@ const FileUpload = ({
               <p className="text-sm">{file}</p>
             </div>
             </div>
-<DeleteBinLineIcon  className="text-error-600 w-5 h-5" />
+<DeleteBinLineIcon onClick={onDelete} className="text-error-600 w-5 h-5" />
           </div>
         ))}
       </div>
