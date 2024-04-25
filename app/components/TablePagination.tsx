@@ -74,8 +74,8 @@ const TablePagination: React.FC<TablePaginationProps> = ({
             size="sm"
             placeholder="1"
             className="w-[70px] px-2 text-center"
-            // disabled={totalPages ? true : false}
-            // value={page + 1}
+            disabled={page >= totalPages}
+            value={page + 1}
             onChange={handlePageInputChange}
           />
           <span>of {totalPages}</span>
