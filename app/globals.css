@@ -179,6 +179,34 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+@keyframes slide-in-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out-top {
+  from {
+    transform: translateY(-100%);
+
+  }
+  to {
+    transform: translateY(0);
+
+  }
+}
+
+.animate-slide-in-top {
+  animation: slide-in-top 0.5s ease forwards;
+}
+
+.animate-slide-out-top {
+  animation: slide-out-top 0.5s ease backwards;
+}
+
 
 /* .c-multi-select-dropdown {
   position: relative;

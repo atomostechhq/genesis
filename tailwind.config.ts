@@ -228,6 +228,28 @@ const config: Config = {
         md: "1px 2px 12px 0px rgba(112, 112, 112, 0.25)",
         lg: "0px 4px 12px 0px rgba(16, 24, 40, 0.25)",
       },
+      animation: {
+        'slide-in-top': 'slide-in-top 0.5s ease backwards',
+        'slide-in-right': 'slide-in-right 0.5s ease backwards',
+      },
+      keyframes: {
+        'slide-in-top': {
+          from: {
+            transform: 'translateY(-100%)',
+          },
+          to: {
+            transform: 'translateY(0)',
+          },
+        },
+        'slide-in-right': {
+          from: {
+            transform: 'translateX(100%)',
+          },
+          to: {
+            transform: 'translateX(0)',
+          },
+        },
+      },
     },
   },
   plugins: [],
