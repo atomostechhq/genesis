@@ -16,29 +16,35 @@ import Pagination from "../Pagination";
 
 const TableSorting = () => {
   const [data, setData] = useState<User[]>(tableData);
-  const [sortConfig, setSortConfig] = useState<{ key: keyof User; direction: 'ascending' | 'descending' }>({
-    key: 'id',
-    direction: 'ascending',
+  const [sortConfig, setSortConfig] = useState<{
+    key: keyof User;
+    direction: "ascending" | "descending";
+  }>({
+    key: "id",
+    direction: "ascending",
   });
   const [selectAllChecked, setSelectAllChecked] = useState(false);
-  
+
   const sortBy = (key: keyof User) => {
-    const direction = sortConfig.key === key && sortConfig.direction === 'ascending' ? 'descending' : 'ascending';
-  
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "ascending"
+        ? "descending"
+        : "ascending";
+
     const sortedData = [...data].sort((a, b) => {
       const aValue = a[key];
       const bValue = b[key];
-  
+
       // Check if either aValue or bValue is undefined
       if (aValue === undefined || bValue === undefined) {
         return 0; // or handle this case as needed
       }
-  
-      if (aValue < bValue) return direction === 'ascending' ? -1 : 1;
-      if (aValue > bValue) return direction === 'ascending' ? 1 : -1;
+
+      if (aValue < bValue) return direction === "ascending" ? -1 : 1;
+      if (aValue > bValue) return direction === "ascending" ? 1 : -1;
       return 0;
     });
-  
+
     setSortConfig({ key, direction });
     setData(sortedData);
   };
@@ -48,7 +54,10 @@ const TableSorting = () => {
   const toggleSelectAll = () => {
     const newSelectAllChecked = !selectAllChecked;
     setSelectAllChecked(newSelectAllChecked);
-    const newData = data.map((item) => ({ ...item, isChecked: newSelectAllChecked }));
+    const newData = data.map((item) => ({
+      ...item,
+      isChecked: newSelectAllChecked,
+    }));
     setData(newData);
   };
 
@@ -78,52 +87,76 @@ const TableSorting = () => {
   const endIndex = (page + 1) * rowsPerPage;
 
   const currentPageData = data?.slice(startIndex, endIndex);
-  
+
   return (
     <div className="overflow-auto">
       <Table>
         <TableHead>
           <TableRow className="text-left">
             <TableHeadCell>
-            <Checkbox
+              <Checkbox
                 id="checkAll"
                 checked={selectAllChecked}
                 onChange={toggleSelectAll}
               />
             </TableHeadCell>
-            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy('id')} />}>
+            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy("id")} />}>
               ID
             </TableHeadCell>
-            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy('firstName')} />} >First Name</TableHeadCell>
-            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('lastName')} />} >Last Name</TableHeadCell>
-            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('age')} />} >Age</TableHeadCell>
-            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('progress')} />} >Progress</TableHeadCell>
-            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('status')} />} >Status</TableHeadCell>
-            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('visits')} />} >Visits</TableHeadCell>
+            <TableHeadCell
+              icon={<SortAscIcon onClick={() => sortBy("firstName")} />}
+            >
+              First Name
+            </TableHeadCell>
+            <TableHeadCell
+              icon={<SortAscIcon onClick={() => sortBy("lastName")} />}
+            >
+              Last Name
+            </TableHeadCell>
+            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy("age")} />}>
+              Age
+            </TableHeadCell>
+            <TableHeadCell
+              icon={<SortAscIcon onClick={() => sortBy("progress")} />}
+            >
+              Progress
+            </TableHeadCell>
+            <TableHeadCell
+              icon={<SortAscIcon onClick={() => sortBy("status")} />}
+            >
+              Status
+            </TableHeadCell>
+            <TableHeadCell
+              icon={<SortAscIcon onClick={() => sortBy("visits")} />}
+            >
+              Visits
+            </TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {currentPageData.map((item) => (
-              <React.Fragment key={item.id}>
-                <TableRow className="text-left">
-                  <TableDataCell><Checkbox
-                  id={`check-${item.id}`}
-                  checked={item.isChecked}
-                  onChange={() => handleCheckboxChange(item.id)}
-                /></TableDataCell>
-                  <TableDataCell>{item.id}</TableDataCell>
-                  <TableDataCell>{item.firstName}</TableDataCell>
-                  <TableDataCell>{item.lastName}</TableDataCell>
-                  <TableDataCell>{item.age}</TableDataCell>
-                  <TableDataCell>{item.progress}</TableDataCell>
-                  <TableDataCell>
-                    <Chip intent={"primary"} size={"md"}>
-                      {item.status}
-                    </Chip>
-                  </TableDataCell>
-                  <TableDataCell>{item.visits}</TableDataCell>
-                </TableRow>
-              </React.Fragment>
+            <React.Fragment key={item.id}>
+              <TableRow className="text-left">
+                <TableDataCell>
+                  <Checkbox
+                    id={`check-${item.id}`}
+                    checked={item.isChecked}
+                    onChange={() => handleCheckboxChange(item.id)}
+                  />
+                </TableDataCell>
+                <TableDataCell>{item.id}</TableDataCell>
+                <TableDataCell>{item.firstName}</TableDataCell>
+                <TableDataCell>{item.lastName}</TableDataCell>
+                <TableDataCell>{item.age}</TableDataCell>
+                <TableDataCell>{item.progress}</TableDataCell>
+                <TableDataCell>
+                  <Chip intent={"primary"} size={"md"}>
+                    {item.status}
+                  </Chip>
+                </TableDataCell>
+                <TableDataCell>{item.visits}</TableDataCell>
+              </TableRow>
+            </React.Fragment>
           ))}
         </TableBody>
       </Table>
