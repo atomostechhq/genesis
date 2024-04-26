@@ -51,7 +51,7 @@ const FileUpload = ({
       <div className="">
         {selectedFile?.map((file, index) => (
           <div className="p-4 border border-gray-200 rounded-lg w-[512px]">
-            <div className="flex items-center justify-between mb-2 gap-2" key={index}>
+            <div className="flex items-center justify-between gap-2" key={index}>
               <div className="flex items-center gap-2">
                 <File3LineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
                 <div className="flex flex-col gap-2">
@@ -63,7 +63,7 @@ const FileUpload = ({
                 className="text-error-600 w-5 h-5"
               />
             </div>
-            <span className="w-[512px]">{children}</span>
+            <span className="w-[512px] mt-2">{children}</span>
           </div>
         ))}
       </div>
