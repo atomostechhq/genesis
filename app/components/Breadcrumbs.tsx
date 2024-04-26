@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
+import ArrowRightSLineIcon from "remixicon-react/ArrowRightSLineIcon";
 
 const BreadCrumb = () => {
   const pathname = usePathname();
@@ -16,7 +16,7 @@ const BreadCrumb = () => {
       const isLast = i === segments.length - 1;
       return (
         <React.Fragment key={i}>
-          {i !== 0 && <ArrowRightLineIcon size={16} />}
+          {i !== 0 && <ArrowRightSLineIcon size={16} />}
           <Link
             className={`text-gray-700 text-text-xs font-semibold py-[6px] rounded-lg ${
               isActive ? "bg-gray-200 px-3 rounded-lg" : ""
@@ -29,7 +29,6 @@ const BreadCrumb = () => {
       );
     });
 
-    // Dynamically handle the root route ("/")
     if (segments.length === 0) {
       links.unshift(
         <Link

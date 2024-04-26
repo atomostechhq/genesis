@@ -12,6 +12,7 @@ import {
 import React, { useState } from "react";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import Pagination from "../Pagination";
+import { cn } from "@/app/utils/utils";
 
 const TableExpanding = () => {
   const [page, setPage] = useState(0);
@@ -33,6 +34,7 @@ const TableExpanding = () => {
 
   // expandable row
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
+  console.log("expandedRows", expandedRows);
   const toggleRowExpansion = (id: number) => {
     setExpandedRows((prevExpandedRows) => {
       if (prevExpandedRows?.includes(id)) {
@@ -47,9 +49,7 @@ const TableExpanding = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCell>
-              First Name
-            </TableHeadCell>
+            <TableHeadCell>First Name</TableHeadCell>
             <TableHeadCell>Last Name</TableHeadCell>
             <TableHeadCell>Age</TableHeadCell>
             <TableHeadCell>Visits</TableHeadCell>
@@ -60,12 +60,22 @@ const TableExpanding = () => {
         <TableBody>
           {currentPageData?.map((data, index) => (
             <React.Fragment key={index}>
-              <TableRow onClick={() => toggleRowExpansion(data.id)}>
+              <TableRow
+                className={`${
+                  expandedRows?.includes(data.id) && expandedRows?.length > 0
+                    ? "bg-gray-200"
+                    : ""
+                }`}
+                onClick={() => toggleRowExpansion(data.id)}
+              >
                 <TableDataCell>
                   <div className="flex items-center gap-1">
                     {data.firstName}{" "}
                     {data.subRows && data.subRows.length > 0 && (
-                      <ArrowDownSLineIcon size={18} />
+                      <span className="p-1 rounded-md hover:bg-gray-200">
+                        {" "}
+                        <ArrowDownSLineIcon cursor="pointer" size={18} />
+                      </span>
                     )}
                   </div>
                 </TableDataCell>

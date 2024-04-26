@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import Chip from "../Chip";
 import Button from "../Button";
 import Pagination from "../Pagination";
+import { cn } from "@/app/utils/utils";
 
 const TableFixedColumn = () => {
   const [data, setdata] = useState(tableData);
@@ -61,8 +62,8 @@ const TableFixedColumn = () => {
             <TableHeadCell sticky left="0px">
               ID
             </TableHeadCell>
-            <TableHeadCell>First Name</TableHeadCell>
-            <TableHeadCell>Last Name</TableHeadCell>
+            <TableHeadCell sticky left="100px">First Name</TableHeadCell>
+            <TableHeadCell sticky left="255px">Last Name</TableHeadCell>
             <TableHeadCell>Age</TableHeadCell>
             <TableHeadCell>Progress</TableHeadCell>
             <TableHeadCell>Status</TableHeadCell>
@@ -76,8 +77,8 @@ const TableFixedColumn = () => {
                 <TableDataCell sticky left="0px">
                   {item.id}
                 </TableDataCell>
-                <TableDataCell>{item.firstName}</TableDataCell>
-                <TableDataCell>{item.lastName}</TableDataCell>
+                <TableDataCell sticky left="100px">{item.firstName}</TableDataCell>
+                <TableDataCell sticky left="255px">{item.lastName}</TableDataCell>
                 <TableDataCell>{item.age}</TableDataCell>
                 <TableDataCell>{item.progress}</TableDataCell>
                 <TableDataCell>

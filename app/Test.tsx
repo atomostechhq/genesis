@@ -73,10 +73,10 @@ const Test = () => {
   const [isComplete, setIsComplete] = useState<boolean>(false);
 
   const stepsConfig = [
-    { name: "Step One", Component: () => <div>Step 1 Component</div> },
-    { name: "Step Two", Component: () => <div>Step 2 Component</div> },
-    { name: "Step Three", Component: () => <div>Step 3 Component</div> },
-    { name: "Step Four", Component: () => <div>Step 4 Component</div> },
+    { name: "Step One", helperName: "step1", Component: () => <div>Step 1 Component</div> },
+    { name: "Step Two", helperName: "step2", Component: () => <div>Step 2 Component</div> },
+    { name: "Step Three", helperName: "step3", Component: () => <div>Step 3 Component</div> },
+    { name: "Step Four", helperName: "step4", Component: () => <div>Step 4 Component</div> },
   ];
 
   const handleNext = () => {
@@ -605,8 +605,8 @@ const Test = () => {
             setCurrentStep={setCurrentStep}
             isComplete={isComplete}
             setIsComplete={setIsComplete}
-            // position="vertical"
-            position="horizontal"
+            position="vertical"
+            // position="horizontal"
           />
           <section className="my-5 flex justify-end items-center gap-4">
             <Button
@@ -788,7 +788,13 @@ const Test = () => {
           selectedFile={selectedFile}
           setSelectedFile={setSelectedFile}
           onChange={handleFileChange}
-        />
+        >
+          <ProgressBar
+            progressColor="bg-primary-600"
+            progress={50}
+            progressText={`${50}%`}
+          />
+        </FileUpload>
       </div>
       {/* Textarea */}
       <div className="flex flex-col gap-1">

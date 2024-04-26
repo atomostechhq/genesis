@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import CheckLineIcon from "remixicon-react/CheckLineIcon";
 import { cn } from "../utils/utils";
 
 interface StepConfig {
   name: string;
+  helperName?: string;
   Component: React.ComponentType<any>;
 }
 
@@ -52,12 +53,7 @@ const Stepper = ({
   const ActiveComponent = stepsConfig[currentStep - 1]?.Component;
 
   return (
-    <div
-      className={cn(
-        "",
-        position === "horizontal" ? "" : " flex"
-      )}
-    >
+    <div className={cn("", position === "horizontal" ? "" : " flex")}>
       <div
         className={cn(
           "relative",
@@ -66,7 +62,7 @@ const Stepper = ({
             : "flex flex-col"
         )}
       >
-        {stepsConfig.map((step, index) => (
+        {stepsConfig?.map((step, index) => (
           <>
             <div
               key={step.name}
@@ -74,7 +70,7 @@ const Stepper = ({
               className={`w-full ${
                 position === "horizontal"
                   ? "flex flex-col"
-                  : "flex gap-4 justify-start ml-6"
+                  : "flex gap-4 justify-start"
               }  ${currentStep > index + 1 || isComplete ? "complete" : ""} ${
                 currentStep === index + 1 ? "" : ""
               } `}
@@ -135,11 +131,12 @@ const Stepper = ({
               <div
                 className={cn(
                   "whitespace-nowrap",
-                  position === "vertical" ? "-mt-1" : ""
+                  position === "vertical" || step?.helperName ? "-mt-1" : ""
                 )}
               >
                 <span className="text-gray-400 text-text-xs">
-                  STEP{index + 1}
+                  {/* STEP{index + 1} */}
+                  {step?.helperName}
                 </span>
                 <p>{step?.name}</p>
               </div>
