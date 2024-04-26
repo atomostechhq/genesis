@@ -11,8 +11,8 @@ import {
 import React, { useState } from "react";
 import SortAscIcon from "remixicon-react/SortDescIcon";
 import Chip from "../Chip";
-import TablePagination from "../TablePagination";
 import Checkbox from "../Checkbox";
+import Pagination from "../Pagination";
 
 const TableSorting = () => {
   const [data, setData] = useState<User[]>(tableData);
@@ -127,7 +127,7 @@ const TableSorting = () => {
           ))}
         </TableBody>
       </Table>
-      <TablePagination
+      <Pagination
         count={tableData?.length}
         page={page}
         rowsPerPage={rowsPerPage}

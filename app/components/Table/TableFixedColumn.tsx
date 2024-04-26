@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import Chip from "../Chip";
 import Button from "../Button";
-import TablePagination from "../TablePagination";
+import Pagination from "../Pagination";
 
 const TableFixedColumn = () => {
   const [data, setdata] = useState(tableData);
@@ -92,7 +92,7 @@ const TableFixedColumn = () => {
         </TableBody>
       </Table>
       </div>
-      <TablePagination
+      <Pagination
         count={tableData?.length}
         page={page}
         rowsPerPage={rowsPerPage}
