@@ -79,6 +79,7 @@ const Test = () => {
     { name: "Step One", Component: () => <div>Step 1 Component</div> },
     { name: "Step Two", Component: () => <div>Step 2 Component</div> },
     { name: "Step Three", Component: () => <div>Step 3 Component</div> },
+    { name: "Step Four", Component: () => <div>Step 4 Component</div> },
   ];
 
   const handleNext = () => {

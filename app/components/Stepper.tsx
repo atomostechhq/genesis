@@ -1,12 +1,5 @@
 "use client";
-import { VariantProps, cva } from "class-variance-authority";
-import React, {
-  HtmlHTMLAttributes,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CheckLineIcon from "remixicon-react/CheckLineIcon";
 import { cn } from "../utils/utils";
 
@@ -42,36 +35,35 @@ const Stepper = ({
 
   const stepRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    const firstStepWidth = stepRef.current[0]?.offsetWidth;
-    const lastStepWidth = stepRef.current[stepsConfig.length - 1]?.offsetWidth;
+  // useEffect(() => {
+  //   const firstStepWidth = stepRef.current[0]?.offsetWidth;
+  //   const lastStepWidth = stepRef.current[stepsConfig.length - 1]?.offsetWidth;
 
-    setMargins({
-      marginLeft: firstStepWidth !== undefined ? firstStepWidth / 2 : 0,
-      marginRight: lastStepWidth !== undefined ? lastStepWidth / 2 : 0,
-    });
-  }, [stepRef, stepsConfig.length]);
+  //   setMargins({
+  //     marginLeft: firstStepWidth !== undefined ? firstStepWidth / 2 : 0,
+  //     marginRight: lastStepWidth !== undefined ? lastStepWidth / 2 : 0,
+  //   });
+  // }, [stepRef, stepsConfig.length]);
 
   if (!stepsConfig.length) {
     return <></>;
   }
 
-  // const calculateProgressBarWidth = () => {
-  //   console.log("calculateProgressBarWidth", ((currentStep - 1) / (stepsConfig.length - 1)) * 100)
-  //   console.log("currentStep", currentStep, stepsConfig.length)
-  //   return ((currentStep - 1) / (stepsConfig.length - 1)) * 100;
-  // };
-
   const ActiveComponent = stepsConfig[currentStep - 1]?.Component;
 
   return (
-    <>
+    <div
+      className={cn(
+        "",
+        position === "horizontal" ? "" : " flex"
+      )}
+    >
       <div
         className={cn(
-          "stepper relative",
+          "relative",
           position === "horizontal"
             ? "flex justify-between items-start"
-            : "flex flex-col gap-[60px]"
+            : "flex flex-col"
         )}
       >
         {stepsConfig.map((step, index) => (
@@ -79,7 +71,7 @@ const Stepper = ({
             <div
               key={step.name}
               ref={(el: any) => (stepRef.current[index] = el)}
-              className={`step w-full ${
+              className={`w-full ${
                 position === "horizontal"
                   ? "flex flex-col"
                   : "flex gap-4 justify-start ml-6"
@@ -89,8 +81,10 @@ const Stepper = ({
             >
               <div
                 className={cn(
-                  " ",
-                  position === "horizontal" ? "flex items-center" : "flex flex-col"
+                  "",
+                  position === "horizontal"
+                    ? "flex items-center"
+                    : "flex flex-col"
                 )}
               >
                 <div
@@ -118,15 +112,32 @@ const Stepper = ({
                     ""
                   )}
                 </div>
-                {index !== stepsConfig?.length -1 && <div className={cn("w-[80%] mx-auto h-2 rounded-lg bg-gray-200")}>
-                  <p
-                    className={cn("h-full rounded-lg ", (currentStep > index + 1 ? "bg-primary-600" : ""))}
-                  ></p>
-                </div>}
+                {index !== stepsConfig?.length - 1 && (
+                  <div
+                    className={cn(
+                      "mx-auto rounded-lg bg-gray-200",
+                      position === "horizontal"
+                        ? "w-[80%] h-1"
+                        : "h-[100px] w-1 my-2"
+                    )}
+                  >
+                    <p
+                      className={cn(
+                        "h-full rounded-lg ",
+                        currentStep > index + 1 ? "bg-primary-600" : ""
+                      )}
+                    ></p>
+                  </div>
+                )}
               </div>
 
               {/* step name */}
-              <div className="whitespace-nowrap">
+              <div
+                className={cn(
+                  "whitespace-nowrap",
+                  position === "vertical" ? "-mt-1" : ""
+                )}
+              >
                 <span className="text-gray-400 text-text-xs">
                   STEP{index + 1}
                 </span>
@@ -135,50 +146,11 @@ const Stepper = ({
             </div>
           </>
         ))}
-        {/* <div
-          className={cn(
-            "progress-bar absolute",
-            position === "horizontal"
-              ? "top-[10%] left-0 h-[3px] bg-gray-200"
-              : "h-[100px]"
-          )}
-          style={{
-            width: `calc(100% - ${margins.marginLeft + margins.marginRight}px)`,
-            marginRight: margins.marginRight,
-          }}
-        >
-          <div
-            className="bg-primary-600 h-full transition-all duration-75 ease"
-            style={{ width: `${calculateProgressBarWidth()}%` }}
-          ></div>
-        </div> */}
-        {/* <div
-          className={cn(
-            "progress-bar absolute",
-            position === "horizontal"
-              ? "top-[10%] left-0 h-[3px] bg-gray-200"
-              : "left-0 top-0 w-[3px] bg-gray-200"
-          )}
-          style={{
-            height: position === "horizontal" ? undefined : "100%",
-            width:
-              position === "horizontal"
-                ? `calc(100% - ${margins.marginLeft + margins.marginRight}px)`
-                : undefined,
-            marginRight:
-              position === "horizontal" ? margins.marginRight : undefined,
-          }}
-        >
-          <div
-            className="bg-primary-600 h-full transition-all duration-75 ease"
-            style={{ width: `${calculateProgressBarWidth()}%` }}
-          ></div>
-        </div> */}
       </div>
 
       {/* Conditional rendering of ActiveComponent */}
       {ActiveComponent && <ActiveComponent />}
-    </>
+    </div>
   );
 };
 
