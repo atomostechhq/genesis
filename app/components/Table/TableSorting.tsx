@@ -1,15 +1,5 @@
-import React from "react";
-
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  SortingFn,
-  SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
-import { makeData, Person } from "./data";
+"use client";
+import { tableData, User } from "@/app/components/Table/table";
 import {
   Table,
   TableBody,
@@ -17,169 +7,134 @@ import {
   TableHead,
   TableHeadCell,
   TableRow,
-} from "../TableComponents";
-import SortDescIcon from "remixicon-react/SortDescIcon";
-import Edit2LineIcon from "remixicon-react/Edit2LineIcon";
-import DeleteBinLineIcon from "remixicon-react/DeleteBinLineIcon";
+} from "@/app/components/TableComponents";
+import React, { useState } from "react";
+import SortAscIcon from "remixicon-react/SortDescIcon";
+import Chip from "../Chip";
+import TablePagination from "../TablePagination";
 import Checkbox from "../Checkbox";
 
-const sortStatusFn: SortingFn<Person> = (rowA, rowB, _columnId) => {
-  const statusA = rowA.original.status;
-  const statusB = rowB.original.status;
-  const statusOrder = ["single", "complicated", "relationship"];
-  return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
-};
-
 const TableSorting = () => {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const columns = React.useMemo<ColumnDef<Person>[]>(
-    () => [
-      {
-        accessorKey: "firstName",
-        header: () => "First Name",
-        cell: (info) => info.getValue(),
-        //this column will sort in ascending order by default since it is a string column
-      },
-      {
-        accessorFn: (row) => row.lastName,
-        id: "lastName",
-        cell: (info) => info.getValue(),
-        header: () => "Last Name",
-        sortUndefined: "last", //force undefined values to the end
-        sortDescFirst: false, //first sort order will be ascending (nullable values can mess up auto detection of sort order)
-      },
-      {
-        accessorKey: "age",
-        header: () => "Age",
-        //this column will sort in descending order by default since it is a number column
-      },
-      {
-        accessorKey: "visits",
-        header: () => "Visits",
-        sortUndefined: "last", //force undefined values to the end
-      },
-      {
-        accessorKey: "status",
-        header: "Status",
-        sortingFn: sortStatusFn, //use our custom sorting function for this enum column
-      },
-      {
-        accessorKey: "progress",
-        header: "Profile Progress",
-        // enableSorting: false, //disable sorting for this column
-      },
-    ],
-    []
-  );
-
-  const [data, setData] = React.useState(() => makeData(1_000));
-  const table = useReactTable({
-    columns,
-    data,
-    debugTable: true,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(), //client-side sorting
-    onSortingChange: setSorting, //optionally control sorting state in your own scope for easy access
-    state: {
-      sorting,
-    },
+  const [data, setData] = useState<User[]>(tableData);
+  const [sortConfig, setSortConfig] = useState<{ key: keyof User; direction: 'ascending' | 'descending' }>({
+    key: 'id',
+    direction: 'ascending',
   });
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+  
+  const sortBy = (key: keyof User) => {
+    const direction = sortConfig.key === key && sortConfig.direction === 'ascending' ? 'descending' : 'ascending';
+  
+    const sortedData = [...data].sort((a, b) => {
+      const aValue = a[key];
+      const bValue = b[key];
+  
+      // Check if either aValue or bValue is undefined
+      if (aValue === undefined || bValue === undefined) {
+        return 0; // or handle this case as needed
+      }
+  
+      if (aValue < bValue) return direction === 'ascending' ? -1 : 1;
+      if (aValue > bValue) return direction === 'ascending' ? 1 : -1;
+      return 0;
+    });
+  
+    setSortConfig({ key, direction });
+    setData(sortedData);
+  };
 
+  // Checkbox
+
+  const toggleSelectAll = () => {
+    const newSelectAllChecked = !selectAllChecked;
+    setSelectAllChecked(newSelectAllChecked);
+    const newData = data.map((item) => ({ ...item, isChecked: newSelectAllChecked }));
+    setData(newData);
+  };
+
+  const handleCheckboxChange = (id: number) => {
+    const newData = data.map((item) =>
+      item.id === id ? { ...item, isChecked: !item.isChecked } : item
+    );
+    setData(newData);
+    setSelectAllChecked(newData.every((item) => item.isChecked));
+  };
+
+  // pagination
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (newRowsPerPage: number) => {
+    setRowsPerPage(newRowsPerPage);
+    setPage(0);
+  };
+
+  const startIndex = page * rowsPerPage;
+  const endIndex = (page + 1) * rowsPerPage;
+
+  const currentPageData = data?.slice(startIndex, endIndex);
+  
   return (
-    <div>
+    <div className="overflow-auto">
       <Table>
         <TableHead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-               <TableHeadCell className="relative z-20">
-                <Checkbox className="bg-white z-0" />
-              </TableHeadCell>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <>
-                    <TableHeadCell
-                      icon={
-                        <SortDescIcon
-                       
-                        size={14}
-                          onClick={header.column.getToggleSortingHandler()}
-                        />
-                      }
-                      key={header.id}
-                      colSpan={header.colSpan}
-                    >
-                      {header.isPlaceholder ? null : (
-                        <>
-                          <div
-                            className={
-                              header.column.getCanSort()
-                                ? "cursor-pointer select-none"
-                                : ""
-                            }
-                            title={
-                              header.column.getCanSort()
-                                ? header.column.getNextSortingOrder() === "asc"
-                                  ? "Sort ascending"
-                                  : header.column.getNextSortingOrder() ===
-                                    "desc"
-                                  ? "Sort descending"
-                                  : "Clear sort"
-                                : undefined
-                            }
-                          >
-                            {{
-                              asc: "",
-                              desc: "",
-                            }[header.column.getIsSorted() as string] ?? null}
-                          </div>
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                        </>
-                      )}
-                    </TableHeadCell>
-                  </>
-                );
-              })}
-              <TableHeadCell>
-                Action
-              </TableHeadCell>
-            </TableRow>
-          ))}
+          <TableRow className="text-left">
+            <TableHeadCell>
+            <Checkbox
+                id="checkAll"
+                checked={selectAllChecked}
+                onChange={toggleSelectAll}
+              />
+            </TableHeadCell>
+            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy('id')} />}>
+              ID
+            </TableHeadCell>
+            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy('firstName')} />} >First Name</TableHeadCell>
+            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('lastName')} />} >Last Name</TableHeadCell>
+            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('age')} />} >Age</TableHeadCell>
+            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('progress')} />} >Progress</TableHeadCell>
+            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('status')} />} >Status</TableHeadCell>
+            <TableHeadCell  icon={<SortAscIcon onClick={() => sortBy('visits')} />} >Visits</TableHeadCell>
+          </TableRow>
         </TableHead>
         <TableBody>
-          {table
-            .getRowModel()
-            .rows.slice(0, 15)
-            .map((row) => {
-              return (
-                <TableRow key={row.id}>
+          {currentPageData.map((item) => (
+              <React.Fragment key={item.id}>
+                <TableRow className="text-left">
+                  <TableDataCell><Checkbox
+                  id={`check-${item.id}`}
+                  checked={item.isChecked}
+                  onChange={() => handleCheckboxChange(item.id)}
+                /></TableDataCell>
+                  <TableDataCell>{item.id}</TableDataCell>
+                  <TableDataCell>{item.firstName}</TableDataCell>
+                  <TableDataCell>{item.lastName}</TableDataCell>
+                  <TableDataCell>{item.age}</TableDataCell>
+                  <TableDataCell>{item.progress}</TableDataCell>
                   <TableDataCell>
-                    <Checkbox />
+                    <Chip intent={"primary"} size={"md"}>
+                      {item.status}
+                    </Chip>
                   </TableDataCell>
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <TableDataCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableDataCell>
-                    );
-                  })}
-                  <TableDataCell >
-                    <div className="flex items-center gap-2">
-
-                    <Edit2LineIcon className="hover:bg-gray-100 mx-1 w-7 h-7 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300" size={20} />
-                    <DeleteBinLineIcon className="hover:bg-gray-100 mx-1 w-7 h-7 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300" size={20} />
-                    </div>
-                  </TableDataCell>
+                  <TableDataCell>{item.visits}</TableDataCell>
                 </TableRow>
-              );
-            })}
+              </React.Fragment>
+          ))}
         </TableBody>
       </Table>
+      <TablePagination
+        count={tableData?.length}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </div>
   );
 };

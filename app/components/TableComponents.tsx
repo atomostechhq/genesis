@@ -22,12 +22,15 @@ interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 interface TableHeadCellProps extends ThHTMLAttributes<HTMLTableCellElement> {
   children?: ReactNode;
   icon?: JSX.Element;
+  sticky?: boolean;
+  left?: string;
 }
 
 interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   children?: ReactNode;
   icon?: JSX.Element;
-  expandedRows?: any;
+  sticky?: boolean;
+  left?: string;
 }
 
 export const Table = ({ children, className, ...props }: TableProps) => {
@@ -35,7 +38,7 @@ export const Table = ({ children, className, ...props }: TableProps) => {
     <table
       {...props}
       className={cn(
-        "max-w-7xl bg-white w-full relative overflow-x-scroll border border-collapse",
+        "bg-white w-full text-left whitespace-nowrap relative border",
         className
       )}
     >
@@ -53,7 +56,7 @@ export const TableHead = ({
     <thead
       {...props}
       className={cn(
-        "sticky top-0 bg-gray-50 z-[100] border border-gray-200",
+        "bg-gray-50 z-[100] border border-gray-200",
         className
       )}
     >
@@ -86,14 +89,24 @@ export const TableHeadCell = ({
   children,
   className,
   icon,
+  sticky,
+  left,
   ...props
 }: TableHeadCellProps) => {
-
   return (
-    <th {...props} className={cn("px-6 py-3 text-left", className)}>
+    <th {...props} className={cn("px-6 py-3 text-left",sticky === true && `sticky bg-gray-50 left-[${left}]`,
+    left, className)} style={{
+      left: left,
+    }}>
       <div className="flex items-center gap-1">
         <span className="font-medium text-xs">{children}</span>
-        <span className="hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300">
+        <span
+          className={cn(
+            icon
+              ? "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
+              : "hidden"
+          )}
+        >
           {icon}
         </span>
       </div>
@@ -105,15 +118,33 @@ export const TableDataCell = ({
   children,
   className,
   icon,
+  sticky,
+  left,
   ...props
 }: TableCellProps) => {
   return (
     <td
       {...props}
-      className={cn("px-6 py-4 text-sm font-medium space-x-2", className)}
+      className={cn(
+        "px-6 py-4 text-sm font-medium space-x-2",
+        sticky === true && `sticky bg-white left-[${left}]`,
+        left,
+        className
+      )}
+      style={{
+        left: left,
+      }}
     >
       <span className="font-medium text-sm">{children}</span>
-      {icon}
+      <span
+          className={cn(
+            icon
+              ? "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
+              : "hidden"
+          )}
+        >
+          {icon}
+        </span>
     </td>
   );
 };

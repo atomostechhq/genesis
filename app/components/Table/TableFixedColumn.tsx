@@ -1,196 +1,101 @@
-import React, { CSSProperties } from "react";
+"use client";
+import { tableData } from "@/app/components/Table/table";
 import {
-  Column,
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { makeData, Person } from "./data";
-import { Table, TableHead, TableBody, TableRow, TableHeadCell, TableDataCell } from "../TableComponents";
-
-const getCommonPinningStyles = (column: Column<Person>): CSSProperties => {
-  const isPinned = column.getIsPinned();
-  const isLastLeftPinnedColumn =
-    isPinned === "left" && column.getIsLastColumn("left");
-  const isFirstRightPinnedColumn =
-    isPinned === "right" && column.getIsFirstColumn("right");
-
-  return {
-    boxShadow: isLastLeftPinnedColumn
-      ? "-4px 0 4px -4px gray inset"
-      : isFirstRightPinnedColumn
-      ? "4px 0 4px -4px gray inset"
-      : undefined,
-    left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
-    right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
-    position: isPinned ? "sticky" : "relative",
-    width: column.getSize(),
-    zIndex: isPinned ? 1 : 0,
-  };
-};
-
-const defaultColumns: ColumnDef<Person>[] = [
-  {
-    accessorKey: "firstName",
-    id: "firstName",
-    header: "First Name",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-  },
-  {
-    accessorFn: (row) => row.lastName,
-    id: "lastName",
-    cell: (info) => info.getValue(),
-    header: () => <span>Last Name</span>,
-    footer: (props) => props.column.id,
-    size: 180,
-  },
-  {
-    accessorKey: "age",
-    id: "age",
-    header: "Age",
-    footer: (props) => props.column.id,
-    size: 180,
-  },
-  {
-    accessorKey: "visits",
-    id: "visits",
-    header: "Visits",
-    footer: (props) => props.column.id,
-    size: 180,
-  },
-  {
-    accessorKey: "status",
-    id: "status",
-    header: "Status",
-    footer: (props) => props.column.id,
-    size: 180,
-  },
-  {
-    accessorKey: "progress",
-    id: "progress",
-    header: "Profile Progress",
-    footer: (props) => props.column.id,
-    size: 180,
-  },
-];
+  Table,
+  TableBody,
+  TableDataCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from "@/app/components/TableComponents";
+import React, { useState } from "react";
+import Chip from "../Chip";
+import Button from "../Button";
+import TablePagination from "../TablePagination";
 
 const TableFixedColumn = () => {
-  const [data, setData] = React.useState(() => makeData(30));
-  const [columns] = React.useState(() => [...defaultColumns]);
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
-    columnResizeMode: "onChange",
-  });
+  const [data, setdata] = useState(tableData);
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (newRowsPerPage: number) => {
+    setRowsPerPage(newRowsPerPage);
+    setPage(0);
+  };
+
+  const startIndex = page * rowsPerPage;
+  const endIndex = (page + 1) * rowsPerPage;
+
+  const currentPageData = data?.slice(startIndex, endIndex);
   return (
-    <div className="table-container">
-      <Table
-        style={{
-          width: table.getTotalSize(),
-        }}
-      >
-        <TableHead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                const { column } = header;
+    <div className="overflow-auto shadow-sm rounded-xl">
+       <div className="px-6 py-2 w-full h-[91px] border-b border-gray-200 flex items-center justify-between gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-medium">Heading</h1>
+            <Chip intent={"primary"}>Label</Chip>
+          </div>
+          <p className="text-sm text-gray-600">
+            Keep track of vendor and their security ratings.
+          </p>
+        </div>
 
-                return (
-                  <TableHeadCell
-                    key={header.id}
-                    colSpan={header.colSpan}
-                    //IMPORTANT: This is where the magic happens!
-                    style={{ ...getCommonPinningStyles(column) }}
-                     className="bg-gray-50"
-                  >
-                    <div className="whitespace-nowrap">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}{" "}
-                      {/* Demo getIndex behavior */}
-                      {column.getIndex(column.getIsPinned() || "center")}
-                    </div>
-                    {!header.isPlaceholder && header.column.getCanPin() && (
-                      <div className="flex gap-1 justify-center">
-                        {header.column.getIsPinned() !== "left" ? (
-                          <button
-                            className="border rounded px-2"
-                            onClick={() => {
-                              header.column.pin("left");
-                            }}
-                          >
-                            {"<="}
-                          </button>
-                        ) : null}
-                        {header.column.getIsPinned() ? (
-                          <button
-                            className="border rounded px-2"
-                            onClick={() => {
-                              header.column.pin(false);
-                            }}
-                          >
-                            X
-                          </button>
-                        ) : null}
-                        {header.column.getIsPinned() !== "right" ? (
-                          <button
-                            className="border rounded px-2"
-                            onClick={() => {
-                              header.column.pin("right");
-                            }}
-                          >
-                            {"=>"}
-                          </button>
-                        ) : null}
-                      </div>
-                    )}
-                    <div
-                      {...{
-                        onDoubleClick: () => header.column.resetSize(),
-                        onMouseDown: header.getResizeHandler(),
-                        onTouchStart: header.getResizeHandler(),
-                        className: `resizer ${
-                          header.column.getIsResizing() ? "isResizing" : ""
-                        }`,
-                      }}
-                    />
-                  </TableHeadCell>
-                );
-              })}
-            </TableRow>
-          ))}
+        <div className="flex items-center gap-2">
+          <Button variant={"outlined"} intent={"primary-outlined"}>
+            Button CTA
+          </Button>
+          <Button variant={"filled"} intent="primary">
+            Button CTA
+          </Button>
+        </div>
+      </div>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell sticky left="0px">
+              ID
+            </TableHeadCell>
+            <TableHeadCell>First Name</TableHeadCell>
+            <TableHeadCell>Last Name</TableHeadCell>
+            <TableHeadCell>Age</TableHeadCell>
+            <TableHeadCell>Progress</TableHeadCell>
+            <TableHeadCell>Status</TableHeadCell>
+            <TableHeadCell>Visits</TableHeadCell>
+          </TableRow>
         </TableHead>
         <TableBody>
-          {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
-              {row.getVisibleCells().map((cell) => {
-                const { column } = cell;
-                return (
-                  <TableDataCell
-                    key={cell.id}
-                    //IMPORTANT: This is where the magic happens!
-                    style={{ ...getCommonPinningStyles(column) }}
-                    className="bg-white"
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableDataCell>
-                );
-              })}
-            </TableRow>
-          ))}
+          {currentPageData.slice(0,10).map((item) => {
+            return (
+              <TableRow key={item.id}>
+                <TableDataCell sticky left="0px">{item.id}</TableDataCell>
+                <TableDataCell>{item.firstName}</TableDataCell>
+                <TableDataCell>{item.lastName}</TableDataCell>
+                <TableDataCell>{item.age}</TableDataCell>
+                <TableDataCell>{item.progress}</TableDataCell>
+                <TableDataCell>
+                  <Chip intent={"primary"} size={"md"}>
+                    {item.status}
+                  </Chip>
+                </TableDataCell>
+                <TableDataCell>{item.visits}</TableDataCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
+      <TablePagination
+        count={tableData?.length}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </div>
   );
 };

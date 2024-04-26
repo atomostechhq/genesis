@@ -23,10 +23,6 @@ import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Dropdown from "./components/Dropdown";
 import Sidebar from "./components/Sidebar";
-import TableSorting from "./components/Table/TableSorting";
-import TableExpanding from "./components/Table/TableExpanding";
-import TableFixedColumn from "./components/Table/TableFixedColumn";
-import Table from "./components/Table";
 import LogoutBoxRLineIcon from "remixicon-react/LogoutBoxRLineIcon";
 import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
 import BreadCrumb from "./components/Breadcrumbs";
@@ -821,21 +817,6 @@ const Test = () => {
             </p>
           </Sidebar.Footer>
         </Sidebar>
-      </div>
-
-      <div className="py-5 px-3 mx-auto">
-        <div className="space-y-2">
-          <h1>Table With Fixed Column</h1>
-          <TableFixedColumn />
-        </div>
-        <div className="space-y-2">
-          <h1>Table With Row Expanding, Header and Pagination</h1>
-          <TableExpanding />
-        </div>
-        <div className="space-y-2">
-          <h1>Table With Sorting and Checkbox</h1>
-          <TableSorting />
-        </div>
       </div>
       <div>
         <EmptyState>

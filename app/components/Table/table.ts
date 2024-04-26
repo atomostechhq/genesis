@@ -6,6 +6,7 @@ export type User = {
   visits: number;
   progress: number;
   status: string;
+  isChecked?:boolean;
   subRows?: {
     id: number;
     firstName: string;
@@ -28,7 +29,7 @@ export const tableData: User[] = [
     status: "Married",
     subRows: [
       {
-        id: 69,
+        id: 101,
         firstName: "string",
         lastName: "name 1",
         age: 33,
@@ -37,7 +38,7 @@ export const tableData: User[] = [
         status: "Married",
       },
       {
-        id: 69,
+        id: 102,
         firstName: "string",
         lastName: "name 2",
         age: 33,
@@ -46,7 +47,7 @@ export const tableData: User[] = [
         status: "Married",
       },
       {
-        id: 69,
+        id: 103,
         firstName: "string",
         lastName: "name 3",
         age: 33,
@@ -55,7 +56,7 @@ export const tableData: User[] = [
         status: "Married",
       },
       {
-        id: 69,
+        id: 104,
         firstName: "string",
         lastName: "name 4",
         age: 33,
@@ -64,7 +65,7 @@ export const tableData: User[] = [
         status: "Single",
       },
       {
-        id: 69,
+        id: 105,
         firstName: "string",
         lastName: "name 5",
         age: 33,
@@ -84,7 +85,7 @@ export const tableData: User[] = [
     status: "Single",
     subRows: [
       {
-        id: 70,
+        id: 106,
         firstName: "idk",
         lastName: "who",
         age: 33,
@@ -131,7 +132,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 7,
     firstName: "David",
     lastName: "Davis",
     age: 41,
@@ -140,7 +141,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 8,
     firstName: "Rachel",
     lastName: "Wilson",
     age: 31,
@@ -149,7 +150,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 9,
     firstName: "Andrew",
     lastName: "Anderson",
     age: 50,
@@ -158,7 +159,7 @@ export const tableData: User[] = [
     status: "Divorced",
   },
   {
-    id: 1,
+    id: 10,
     firstName: "Lauren",
     lastName: "Taylor",
     age: 26,
@@ -167,7 +168,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 11,
     firstName: "James",
     lastName: "Martinez",
     age: 32,
@@ -176,7 +177,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 12,
     firstName: "Amanda",
     lastName: "Harris",
     age: 39,
@@ -185,7 +186,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 13,
     firstName: "Christopher",
     lastName: "Garcia",
     age: 28,
@@ -194,7 +195,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 14,
     firstName: "Stephanie",
     lastName: "Clark",
     age: 36,
@@ -203,7 +204,7 @@ export const tableData: User[] = [
     status: "Divorced",
   },
   {
-    id: 1,
+    id: 15,
     firstName: "Matthew",
     lastName: "Lewis",
     age: 43,
@@ -212,7 +213,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 16,
     firstName: "Jennifer",
     lastName: "Lee",
     age: 34,
@@ -221,7 +222,7 @@ export const tableData: User[] = [
     status: "Divorced",
   },
   {
-    id: 1,
+    id: 17,
     firstName: "Justin",
     lastName: "Wright",
     age: 30,
@@ -230,7 +231,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 18,
     firstName: "Megan",
     lastName: "King",
     age: 29,
@@ -239,7 +240,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 19,
     firstName: "Nicholas",
     lastName: "Evans",
     age: 37,
@@ -248,7 +249,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 20,
     firstName: "Samantha",
     lastName: "Parker",
     age: 33,
@@ -257,7 +258,7 @@ export const tableData: User[] = [
     status: "Divorced",
   },
   {
-    id: 1,
+    id: 21,
     firstName: "Tanner",
     lastName: "Linsley",
     age: 33,
@@ -266,7 +267,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 22,
     firstName: "Kevin",
     lastName: "Vandy",
     age: 27,
@@ -275,7 +276,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 23,
     firstName: "Emily",
     lastName: "Johnson",
     age: 45,
@@ -284,7 +285,7 @@ export const tableData: User[] = [
     status: "Divorced",
   },
   {
-    id: 1,
+    id: 24,
     firstName: "Jessica",
     lastName: "Smith",
     age: 29,
@@ -293,7 +294,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 25,
     firstName: "Michael",
     lastName: "Brown",
     age: 38,
@@ -302,7 +303,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 26,
     firstName: "Sarah",
     lastName: "Miller",
     age: 35,
@@ -311,7 +312,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 27,
     firstName: "David",
     lastName: "Davis",
     age: 41,
@@ -320,7 +321,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 28,
     firstName: "Rachel",
     lastName: "Wilson",
     age: 31,
@@ -329,7 +330,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 29,
     firstName: "Andrew",
     lastName: "Anderson",
     age: 50,
@@ -338,7 +339,7 @@ export const tableData: User[] = [
     status: "Divorced",
   },
   {
-    id: 1,
+    id: 30,
     firstName: "Lauren",
     lastName: "Taylor",
     age: 26,
@@ -347,7 +348,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 31,
     firstName: "James",
     lastName: "Martinez",
     age: 32,
@@ -356,7 +357,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 32,
     firstName: "Amanda",
     lastName: "Harris",
     age: 39,
@@ -365,7 +366,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 33,
     firstName: "Christopher",
     lastName: "Garcia",
     age: 28,
@@ -374,7 +375,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 34,
     firstName: "Stephanie",
     lastName: "Clark",
     age: 36,
@@ -383,7 +384,7 @@ export const tableData: User[] = [
     status: "Divorced",
   },
   {
-    id: 1,
+    id: 35,
     firstName: "Matthew",
     lastName: "Lewis",
     age: 43,
@@ -392,7 +393,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 36,
     firstName: "Jennifer",
     lastName: "Lee",
     age: 34,
@@ -401,7 +402,7 @@ export const tableData: User[] = [
     status: "Divorced",
   },
   {
-    id: 1,
+    id: 37,
     firstName: "Justin",
     lastName: "Wright",
     age: 30,
@@ -410,7 +411,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 38,
     firstName: "Megan",
     lastName: "King",
     age: 29,
@@ -419,7 +420,7 @@ export const tableData: User[] = [
     status: "Single",
   },
   {
-    id: 1,
+    id: 39,
     firstName: "Nicholas",
     lastName: "Evans",
     age: 37,
@@ -428,7 +429,7 @@ export const tableData: User[] = [
     status: "Married",
   },
   {
-    id: 1,
+    id: 40,
     firstName: "Samantha",
     lastName: "Parker",
     age: 33,
