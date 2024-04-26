@@ -9,8 +9,10 @@ import {
   TableRow,
 } from "@/app/components/TableComponents";
 import React, { useState } from "react";
-import SortAscIcon from "remixicon-react/SortAscIcon";
+import SortAscIcon from "remixicon-react/SortDescIcon";
 import Chip from "../Chip";
+import TablePagination from "../TablePagination";
+import Checkbox from "../Checkbox";
 
 const TableSorting = () => {
   const [data, setData] = useState<User[]>(tableData);
@@ -18,6 +20,7 @@ const TableSorting = () => {
     key: 'id',
     direction: 'ascending',
   });
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
   
   const sortBy = (key: keyof User) => {
     const direction = sortConfig.key === key && sortConfig.direction === 'ascending' ? 'descending' : 'ascending';
@@ -39,13 +42,56 @@ const TableSorting = () => {
     setSortConfig({ key, direction });
     setData(sortedData);
   };
+
+  // Checkbox
+
+  const toggleSelectAll = () => {
+    const newSelectAllChecked = !selectAllChecked;
+    setSelectAllChecked(newSelectAllChecked);
+    const newData = data.map((item) => ({ ...item, isChecked: newSelectAllChecked }));
+    setData(newData);
+  };
+
+  const handleCheckboxChange = (id: number) => {
+    const newData = data.map((item) =>
+      item.id === id ? { ...item, isChecked: !item.isChecked } : item
+    );
+    setData(newData);
+    setSelectAllChecked(newData.every((item) => item.isChecked));
+  };
+
+  // pagination
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (newRowsPerPage: number) => {
+    setRowsPerPage(newRowsPerPage);
+    setPage(0);
+  };
+
+  const startIndex = page * rowsPerPage;
+  const endIndex = (page + 1) * rowsPerPage;
+
+  const currentPageData = data?.slice(startIndex, endIndex);
   
   return (
     <div className="overflow-auto">
-      <Table className="w-full table-fixed">
+      <Table>
         <TableHead>
           <TableRow className="text-left">
-            <TableHeadCell sticky left="10px" onClick={() => sortBy('id')}>
+            <TableHeadCell>
+            <Checkbox
+                id="checkAll"
+                checked={selectAllChecked}
+                onChange={toggleSelectAll}
+              />
+            </TableHeadCell>
+            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy('id')} />}>
               ID
             </TableHeadCell>
             <TableHeadCell icon={<SortAscIcon onClick={() => sortBy('firstName')} />} >First Name</TableHeadCell>
@@ -57,10 +103,15 @@ const TableSorting = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item) => (
+          {currentPageData.map((item) => (
               <React.Fragment key={item.id}>
                 <TableRow className="text-left">
-                  <TableDataCell sticky left="10px">{item.id}</TableDataCell>
+                  <TableDataCell><Checkbox
+                  id={`check-${item.id}`}
+                  checked={item.isChecked}
+                  onChange={() => handleCheckboxChange(item.id)}
+                /></TableDataCell>
+                  <TableDataCell>{item.id}</TableDataCell>
                   <TableDataCell>{item.firstName}</TableDataCell>
                   <TableDataCell>{item.lastName}</TableDataCell>
                   <TableDataCell>{item.age}</TableDataCell>
@@ -76,6 +127,14 @@ const TableSorting = () => {
           ))}
         </TableBody>
       </Table>
+      <TablePagination
+        count={tableData?.length}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </div>
   );
 };

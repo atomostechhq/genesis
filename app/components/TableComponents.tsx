@@ -38,7 +38,7 @@ export const Table = ({ children, className, ...props }: TableProps) => {
     <table
       {...props}
       className={cn(
-        "bg-white w-full relative table-fixed border",
+        "bg-white w-full text-left whitespace-nowrap relative border",
         className
       )}
     >
@@ -56,7 +56,7 @@ export const TableHead = ({
     <thead
       {...props}
       className={cn(
-        "sticky top-0 bg-gray-50 z-[100] border border-gray-200",
+        "bg-gray-50 z-[100] border border-gray-200",
         className
       )}
     >
@@ -94,7 +94,7 @@ export const TableHeadCell = ({
   ...props
 }: TableHeadCellProps) => {
   return (
-    <th {...props} className={cn("px-6 py-3 text-left",sticky === true && `sticky left-[${left}]`,
+    <th {...props} className={cn("px-6 py-3 text-left",sticky === true && `sticky bg-gray-50 left-[${left}]`,
     left, className)} style={{
       left: left,
     }}>
@@ -127,7 +127,7 @@ export const TableDataCell = ({
       {...props}
       className={cn(
         "px-6 py-4 text-sm font-medium space-x-2",
-        sticky === true && `sticky left-[${left}]`,
+        sticky === true && `sticky bg-white left-[${left}]`,
         left,
         className
       )}

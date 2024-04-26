@@ -10,15 +10,54 @@ import {
 } from "@/app/components/TableComponents";
 import React, { useState } from "react";
 import Chip from "../Chip";
+import Button from "../Button";
+import TablePagination from "../TablePagination";
 
 const TableFixedColumn = () => {
   const [data, setdata] = useState(tableData);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (newRowsPerPage: number) => {
+    setRowsPerPage(newRowsPerPage);
+    setPage(0);
+  };
+
+  const startIndex = page * rowsPerPage;
+  const endIndex = (page + 1) * rowsPerPage;
+
+  const currentPageData = data?.slice(startIndex, endIndex);
   return (
-    <div className="overflow-auto">
-      <Table className="w-full table-fixed">
+    <div className="overflow-auto shadow-sm rounded-xl">
+       <div className="px-6 py-2 w-full h-[91px] border-b border-gray-200 flex items-center justify-between gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-medium">Heading</h1>
+            <Chip intent={"primary"}>Label</Chip>
+          </div>
+          <p className="text-sm text-gray-600">
+            Keep track of vendor and their security ratings.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Button variant={"outlined"} intent={"primary-outlined"}>
+            Button CTA
+          </Button>
+          <Button variant={"filled"} intent="primary">
+            Button CTA
+          </Button>
+        </div>
+      </div>
+      <Table>
         <TableHead>
-          <TableRow className="text-left">
-            <TableHeadCell sticky left="10px">
+          <TableRow>
+            <TableHeadCell sticky left="0px">
               ID
             </TableHeadCell>
             <TableHeadCell>First Name</TableHeadCell>
@@ -30,10 +69,10 @@ const TableFixedColumn = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.slice(0,10).map((item) => {
+          {currentPageData.slice(0,10).map((item) => {
             return (
-              <TableRow key={item.id} className="text-left">
-                <TableDataCell sticky left="10px">{item.id}</TableDataCell>
+              <TableRow key={item.id}>
+                <TableDataCell sticky left="0px">{item.id}</TableDataCell>
                 <TableDataCell>{item.firstName}</TableDataCell>
                 <TableDataCell>{item.lastName}</TableDataCell>
                 <TableDataCell>{item.age}</TableDataCell>
@@ -49,6 +88,14 @@ const TableFixedColumn = () => {
           })}
         </TableBody>
       </Table>
+      <TablePagination
+        count={tableData?.length}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </div>
   );
 };

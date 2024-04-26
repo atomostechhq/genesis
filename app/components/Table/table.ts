@@ -6,6 +6,7 @@ export type User = {
   visits: number;
   progress: number;
   status: string;
+  isChecked?:boolean;
   subRows?: {
     id: number;
     firstName: string;

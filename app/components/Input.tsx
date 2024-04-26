@@ -26,7 +26,7 @@ const Input = ({
     >
       <span
         className={cn(
-          "group-hover:text-gray-600 group-focus-within:text-gray-600",
+          startIcon ? "group-hover:text-gray-600 group-focus-within:text-gray-600": "hidden",
           disabled === true && "text-gray-900"
         )}
       >
@@ -39,7 +39,7 @@ const Input = ({
         className={cn("w-full text-sm focus:outline-none bg-transparent disabled:text-gray-900 placeholder:text-gray-500 group-hover:placeholder:text-gray-500", size)}
       />
       <span className={cn(
-          "group-hover:text-gray-600 group-focus-within:text-gray-600",
+          endIcon ? "group-hover:text-gray-600 group-focus-within:text-gray-600": "hidden",
           disabled === true && "text-gray-900"
         )}>
         {endIcon}
