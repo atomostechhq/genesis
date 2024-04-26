@@ -159,7 +159,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       >
         <section>
           {multiple
-            ? `${ `${selected?.length} Selected` || dropdownText}`
+            ? `${`${selected?.length} Selected` || dropdownText}`
             : selected?.[0]?.label
             ? selected?.[0]?.label
             : dropdownText}
@@ -168,23 +168,23 @@ const Dropdown: React.FC<DropdownProps> = ({
       </div>
       {dropdownMenu && (
         <ul className="shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full">
-          {multiple && (
-            <span
-              onClick={handleSelectAll}
-              className="text-text-sm py-1 px-[14px] text-primary-600 cursor-pointer"
-            >
-              Select all
-            </span>
-          )}
           {search && (
             <Input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="rounded rounded-b-none bg-white w-full h-[35px] text-gray-400"
+              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-1"
               endIcon={<SearchLineIcon size={18} />}
             />
+          )}
+          {multiple && (
+            <span
+              onClick={handleSelectAll}
+              className="text-text-sm py-[6px] hover:text-primary-700 px-[14px] text-primary-600 cursor-pointer"
+            >
+              Select all
+            </span>
           )}
           <section className="max-h-[200px] overflow-y-scroll">
             {options
