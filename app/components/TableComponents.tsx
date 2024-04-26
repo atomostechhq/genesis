@@ -136,7 +136,7 @@ export const TableDataCell = ({
     <td
       {...props}
       className={cn(
-        "px-6 py-4 text-sm font-medium space-x-2",
+        "px-6 py-4 text-sm font-medium",
         sticky === true && `sticky bg-white left-[${left}]`,
         left,
         className
@@ -145,6 +145,8 @@ export const TableDataCell = ({
         left: left,
       }}
     >
+<div className="flex items-center justify-center gap-1">
+
       <span className="font-medium text-sm">{children}</span>
       <span
         className={cn(
@@ -155,6 +157,8 @@ export const TableDataCell = ({
       >
         {icon}
       </span>
+</div>
+
     </td>
   );
 };
