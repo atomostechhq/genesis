@@ -64,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> & {
       onMouseEnter={() => setCollapsed(true)}
       onMouseLeave={() => setCollapsed(false)}
       className={cn(
-        "border border-gray-200 shadow-md relative flex flex-col min-h-screen transition-all duration-300 ease-in-out cursor-pointer",
+        "border border-gray-200 shadow-sm relative flex flex-col min-h-screen transition-all duration-300 ease-in-out cursor-pointer",
         !collapsed ? "w-[80px] py-[21px] px-[17px]" : "w-[308px] py-[22px] px-6"
       )}
     >
