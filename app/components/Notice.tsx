@@ -70,8 +70,8 @@ const noticeVariants = cva("p-4 w-fit rounded-[6px]", {
       default: "bg-gray-25 border border-gray-600",
     },
     position: {
-      top: "top-4 left-[35%]",
-      bottom: "bottom-4 right-4",
+      top: "top-4 transition-all duration-700 left-[35%]",
+      bottom: "bottom-4 transition-all duration-700 right-4",
     },
   },
 });
@@ -91,7 +91,9 @@ export const Notice = ({
         <div
           className={cn(
             noticeVariants({ variant, position }),
-            "fixed transition-all duration-500 z-10"
+            "fixed z-10",
+            position == "top" && open && "animate-slide-in-top",
+            position == "bottom" && open && "animate-slide-in-right",
           )}
         >
           <div className="relative">
@@ -100,7 +102,9 @@ export const Notice = ({
                 <div className="flex items-start">
                   <VariantIcon variant={variant} />
                   <span className="ml-2 mr-8 text-text-sm">{children}</span>
-                  <span className="" onClick={(prev) => setOpen(!prev)}>
+                  <span
+                    onClick={(prev) => setOpen(!prev)}
+                  >
                     <CloseLineIcon size={20} />
                   </span>
                 </div>
@@ -116,7 +120,7 @@ export const Notice = ({
                     </div>
                   </section>
                   <span
-                    className="absolute top-0 right-0 cursor-pointer"
+                    className={cn("absolute top-0 right-0 cursor-pointer")}
                     onClick={(prev) => setOpen(!prev)}
                   >
                     <CloseLineIcon size={20} />
@@ -129,10 +133,12 @@ export const Notice = ({
                   <p className="font-bold text-gray-800 mb-1">{noticeTitle}</p>
                 </section>
                 <span
-                  className="absolute top-0 right-0 cursor-pointer"
+                  className={cn("absolute top-0 right-0 cursor-pointer")}
                   onClick={(prev) => setOpen(!prev)}
                 >
-                  <CloseLineIcon size={20} />
+                  <CloseLineIcon
+                    size={20}
+                  />
                 </span>
                 <p className="text-text-sm">{children}</p>
               </div>

@@ -6,6 +6,7 @@ import React, {
   ThHTMLAttributes,
 } from "react";
 import { cn } from "../utils/utils";
+import Pushpin2LineIcon from "remixicon-react/Pushpin2LineIcon";
 
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
@@ -24,6 +25,7 @@ interface TableHeadCellProps extends ThHTMLAttributes<HTMLTableCellElement> {
   icon?: JSX.Element;
   sticky?: boolean;
   left?: string;
+  stickyIcon?: JSX.Element;
 }
 
 interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
@@ -55,10 +57,7 @@ export const TableHead = ({
   return (
     <thead
       {...props}
-      className={cn(
-        "bg-gray-50 z-[100] border border-gray-200",
-        className
-      )}
+      className={cn("bg-gray-50 z-[100] border border-gray-200", className)}
     >
       {children}
     </thead>
@@ -90,21 +89,32 @@ export const TableHeadCell = ({
   className,
   icon,
   sticky,
+  stickyIcon,
   left,
   ...props
 }: TableHeadCellProps) => {
   return (
-    <th {...props} className={cn("px-6 py-3 text-left",sticky === true && `sticky bg-gray-50 left-[${left}]`,
-    left, className)} style={{
-      left: left,
-    }}>
+    <th
+      {...props}
+      className={cn(
+        "px-6 py-3 text-left",
+        sticky === true && `sticky bg-gray-50 left-[${left}]`,
+        left,
+        className
+      )}
+      style={{
+        left: left,
+      }}
+    >
       <div className="flex items-center gap-1">
+        <span>
+          {sticky ? <Pushpin2LineIcon className="w-3.5 h-3.5" />: "" }
+        </span>
         <span className="font-medium text-xs">{children}</span>
         <span
           className={cn(
-            icon
-              ? "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
-              : "hidden"
+            icon &&
+              "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
           )}
         >
           {icon}
@@ -137,14 +147,14 @@ export const TableDataCell = ({
     >
       <span className="font-medium text-sm">{children}</span>
       <span
-          className={cn(
-            icon
-              ? "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
-              : "hidden"
-          )}
-        >
-          {icon}
-        </span>
+        className={cn(
+          icon
+            ? "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
+            : "hidden"
+        )}
+      >
+        {icon}
+      </span>
     </td>
   );
 };
