@@ -98,7 +98,7 @@ export const TableHeadCell = ({
       {...props}
       className={cn(
         "px-6 py-3 text-left",
-        sticky === true && `sticky bg-gray-50 left-[${left}]`,
+        sticky === true && `sticky bg-gray-50 shadow-sm shadow-black left-[${left}]`,
         left,
         className
       )}
@@ -106,7 +106,7 @@ export const TableHeadCell = ({
         left: left,
       }}
     >
-      <div className="flex items-center gap-1">
+      <div className="flex items-center">
         <span>
           {sticky ? <Pushpin2LineIcon className="w-3.5 h-3.5" />: "" }
         </span>
@@ -136,8 +136,8 @@ export const TableDataCell = ({
     <td
       {...props}
       className={cn(
-        "px-6 py-4 text-sm font-medium",
-        sticky === true && `sticky bg-white left-[${left}]`,
+        "px-6 py-4 text-sm font-medium space-x-2",
+        sticky === true ? `sticky bg-white left-[${left}]`: "",
         left,
         className
       )}
@@ -145,8 +145,6 @@ export const TableDataCell = ({
         left: left,
       }}
     >
-<div className="flex items-center justify-center gap-1">
-
       <span className="font-medium text-sm">{children}</span>
       <span
         className={cn(
@@ -157,8 +155,6 @@ export const TableDataCell = ({
       >
         {icon}
       </span>
-</div>
-
     </td>
   );
 };
