@@ -1,4 +1,5 @@
 "use client";
+"use client";
 import Chip from "@/app/components/Chip";
 import CombinedTable from "@/app/components/Table/BasicTable";
 import { tableData, User } from "@/app/components/Table/table";
@@ -13,6 +14,9 @@ import {
 } from "@/app/components/TableComponents";
 import TablePagination from "@/app/components/TablePagination";
 import React, { useState } from "react";
+import SortAscIcon from "remixicon-react/SortAscIcon";
+import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
+import ArrowUpSLineIcon from "remixicon-react/ArrowUpSLineIcon";
 
 // interface Props {
 //   subRows: User[];
@@ -126,6 +130,17 @@ const Page = () => {
 
   const currentPageData = tableData?.slice(startIndex, endIndex);
 
+  // expandable row
+  const [expandedRows, setExpandedRows] = useState<number[]>([]);
+  const toggleRowExpansion = (id: number) => {
+    setExpandedRows((prevExpandedRows) => {
+      if (prevExpandedRows?.includes(id)) {
+        return [];
+      }
+      return [id];
+    });
+  };
+
   return (
     <div className="overflow-auto">
       <TableSorting />
@@ -134,7 +149,9 @@ const Page = () => {
       {/* <Table className="table-fixed w-full">
         <TableHead>
           <TableRow>
-            <TableHeadCell className="sticky left-[40px] bg-indigo-900 text-white">First Name</TableHeadCell>
+            <TableHeadCell className="sticky left-[40px] bg-indigo-900 text-white">
+              First Name
+            </TableHeadCell>
             <TableHeadCell>Last Name</TableHeadCell>
             <TableHeadCell>Age</TableHeadCell>
             <TableHeadCell>Visits</TableHeadCell>
@@ -144,16 +161,39 @@ const Page = () => {
         </TableHead>
         <TableBody>
           {currentPageData?.map((data, index) => (
-            <TableRow key={index}>
-              <TableDataCell className="sticky left-[40px] bg-indigo-900 text-white">{data.firstName}</TableDataCell>
-              <TableDataCell>{data.lastName}</TableDataCell>
-              <TableDataCell>{data.age}</TableDataCell>
-              <TableDataCell>{data.visits}</TableDataCell>
-              <TableDataCell>{data.progress}</TableDataCell>
-              <TableDataCell>
-                <Chip intent="primary">{data.status}</Chip>
-              </TableDataCell>
-            </TableRow>
+            <React.Fragment key={index}>
+              <TableRow onClick={() => toggleRowExpansion(data.id)}>
+                <TableDataCell className="sticky left-[40px] bg-indigo-900 text-white">
+                  <div className="flex items-center gap-1">
+                    {data.firstName}{" "}
+                    {data.subRows && data.subRows.length > 0 && (
+                      <ArrowDownSLineIcon size={18} />
+                    )}
+                  </div>
+                </TableDataCell>
+                <TableDataCell>{data.lastName}</TableDataCell>
+                <TableDataCell>{data.age}</TableDataCell>
+                <TableDataCell>{data.visits}</TableDataCell>
+                <TableDataCell>{data.progress}</TableDataCell>
+                <TableDataCell>
+                  <Chip intent="primary">{data.status}</Chip>
+                </TableDataCell>
+              </TableRow>
+              {expandedRows?.includes(data.id) &&
+                data.subRows &&
+                data.subRows.map((subData, subIndex) => (
+                  <TableRow key={`${index}-${subIndex}`}>
+                    <TableDataCell>{subData.firstName}</TableDataCell>
+                    <TableDataCell>{subData.lastName}</TableDataCell>
+                    <TableDataCell>{subData.age}</TableDataCell>
+                    <TableDataCell>{subData.visits}</TableDataCell>
+                    <TableDataCell>{subData.progress}</TableDataCell>
+                    <TableDataCell>
+                      <Chip intent="primary">{subData.status}</Chip>
+                    </TableDataCell>
+                  </TableRow>
+                ))}
+            </React.Fragment>
           ))}
         </TableBody>
       </Table> */}

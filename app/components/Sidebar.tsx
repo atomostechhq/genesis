@@ -64,10 +64,8 @@ const Sidebar: React.FC<SidebarProps> & {
       onMouseEnter={() => setCollapsed(true)}
       onMouseLeave={() => setCollapsed(false)}
       className={cn(
-        "border border-gray-200 shadow-md relative flex flex-col min-h-screen transition-all duration-300 ease-in-out ",
-        !collapsed
-          ? "w-[80px] py-[21px] px-[17px]"
-          : "w-[308px] py-[22px] px-6"
+        "border border-gray-200 shadow-md relative flex flex-col min-h-screen transition-all duration-300 ease-in-out cursor-pointer",
+        !collapsed ? "w-[80px] py-[21px] px-[17px]" : "w-[308px] py-[22px] px-6"
       )}
     >
       <div className="">{children}</div>
@@ -87,18 +85,20 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
         "z-20": true,
       })}
     >
-      <div className="flex justify-between items-center">
-        {collapsed && <span className="whitespace-nowrap">{children}</span>}
-        <button
-          className={cn({
-            "grid place-content-center": true,
-            "hover:bg-gray-100 ": true,
-            "w-10 h-10 rounded-full": true,
-          })}
-          onClick={() => setCollapsed(!collapsed)}
-        >
-          <ArrowLeftSLineIcon color="#101828" />
-        </button>
+      <div className="flex justify-between items-center mb-6">
+        <span className="whitespace-nowrap">{children}</span>
+        {collapsed && (
+          <button
+            className={cn({
+              "grid place-content-center": true,
+              "hover:bg-gray-100 ": true,
+              "rounded-full": true,
+            })}
+            onClick={() => setCollapsed(!collapsed)}
+          >
+            <ArrowLeftSLineIcon color="#101828" />
+          </button>
+        )}
       </div>
     </div>
   );
@@ -109,10 +109,13 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
   const currentPath = usePathname();
 
   return (
-    <nav className="flex-grow">
+    <nav className="">
       <ul className="my-2 flex flex-col gap-2 items-stretch">
         {navItems?.map((parentItem, parentIndex) => (
-          <li key={parentIndex} className="flex flex-col gap-3 mb-6">
+          <li
+            key={parentIndex}
+            className="flex flex-col gap-3 mb-6 whitespace-nowrap overflow-hidden"
+          >
             <p
               className={cn({
                 "text-[14px] text-gray-500": true,
@@ -129,7 +132,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
                   <li
                     key={index}
                     className={cn({
-                      "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold":
+                      "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold whitespace-nowrap overflow-hidden":
                         true,
                       "text-white bg-primary-600":
                         currentPath === `${item?.href}`,
@@ -138,12 +141,14 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
                     })}
                   >
                     <Link
-                      className={`flex items-center gap-2`}
+                      className={`flex items-center gap-2 whitespace-nowrap`}
                       href={item.href}
                       passHref
                     >
                       <span className="text-text-sm"> {item.icon}</span>
-                      {collapsed && <span className="">{item.label}</span>}
+                      <span className={`${!collapsed ? "opacity-0" : ""}`}>
+                        {item.label}
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -175,7 +180,10 @@ const Footer: React.FC<FooterProps> = ({
       <nav className="flex-grow w-full">
         <ul className="my-2 flex flex-col gap-2 items-stretch">
           {navItems?.map((parentItem, parentIndex) => (
-            <li key={parentIndex} className="flex flex-col gap-3 mb-1">
+            <li
+              key={parentIndex}
+              className="flex flex-col gap-3 mb-1 whitespace-nowrap overflow-hidden"
+            >
               <p
                 className={cn({
                   "text-[14px] text-gray-500": true,
@@ -191,7 +199,7 @@ const Footer: React.FC<FooterProps> = ({
                     <li
                       key={index}
                       className={cn({
-                        "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold":
+                        "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold whitespace-nowrap overflow-hidden":
                           true,
                         "text-white bg-primary-600":
                           currentPath === `${item?.href}`,
@@ -200,12 +208,14 @@ const Footer: React.FC<FooterProps> = ({
                       })}
                     >
                       <Link
-                        className={`flex items-center gap-2`}
+                        className={`flex items-center gap-2 whitespace-nowrap`}
                         href={item.href}
                         passHref
                       >
                         <span className="text-text-sm"> {item.icon}</span>
-                        {collapsed && <span className="">{item.label}</span>}
+                        <span className={`${!collapsed ? "opacity-0" : ""}`}>
+                          {item.label}
+                        </span>
                       </Link>
                     </li>
                   ))}

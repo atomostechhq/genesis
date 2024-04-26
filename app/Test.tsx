@@ -166,15 +166,15 @@ const Test = () => {
     {
       label: "Footer Item 1",
       items: [
-        { label: "Subitem 1", href: "/subitem1", icon: <AlertFillIcon /> },
-        { label: "Subitem 2", href: "/subitem2", icon: <AlertFillIcon /> },
+        { label: "Subitem 1", href: "/subitem1", icon: <AlertFillIcon size={18} /> },
+        { label: "Subitem 2", href: "/subitem2", icon: <AlertFillIcon size={18} /> },
       ],
     },
     {
       label: "Footer Item 2",
       items: [
-        { label: "Subitem 3", href: "/subitem3", icon: <AlertFillIcon /> },
-        { label: "Subitem 4", href: "/subitem4", icon: <AlertFillIcon /> },
+        { label: "Subitem 3", href: "/subitem3", icon: <AlertFillIcon size={18} /> },
+        { label: "Subitem 4", href: "/subitem4", icon: <AlertFillIcon size={18} /> },
       ],
     },
   ];
@@ -253,10 +253,7 @@ const Test = () => {
           ))}
         </div>
       </div>
-      <div
-        className={
-          "flex gap-4 items-center mt-5"}
-      >
+      <div className={"flex gap-4 items-center mt-5"}>
         <span className="bg-primary-25">{color} Primary 25</span>
         <span className="bg-primary-50">{color} Primary 50</span>
         <span className="bg-primary-100">{color} Primary 100</span>
@@ -283,11 +280,13 @@ const Test = () => {
         >
           This is a success Alert with an encouraging title and both icons.
           <section className="flex gap-2 items-center mt-3">
-            <Button variant="outlined" intent="error-outlined">Cancel</Button>
+            <Button variant="outlined" intent="error-outlined">
+              Cancel
+            </Button>
             <Button>Apply</Button>
           </section>
         </Notice>
-       {/* <Notice
+        {/* <Notice
           open={open}
           setOpen={setOpen}
           variant="success"
@@ -297,7 +296,7 @@ const Test = () => {
         >
           This is a success Alert with an encouraging title without icon.
         </Notice> */}
-         {/* 
+        {/* 
         <Notice
           open={open}
           setOpen={setOpen}
@@ -636,7 +635,9 @@ const Test = () => {
             <h1>States:</h1>
             <div className="flex items-center gap-2">
               <Checkbox id="disable" size="lg" disabled />
-              <Label disabled htmlFor="disable">Disabled</Label>
+              <Label disabled htmlFor="disable">
+                Disabled
+              </Label>
             </div>
             <div className="flex items-center gap-2">
               <Checkbox id="check" size="lg" checked />
@@ -646,15 +647,15 @@ const Test = () => {
           <section className="flex items-center gap-4">
             <h1>Checkbox with Text and Subtext: </h1>
             <div className="flex items-start gap-2">
-              <Checkbox id="smallText" size="sm" className="mt-1" />
-              <div className="flex flex-col">
+              <Checkbox id="smallText" size="sm" />
+              <div className="flex flex-col -mt-1">
                 <Label htmlFor="smallText">Text with small checkbox</Label>
                 <HelperText size="sm">This is a helper text</HelperText>
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <Checkbox id="largeText" size="lg" className="mt-1" />
-              <div className="flex flex-col">
+              <Checkbox id="largeText" size="lg" />
+              <div className="flex flex-col -mt-1">
                 <Label htmlFor="largeText">Text with large checkbox</Label>
                 <HelperText size="lg">This is a helper text</HelperText>
               </div>
@@ -679,7 +680,9 @@ const Test = () => {
             <h1>States:</h1>
             <div className="flex items-center gap-2">
               <Radio id="disable" size="lg" disabled />
-              <Label disabled htmlFor="disable">Disabled</Label>
+              <Label disabled htmlFor="disable">
+                Disabled
+              </Label>
             </div>
             <div className="flex items-center gap-2">
               <Radio id="check" size="lg" checked />
@@ -689,25 +692,15 @@ const Test = () => {
           <section className="flex items-center gap-4">
             <h1>Radio with Text and Subtext: </h1>
             <div className="flex items-start gap-2">
-              <Radio
-                name="radioWithText"
-                id="smallRadio"
-                size="sm"
-                className="mt-1"
-              />
-              <div className="flex flex-col">
+              <Radio name="radioWithText" id="smallRadio" size="sm" />
+              <div className="flex flex-col -mt-1">
                 <Label htmlFor="smallRadio">Text with small radio button</Label>
                 <HelperText size="sm">This is a helper text</HelperText>
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <Radio
-                name="radioWithText"
-                id="largeRadio"
-                size="lg"
-                className="mt-1"
-              />
-              <div className="flex flex-col">
+              <Radio name="radioWithText" id="largeRadio" size="lg" />
+              <div className="flex flex-col -mt-1">
                 <Label htmlFor="largeRadio">Text with large radio button</Label>
                 <HelperText size="lg">This is a helper text</HelperText>
               </div>
@@ -777,7 +770,7 @@ const Test = () => {
       <div className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
-        onDelete={()=>alert("deleted")}
+          onDelete={() => alert("deleted")}
           selectedFile={selectedFile}
           setSelectedFile={setSelectedFile}
           onChange={handleFileChange}

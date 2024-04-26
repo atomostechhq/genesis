@@ -30,7 +30,7 @@ export const tableData: User[] = [
       {
         id: 101,
         firstName: "string",
-        lastName: "Linsley",
+        lastName: "name 1",
         age: 33,
         visits: 100,
         progress: 50,
@@ -39,7 +39,7 @@ export const tableData: User[] = [
       {
         id: 102,
         firstName: "string",
-        lastName: "Linsley",
+        lastName: "name 2",
         age: 33,
         visits: 100,
         progress: 50,
@@ -48,7 +48,7 @@ export const tableData: User[] = [
       {
         id: 103,
         firstName: "string",
-        lastName: "Linsley",
+        lastName: "name 3",
         age: 33,
         visits: 100,
         progress: 50,
@@ -57,7 +57,7 @@ export const tableData: User[] = [
       {
         id: 104,
         firstName: "string",
-        lastName: "Linsley",
+        lastName: "name 4",
         age: 33,
         visits: 100,
         progress: 50,
@@ -66,7 +66,7 @@ export const tableData: User[] = [
       {
         id: 105,
         firstName: "string",
-        lastName: "Linsley",
+        lastName: "name 5",
         age: 33,
         visits: 100,
         progress: 50,
