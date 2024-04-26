@@ -27,6 +27,7 @@ import LogoutBoxRLineIcon from "remixicon-react/LogoutBoxRLineIcon";
 import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
 import BreadCrumb from "./components/Breadcrumbs";
 import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
+import Link from "next/link";
 
 interface Option {
   label: string;
@@ -163,15 +164,31 @@ const Test = () => {
     {
       label: "Footer Item 1",
       items: [
-        { label: "Subitem 1", href: "/subitem1", icon: <AlertFillIcon size={18} /> },
-        { label: "Subitem 2", href: "/subitem2", icon: <AlertFillIcon size={18} /> },
+        {
+          label: "Subitem 1",
+          href: "/subitem1",
+          icon: <AlertFillIcon size={18} />,
+        },
+        {
+          label: "Subitem 2",
+          href: "/subitem2",
+          icon: <AlertFillIcon size={18} />,
+        },
       ],
     },
     {
       label: "Footer Item 2",
       items: [
-        { label: "Subitem 3", href: "/subitem3", icon: <AlertFillIcon size={18} /> },
-        { label: "Subitem 4", href: "/subitem4", icon: <AlertFillIcon size={18} /> },
+        {
+          label: "Subitem 3",
+          href: "/subitem3",
+          icon: <AlertFillIcon size={18} />,
+        },
+        {
+          label: "Subitem 4",
+          href: "/subitem4",
+          icon: <AlertFillIcon size={18} />,
+        },
       ],
     },
   ];
@@ -818,6 +835,13 @@ const Test = () => {
           </Sidebar.Footer>
         </Sidebar>
       </div>
+
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">
+          <Link href="/pages/tables">Go to Table component</Link>
+        </h1>
+      </div>
+
       <div>
         <EmptyState>
           <EmptyImageSVG />

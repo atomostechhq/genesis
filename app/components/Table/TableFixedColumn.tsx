@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import Chip from "../Chip";
 import Button from "../Button";
-import TablePagination from "../TablePagination";
+import Pagination from "../Pagination";
 
 const TableFixedColumn = () => {
   const [data, setdata] = useState(tableData);
@@ -33,8 +33,8 @@ const TableFixedColumn = () => {
 
   const currentPageData = data?.slice(startIndex, endIndex);
   return (
-    <div className="overflow-auto shadow-sm rounded-xl">
-       <div className="px-6 py-2 w-full h-[91px] border-b border-gray-200 flex items-center justify-between gap-2">
+    <div className="shadow-sm rounded-xl">
+      <div className="px-6 py-2 w-full h-[91px] border-b border-gray-200 flex items-center justify-between gap-2">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-lg font-medium">Heading</h1>
@@ -54,6 +54,7 @@ const TableFixedColumn = () => {
           </Button>
         </div>
       </div>
+      <div className="overflow-scroll">
       <Table>
         <TableHead>
           <TableRow>
@@ -69,10 +70,12 @@ const TableFixedColumn = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {currentPageData.slice(0,10).map((item) => {
+          {currentPageData?.map((item) => {
             return (
               <TableRow key={item.id}>
-                <TableDataCell sticky left="0px">{item.id}</TableDataCell>
+                <TableDataCell sticky left="0px">
+                  {item.id}
+                </TableDataCell>
                 <TableDataCell>{item.firstName}</TableDataCell>
                 <TableDataCell>{item.lastName}</TableDataCell>
                 <TableDataCell>{item.age}</TableDataCell>
@@ -88,7 +91,8 @@ const TableFixedColumn = () => {
           })}
         </TableBody>
       </Table>
-      <TablePagination
+      </div>
+      <Pagination
         count={tableData?.length}
         page={page}
         rowsPerPage={rowsPerPage}

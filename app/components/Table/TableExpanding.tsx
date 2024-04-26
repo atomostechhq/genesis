@@ -9,9 +9,9 @@ import {
   TableHeadCell,
   TableRow,
 } from "@/app/components/TableComponents";
-import TablePagination from "@/app/components/TablePagination";
 import React, { useState } from "react";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
+import Pagination from "../Pagination";
 
 const TableExpanding = () => {
   const [page, setPage] = useState(0);
@@ -95,7 +95,7 @@ const TableExpanding = () => {
           ))}
         </TableBody>
       </Table>
-      <TablePagination
+      <Pagination
         count={tableData?.length}
         page={page}
         rowsPerPage={rowsPerPage}
