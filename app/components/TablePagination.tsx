@@ -1,6 +1,5 @@
-"use client"
+"use client";
 import React, { useState } from "react";
-import Input from "./Input";
 import Button from "./Button";
 import ArrowLeftLineIcon from "remixicon-react/ArrowLeftLineIcon";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
@@ -23,7 +22,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
   onRowsPerPageChange,
 }) => {
   const totalPages = Math.ceil(count / rowsPerPage);
-  console.log("totalPages", totalPages)
+  console.log("totalPages", totalPages);
 
   const handlePrevPageClick = () => {
     onPageChange(page - 1);
@@ -34,9 +33,9 @@ const TablePagination: React.FC<TablePaginationProps> = ({
   };
 
   const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPage = parseInt(e.target.value, 10) - 1;
-    if (!isNaN(newPage) && newPage >= 0 && newPage < totalPages) {
-      onPageChange(newPage);
+    const inputPage = parseInt(e.target.value, 10);
+    if (!isNaN(inputPage) && inputPage >= 1 && inputPage <= totalPages) {
+      onPageChange(inputPage - 1);
     }
   };
 
@@ -45,6 +44,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
   ) => {
     onRowsPerPageChange(parseInt(event.target.value, 10));
   };
+  console.log("totalPages", totalPages);
 
   return (
     <div className="border-t border-gray-200 px-6 py-4 flex justify-between items-center">
@@ -69,17 +69,26 @@ const TablePagination: React.FC<TablePaginationProps> = ({
       <section className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <span>Page</span>
-          <Input
-            type="number"
-            size="sm"
-            placeholder="1"
-            className="w-[70px] px-2 text-center"
-            disabled={page >= totalPages}
+          <select
             value={page + 1}
-            onChange={handlePageInputChange}
-          />
-          <span>of {totalPages}</span>
+            onChange={(e) => onPageChange(parseInt(e.target.value, 10) - 1)}
+            className="bg-white border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-500"
+          >
+            {totalPages > 0 &&
+              [...Array(totalPages)].map((_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+          </select>
+          <span>of {totalPages > 0 ? totalPages : 0}</span>
         </div>
+        <div className="flex items-center gap-2">
+          <span>Page</span>
+
+          <span>of {totalPages > 0 ? totalPages : 0}</span>
+        </div>
+
         <div className="flex items-center">
           <Button
             variant="outlined"
