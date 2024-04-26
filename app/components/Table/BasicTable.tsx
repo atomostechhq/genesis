@@ -7,8 +7,10 @@ import TablePagination from "../TablePagination";
 
 
 interface TableComponentProps {
-  defaultColumns: any;
-  ExpandedRow:any;
+  defaultColumns?: any;
+  ExpandedRow?:any;
+  columns?:any;
+  setColumns?:(value:any)=>void;
 }
 
 type ColumnDef<T> = {
@@ -81,7 +83,7 @@ const CombinedTable = ({ExpandedRow,defaultColumns}:TableComponentProps) => {
 
   return (
     <div>
-      <div className="overflow-auto max-h-[400px]">
+      <div className="overflow-auto">
         <Table className="table-fixed w-full">
           <TableHead>
             <TableRow>
