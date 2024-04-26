@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Input from "./Input";
 import Button from "./Button";
 import ArrowLeftLineIcon from "remixicon-react/ArrowLeftLineIcon";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
@@ -82,6 +81,11 @@ const TablePagination: React.FC<TablePaginationProps> = ({
                 </option>
               ))}
           </select>
+          <span>of {totalPages > 0 ? totalPages : 0}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span>Page</span>
+
           <span>of {totalPages > 0 ? totalPages : 0}</span>
         </div>
 
