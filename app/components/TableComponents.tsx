@@ -59,7 +59,7 @@ export const TableHead = ({
   return (
     <thead
       {...props}
-      className={cn("bg-gray-50 border border-gray-300", className)}
+      className={cn("bg-gray-50 border border-gray-200", className)}
     >
       {children}
     </thead>
@@ -80,7 +80,7 @@ export const TableBody = ({
 
 export const TableRow = ({ children, className, ...props }: TableRowProps) => {
   return (
-    <tr {...props} className={cn("border border-gray-300", className)}>
+    <tr {...props} className={cn("border border-gray-200", className)}>
       {children}
     </tr>
   );

@@ -119,7 +119,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
             <p
               className={cn({
                 "text-[14px] text-gray-500": true,
-                "w-[37px] text-ellipsis whitespace-nowrap overflow-hidden":
+                "w-[37px] text-ellipsis text-white whitespace-nowrap overflow-hidden":
                   !collapsed,
               })}
             >
@@ -187,7 +187,7 @@ const Footer: React.FC<FooterProps> = ({
               <p
                 className={cn({
                   "text-[14px] text-gray-500": true,
-                  "w-[37px] text-ellipsis whitespace-nowrap overflow-hidden":
+                  "w-[37px] text-ellipsis text-white whitespace-nowrap overflow-hidden":
                     !collapsed,
                 })}
               >
