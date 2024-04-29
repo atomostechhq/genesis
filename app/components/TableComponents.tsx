@@ -26,6 +26,7 @@ interface TableHeadCellProps extends ThHTMLAttributes<HTMLTableCellElement> {
   sticky?: boolean;
   left?: string;
   stickyIcon?: JSX.Element;
+  shadow?:boolean;
 }
 
 interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
@@ -33,6 +34,7 @@ interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   icon?: JSX.Element;
   sticky?: boolean;
   left?: string;
+  shadow?:boolean;
 }
 
 export const Table = ({ children, className, ...props }: TableProps) => {
@@ -40,7 +42,7 @@ export const Table = ({ children, className, ...props }: TableProps) => {
     <table
       {...props}
       className={cn(
-        "bg-white w-full text-left whitespace-nowrap relative border",
+        "bg-white text-left w-full whitespace-nowrap relative border",
         className
       )}
     >
@@ -57,7 +59,7 @@ export const TableHead = ({
   return (
     <thead
       {...props}
-      className={cn("bg-gray-50 z-[100] border border-gray-200", className)}
+      className={cn("bg-gray-50 border border-gray-300", className)}
     >
       {children}
     </thead>
@@ -78,7 +80,7 @@ export const TableBody = ({
 
 export const TableRow = ({ children, className, ...props }: TableRowProps) => {
   return (
-    <tr {...props} className={cn("border border-gray-200", className)}>
+    <tr {...props} className={cn("border border-gray-300", className)}>
       {children}
     </tr>
   );
@@ -90,6 +92,7 @@ export const TableHeadCell = ({
   icon,
   sticky,
   stickyIcon,
+  shadow,
   left,
   ...props
 }: TableHeadCellProps) => {
@@ -98,7 +101,8 @@ export const TableHeadCell = ({
       {...props}
       className={cn(
         "px-6 py-3 text-left",
-        sticky === true && `sticky bg-gray-50 shadow-sm shadow-black left-[${left}]`,
+        sticky && `sticky bg-gray-50`,
+        sticky && shadow && "shadow-table",
         left,
         className
       )}
@@ -129,6 +133,7 @@ export const TableDataCell = ({
   className,
   icon,
   sticky,
+  shadow,
   left,
   ...props
 }: TableCellProps) => {
@@ -137,7 +142,8 @@ export const TableDataCell = ({
       {...props}
       className={cn(
         "px-6 py-4 text-sm font-medium space-x-2",
-        sticky === true ? `sticky bg-white left-[${left}]`: "",
+        sticky &&`sticky bg-white`,
+        sticky && shadow && "shadow-table",
         left,
         className
       )}
