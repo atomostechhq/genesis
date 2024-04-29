@@ -57,7 +57,7 @@ interface NoticeProps
   position?: "top" | "bottom";
   showIcon?: boolean;
   open?: boolean;
-  setOpen?: any;
+  setOpen?: any
 }
 
 const noticeVariants = cva("p-4 w-fit rounded-[6px]", {
@@ -85,15 +85,16 @@ export const Notice = ({
   setOpen,
   showIcon = true,
 }: NoticeProps) => {
+  const handleClose = () => setOpen(false);
   return (
     <>
       {open && (
         <div
           className={cn(
             noticeVariants({ variant, position }),
-            "fixed z-10",
-            position == "top" && open && "animate-slide-in-top",
-            position == "bottom" && open && "animate-slide-in-right",
+            `fixed z-10`,
+            position === "top" && open && `animate-slide-in-top`,
+            position === "bottom" && open && `animate-slide-in-right`,
           )}
         >
           <div className="relative">
@@ -103,7 +104,8 @@ export const Notice = ({
                   <VariantIcon variant={variant} />
                   <span className="ml-2 mr-8 text-text-sm">{children}</span>
                   <span
-                    onClick={(prev) => setOpen(!prev)}
+
+                    onClick={handleClose}
                   >
                     <CloseLineIcon size={20} />
                   </span>
@@ -121,7 +123,7 @@ export const Notice = ({
                   </section>
                   <span
                     className={cn("absolute top-0 right-0 cursor-pointer")}
-                    onClick={(prev) => setOpen(!prev)}
+                    onClick={handleClose}
                   >
                     <CloseLineIcon size={20} />
                   </span>
@@ -134,7 +136,7 @@ export const Notice = ({
                 </section>
                 <span
                   className={cn("absolute top-0 right-0 cursor-pointer")}
-                  onClick={(prev) => setOpen(!prev)}
+                  onClick={handleClose}
                 >
                   <CloseLineIcon
                     size={20}
