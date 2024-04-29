@@ -55,15 +55,15 @@ const TableFixedColumn = () => {
           </Button>
         </div>
       </div>
-      <div className="overflow-scroll">
+      <div className="overflow-auto">
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCell sticky left="0px">
+            <TableHeadCell sticky left="0px" shadow>
               ID
             </TableHeadCell>
-            <TableHeadCell sticky left="100px">First Name</TableHeadCell>
-            <TableHeadCell sticky left="255px">Last Name</TableHeadCell>
+            <TableHeadCell>First Name</TableHeadCell>
+            <TableHeadCell>Last Name</TableHeadCell>
             <TableHeadCell>Age</TableHeadCell>
             <TableHeadCell>Progress</TableHeadCell>
             <TableHeadCell>Status</TableHeadCell>
@@ -74,11 +74,11 @@ const TableFixedColumn = () => {
           {currentPageData?.map((item) => {
             return (
               <TableRow key={item.id}>
-                <TableDataCell sticky left="0px">
+                <TableDataCell sticky left="0px" shadow>
                   {item.id}
                 </TableDataCell>
-                <TableDataCell sticky left="100px">{item.firstName}</TableDataCell>
-                <TableDataCell sticky left="255px">{item.lastName}</TableDataCell>
+                <TableDataCell>{item.firstName}</TableDataCell>
+                <TableDataCell>{item.lastName}</TableDataCell>
                 <TableDataCell>{item.age}</TableDataCell>
                 <TableDataCell>{item.progress}</TableDataCell>
                 <TableDataCell>
