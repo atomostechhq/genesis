@@ -13,7 +13,7 @@ import SearchLineIcon from "remixicon-react/SearchLineIcon";
 import ErrorWarningLineIcon from "remixicon-react/ErrorWarningLineIcon";
 import { cn } from "../utils/utils";
 import Label from "./Label";
-import { Tooltip } from "./Tooltip";
+import Tooltip  from "./Tooltip";
 
 interface Option {
   label: string;

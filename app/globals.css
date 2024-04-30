@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* "brand",
-"blue-gray",
-"blue-light",
-"indigo",
-"purple",
-"violet",
-"pink",
-"rose",
-"orange", */
 
 .test {
   border: 1px solid red;
@@ -185,56 +176,3 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-
-
-
-/* .c-multi-select-dropdown {
-  position: relative;
-  width: 300px;
-
-  &:hover {
-    .c-multi-select-dropdown__options {
-      display: block;
-    }
-  }
-
-  .c-multi-select-dropdown__selected {
-    border: solid 1px #eee;
-    font-size: 14px;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    > img {
-      height: 18px;
-    }
-  }
-
-  .c-multi-select-dropdown__options {
-    display: none;
-    position: absolute;
-    box-sizing: border-box;
-    left: 0;
-    width: inherit;
-    list-style: none;
-    padding-left: 0px;
-    border: solid 1px #eee;
-    padding: 5px 0px;
-  }
-
-  .c-multi-select-dropdown__option {
-    display: flex;
-    align-items: center;
-    padding: 6px 10px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #eee;
-    }
-
-    &-checkbox {
-      margin-right: 6px;
-    }
-  }
-} */

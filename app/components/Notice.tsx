@@ -76,7 +76,7 @@ const noticeVariants = cva("p-4 w-fit rounded-[6px]", {
   },
 });
 
-export const Notice = ({
+const Notice = ({
   children,
   variant,
   position,
@@ -149,3 +149,5 @@ export const Notice = ({
     </>
   );
 };
+
+export default Notice

@@ -24,7 +24,7 @@ const tooltupVariants = cva(
   }
 );
 
-export const Tooltip = ({ position, content, children }: TooltipProps) => {
+const Tooltip = ({ position, content, children }: TooltipProps) => {
   return (
     <div id="tooltip" className="relative cursor-pointer group">
       <div>{children}</div>
@@ -32,3 +32,5 @@ export const Tooltip = ({ position, content, children }: TooltipProps) => {
     </div>
   );
 };
+
+export default Tooltip
