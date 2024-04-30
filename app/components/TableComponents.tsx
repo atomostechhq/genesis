@@ -61,7 +61,7 @@ export const TableHead = ({
   return (
     <thead
       {...props}
-      className={cn("bg-gray-50 border border-gray-200 ", className)}
+      className={cn("bg-gray-50 border border-gray-200", className)}
     >
       {children}
     </thead>
@@ -74,7 +74,7 @@ export const TableBody = ({
   ...props
 }: TableHeadProps) => {
   return (
-    <tbody {...props} className={cn("",className)}>
+    <tbody {...props} className={cn(className)}>
       {children}
     </tbody>
   );
@@ -102,7 +102,7 @@ export const TableHeadCell = ({
     <th
       {...props}
       className={cn(
-        "px-6 py-3 text-left group-has-[td]:py-1",
+        "px-6 py-3 text-left group-has-[th]:py-1",
         sticky && `sticky bg-gray-50`,
         sticky && shadow && "shadow-table",
         left,
@@ -114,7 +114,7 @@ export const TableHeadCell = ({
     >
       <div className="flex items-center">
         <span>
-          {sticky ? <Pushpin2LineIcon className="w-3.5 h-3.5" />: "" }
+          {sticky && <Pushpin2LineIcon className="w-3.5 h-3.5" />}
         </span>
         <span className="font-medium text-xs">{children}</span>
         <span
@@ -135,7 +135,6 @@ export const TableDataCell = ({
   className,
   icon,
   sticky,
-
   shadow,
   left,
   ...props
