@@ -223,11 +223,11 @@ const config: Config = {
         sm: "0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1)",
         md: "1px 2px 12px 0px rgba(112, 112, 112, 0.25)",
         lg: "0px 4px 12px 0px rgba(16, 24, 40, 0.25)",
-        table:"inset -4px 0px 0px 0px #D0D5DD"
+        table:"inset -3px 0px 0px 0px #EAECF0"
       },
       animation: {
-        'slide-in-top': 'slide-in-top 0.5s ease backwards',
-        'slide-in-right': 'slide-in-right 0.5s ease backwards',
+        'slide-in-top': 'slide-in-top 0.5s ease forwards',
+        'slide-in-right': 'slide-in-right 0.5s ease forwards',
       },
       keyframes: {
         'slide-in-top': {
