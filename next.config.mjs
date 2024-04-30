@@ -1,4 +1,4 @@
-// /** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 // const nextConfig = {
 //   webpack: (config, { isServer }) => {
 //     if (!isServer) {
@@ -36,3 +36,5 @@ const nextConfig = {
     return config;
   },
 };
+
+export default nextConfig
