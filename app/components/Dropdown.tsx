@@ -13,7 +13,7 @@ import SearchLineIcon from "remixicon-react/SearchLineIcon";
 import ErrorWarningLineIcon from "remixicon-react/ErrorWarningLineIcon";
 import { cn } from "../utils/utils";
 import Label from "./Label";
-import Tooltip  from "./Tooltip";
+import Tooltip from "./Tooltip";
 
 interface Option {
   label: string;
@@ -134,10 +134,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   useEffect(() => {
-    // Add event listener to detect clicks outside the dropdown
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Cleanup by removing the event listener
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
@@ -147,7 +145,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node)
     ) {
-      setDropdownMenu(false); // Close dropdown if clicked outside
+      setDropdownMenu(false);
     }
   };
 
@@ -155,7 +153,10 @@ const Dropdown: React.FC<DropdownProps> = ({
     <div ref={dropdownRef} className="relative w-[320px]">
       <div
         onClick={() => setDropdownMenu((prev) => !prev)}
-        className="border border-gray-800 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 text-text-sm cursor-pointer"
+        className={cn(
+          "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 text-text-sm cursor-pointer",
+          dropdownMenu ? "border border-gray-800" : "border border-gray-200"
+        )}
       >
         <section>
           {multiple
@@ -174,17 +175,17 @@ const Dropdown: React.FC<DropdownProps> = ({
               placeholder="Search..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-1"
+              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
               endIcon={<SearchLineIcon size={18} />}
             />
           )}
           {multiple && (
-            <span
+            <p
               onClick={handleSelectAll}
               className="text-text-sm py-[6px] hover:text-primary-700 px-[14px] text-primary-600 cursor-pointer"
             >
               Select all
-            </span>
+            </p>
           )}
           <section className="max-h-[200px] overflow-y-scroll">
             {options
