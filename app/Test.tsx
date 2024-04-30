@@ -805,12 +805,10 @@ const Test = () => {
           setSelectedFile={setSelectedFile}
           onChange={handleFileChange}
         >
-          Uploaded
-          {/* <ProgressBar
+          <ProgressBar
             progressColor="bg-primary-600"
             progress={50}
-            progressText={`${50}%`}
-          /> */}
+          />
         </FileUpload>
       </div>
       {/* Textarea */}
