@@ -19,6 +19,7 @@ interface TableHeadProps extends HTMLAttributes<HTMLTableSectionElement> {
 
 interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   children?: ReactNode;
+  indent?:boolean;
 }
 
 interface TableHeadCellProps extends ThHTMLAttributes<HTMLTableCellElement> {
@@ -80,9 +81,9 @@ export const TableBody = ({
   );
 };
 
-export const TableRow = ({ children, className, ...props }: TableRowProps) => {
+export const TableRow = ({ children, className,indent, ...props }: TableRowProps) => {
   return (
-    <tr {...props} className={cn("border border-gray-200",className)}>
+    <tr {...props} className={cn("border border-gray-200",indent && "group/indent",className)}>
       {children}
     </tr>
   );
@@ -143,7 +144,7 @@ export const TableDataCell = ({
     <td
       {...props}
       className={cn(
-        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2",
+        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2 first:group-has-[td]/indent:pl-10",
         sticky &&`sticky bg-white`,
         sticky && shadow && "shadow-table",
         left,

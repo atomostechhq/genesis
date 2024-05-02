@@ -90,7 +90,7 @@ const TableExpanding = () => {
               {expandedRows?.includes(data.id) &&
                 data.subRows &&
                 data.subRows.map((subData, subIndex) => (
-                  <TableRow key={`${index}-${subIndex}`}>
+                  <TableRow indent key={`${index}-${subIndex}`}>
                     <TableDataCell>{subData.firstName}</TableDataCell>
                     <TableDataCell>{subData.lastName}</TableDataCell>
                     <TableDataCell>{subData.age}</TableDataCell>
