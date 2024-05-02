@@ -8,10 +8,10 @@ import MailLineIcon from "remixicon-react/MailLineIcon";
 import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
 import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
-import  Tooltip  from "./components/Tooltip";
+import Tooltip from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
-import Notice  from "./components/Notice";
+import Notice from "./components/Notice";
 import Skeleton from "./components/Skeleton";
 import Checkbox from "./components/Checkbox";
 import HelperText from "./components/HelperText";
@@ -28,6 +28,7 @@ import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
 import BreadCrumb from "./components/Breadcrumbs";
 import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 import Link from "next/link";
+import Loading, { LoadingDesc, LoadingText } from "./components/Loading";
 
 interface Option {
   label: string;
@@ -353,9 +354,6 @@ const Test = () => {
           </div>
         </Notice> */}
       </div>
-      {/* <div>
-        <Table />
-      </div> */}
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
@@ -392,6 +390,7 @@ const Test = () => {
         <Chip intent="error">error</Chip>
         <Chip intent="default">default</Chip>
       </div>
+      {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <div className="flex gap-10">
         <section>
@@ -596,6 +595,7 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* Notice  */}
       <Button variant="filled" onClick={() => setOpen(true)}>
         Show Notice
       </Button>
@@ -806,11 +806,8 @@ const Test = () => {
           onChange={handleFileChange}
         >
           <div className="mt-1">
-          <ProgressBar
-            progressColor="bg-primary-600"
-            progress={50}
-            />
-            </div>
+            <ProgressBar progressColor="bg-primary-600" progress={50} />
+          </div>
         </FileUpload>
       </div>
       {/* Textarea */}
@@ -864,7 +861,7 @@ const Test = () => {
           <Link href="/pages/tables">Go to Table component</Link>
         </h1>
       </div>
-
+      {/* Empty State */}
       <div>
         <EmptyState>
           <EmptyImageSVG />
@@ -877,6 +874,13 @@ const Test = () => {
             Reload Page
           </Button>
         </EmptyState>
+      </div>
+      {/* Loading State */}
+      <div>
+        <Loading className="text-center" width="50px" height="50px">
+          <LoadingText>Hold On ...</LoadingText>
+          <LoadingDesc>We are running into some issues :&#40;</LoadingDesc>
+        </Loading>
       </div>
     </div>
   );

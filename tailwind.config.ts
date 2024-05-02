@@ -228,6 +228,7 @@ const config: Config = {
       animation: {
         'slide-in-top': 'slide-in-top 0.5s ease forwards',
         'slide-in-right': 'slide-in-right 0.5s ease forwards',
+        "spin-slow":"spin-slow 1.5s linear infinite",
       },
       keyframes: {
         'slide-in-top': {
@@ -246,6 +247,14 @@ const config: Config = {
             transform: 'translateX(0)',
           },
         },
+        "spin-slow":{
+          from: {
+            transform: "rotate(0deg)"
+          },
+          to: {
+            transform: "rotate(360deg)"
+          }
+        }
       },
     },
   },

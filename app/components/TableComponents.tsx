@@ -102,7 +102,7 @@ export const TableHeadCell = ({
     <th
       {...props}
       className={cn(
-        "px-6 py-3 text-left group-has-[th]:py-1",
+        "px-6 py-3 text-left group-has-[th]:py-2",
         sticky && `sticky bg-gray-50`,
         sticky && shadow && "shadow-table",
         left,
@@ -143,7 +143,7 @@ export const TableDataCell = ({
     <td
       {...props}
       className={cn(
-        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-1",
+        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2",
         sticky &&`sticky bg-white`,
         sticky && shadow && "shadow-table",
         left,
