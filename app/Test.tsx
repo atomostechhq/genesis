@@ -8,10 +8,10 @@ import MailLineIcon from "remixicon-react/MailLineIcon";
 import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
 import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ListCheckIcon from "remixicon-react/ListCheckIcon";
-import  Tooltip  from "./components/Tooltip";
+import Tooltip from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
-import Notice  from "./components/Notice";
+import Notice from "./components/Notice";
 import Skeleton from "./components/Skeleton";
 import Checkbox from "./components/Checkbox";
 import HelperText from "./components/HelperText";
@@ -28,6 +28,7 @@ import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
 import BreadCrumb from "./components/Breadcrumbs";
 import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 import Link from "next/link";
+import Loading from "./components/Loading";
 
 interface Option {
   label: string;
@@ -360,9 +361,6 @@ const Test = () => {
           </div>
         </Notice> */}
       </div>
-      {/* <div>
-        <Table />
-      </div> */}
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
@@ -399,6 +397,7 @@ const Test = () => {
         <Chip intent="error">error</Chip>
         <Chip intent="default">default</Chip>
       </div>
+      {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <div className="flex gap-10">
         <section>
@@ -603,6 +602,7 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* Notice  */}
       <Button variant="filled" onClick={() => setOpen(true)}>
         Show Notice
       </Button>
@@ -812,12 +812,9 @@ const Test = () => {
           setSelectedFile={setSelectedFile}
           onChange={handleFileChange}
         >
-          Uploaded
-          {/* <ProgressBar
-            progressColor="bg-primary-600"
-            progress={50}
-            progressText={`${50}%`}
-          /> */}
+          <div className="mt-1">
+            <ProgressBar progressColor="bg-primary-600" progress={50} />
+          </div>
         </FileUpload>
       </div>
       {/* Textarea */}
@@ -842,7 +839,7 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
         <BreadCrumb />
       </div>
-
+      {/* sidebar */}
       <div className="">
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
           <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
@@ -869,7 +866,7 @@ const Test = () => {
           <Link href="/pages/tables">Go to Table component</Link>
         </h1>
       </div>
-
+      {/* Empty State */}
       <div>
         <EmptyState>
           <EmptyImageSVG />
@@ -882,6 +879,16 @@ const Test = () => {
             Reload Page
           </Button>
         </EmptyState>
+      </div>
+      {/* Loading State */}
+      <div className="flex flex-col items-center justify-center gap-2">
+        <Loading width="50px" height="50px" />
+        <span className="font-bold">Hold On ...</span>
+        <p className="text-sm text-gray-500">
+          We are running into some issues :&#40;
+        </p>
+        <Button>Loading <Loading width="15px" height="15px" /></Button>
+        <Button variant="outlined">Loading <Loading width="15px" height="15px" /></Button>
       </div>
     </div>
   );
