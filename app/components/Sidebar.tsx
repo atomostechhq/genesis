@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "../utils/utils";
-import AlertFillIcon from "remixicon-react/AlertFillIcon";
 import ArrowLeftSLineIcon from "remixicon-react/ArrowLeftSLineIcon";
 import { usePathname } from "next/navigation";
 
