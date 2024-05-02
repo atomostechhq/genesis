@@ -147,7 +147,7 @@ const Test = () => {
  
   const navItems = [
     {
-      label: "Home",
+      label: "Page",
       items: [
         {
           label: "Dashboard",
@@ -858,10 +858,8 @@ const Test = () => {
             setCollapsed={setCollapsed}
             navItems={footerItems}
           >
-            <p className="flex justify-center items-center gap-2">
-              <LogoutBoxRLineIcon size={20} />
-              {!collapsed ? "" : "Logout"}
-            </p>
+            <hr/>
+            <Button className="w-full" variant="outlined" intent="default-outlined" startIcon={<LogoutBoxRLineIcon size={20} />} >{!collapsed ? "" : "Logout"}</Button>
           </Sidebar.Footer>
         </Sidebar>
       </div>

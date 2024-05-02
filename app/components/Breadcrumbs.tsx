@@ -13,12 +13,16 @@ const BreadCrumb = () => {
     const links = segments.map((segment, i) => {
       url += `/${segment}`;
       const isActive = i === segments.length - 1;
-      const isLast = i === segments.length - 1;
+      // const isLast = i === segments.length - 1;
       return (
         <React.Fragment key={i}>
-          {i !== 0 && <ArrowRightSLineIcon size={16} />}
+          {i !== 0 && (
+            <span className="">
+              <ArrowRightSLineIcon size={16} />
+            </span>
+          )}
           <Link
-            className={`text-gray-700 text-text-xs font-semibold py-[6px] rounded-lg ${
+            className={`text-gray-700 capitalize px-3 hover:bg-gray-100 text-text-xs font-semibold py-[6px] rounded-lg ${
               isActive ? "bg-gray-200 px-3 rounded-lg" : ""
             }`}
             href={url}
