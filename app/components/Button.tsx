@@ -43,13 +43,13 @@ const buttonVariants = cva("rounded-lg font-semibold cursor-pointer", {
 
 const Button = ({
   children,
-  className,
-  variant,
-  intent,
-  startIcon,
-  disabled,
-  endIcon,
-  size,
+  className = "",
+  variant = "filled",
+  intent = "primary",
+  startIcon = undefined,
+  endIcon = undefined,
+  size = "md",
+  disabled = false,
   ...props
 }: ButtonProps) => {
   return (
