@@ -10,6 +10,7 @@ import Pushpin2LineIcon from "remixicon-react/Pushpin2LineIcon";
 
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
+  dense?:boolean;
 }
 
 interface TableHeadProps extends HTMLAttributes<HTMLTableSectionElement> {
@@ -37,11 +38,12 @@ interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   shadow?:boolean;
 }
 
-export const Table = ({ children, className, ...props }: TableProps) => {
+export const Table = ({ children, className,dense, ...props }: TableProps) => {
   return (
     <table
       {...props}
       className={cn(
+      dense && "group",
         "bg-white text-left w-full whitespace-nowrap relative border",
         className
       )}
@@ -80,7 +82,7 @@ export const TableBody = ({
 
 export const TableRow = ({ children, className, ...props }: TableRowProps) => {
   return (
-    <tr {...props} className={cn("border border-gray-200", className)}>
+    <tr {...props} className={cn("border border-gray-200",className)}>
       {children}
     </tr>
   );
@@ -100,7 +102,7 @@ export const TableHeadCell = ({
     <th
       {...props}
       className={cn(
-        "px-6 py-3 text-left",
+        "px-6 py-3 text-left group-has-[th]:py-2",
         sticky && `sticky bg-gray-50`,
         sticky && shadow && "shadow-table",
         left,
@@ -112,7 +114,7 @@ export const TableHeadCell = ({
     >
       <div className="flex items-center">
         <span>
-          {sticky ? <Pushpin2LineIcon className="w-3.5 h-3.5" />: "" }
+          {sticky && <Pushpin2LineIcon className="w-3.5 h-3.5" />}
         </span>
         <span className="font-medium text-xs">{children}</span>
         <span
@@ -141,7 +143,7 @@ export const TableDataCell = ({
     <td
       {...props}
       className={cn(
-        "px-6 py-4 text-sm font-medium space-x-2",
+        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2",
         sticky &&`sticky bg-white`,
         sticky && shadow && "shadow-table",
         left,

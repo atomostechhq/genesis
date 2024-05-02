@@ -15,7 +15,7 @@ const tables = () => {
         <TableExpanding />
       </div>
       <div className="space-y-2">
-        <h1>Table With Sorting and Checkbox</h1>
+        <h1>Table With Sorting, Checkbox and Dense Mode</h1>
         <TableSorting />
       </div>
     </div>

@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import Label from "./Label";
 import HelperText from "./HelperText";
-import Button from "./Button";
 import { cn } from "../utils/utils";
 
 interface EmptyStateProps {

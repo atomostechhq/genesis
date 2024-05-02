@@ -90,7 +90,7 @@ const TableSorting = () => {
 
   return (
     <div className="overflow-auto">
-      <Table>
+      <Table dense>
         <TableHead>
           <TableRow className="text-left">
             <TableHeadCell>

@@ -34,7 +34,7 @@ const FileUpload = ({
       <label
         htmlFor="custom-input"
         className={cn(
-          "max-w-lg w-full h-[126px] border border-dashed border-gray-200 hover:bg-gray-200 cursor-pointer rounded-lg px-6 py-4 flex flex-col items-center gap-2",
+          "max-w-lg w-full h-[126px] border-2 border-dashed border-gray-200 hover:bg-gray-200 cursor-pointer rounded-lg px-6 py-4 flex flex-col items-center gap-2",
           className
         )}
       >
@@ -50,20 +50,21 @@ const FileUpload = ({
       </label>
       <div className="">
         {selectedFile?.map((file, index) => (
-          <div key={index} className="p-4 border border-gray-200 rounded-lg w-[512px]">
-            <div className="flex items-center justify-between gap-2" key={index}>
-              <div className="flex items-center gap-2">
-                <File3LineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
-                <div className="flex flex-col gap-2">
-                  <p className="text-sm">{file}</p>
-                </div>
+          <div
+            key={index}
+            className="p-4 border border-gray-200 rounded-lg w-[512px] flex items-center justify-between gap-5"
+          >
+            <div className="flex items-start gap-2 w-full">
+              <File3LineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+              <div className="flex flex-col gap-1 w-full">
+                <p className="text-sm">{file}</p>
+                <div className="w-full">{children}</div>
               </div>
-              <DeleteBinLineIcon
-                onClick={onDelete}
-                className="text-error-600 w-5 h-5"
-              />
             </div>
-            <span className="w-[512px] mt-2">{children}</span>
+            <DeleteBinLineIcon
+              onClick={onDelete}
+              className="text-gray-500 w-5 h-5"
+            />
           </div>
         ))}
       </div>
