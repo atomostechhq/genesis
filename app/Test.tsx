@@ -28,7 +28,7 @@ import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
 import BreadCrumb from "./components/Breadcrumbs";
 import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 import Link from "next/link";
-import Loading, { LoadingDesc, LoadingText } from "./components/Loading";
+import Loading from "./components/Loading";
 
 interface Option {
   label: string;
@@ -832,7 +832,7 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
         <BreadCrumb />
       </div>
-
+      {/* sidebar */}
       <div className="">
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
           <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
@@ -876,11 +876,14 @@ const Test = () => {
         </EmptyState>
       </div>
       {/* Loading State */}
-      <div>
-        <Loading className="text-center" width="50px" height="50px">
-          <LoadingText>Hold On ...</LoadingText>
-          <LoadingDesc>We are running into some issues :&#40;</LoadingDesc>
-        </Loading>
+      <div className="flex flex-col items-center justify-center gap-2">
+        <Loading width="50px" height="50px" />
+        <span className="font-bold">Hold On ...</span>
+        <p className="text-sm text-gray-500">
+          We are running into some issues :&#40;
+        </p>
+        <Button>Loading <Loading width="15px" height="15px" /></Button>
+        <Button variant="outlined">Loading <Loading width="15px" height="15px" /></Button>
       </div>
     </div>
   );
