@@ -1,7 +1,7 @@
 {
-  "name": "atomos-genesis-component-library",
+  "name": "@atomos_tech/genesis",
   "description": "list of components for your project",
-  "version": "0.0.12",
+  "version": "0.0.2",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -23,13 +23,13 @@
       "types": "./dist/index.d.ts"
     },
     "./style": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
+      "import": "./dist/index.css",
+      "require": "./dist/index.css"
     }
   },
   "scripts": {
     "dev": "next dev",
-    "build:css": "postcss app/globals.css -o dist/styles.css",
+    "build:css": "postcss app/globals.css -o dist/index.css",
     "prepare": "npm run build",
     "start": "next start",
     "lint": "next lint",
