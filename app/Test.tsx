@@ -113,7 +113,6 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
-  console.log("multiSelect", multiSelect);
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
 
@@ -142,7 +141,10 @@ const Test = () => {
 
   // sidebar
   const [collapsed, setCollapsed] = useState(false);
-  console.log("collapsed", collapsed);
+
+  // progress bar
+  const [progress, setProgress] = useState(0)
+ 
   const navItems = [
     {
       label: "Home",
@@ -214,6 +216,11 @@ const Test = () => {
       setLoadingState(true);
     }, 2000);
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => setProgress(80), 2000)
+    return () => clearTimeout(timer)
+  }, [progress])
 
   // skeleton data
   const cardBlockData = () => {
@@ -559,14 +566,14 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Progress:</h1>
         <ProgressBar
           progressColor="bg-primary-600"
-          progress={30}
-          progressText={`${30}%`}
+          progress={progress}
+          progressText={`${progress}%`}
         />
         <section className="w-[320px]">
           <ProgressBar
             progressColor="bg-success-600"
-            progress={50}
-            progressText={`${50}%`}
+            progress={progress}
+            progressText={`${progress}%`}
           />
         </section>
       </div>
