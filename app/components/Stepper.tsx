@@ -15,7 +15,7 @@ interface CheckoutStepperProps {
   setCurrentStep: any;
   isComplete: any;
   setIsComplete: any;
-  position: any;
+  position?: string;
 }
 
 const Stepper = ({
@@ -24,27 +24,11 @@ const Stepper = ({
   setCurrentStep,
   isComplete,
   setIsComplete,
-  position,
+  position = "horizontal",
 }: CheckoutStepperProps) => {
-  const [margins, setMargins] = useState<{
-    marginLeft: number;
-    marginRight: number;
-  }>({
-    marginLeft: 0,
-    marginRight: 0,
-  });
 
   const stepRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // useEffect(() => {
-  //   const firstStepWidth = stepRef.current[0]?.offsetWidth;
-  //   const lastStepWidth = stepRef.current[stepsConfig.length - 1]?.offsetWidth;
-
-  //   setMargins({
-  //     marginLeft: firstStepWidth !== undefined ? firstStepWidth / 2 : 0,
-  //     marginRight: lastStepWidth !== undefined ? lastStepWidth / 2 : 0,
-  //   });
-  // }, [stepRef, stepsConfig.length]);
 
   if (!stepsConfig.length) {
     return <></>;
