@@ -652,8 +652,8 @@ const Test = () => {
             setCurrentStep={setCurrentStep}
             isComplete={isComplete}
             setIsComplete={setIsComplete}
-            position="vertical"
-            // position="horizontal"
+            // position="vertical"
+            position="horizontal"
           />
           <section className="my-5 flex justify-end items-center gap-4">
             <Button
