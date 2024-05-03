@@ -83,7 +83,7 @@ export const TableBody = ({
 
 export const TableRow = ({ children, className,indent, ...props }: TableRowProps) => {
   return (
-    <tr {...props} className={cn("border border-gray-200",indent && "group/indent",className)}>
+    <tr {...props} className={cn("border border-gray-200",indent && "group/indent border-none",className)}>
       {children}
     </tr>
   );
