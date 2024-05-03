@@ -144,7 +144,7 @@ export const TableDataCell = ({
     <td
       {...props}
       className={cn(
-        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2 first:group-has-[td]/indent:pl-10",
+        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2 first:group-has-[td]/indent:pl-[60px]",
         sticky &&`sticky bg-white`,
         sticky && shadow && "shadow-table",
         left,
