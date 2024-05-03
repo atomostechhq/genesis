@@ -166,3 +166,5 @@ export const TableDataCell = ({
     </td>
   );
 };
+
+export default Table
