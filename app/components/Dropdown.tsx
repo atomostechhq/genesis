@@ -168,7 +168,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         <ArrowDownSLineIcon size={18} />
       </div>
       {dropdownMenu && (
-        <ul className="shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full">
+        <ul className="shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in-out">
           {search && (
             <Input
               type="text"
@@ -187,7 +187,7 @@ const Dropdown: React.FC<DropdownProps> = ({
               Select all
             </p>
           )}
-          <section className="max-h-[200px] overflow-y-scroll">
+          <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
             {options
               ? memoizedFilteredOptions.map((option) => (
                   <>

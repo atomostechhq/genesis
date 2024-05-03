@@ -9,6 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        backdrop: "rgba(0, 0, 0, 0.5)",
+
         "primary-25": "var(--primary-25)",
         "primary-50": "var(--primary-50)",
         "primary-100": "var(--primary-100)",
@@ -223,38 +225,38 @@ const config: Config = {
         sm: "0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1)",
         md: "1px 2px 12px 0px rgba(112, 112, 112, 0.25)",
         lg: "0px 4px 12px 0px rgba(16, 24, 40, 0.25)",
-        table:"inset -3px 0px 0px 0px #EAECF0"
+        table: "inset -3px 0px 0px 0px #EAECF0",
       },
       animation: {
-        'slide-in-top': 'slide-in-top 0.5s ease forwards',
-        'slide-in-right': 'slide-in-right 0.5s ease forwards',
-        "spin-slow":"spin-slow 1.5s linear infinite",
+        "slide-in-top": "slide-in-top 0.5s ease forwards",
+        "slide-in-right": "slide-in-right 0.5s ease forwards",
+        "spin-slow": "spin-slow 1.5s linear infinite",
       },
       keyframes: {
-        'slide-in-top': {
+        "slide-in-top": {
           from: {
-            transform: 'translateY(-100%)',
+            transform: "translateY(-100%)",
           },
           to: {
-            transform: 'translateY(0)',
+            transform: "translateY(0)",
           },
         },
-        'slide-in-right': {
+        "slide-in-right": {
           from: {
-            transform: 'translateX(100%)',
+            transform: "translateX(100%)",
           },
           to: {
-            transform: 'translateX(0)',
+            transform: "translateX(0)",
           },
         },
-        "spin-slow":{
+        "spin-slow": {
           from: {
-            transform: "rotate(0deg)"
+            transform: "rotate(0deg)",
           },
           to: {
-            transform: "rotate(360deg)"
-          }
-        }
+            transform: "rotate(360deg)",
+          },
+        },
       },
     },
   },

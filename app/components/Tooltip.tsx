@@ -1,6 +1,7 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { HTMLAttributes, ReactNode } from "react";
 import { cn } from "../utils/utils";
+import React from "react";
 
 interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -28,9 +29,15 @@ const Tooltip = ({ position, content, children }: TooltipProps) => {
   return (
     <div id="tooltip" className="relative cursor-pointer group">
       <div>{children}</div>
-      <span className={cn(tooltupVariants({ position }))}>{content}</span>
+      <span
+        className={
+          cn(tooltupVariants({ position })) + ""
+        }
+      >
+        {content}
+      </span>
     </div>
   );
 };
 
-export default Tooltip
+export default Tooltip;

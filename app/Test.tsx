@@ -29,6 +29,8 @@ import BreadCrumb from "./components/Breadcrumbs";
 import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 import Link from "next/link";
 import Loading from "./components/Loading";
+import Divider from "./components/Divider";
+import Modal from "./components/Modal";
 
 interface Option {
   label: string;
@@ -133,7 +135,6 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
-  console.log("multiSelect", multiSelect);
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
 
@@ -160,12 +161,18 @@ const Test = () => {
   // skeleton
   const [loadingState, setLoadingState] = useState(false);
 
+  // modal
+  const [showModal, setShowModal] = useState(false);
+
   // sidebar
   const [collapsed, setCollapsed] = useState(false);
-  console.log("collapsed", collapsed);
+
+  // progress bar
+  const [progress, setProgress] = useState(0);
+
   const navItems = [
     {
-      label: "Home",
+      label: "Page",
       items: [
         {
           label: "Dashboard",
@@ -234,6 +241,11 @@ const Test = () => {
       setLoadingState(true);
     }, 2000);
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => setProgress(80), 2000);
+    return () => clearTimeout(timer);
+  }, [progress]);
 
   // skeleton data
   const cardBlockData = () => {
@@ -577,14 +589,14 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Progress:</h1>
         <ProgressBar
           progressColor="bg-primary-600"
-          progress={30}
-          progressText={`${30}%`}
+          progress={progress}
+          progressText={`${progress}%`}
         />
         <section className="w-[320px]">
           <ProgressBar
             progressColor="bg-success-600"
-            progress={50}
-            progressText={`${50}%`}
+            progress={progress}
+            progressText={`${progress}%`}
           />
         </section>
       </div>
@@ -868,10 +880,15 @@ const Test = () => {
             setCollapsed={setCollapsed}
             navItems={footerItems}
           >
-            <p className="flex justify-center items-center gap-2">
-              <LogoutBoxRLineIcon size={20} />
+            <Divider className="my-3" />
+            <Button
+              className="w-full"
+              variant="outlined"
+              intent="default-outlined"
+              startIcon={<LogoutBoxRLineIcon size={20} />}
+            >
               {!collapsed ? "" : "Logout"}
-            </p>
+            </Button>
           </Sidebar.Footer>
         </Sidebar>
       </div>
@@ -880,6 +897,15 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">
           <Link href="/pages/tables">Go to Table component</Link>
         </h1>
+      </div>
+      <h1 className="text-display-sm text-primary-400">Divider</h1>
+      <div className="w-[50%] border border-primary-600 p-5 flex justify-center gap-6 items-center">
+        <Divider
+          position="vertical"
+          height="200px"
+          className="my-4 border-primary-600"
+        />
+        <Divider position="horizontal" className="my-4" />
       </div>
       {/* Empty State */}
       <div>
@@ -897,17 +923,29 @@ const Test = () => {
       </div>
       {/* Loading State */}
       <div className="flex flex-col items-center justify-center gap-2">
-        <Loading width="50px" height="50px" />
+        {/* <Loading width="50px" height="50px" /> */}
         <span className="font-bold">Hold On ...</span>
         <p className="text-sm text-gray-500">
           We are running into some issues :&#40;
         </p>
         <Button>
+          
           Loading <Loading width="15px" height="15px" />
+        
         </Button>
         <Button variant="outlined">
+          
           Loading <Loading width="15px" height="15px" />
+        
         </Button>
+      </div>
+      <div className="my-5">
+        <Button onClick={() => setShowModal(true)}>Show Modal</Button>
+        <Modal showModal={showModal} setShowModal={setShowModal} closeModal={true}>
+          <div className="w-[500px] h-[300px]">
+            content
+          </div>
+        </Modal>
       </div>
     </div>
   );
