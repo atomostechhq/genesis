@@ -48,6 +48,7 @@ const Test = () => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
+  // label
   const handleChange = (e: any) => {
     const value = e.target.value;
     setInputValue(value);
@@ -63,15 +64,33 @@ const Test = () => {
     setActiveTab(value);
   };
 
+  // single file upload
   const [selectedFile, setSelectedFile] = useState<string[]>([]);
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChangeSingle = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files) {
-      const fileNames = Array.from(files).map((file) => file.name);
-      setSelectedFile(fileNames);
+    if (files && files.length > 0) {
+      const file = files[0];
+      setSelectedFiles([file.name]);
     }
   };
 
+  // multiple file upload
+  const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
+  const handleFileChangeMultiple = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const newFileNames = Array.from(files).map((file) => file.name);
+      setSelectedFiles((prevFiles) => [...prevFiles, ...newFileNames]);
+    }
+  };
+
+  const handleDeleteFile = (fileName: string) => {
+    setSelectedFiles((prevFiles) =>
+      prevFiles.filter((file) => file !== fileName)
+    );
+  };
+
+  // Stepper
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isComplete, setIsComplete] = useState<boolean>(false);
 
@@ -588,7 +607,7 @@ const Test = () => {
           <h1>Size:</h1>
           <Toggle size="sm" />
           <Toggle size="md" />
-          <Toggle size="lg" checked />
+          <Toggle size="lg" checked readOnly />
         </section>
         <section className="flex items-center gap-4">
           <h1>Variants:</h1>
@@ -727,7 +746,7 @@ const Test = () => {
               </Label>
             </div>
             <div className="flex items-center gap-2">
-              <Radio id="check" size="lg" checked />
+              <Radio id="check" size="lg" readOnly checked />
               <Label htmlFor="check">Checked</Label>
             </div>
           </section>
@@ -809,17 +828,18 @@ const Test = () => {
         </section>
       </div>
       {/* File Upload */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
-          onDelete={() => alert("deleted")}
-          selectedFile={selectedFile}
-          setSelectedFile={setSelectedFile}
-          onChange={handleFileChange}
+          onDelete={() => handleDeleteFile(selectedFiles[0])}
+          multiple
+          id="multipleFileUpload"
+          selectedFile={selectedFiles}
+          setSelectedFile={setSelectedFiles}
+          onChange={handleFileChangeMultiple}
+          title="SVG, PNG, JPG or GIF (max. 800x400px)"
         >
-          <div className="mt-1">
-            <ProgressBar progressColor="bg-primary-600" progress={50} />
-          </div>
+          <ProgressBar progressColor="bg-primary-600" progress={50} />
         </FileUpload>
       </div>
       {/* Textarea */}
@@ -909,10 +929,14 @@ const Test = () => {
           We are running into some issues :&#40;
         </p>
         <Button>
+          
           Loading <Loading width="15px" height="15px" />
+        
         </Button>
         <Button variant="outlined">
+          
           Loading <Loading width="15px" height="15px" />
+        
         </Button>
       </div>
       <div className="my-5">
