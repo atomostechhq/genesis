@@ -1,7 +1,6 @@
 import TableExpanding from "@/app/components/Table/TableExpanding";
 import TableFixedColumn from "@/app/components/Table/TableFixedColumn";
 import TableSorting from "@/app/components/Table/TableSorting";
-import Trial from "@/app/components/Trial";
 import React from "react";
 
 const tables = () => {
