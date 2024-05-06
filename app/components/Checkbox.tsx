@@ -20,7 +20,7 @@ const checkboxVariant = cva("peer relative cursor-pointer appearance-none rounde
   }
 })
 
-const Checkbox = ({ disabled, checked,size, className , ...props }: CheckboxProps) => {
+const Checkbox = ({ disabled, checked,size, className,children , ...props }: CheckboxProps) => {
   return (
     <div className="inline-flex relative items-center">
       <input

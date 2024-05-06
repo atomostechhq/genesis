@@ -12,7 +12,7 @@ interface ButtonProps
   disabled?: boolean;
 }
 
-const buttonVariants = cva("rounded-lg font-semibold cursor-pointer", {
+const buttonVariants = cva("rounded-lg disabled:select-none font-semibold cursor-pointer", {
   variants: {
     variant: {
       filled: "bg-primary-600 text-white active:bg-primary-900 active:border-primary-900 hover:bg-primary-700 hover:border-primary-700 border border-primary-600 disabled:opacity-[30%] disabled:pointer-events-none",

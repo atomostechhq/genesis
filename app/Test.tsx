@@ -892,7 +892,6 @@ const Test = () => {
           </Sidebar.Footer>
         </Sidebar>
       </div>
-
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">
           <Link href="/pages/tables">Go to Table component</Link>
@@ -923,28 +922,26 @@ const Test = () => {
       </div>
       {/* Loading State */}
       <div className="flex flex-col items-center justify-center gap-2">
-        {/* <Loading width="50px" height="50px" /> */}
+        <Loading width="50px" height="50px" />
         <span className="font-bold">Hold On ...</span>
         <p className="text-sm text-gray-500">
           We are running into some issues :&#40;
         </p>
         <Button>
-          
-          Loading <Loading width="15px" height="15px" />
-        
+          Loading <Loading width="15px" height="15px"  variant="light" loaderColor="white" />
         </Button>
         <Button variant="outlined">
-          
-          Loading <Loading width="15px" height="15px" />
-        
+          Loading <Loading width="15px" height="15px" variant="light" />
         </Button>
       </div>
       <div className="my-5">
         <Button onClick={() => setShowModal(true)}>Show Modal</Button>
-        <Modal showModal={showModal} setShowModal={setShowModal} closeModal={true}>
-          <div className="w-[500px] h-[300px]">
-            content
-          </div>
+        <Modal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          closeModal={true}
+        >
+          <div className="w-[500px] h-[300px]">content</div>
         </Modal>
       </div>
     </div>
