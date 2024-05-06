@@ -91,7 +91,7 @@ export const tableData: User[] = [
         age: 33,
         visits: 100,
         progress: 50,
-        status: "whats thar",
+        status: "whats that",
       },
     ],
   },
