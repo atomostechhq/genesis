@@ -83,7 +83,7 @@ export const TableBody = ({
 
 export const TableRow = ({ children, className,indent, ...props }: TableRowProps) => {
   return (
-    <tr {...props} className={cn("border border-gray-200",indent && "group/indent border-none",className)}>
+    <tr {...props} className={cn("border border-gray-200 hover:bg-gray-50",indent && "group/indent border-none",className)}>
       {children}
     </tr>
   );
@@ -144,7 +144,7 @@ export const TableDataCell = ({
     <td
       {...props}
       className={cn(
-        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2 first:group-has-[td]/indent:pl-10",
+        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2 first:group-has-[td]/indent:pl-[60px]",
         sticky &&`sticky bg-white`,
         sticky && shadow && "shadow-table",
         left,
