@@ -25,6 +25,7 @@ const Radio = ({
   disabled,
   checked,
   className,
+  children,
   ...props
 }: RadioProps) => {
   return (

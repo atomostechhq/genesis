@@ -892,7 +892,6 @@ const Test = () => {
           </Sidebar.Footer>
         </Sidebar>
       </div>
-
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">
           <Link href="/pages/tables">Go to Table component</Link>
