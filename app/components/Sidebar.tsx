@@ -1,3 +1,4 @@
+"use client"
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "../utils/utils";
