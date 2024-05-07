@@ -36,7 +36,7 @@ const Label = ({
   return (
     <label
       htmlFor={htmlFor}
-      className={cn("cursor-pointer",labelVariants({ className, size }),disabled === true ? "opacity-30":"opacity-100")}
+      className={cn("cursor-pointer",labelVariants({ className, size }),disabled === true ? "opacity-30 select-none":"opacity-100")}
       {...props}
     >
       {children}
