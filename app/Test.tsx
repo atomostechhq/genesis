@@ -483,7 +483,7 @@ const Test = () => {
       {/* Tabs */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Tabs:</h1>
-        <TabContext value={activeTab} position="top" onChange={handleTabChange}>
+        <TabContext box={true} value={activeTab} position="top" onChange={handleTabChange}>
           <TabList>
             <Tab value="tab1">
               <ListCheckIcon size={16} color="#1765dc" /> Tab 1
