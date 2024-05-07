@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import 'react-day-picker/dist/style.css';
 import { AppWrapper } from "./context";
 
 export const metadata: Metadata = {
@@ -16,7 +17,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AppWrapper>{children}</AppWrapper>
-        {/* <div className="theme-pink">{children}</div> */}
       </body>
     </html>
   );

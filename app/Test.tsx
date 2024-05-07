@@ -1,5 +1,6 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent,ChangeEventHandler, useEffect, useState } from "react";
+import { isValid, parse } from "date-fns";
 import { useAppContext } from "./context";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
@@ -31,6 +32,7 @@ import Link from "next/link";
 import Loading from "./components/Loading";
 import Divider from "./components/Divider";
 import Modal from "./components/Modal";
+import DatePicker from "./components/DatePicker";
 
 interface Option {
   label: string;
@@ -235,6 +237,16 @@ const Test = () => {
       ],
     },
   ];
+
+  // date picker
+  const [selected, setSelected] = useState<Date>();
+  const [inputValueDate, setInputValueDate] = useState<string>("");
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setInputValue(e.currentTarget.value);
+    const date = parse(e.currentTarget.value, "y-MM-dd", new Date());
+    isValid(date) ? setSelected(date) : setSelected(undefined);
+  };
+
 
   const info: any = ["one", "two"];
 
@@ -853,7 +865,7 @@ const Test = () => {
         </FileUpload>
       </div>
       {/* Textarea */}
-      <div className="flex flex-col gap-1">
+      <section className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-400">Textarea</h1>
         <section className="flex items-center gap-4">
           <h1>States</h1>
@@ -868,14 +880,23 @@ const Test = () => {
             disabled
           ></Textarea>
         </section>
-      </div>
-
+      </section>
+      <section className="py-10">
+        <p className="text-primary-500">Date Picker</p>
+        <DatePicker 
+        selected={selected}
+        setSelected={setSelected}
+        inputValue={inputValueDate}
+        setInputValue={setInputValueDate}
+        handleInputChange={handleInputChange}
+        />
+      </section>
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
         <BreadCrumb />
       </div>
       {/* sidebar */}
-      <div className="">
+      <section className="">
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
           <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
             <span>Logo</span>
@@ -901,7 +922,7 @@ const Test = () => {
             </Button>
           </Sidebar.Footer>
         </Sidebar>
-      </div>
+      </section>
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">
           <Link href="/pages/tables">Go to Table component</Link>
@@ -917,7 +938,7 @@ const Test = () => {
         <Divider position="horizontal" className="my-4" />
       </div>
       {/* Empty State */}
-      <div>
+      <section>
         <EmptyState>
           <EmptyImageSVG />
           <Text>Something went wrong</Text>
@@ -929,7 +950,7 @@ const Test = () => {
             Reload Page
           </Button>
         </EmptyState>
-      </div>
+      </section>
       {/* Loading State */}
       <div className="flex flex-col items-center justify-center gap-2">
         <Loading width="50px" height="50px" />
