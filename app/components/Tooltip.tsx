@@ -16,10 +16,10 @@ const tooltupVariants = cva(
   {
     variants: {
       position: {
-        top: "bottom-[calc(100%+8px)]",
-        right: "top-1/2 -translate-y-1/2 left-[calc(100%+8px)]",
-        bottom: "top-[calc(100%+8px)]",
-        left: "top-1/2 -translate-y-1/2 right-[calc(100%+8px)]",
+        top: "bottom-[calc(100%+0px)]",
+        right: "top-1/2 -translate-y-1/2 left-[calc(100%+0px)]",
+        bottom: "top-[calc(100%+0px)]",
+        left: "top-1/2 -translate-y-1/2 right-[calc(100%+0px)]",
       },
     },
   }
@@ -27,15 +27,9 @@ const tooltupVariants = cva(
 
 const Tooltip = ({ position, content, children }: TooltipProps) => {
   return (
-    <div id="tooltip" className="relative cursor-pointer group">
+    <div id="tooltip" className="relative cursor-pointer px-2 group">
       <div>{children}</div>
-      <span
-        className={
-          cn(tooltupVariants({ position })) + ""
-        }
-      >
-        {content}
-      </span>
+      <span className={cn(tooltupVariants({ position }))}>{content}</span>
     </div>
   );
 };

@@ -236,6 +236,8 @@ const Test = () => {
     },
   ];
 
+  const info: any = ["one", "two"];
+
   useEffect(() => {
     setTimeout(() => {
       setLoadingState(true);
@@ -437,7 +439,10 @@ const Test = () => {
             dropDownTooltip={true}
             tooltipContent="info"
             dropdownFooter={true}
-            info="info"
+            info={info?.map((i: any) => (
+              <>{i}</>
+            ))}
+            addInfo="Awesome additional info"
             onApply={() => {
               console.log("Apply button clicked");
             }}
@@ -483,10 +488,15 @@ const Test = () => {
       {/* Tabs */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Tabs:</h1>
-        <TabContext box={true} value={activeTab} position="top" onChange={handleTabChange}>
+        <TabContext
+          box={false}
+          value={activeTab}
+          position="top"
+          onChange={handleTabChange}
+        >
           <TabList>
             <Tab value="tab1">
-              <ListCheckIcon size={16} color="#1765dc" /> Tab 1
+              <ListCheckIcon size={16} /> Tab 1
             </Tab>
             <Tab value="tab2">Tab 2</Tab>
             <Tab value="tab3">Tab 3</Tab>
@@ -928,7 +938,13 @@ const Test = () => {
           We are running into some issues :&#40;
         </p>
         <Button>
-          Loading <Loading width="15px" height="15px"  variant="light" loaderColor="white" />
+          Loading{" "}
+          <Loading
+            width="15px"
+            height="15px"
+            variant="light"
+            loaderColor="white"
+          />
         </Button>
         <Button variant="outlined">
           Loading <Loading width="15px" height="15px" variant="light" />

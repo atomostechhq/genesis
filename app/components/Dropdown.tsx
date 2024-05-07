@@ -58,6 +58,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   children,
   tooltipContent,
   info,
+  addInfo,
   dropDownTooltip = false,
   dropdownFooter = false,
   onApply,
@@ -217,7 +218,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                           <span className="text-gray-500">{info}</span>
                         </section>
                         <span className="pt-[2px] text-text-sm text-gray-500">
-                          Awesome additional info
+                          {addInfo}
                         </span>
                       </Label>
                     ) : (

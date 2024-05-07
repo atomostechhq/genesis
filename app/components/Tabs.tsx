@@ -12,7 +12,7 @@ const defaultContextData: TabContextData = {
   position: "top",
   selectedTabValue: "",
   handleTabChange: () => {},
-  box: false,
+  // box: false,
 };
 
 const TabsContainerContext = createContext<TabContextData>(defaultContextData);
@@ -22,7 +22,7 @@ type TabContextProps = {
   position: string;
   onChange: (value: string) => void;
   children: React.ReactNode;
-  box: boolean;
+  box?: boolean;
 };
 
 export const TabContext = ({
@@ -51,8 +51,8 @@ export const TabList = ({ children }: { children: React.ReactNode }) => {
   return (
     <ul
       className={cn(
-        "flex items-center ",
-        box ? "bg-gray-50" : "border-b border-gray-600"
+        "flex items-center",
+        box ? "bg-gray-50 rounded-lg border border-gray-200" : "border-b border-gray-600"
       )}
     >
       {children}
@@ -77,11 +77,15 @@ export const Tab = ({ value, children }: TabProps) => {
 
   return (
     <li
-      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium hover:bg-gray-100 cursor-pointer ${
-        value === selectedTabValue || box === false
+      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium  cursor-pointer hover:bg-gray-100 transition-all ease-in-out duration-300 ${
+        value === selectedTabValue && box === false
           ? "text-primary-700 border-b-2 border-primary-700"
-          : "border-b-2 border-transparent text-gray-700"
-      } `}
+          : "border-b-2 border-transparent text-gray-700 "
+      } ${
+        value === selectedTabValue && box === true
+          ? "bg-white hover:bg-white shadow-md"
+          : ""
+      }  ${box === true ? "m-1 rounded-lg" : "m-0"}`}
       onClick={handleClick}
     >
       {children}
