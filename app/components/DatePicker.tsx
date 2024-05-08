@@ -1,5 +1,5 @@
-"use client";
-import React, { useRef, useState } from "react";
+"use client"
+import React, { useRef, useState, useEffect } from "react";
 import { format } from "date-fns";
 import {
   CaptionProps,
@@ -19,7 +19,6 @@ interface DatePickerProps {
   setInputValue: (value: string) => void;
   handleInputChange?: (value: any) => void;
 }
-
 const css = `
   .rdp-button:hover:not([disabled]):not(.rdp-day_selected) { 
     background-color: #EAECF0;
@@ -55,7 +54,25 @@ const DatePicker = ({
     null
   );
 
-  const closePopper = () => setIsPopperOpen(false)
+  const closePopper = () => setIsPopperOpen(false);
+
+  // Add event listener to handle clicks outside of the popup
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popperElement &&
+        !popperElement.contains(event.target as Node) &&
+        !popperRef.current?.contains(event.target as Node)
+      ) {
+        closePopper();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [popperElement]);
 
   // chevron icon for navigation
   function CustomCaption(props: CaptionProps) {
@@ -81,13 +98,12 @@ const DatePicker = ({
     );
   }
 
-   
   const handleDaySelect: SelectSingleEventHandler = (date) => {
     setSelected(date);
     date ? setInputValue(format(date, "MMM dd, y")) : setInputValue("");
     date && closePopper();
   };
- 
+
   return (
     <div>
       <div ref={popperRef} className="relative">
@@ -106,7 +122,7 @@ const DatePicker = ({
         <div
           tabIndex={-1}
           className="shadow-sm mt-1 mx-auto rounded-md absolute text-[16px] bg-white z-[1000] transition-all duration-75 delay-100 ease-in-out"
-          ref={setPopperElement}
+          ref={(element) => setPopperElement(element)}
           role="dialog"
           aria-label="Single DayPicker calendar"
         >
