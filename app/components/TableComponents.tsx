@@ -54,64 +54,64 @@ export const Table = ({ children, className,dense, ...props }: TableProps) => {
   );
 };
 
-// export const TableHead = ({
-//   children,
-//   className,
-//   ...props
-// }: TableHeadProps) => {
-//   return (
-//     <thead
-//       {...props}
-//       className={cn("bg-gray-50 border border-gray-200", className)}
-//     >
-//       {children}
-//     </thead>
-//   );
-// };
-
-export const TableHead = React.forwardRef<HTMLTableSectionElement, TableHeadProps>(({ children, className, ...props }, ref) => {
+export const TableHead = ({
+  children,
+  className,
+  ...props
+}: TableHeadProps) => {
   return (
-    <thead ref={ref} {...props} className={cn("your-default-classes", className)}>
+    <thead
+      {...props}
+      className={cn("bg-gray-50 border border-gray-200", className)}
+    >
       {children}
     </thead>
   );
-});
+};
 
-export const TableBody = React.forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(({ children, className, ...props }, ref) => {
-  return (
-    <tbody ref={ref} {...props} className={cn(className)}>
-      {children}
-    </tbody>
-  );
-});
-
-// export const TableBody = ({
-//   children,
-//   className,
-//   ...props
-// }: TableHeadProps) => {
+// export const TableHead = React.forwardRef<HTMLTableSectionElement, TableHeadProps>(({ children, className, ...props }, ref) => {
 //   return (
-//     <tbody {...props} className={cn(className)}>
+//     <thead ref={ref} {...props} className={cn("your-default-classes", className)}>
+//       {children}
+//     </thead>
+//   );
+// });
+
+// export const TableBody = React.forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(({ children, className, ...props }, ref) => {
+//   return (
+//     <tbody ref={ref} {...props} className={cn(className)}>
 //       {children}
 //     </tbody>
 //   );
-// };
+// });
 
-// export const TableRow = ({ children, className,indent, ...props }: TableRowProps) => {
-//   return (
-//     <tr {...props} className={cn("border border-gray-200 hover:bg-gray-50",indent && "group/indent border-none",className)}>
-//       {children}
-//     </tr>
-//   );
-// };
-
-export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(({ children, className, indent, ...props }, ref) => {
+export const TableBody = ({
+  children,
+  className,
+  ...props
+}: TableHeadProps) => {
   return (
-    <tr ref={ref} {...props} className={cn("border border-gray-200 hover:bg-gray-50", indent && "group/indent border-none", className)}>
+    <tbody {...props} className={cn(className)}>
+      {children}
+    </tbody>
+  );
+};
+
+export const TableRow = ({ children, className,indent, ...props }: TableRowProps) => {
+  return (
+    <tr {...props} className={cn("border border-gray-200 hover:bg-gray-50",indent && "group/indent border-none",className)}>
       {children}
     </tr>
   );
-});
+};
+
+// export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(({ children, className, indent, ...props }, ref) => {
+//   return (
+//     <tr ref={ref} {...props} className={cn("border border-gray-200 hover:bg-gray-50", indent && "group/indent border-none", className)}>
+//       {children}
+//     </tr>
+//   );
+// });
 
 export const TableHeadCell = ({
   children,
