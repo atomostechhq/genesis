@@ -12,7 +12,6 @@ import {
 import React, { useState } from "react";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import Pagination from "../Pagination";
-import { cn } from "@/app/utils/utils";
 
 const TableExpanding = () => {
   const [page, setPage] = useState(0);
@@ -34,7 +33,6 @@ const TableExpanding = () => {
 
   // expandable row
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
-  console.log("expandedRows", expandedRows);
   const toggleRowExpansion = (id: number) => {
     setExpandedRows((prevExpandedRows) => {
       if (prevExpandedRows?.includes(id)) {
