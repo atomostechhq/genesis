@@ -1,3 +1,4 @@
+import CustomDraggable from "@/app/components/Table/CustomDraggable";
 import TableExpanding from "@/app/components/Table/TableExpanding";
 import TableFixedColumn from "@/app/components/Table/TableFixedColumn";
 import TableSorting from "@/app/components/Table/TableSorting";
@@ -17,6 +18,10 @@ const tables = () => {
       <div className="space-y-2">
         <h1>Table With Sorting, Checkbox and Dense Mode</h1>
         <TableSorting />
+      </div>
+      <div className="space-y-2">
+        <h1>Draggable Table</h1>
+        <CustomDraggable />
       </div>
     </div>
   );
