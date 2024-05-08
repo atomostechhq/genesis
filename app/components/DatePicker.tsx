@@ -25,6 +25,15 @@ const css = `
     background-color: #EAECF0;
     border-radius: 5px;
   }
+  .rdp-button:focus-visible:not([disabled]){
+    color:black;
+    background:white;
+    border-radius: 5px;
+    border: 1px solid var(--primary-400);
+  }
+  .rdp-day_selected:focus-visible{
+    outline: none;
+  }
 `;
 
 const DatePicker = ({
