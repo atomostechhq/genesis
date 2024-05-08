@@ -34,6 +34,12 @@ const css = `
   .rdp-day_selected:focus-visible{
     outline: none;
   }
+  .rdp-head_cell{
+    font-size: 12px;
+  }
+  .rdp-cell{
+    font-size: 13px;
+  }
 `;
 
 const DatePicker = ({
@@ -99,7 +105,7 @@ const DatePicker = ({
       {isPopperOpen && (
         <div
           tabIndex={-1}
-          className="shadow-sm mt-1 mx-auto rounded-md absolute text-[16px] bg-white z-[1000] w-[315px] transition-all duration-75 delay-100 ease-in-out"
+          className="shadow-sm mt-1 mx-auto rounded-md absolute text-[16px] bg-white z-[1000] transition-all duration-75 delay-100 ease-in-out"
           ref={setPopperElement}
           role="dialog"
           aria-label="Single DayPicker calendar"

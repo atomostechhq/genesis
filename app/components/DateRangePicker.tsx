@@ -1,13 +1,25 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
-import { format, isValid, isAfter, parse } from "date-fns";
+import React, { useRef, useState, useEffect, ReactNode } from "react";
 import CalendarLineIcon from "remixicon-react/CalendarLineIcon";
 import {
-  DateRange,
   DayPicker,
   SelectRangeEventHandler,
 } from "react-day-picker";
 import Input from "./Input";
+import Button from "./Button";
+
+
+// fix the types later (be specific with it)
+interface DateRangePickerProps {
+  selectedRange?: any;
+  setSelectedRange: (value: any) => void;
+  dateRangeInput?: string;
+  setDateRangeInput: (value: string) => void;
+  handleInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRangeSelect?: SelectRangeEventHandler;
+  handleApply:(value:any)=>void;
+  children?:ReactNode;
+}
 
 const css = `
   .rdp-button:hover:not([disabled]):not(.rdp-day_selected) { 
@@ -27,12 +39,25 @@ const css = `
   .rdp-day_selected:focus-visible{
     outline: none;
   }
+  .rdp-head_cell{
+    font-size: 12px;
+  }
+  .rdp-cell{
+    font-size: 13px;
+  }
 `;
 
-const DateRangePicker = () => {
-  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>();
+const DateRangePicker = ({
+  selectedRange,
+  setSelectedRange,
+  dateRangeInput,
+  setDateRangeInput,
+  handleInputChange,
+  handleRangeSelect,
+  handleApply,
+  children,
+}: DateRangePickerProps) => {
   const [isPopperOpen, setIsPopperOpen] = useState(false);
-  const [dateRangeInput, setDateRangeInput] = useState<string>("");
 
   const popperRef = useRef<HTMLDivElement>(null);
 
@@ -56,34 +81,9 @@ const DateRangePicker = () => {
 
   const handleButtonClick = () => setIsPopperOpen(true);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDateRangeInput(value);
-    const [fromDateString, toDateString] = value.split(" – ");
-
-    const fromDate = parse(fromDateString, "y-MM-dd", new Date());
-    const toDate = parse(toDateString, "y-MM-dd", new Date());
-
-    if (isValid(fromDate) && isValid(toDate) && isAfter(toDate, fromDate)) {
-      setSelectedRange({ from: fromDate, to: toDate });
-    } else {
-      setSelectedRange(undefined);
-    }
-  };
-
-  const handleRangeSelect: SelectRangeEventHandler = (
-    range: DateRange | undefined
-  ) => {
-    setSelectedRange(range);
-    if (range) {
-      setDateRangeInput(
-        `${range.from ? format(range.from, "MMM dd, y") : ""} – ${
-          range.to ? format(range.to, "MMM dd, y") : ""
-        }`
-      );
-    } else {
-      setDateRangeInput("");
-    }
+  const handleReset = () => {
+    setSelectedRange(undefined);
+    setDateRangeInput("");
   };
 
   return (
@@ -101,43 +101,66 @@ const DateRangePicker = () => {
       {isPopperOpen && (
         <div
           tabIndex={-1}
-          className="shadow-sm mt-1 mx-auto rounded-md absolute text-[16px] bg-white z-[1000] transition-all duration-75 delay-100 ease-in-out"
+          className="shadow-md mt-1 rounded-md h-[330px] p-3 flex gap-5 justify-center items-start absolute bg-white z-[1000] transition-all duration-75 delay-100 ease-in-out"
           ref={popperRef}
-          role="dialog"
           aria-label="Date Range Picker"
         >
-          <style>{css}</style>
-          <DayPicker
-            mode="range"
-            numberOfMonths={2}
-            className="flex items-center"
-            selected={selectedRange}
-            onSelect={handleRangeSelect}
-            showOutsideDays
-            modifiersStyles={{
-              selected: {
-                backgroundColor: "var(--primary-500)",
-                borderRadius: "5px",
-              },
-              range_middle: {
-                borderRadius: "0px",
-                backgroundColor: "var(--primary-50)",
-                color: "black",
-              },
-              range_start: {
-                borderTopLeftRadius: "5px",
-                borderTopRightRadius: "0px",
-                borderBottomLeftRadius: "5px",
-                borderBottomRightRadius: "0px",
-              },
-              range_end: {
-                borderTopLeftRadius: "0px",
-                borderTopRightRadius: "5px",
-                borderBottomLeftRadius: "0px",
-                borderBottomRightRadius: "5px",
-              },
-            }}
-          />
+          <div className="flex flex-col whitespace-nowrap items-start h-full border-r border-gray-200 pr-2">
+           {children}
+          </div>
+          <div className="flex flex-col h-full justify-between">
+            <style>{css}</style>
+            <DayPicker
+              mode="range"
+              numberOfMonths={2}
+              selected={selectedRange}
+              onSelect={handleRangeSelect}
+              showOutsideDays
+              modifiersStyles={{
+                selected: {
+                  backgroundColor: "var(--primary-600)",
+                  borderRadius: "5px",
+                },
+                range_middle: {
+                  borderRadius: "0px",
+                  backgroundColor: "var(--primary-50)",
+                  color: "black",
+                },
+                range_start: {
+                  borderTopLeftRadius: "5px",
+                  borderTopRightRadius: "0px",
+                  borderBottomLeftRadius: "5px",
+                  borderBottomRightRadius: "0px",
+                },
+                range_end: {
+                  borderTopLeftRadius: "0px",
+                  borderTopRightRadius: "5px",
+                  borderBottomLeftRadius: "0px",
+                  borderBottomRightRadius: "5px",
+                },
+              }}
+            />
+            <div className="flex justify-between pt-2 border-t border-gray-200 gap-3">
+              <Button
+                variant={"outlined"}
+                intent="default-outlined"
+                className="border-none py-1 px-2 text-sm"
+                size="sm"
+                onClick={handleReset}
+              >
+                Reset
+              </Button>
+              <Button
+                variant={"filled"}
+                intent={"primary"}
+                size="sm"
+                className="py-1 px-2 text-sm"
+                onClick={handleApply}
+              >
+                Apply
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

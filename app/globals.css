@@ -132,6 +132,10 @@
       --primary-800: #9c2a10;
       --primary-900: #7e2410;
     }
+    .rdp {
+      --rdp-cell-size: 28px;
+      --rdp-caption-font-size: 15px;
+      }
   }
 }
 

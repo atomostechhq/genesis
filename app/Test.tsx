@@ -1,6 +1,7 @@
 "use client";
-import { ChangeEvent,ChangeEventHandler, useEffect, useState } from "react";
-import { isValid, parse } from "date-fns";
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { isValid, parse, isAfter, format, subMonths, subDays } from "date-fns";
+import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 import { useAppContext } from "./context";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
@@ -33,6 +34,7 @@ import Loading from "./components/Loading";
 import Divider from "./components/Divider";
 import Modal from "./components/Modal";
 import DatePicker from "./components/DatePicker";
+import DateRangePicker from "./components/DateRangePicker";
 
 interface Option {
   label: string;
@@ -247,6 +249,64 @@ const Test = () => {
     isValid(date) ? setSelected(date) : setSelected(undefined);
   };
 
+  // date range picker
+  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>();
+  const [dateRangeInput, setDateRangeInput] = useState<string>("");
+
+  const handleRangeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDateRangeInput(value);
+    const [fromDateString, toDateString] = value.split(" – ");
+    const fromDate = parse(fromDateString, "y-MM-dd", new Date());
+    const toDate = parse(toDateString, "y-MM-dd", new Date());
+
+    if (isValid(fromDate) && isValid(toDate) && isAfter(toDate, fromDate)) {
+      setSelectedRange({ from: fromDate, to: toDate });
+    } else {
+      setSelectedRange(undefined);
+    }
+  };
+
+  const handleRangeSelect: SelectRangeEventHandler = (
+    range: DateRange | undefined
+  ) => {
+    setSelectedRange(range);
+    if (range) {
+      setDateRangeInput(
+        `${range.from ? format(range.from, "MMM dd, y") : ""} – ${
+          range.to ? format(range.to, "MMM dd, y") : ""
+        }`
+      );
+    } else {
+      setDateRangeInput("");
+    }
+  };
+
+  const applyPreset = (preset: "last2Months" | "last2Days") => {
+    let fromDate;
+    let toDate = new Date(); // End date is today by default
+
+    switch (preset) {
+      case "last2Months":
+        fromDate = subMonths(toDate, 2);
+        break;
+      case "last2Days":
+        fromDate = subDays(toDate, 2);
+        break;
+      default:
+        return;
+    }
+
+    setSelectedRange({ from: fromDate, to: toDate });
+    setDateRangeInput(
+      `${format(fromDate, "MMM dd, y")} – ${format(toDate, "MMM dd, y")}`
+    );
+  };
+
+  const handleApply = () => {
+    // Apply the selected date range
+    console.log("range selected", selectedRange);
+  };
 
   const info: any = ["one", "two"];
 
@@ -882,14 +942,45 @@ const Test = () => {
         </section>
       </section>
       <section className="py-10">
-        <p className="text-primary-500">Date Picker</p>
-        <DatePicker 
-        selected={selected}
-        setSelected={setSelected}
-        inputValue={inputValueDate}
-        setInputValue={setInputValueDate}
-        handleInputChange={handleInputChange}
-        />
+        <div className="space-y-4">
+          <p className="text-primary-500">Date Picker</p>
+          <DatePicker
+            selected={selected}
+            setSelected={setSelected}
+            inputValue={inputValueDate}
+            setInputValue={setInputValueDate}
+            handleInputChange={handleInputChange}
+          />
+        </div>
+        <div className="space-y-4">
+          <p className="text-primary-500">Date Range Picker</p>
+          <DateRangePicker
+            selectedRange={selectedRange}
+            setSelectedRange={setSelectedRange}
+            dateRangeInput={dateRangeInput}
+            setDateRangeInput={setDateRangeInput}
+            handleInputChange={handleInputChange}
+            handleRangeSelect={handleRangeSelect}
+            handleApply={handleApply}
+          >
+            <Button
+              variant={"outlined"}
+              intent="default-outlined"
+              className="border-none"
+              onClick={() => applyPreset("last2Months")}
+            >
+              Last 2 Months
+            </Button>
+            <Button
+              variant={"outlined"}
+              intent="default-outlined"
+              className="border-none"
+              onClick={() => applyPreset("last2Days")}
+            >
+              Last 2 Days
+            </Button>
+          </DateRangePicker>
+        </div>
       </section>
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
