@@ -1,5 +1,5 @@
 import { defineConfig } from "tsup";
-// import esbuildCssModulesPlugin from 'esbuild-css-modules-plugin';
+import esbuildCssModulesPlugin from 'esbuild-css-modules-plugin';
 
 
 export default defineConfig({
@@ -13,6 +13,6 @@ export default defineConfig({
   clean: true,
   outDir: 'dist',
   plugins: [
-    // esbuildCssModulesPlugin()
+    esbuildCssModulesPlugin()
   ]
 });
