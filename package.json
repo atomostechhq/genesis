@@ -1,7 +1,7 @@
 {
-  "name": "atomos-genesis-component-library",
+  "name": "@atomos_tech/genesis",
   "description": "list of components for your project",
-  "version": "0.0.12",
+  "version": "0.0.3-alpha",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -23,22 +23,24 @@
       "types": "./dist/index.d.ts"
     },
     "./style": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
+      "import": "./dist/index.css",
+      "require": "./dist/index.css"
     }
   },
   "scripts": {
     "dev": "next dev",
-    "build:css": "postcss ./app/globals.css -o dist/styles.css",
-    "build": "tsup && npm run build:css",
+    "build:css": "postcss app/globals.css -o dist/index.css",
     "prepare": "npm run build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean": "rm -rf dist",
+    "build": "tsup && npm run build:css"
   },
   "license": "MIT",
   "dependencies": {
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "esbuild-css-modules-plugin": "^3.1.2",
     "next": "^14.2.3",
     "react": "^18",
     "react-dom": "^18",
@@ -46,7 +48,23 @@
     "tailwind-merge": "^2.2.2",
     "tsup": "^8.0.2"
   },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "dist/**/*"
+  ],
   "devDependencies": {
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -55,6 +73,10 @@
     "eslint-config-next": "14.2.1",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
+    "rollup": "^4.17.2",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
     "tailwindcss": "^3.4.3",
     "typescript": "^5"
   }
