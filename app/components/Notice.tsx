@@ -2,13 +2,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { HTMLAttributes, ReactNode } from "react";
 import React from "react";
 import { cn } from "../utils/utils";
-import AlertFillIcon from "remixicon-react/AlertFillIcon";
-import ListCheckIcon from "remixicon-react/ListCheckIcon";
-import CloseLineIcon from "remixicon-react/CloseLineIcon";
-import ErrorWarningLineIcon from "remixicon-react/ErrorWarningLineIcon";
-import QuestionLineIcon from "remixicon-react/QuestionLineIcon";
-import ThumbUpLineIcon from "remixicon-react/ThumbUpLineIcon";
-import ShieldCheckLineIcon from "remixicon-react/ShieldCheckLineIcon";
+import { RiAlertFill, RiCloseLine, RiErrorWarningLine, RiQuestionLine, RiThumbUpLine, RiShieldCheckLine } from "@remixicon/react";
 
 interface VariantIconProps {
   variant: "success" | "warning" | "info" | "error" | "default";
@@ -19,31 +13,31 @@ const VariantIcon = ({ variant }: VariantIconProps) => {
     case "success":
       return (
         <span>
-          <ThumbUpLineIcon size={20} color="#039855" />
+          <RiThumbUpLine size={20} color="#039855" />
         </span>
       );
     case "warning":
       return (
         <span>
-          <QuestionLineIcon color="#F79009" size={20} />
+          <RiQuestionLine color="#F79009" size={20} />
         </span>
       );
     case "info":
       return (
         <span>
-          <ErrorWarningLineIcon color="#1570EF" size={20} />
+          <RiErrorWarningLine color="#1570EF" size={20} />
         </span>
       );
     case "error":
       return (
         <span>
-          <AlertFillIcon color="#F04438" size={20} />
+          <RiAlertFill color="#F04438" size={20} />
         </span>
       );
     default:
       return (
         <span>
-          <ShieldCheckLineIcon color="#475467" size={20} />
+          <RiShieldCheckLine color="#475467" size={20} />
         </span>
       );
   }
@@ -108,7 +102,7 @@ const Notice = ({
 
                     onClick={handleClose}
                   >
-                    <CloseLineIcon size={20} />
+                    <RiCloseLine size={20} />
                   </span>
                 </div>
               ) : (
@@ -126,7 +120,7 @@ const Notice = ({
                     className={cn("absolute top-0 right-0 cursor-pointer")}
                     onClick={handleClose}
                   >
-                    <CloseLineIcon size={20} />
+                    <RiCloseLine size={20} />
                   </span>
                 </div>
               )
@@ -139,7 +133,7 @@ const Notice = ({
                   className={cn("absolute top-0 right-0 cursor-pointer")}
                   onClick={handleClose}
                 >
-                  <CloseLineIcon
+                  <RiCloseLine
                     size={20}
                   />
                 </span>

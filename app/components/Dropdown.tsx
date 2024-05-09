@@ -8,9 +8,7 @@ import React, {
 } from "react";
 import Checkbox from "./Checkbox";
 import Input from "./Input";
-import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
-import SearchLineIcon from "remixicon-react/SearchLineIcon";
-import ErrorWarningLineIcon from "remixicon-react/ErrorWarningLineIcon";
+import { RiArrowDownSLine, RiSearchLine, RiErrorWarningLine } from "@remixicon/react";
 import { cn } from "../utils/utils";
 import Label from "./Label";
 import Tooltip from "./Tooltip";
@@ -169,7 +167,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             ? selected?.[0]?.label
             : dropdownText}
         </section>
-        <ArrowDownSLineIcon size={18} />
+        <RiArrowDownSLine size={18} />
       </div>
       {dropdownMenu && (
         <ul className="shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in-out">
@@ -180,7 +178,7 @@ const Dropdown: React.FC<DropdownProps> = ({
               value={searchQuery}
               onChange={handleSearchChange}
               className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
-              endIcon={<SearchLineIcon size={18} />}
+              endIcon={<RiSearchLine size={18} />}
             />
           )}
           {multiple && (
@@ -273,7 +271,7 @@ const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
   const content = tooltipContent || ""
   return (
     <Tooltip position="right" content={content}>
-      <ErrorWarningLineIcon color="#98A2B3" size={14} />
+      <RiErrorWarningLine color="#98A2B3" size={14} />
     </Tooltip>
   );
 };

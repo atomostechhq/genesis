@@ -68,6 +68,15 @@ const TableFixedColumn = () => {
             <TableHeadCell>Progress</TableHeadCell>
             <TableHeadCell>Status</TableHeadCell>
             <TableHeadCell>Visits</TableHeadCell>
+            <TableHeadCell>Progress Extra</TableHeadCell>
+            <TableHeadCell>Status Extra</TableHeadCell>
+            <TableHeadCell>Visits Extra</TableHeadCell>
+            <TableHeadCell>Progress Extra</TableHeadCell>
+            <TableHeadCell>Status Extra</TableHeadCell>
+            <TableHeadCell>Visits Extra</TableHeadCell>
+            <TableHeadCell>Progress Extra</TableHeadCell>
+            <TableHeadCell>Status Extra</TableHeadCell>
+            <TableHeadCell>Visits Extra</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -80,6 +89,27 @@ const TableFixedColumn = () => {
                 <TableDataCell>{item.firstName}</TableDataCell>
                 <TableDataCell>{item.lastName}</TableDataCell>
                 <TableDataCell>{item.age}</TableDataCell>
+                <TableDataCell>{item.progress}</TableDataCell>
+                <TableDataCell>
+                  <Chip intent={"primary"} size={"md"}>
+                    {item.status}
+                  </Chip>
+                </TableDataCell>
+                <TableDataCell>{item.visits}</TableDataCell>
+                <TableDataCell>{item.progress}</TableDataCell>
+                <TableDataCell>
+                  <Chip intent={"primary"} size={"md"}>
+                    {item.status}
+                  </Chip>
+                </TableDataCell>
+                <TableDataCell>{item.visits}</TableDataCell>
+                <TableDataCell>{item.progress}</TableDataCell>
+                <TableDataCell>
+                  <Chip intent={"primary"} size={"md"}>
+                    {item.status}
+                  </Chip>
+                </TableDataCell>
+                <TableDataCell>{item.visits}</TableDataCell>
                 <TableDataCell>{item.progress}</TableDataCell>
                 <TableDataCell>
                   <Chip intent={"primary"} size={"md"}>
