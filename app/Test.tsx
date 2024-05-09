@@ -37,7 +37,6 @@ interface Option {
 }
 
 const Test = () => {
-
   // tabs
   const [activeTab, setActiveTab] = useState("tab1");
   const [inputValue, setInputValue] = useState("");
@@ -130,7 +129,6 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
-  console.log("multiSelect", multiSelect)
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
 
@@ -141,8 +139,14 @@ const Test = () => {
   ];
 
   const multiOptions = [
-    { label: "apple", value: "apple", info: "info1", addInfo:"djkhdjkhsad", tooltipContent:"hjsghjwg" },
-    { label: "banana", value: "banana", addInfo:"jdhjaldh" },
+    {
+      label: "apple",
+      value: "apple",
+      info: "info1",
+      addInfo: "djkhdjkhsad",
+      tooltipContent: "hjsghjwg",
+    },
+    { label: "banana", value: "banana", addInfo: "jdhjaldh" },
     { label: "strawberry", value: "strawberry" },
     { label: "kiwi", value: "kiwi", info: "info4" },
     { label: "orange", value: "orange" },
@@ -161,12 +165,72 @@ const Test = () => {
   const [showModal, setShowModal] = useState(false);
 
   // sidebar
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   // progress bar
   const [progress, setProgress] = useState(0);
 
   const navItems = [
+    {
+      label: "Page",
+      items: [
+        {
+          label: "Dashboard",
+          href: "/",
+          icon: <CircleFillIcon size={18} />,
+        },
+        {
+          label: "Team",
+          href: "/pages/team",
+          icon: <AlertFillIcon size={18} />,
+        },
+      ],
+    },
+    {
+      label: "Page",
+      items: [
+        {
+          label: "Dashboard",
+          href: "/",
+          icon: <CircleFillIcon size={18} />,
+        },
+        {
+          label: "Team",
+          href: "/pages/team",
+          icon: <AlertFillIcon size={18} />,
+        },
+      ],
+    },
+    {
+      label: "Page",
+      items: [
+        {
+          label: "Dashboard",
+          href: "/",
+          icon: <RiCircleFill size={18} />,
+        },
+        {
+          label: "Team",
+          href: "/pages/team",
+          icon: <RiAlertFill size={18} />,
+        },
+      ],
+    },
+    {
+      label: "Page",
+      items: [
+        {
+          label: "Dashboard",
+          href: "/",
+          icon: <CircleFillIcon size={18} />,
+        },
+        {
+          label: "Team",
+          href: "/pages/team",
+          icon: <AlertFillIcon size={18} />,
+        },
+      ],
+    },
     {
       label: "Page",
       items: [
@@ -197,6 +261,24 @@ const Test = () => {
         },
       ],
     },
+    {
+      label: "Settings",
+      items: [
+        {
+          label: "Setting 1",
+          href: "/setting1",
+          icon: <RiAlertFill size={18} />,
+        },
+        {
+          label: "Subitem 2",
+          href: "/subitem2",
+          icon: <RiAlertFill size={18} />,
+          label: "Setting 2",
+          href: "/setting2",
+          icon: <CircleFillIcon size={18} />,
+        },
+      ],
+    },
   ];
 
   const footerItems = [
@@ -204,24 +286,12 @@ const Test = () => {
       label: "Footer Item 1",
       items: [
         {
-          label: "Subitem 1",
-          href: "/subitem1",
-          icon: <RiAlertFill size={18} />,
-        },
-        {
-          label: "Subitem 2",
-          href: "/subitem2",
-          icon: <RiAlertFill size={18} />,
-        },
-      ],
-    },
-    {
-      label: "Footer Item 2",
-      items: [
-        {
           label: "Subitem 3",
           href: "/subitem3",
           icon: <RiAlertFill size={18} />,
+          label: "Subitem 1",
+          href: "/subitem1",
+          icon: <AlertFillIcon size={18} />,
         },
         {
           label: "Subitem 4",
@@ -358,34 +428,11 @@ const Test = () => {
 
   return (
     <div className="m-5">
-      {/* select a color  */}
-      <div>
-        <label className="block mt-5">Select a color:</label>
-        {/* <div className="flex justify-between space-x-8 mt-2">
-          {colors?.map((c: any) => (
-            <label
-              key={c}
-              className={`${
-                color === c ? "bg-primary-100 text-primary-700 ring-4" : ""
-              } h-20 w-full justify-center items-center flex-wrap font-bold uppercase cursor-pointer text-[12px]`}
-            >
-              <input
-                type="radio"
-                value={c}
-                checked={color === c}
-                onChange={handleColorChange}
-                className="hidden"
-              />
-              {c}
-            </label>
-          ))}
-        </div> */}
-      </div>
-      <Button variant="filled" onClick={() => setOpen(true)}>
-        Show Notice
-      </Button>
-      <div className="flex flex-col gap-5 my-5">
+      <div className="flex flex-col w-fit my-5">
         <h1 className="text-display-sm text-primary-400">Notice:</h1>
+        <Button variant="filled" onClick={() => setOpen(true)}>
+          Show Notice
+        </Button>
         <Notice
           open={open}
           setOpen={setOpen}
@@ -490,7 +537,7 @@ const Test = () => {
             dropDownTooltip={true}
             dropdownFooter={true}
             onApply={() => {
-              console.log("Apply button clicked");
+              alert("Apply button clicked");
             }}
           />
         </section>
@@ -557,9 +604,67 @@ const Test = () => {
           </TabPanel>
         </TabContext>
       </div>
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Box Tabs:</h1>
+        <TabContext
+          box={true}
+          value={activeTab}
+          position="top"
+          onChange={handleTabChange}
+        >
+          <TabList>
+            <Tab value="tab1">
+              <RiListCheck size={16} /> Tab 1
+            </Tab>
+            <Tab value="tab2">Tab 2</Tab>
+            <Tab value="tab3">Tab 3</Tab>
+          </TabList>
+          <TabPanel value="tab1">
+            <div className="m-4">Content for Tab 1</div>
+          </TabPanel>
+          <TabPanel value="tab2">
+            <div className="m-4"> Content for Tab 2</div>{" "}
+          </TabPanel>
+          <TabPanel value="tab3">
+            <div className="m-4"> Content for Tab 3 </div>
+          </TabPanel>
+        </TabContext>
+      </div>
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Box Tabs:</h1>
+        <TabContext
+          box={true}
+          value={activeTab}
+          position="top"
+          onChange={handleTabChange}
+        >
+          <TabList>
+            <Tab value="tab1">
+              <ListCheckIcon size={16} /> Tab 1
+            </Tab>
+            <Tab value="tab2">Tab 2</Tab>
+            <Tab value="tab3">Tab 3</Tab>
+          </TabList>
+          <TabPanel value="tab1">
+            <div className="m-4">Content for Tab 1</div>
+          </TabPanel>
+          <TabPanel value="tab2">
+            <div className="m-4"> Content for Tab 2</div>{" "}
+          </TabPanel>
+          <TabPanel value="tab3">
+            <div className="m-4"> Content for Tab 3 </div>
+          </TabPanel>
+        </TabContext>
+      </div>
       {/* Buttons  */}
       <div className="flex flex-col gap-5">
         <h1 className="text-display-sm text-primary-400">Button:</h1>
+        <section className="my-2">
+          <h1>Full width:</h1>
+          <Button variant="filled" fullWidth>
+            Full width
+          </Button>
+        </section>
         <section className="flex items-center gap-4 my-2">
           <h1>Variants:</h1>
           <Button variant="filled">Filled</Button>
@@ -975,7 +1080,7 @@ const Test = () => {
             setCollapsed={setCollapsed}
             navItems={footerItems}
           >
-            <Divider className="my-3" />
+            <Divider className="mb-3" />
             <Button
               className="w-full"
               variant="outlined"

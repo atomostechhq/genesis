@@ -133,7 +133,7 @@ const FileUpload = ({
           <span className="text-primary-600 font-semibold">
             Click to upload
           </span>{" "}
-          or drag and drop <br /> {title}
+          <br /> {title}
         </p>
       </label>
       <div className="flex flex-col gap-2">

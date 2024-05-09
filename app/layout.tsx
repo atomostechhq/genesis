@@ -16,8 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* <AppWrapper>{children}</AppWrapper> */}
-        <div className="theme-pink">{children}</div>
+        <div className="theme-brand">{children}</div>
       </body>
     </html>
   );
