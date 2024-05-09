@@ -1,46 +1,76 @@
+// {
+//   "compilerOptions": {
+//     "lib": [
+//       "DOM",
+//       "DOM.Iterable",
+//       "ESNext"
+//     ],
+//     "allowJs": true,
+//     "skipLibCheck": true,
+//     "strict": true,
+//     "noEmit": true,
+//     "sourceMap": true,
+//     "esModuleInterop": true,
+//     "module": "ESNext",
+//     "moduleResolution": "Bundler",
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "jsx": "preserve",
+//     "outDir": "dist",
+//     "declaration": true,
+//     "declarationDir": "dist/types",
+//     "plugins": [
+//       {
+//         "name": "next"
+//       }
+//     ],
+//     "paths": {
+//       "@/*": [
+//         "./*"
+//       ]
+//     },
+//     "incremental": false
+//   },
+//   "include": [
+//     "app/**/*",
+//     "next-env.d.ts",
+//     "**/*.ts",
+//     "**/*.tsx",
+//     ".next/types/**/*.ts",
+//     "node_modules/atomos-genesis-component-library/**/*.ts",
+//     "node_modules/atomos-genesis-component-library/**/*.tsx"
+//   ],
+//   "exclude": [
+//     "node_modules"
+//   ]
+// }
+
+
+// VERCEL
+
 {
   "compilerOptions": {
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
-    "sourceMap": true,
     "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "outDir": "dist",
-    "declaration": true,
-    "declarationDir": "dist/types",
+    "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ]
-    },
-    "incremental": false
+      "@/*": ["./app/*"]
+    }
   },
-  "include": [
-    "app/**/*",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "node_modules/atomos-genesis-component-library/**/*.ts",
-    "node_modules/atomos-genesis-component-library/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
