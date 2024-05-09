@@ -13,9 +13,12 @@ import { cn } from "../utils/utils";
 import Label from "./Label";
 import Tooltip from "./Tooltip";
 
-interface Option {
+type Option = {
   label: string;
   value: string;
+  info?: string;
+  addInfo?: string;
+  tooltipContent?:string
 }
 
 interface MenuItemProps {
@@ -194,6 +197,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                       <Label
                         className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
                         htmlFor={`checkbox-${option.value}`}
+                        key={option.label}
                       >
                         <section className="flex items-center justify-between gap-2 w-full">
                           <div className="flex gap-2">
@@ -208,15 +212,15 @@ const Dropdown: React.FC<DropdownProps> = ({
                               <span>{renderItem(option)}</span>
                               {dropDownTooltip && (
                                 <DropdownTooltip
-                                  tooltipContent={tooltipContent}
+                                  tooltipContent={option?.tooltipContent}
                                 />
                               )}
                             </div>
                           </div>
-                          <span className="text-gray-500">{info}</span>
+                          <span className="text-gray-500">{option?.info}</span>
                         </section>
                         <span className="pt-[2px] text-text-sm text-gray-500">
-                          {addInfo}
+                          {option?.addInfo}
                         </span>
                       </Label>
                     ) : (
@@ -234,7 +238,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                         <div className="flex items-center gap-1">
                           <span>{renderItem(option)}</span>
                           {dropDownTooltip && (
-                            <DropdownTooltip tooltipContent={tooltipContent} />
+                            <DropdownTooltip tooltipContent={option?.tooltipContent} />
                           )}
                         </div>
                         <span className="text-gray-500">{info}</span>
@@ -264,7 +268,7 @@ interface DropdownTooltipProps {
 const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
   tooltipContent,
 }) => {
-  const content = tooltipContent || "info";
+  const content = tooltipContent || ""
   return (
     <Tooltip position="right" content={content}>
       <RiErrorWarningLine color="#98A2B3" size={14} />
