@@ -1,7 +1,6 @@
 import { defineConfig } from "tsup";
 import esbuildCssModulesPlugin from 'esbuild-css-modules-plugin';
 
-
 export default defineConfig({
   format: ["cjs", "esm"],
   entry: ["./app/index.ts"],
