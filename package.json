@@ -35,7 +35,7 @@
     "lint": "next lint",
     "clean": "rm -rf dist",
     "build": "tsup && npm run build:css",
-    "vercel build": "tsup && npm run build:css && next build"
+    "vercel build": "next build && tsup && npm run build:css"
   },
   "license": "MIT",
   "dependencies": {
