@@ -165,6 +165,10 @@
   border-radius: 50%;
 }
 
+.handle {
+  cursor: grabbing;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

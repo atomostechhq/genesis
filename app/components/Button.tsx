@@ -10,6 +10,7 @@ interface ButtonProps
   startIcon?: JSX.Element;
   endIcon?: JSX.Element;
   disabled?: boolean;
+  fullWidth?:boolean
 }
 
 const buttonVariants = cva("rounded-lg disabled:select-none font-semibold cursor-pointer", {
@@ -30,6 +31,9 @@ const buttonVariants = cva("rounded-lg disabled:select-none font-semibold cursor
       "warning-outlined":"border-warning-500 text-warning-500 hover:bg-warning-50 hover:border-warning-600 hover:text-warning-600 active:bg-warning-100 active:text-warning-700 active:border-warning-700",
       "default-outlined":"border-gray-700 text-gray-700 hover:bg-gray-100 hover:border-gray-700 hover:text-gray-700 active:bg-gray-300 active:text-gray-800 active:border-gray-800"
     },
+    fullWidth: {
+      true: "w-full"
+    },
     size: {
       sm: "text-sm px-3.5 py-2",
       md: "text-sm px-4 py-2.5",
@@ -44,13 +48,14 @@ const buttonVariants = cva("rounded-lg disabled:select-none font-semibold cursor
 
 const Button = ({
   children,
-  className = "",
-  variant = "filled",
-  intent = "primary",
-  startIcon = undefined,
-  endIcon = undefined,
-  size = "md",
-  disabled = false,
+  className,
+  variant,
+  intent,
+  fullWidth = false,
+  startIcon,
+  disabled,
+  endIcon,
+  size,
   ...props
 }: ButtonProps) => {
   return (
@@ -58,7 +63,7 @@ const Button = ({
       {...props}
       disabled={disabled}
       className={cn(
-        buttonVariants({ intent, className, variant, size }),
+        buttonVariants({ intent, className, variant, fullWidth, size }),
         "flex items-center text-center justify-center gap-2"
       )}
     >

@@ -1,10 +1,11 @@
+"use client";
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "../utils/utils";
 import ArrowLeftSLineIcon from "remixicon-react/ArrowLeftSLineIcon";
 import { usePathname } from "next/navigation";
+import Divider from "@/app/components/Divider";
 
-// Define the props interfaces
 interface SidebarProps {
   children: React.ReactNode;
   collapsed: boolean;
@@ -84,7 +85,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
         "z-20": true,
       })}
     >
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-4">
         <span className="whitespace-nowrap">{children}</span>
         {collapsed && (
           <button
@@ -108,12 +109,12 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
   const currentPath = usePathname();
 
   return (
-    <nav className="">
+    <nav className={`max-h-[60vh] overflow-y-scroll`}>
       <ul className="my-2 flex flex-col gap-2 items-stretch">
         {navItems?.map((parentItem, parentIndex) => (
           <li
             key={parentIndex}
-            className="flex flex-col gap-3 mb-6 whitespace-nowrap overflow-hidden"
+            className="flex flex-col gap-3 mb-1 whitespace-nowrap overflow-hidden"
           >
             <p
               className={cn({
@@ -171,11 +172,17 @@ const Footer: React.FC<FooterProps> = ({
   return (
     <div
       className={cn({
-        "absolute bottom-0 py-3 w-[85%]": true,
+        "absolute bottom-0 max-h-[230px] overflow-auto bg-white z-10 py-3 w-[85%]":
+          true,
         "w-[55%]": !collapsed,
       })}
       onClick={() => setCollapsed(true)}
     >
+      {collapsed && (
+        <div className="shadow-md">
+          <Divider />
+        </div>
+      )}
       <nav className="flex-grow w-full">
         <ul className="my-2 flex flex-col gap-2 items-stretch">
           {navItems?.map((parentItem, parentIndex) => (
