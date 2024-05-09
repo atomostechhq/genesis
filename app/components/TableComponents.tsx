@@ -6,7 +6,7 @@ import React, {
   ThHTMLAttributes,
 } from "react";
 import { cn } from "../utils/utils";
-import Pushpin2LineIcon from "remixicon-react/Pushpin2LineIcon";
+import { RiPushpin2Line } from "@remixicon/react";
 
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
@@ -54,64 +54,40 @@ export const Table = ({ children, className,dense, ...props }: TableProps) => {
   );
 };
 
-// export const TableHead = ({
-//   children,
-//   className,
-//   ...props
-// }: TableHeadProps) => {
-//   return (
-//     <thead
-//       {...props}
-//       className={cn("bg-gray-50 border border-gray-200", className)}
-//     >
-//       {children}
-//     </thead>
-//   );
-// };
-
-export const TableHead = React.forwardRef<HTMLTableSectionElement, TableHeadProps>(({ children, className, ...props }, ref) => {
+export const TableHead = ({
+  children,
+  className,
+  ...props
+}: TableHeadProps) => {
   return (
-    <thead ref={ref} {...props} className={cn("your-default-classes", className)}>
+    <thead
+      {...props}
+      className={cn("bg-gray-50 border border-gray-200", className)}
+    >
       {children}
     </thead>
   );
-});
+};
 
-export const TableBody = React.forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(({ children, className, ...props }, ref) => {
+export const TableBody = ({
+  children,
+  className,
+  ...props
+}: TableHeadProps) => {
   return (
-    <tbody ref={ref} {...props} className={cn(className)}>
+    <tbody {...props} className={cn(className)}>
       {children}
     </tbody>
   );
-});
+};
 
-// export const TableBody = ({
-//   children,
-//   className,
-//   ...props
-// }: TableHeadProps) => {
-//   return (
-//     <tbody {...props} className={cn(className)}>
-//       {children}
-//     </tbody>
-//   );
-// };
-
-// export const TableRow = ({ children, className,indent, ...props }: TableRowProps) => {
-//   return (
-//     <tr {...props} className={cn("border border-gray-200 hover:bg-gray-50",indent && "group/indent border-none",className)}>
-//       {children}
-//     </tr>
-//   );
-// };
-
-export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(({ children, className, indent, ...props }, ref) => {
+export const TableRow = ({ children, className,indent, ...props }: TableRowProps) => {
   return (
-    <tr ref={ref} {...props} className={cn("border border-gray-200 hover:bg-gray-50", indent && "group/indent border-none", className)}>
+    <tr {...props} className={cn("border border-gray-200 hover:bg-gray-50",indent && "group/indent border-none",className)}>
       {children}
     </tr>
   );
-});
+};
 
 export const TableHeadCell = ({
   children,
@@ -139,7 +115,7 @@ export const TableHeadCell = ({
     >
       <div className="flex items-center">
         <span>
-          {sticky && <Pushpin2LineIcon className="w-3.5 h-3.5" />}
+          {sticky && <RiPushpin2Line className="w-3.5 h-3.5" />}
         </span>
         <span className="font-medium text-xs">{children}</span>
         <span

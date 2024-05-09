@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ArrowRightSLineIcon from "remixicon-react/ArrowRightSLineIcon";
+import { RiArrowRightSLine } from "@remixicon/react";
 
 const BreadCrumb = () => {
   const pathname = usePathname();
@@ -20,7 +20,7 @@ const BreadCrumb = () => {
         <React.Fragment key={i}>
           {i !== 0 && (
             <span className="">
-              <ArrowRightSLineIcon size={16} />
+              <RiArrowRightSLine size={16} />
             </span>
           )}
           <Link

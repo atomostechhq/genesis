@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import CloseLineIcon from "remixicon-react/CloseLineIcon";
+import { RiCloseLine } from "@remixicon/react";
 
 interface ModalProps {
   children?: ReactNode;
@@ -25,7 +25,7 @@ export default function Modal({
                 className="absolute top-4 ml-5 right-5 z-10 shadow-backdrop rounded-full text-primary cursor-pointer hover:bg-primaryLight"
                 onClick={() => setShowModal((prev: boolean) => !prev)}
               >
-                <CloseLineIcon size={24} />
+                <RiCloseLine size={24} />
               </div>
             )}
           </div>
