@@ -7,10 +7,8 @@ import {
   TableHeadCell,
   TableRow,
 } from "@/app/components/TableComponents";
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { tableData } from "./table";
-import Pagination from "../Pagination";
 type TableRowData = {
   id: number;
   firstName: string;
@@ -21,43 +19,35 @@ type TableRowData = {
   status: string;
 };
 
-const CustomDraggable = () => {
+const DraggableTable = () => {
+  
   const [draggedItem, setDraggedItem] = useState<TableRowData | null>(null);
+  console.log("draggedItem",draggedItem)
+  const [initialData, setInitialData] = useState(tableData)
 
   const handleDragStart = (event: React.DragEvent<HTMLTableRowElement>) => {
     const index = Number(event.currentTarget.dataset.index);
-    setDraggedItem(tableData[index]);
+    const draggedItemIndex = initialData.findIndex(item => item.id === tableData[index].id);
+    setDraggedItem(initialData[draggedItemIndex]);
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLTableRowElement>) => {
     event.preventDefault();
-
+  
     if (draggedItem) {
       const targetRowIndex = Number(event.currentTarget.dataset.index);
-      const updatedData = [...tableData];
+      const updatedData = [...initialData];
       updatedData.splice(updatedData.indexOf(draggedItem), 1);
       updatedData.splice(targetRowIndex, 0, draggedItem);
-      tableData.splice(0, tableData.length, ...updatedData);
+      setInitialData(updatedData);
     }
   };
+  
 
-  //   pagination
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleChangePage = (newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (newRowsPerPage: number) => {
-    setRowsPerPage(newRowsPerPage);
-    setPage(0);
-  };
-
-  const startIndex = page * rowsPerPage;
-  const endIndex = (page + 1) * rowsPerPage;
-
-  const currentPageData = tableData?.slice(startIndex, endIndex);
+  useEffect(() => {
+    console.log("initialData updated:", initialData);
+  }, [initialData]);
+  
 
   return (
     <div>
@@ -74,7 +64,7 @@ const CustomDraggable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {currentPageData?.map((item, index) => (
+          {initialData?.slice(0,10)?.map((item, index) => (
             <React.Fragment key={item.id}>
               <TableRow
                 draggable
@@ -83,7 +73,7 @@ const CustomDraggable = () => {
                 data-index={index}
                 className="text-left"
               >
-                <TableDataCell>{item.id}</TableDataCell>
+                <TableDataCell>:: {item.id}</TableDataCell>
                 <TableDataCell>{item.firstName}</TableDataCell>
                 <TableDataCell>{item.lastName}</TableDataCell>
                 <TableDataCell>{item.age}</TableDataCell>
@@ -95,16 +85,8 @@ const CustomDraggable = () => {
           ))}
         </TableBody>
       </Table>
-      <Pagination
-        count={tableData?.length}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
     </div>
   );
 };
 
-export default CustomDraggable;
+export default DraggableTable;

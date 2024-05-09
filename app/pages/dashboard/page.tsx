@@ -36,7 +36,6 @@ const Dashboard = () => {
       ],
     },
   ];
-  console.log("collapsed", collapsed);
   return (
     <div className="">
       <div className="my-5">

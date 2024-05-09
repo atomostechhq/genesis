@@ -14,7 +14,7 @@ const defaultContextData: TabContextData = {
   position: "top",
   selectedTabValue: "",
   handleTabChange: () => {},
-  // box: false,
+  box: false,
 };
 
 const TabsContainerContext = createContext<TabContextData>(defaultContextData);
@@ -79,9 +79,9 @@ export const Tab = ({ value, children }: TabProps) => {
 
   return (
     <li
-      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium  cursor-pointer hover:bg-gray-100 transition-all ease-in-out duration-300 ${
+      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium  cursor-pointer hover:bg-gray-100 hover:rounded-t transition-all ease-in-out duration-300 ${
         value === selectedTabValue && box === false
-          ? "text-primary-700 border-b-2 border-primary-700"
+          ? "text-primary-600 border-b-2 border-primary-600"
           : "border-b-2 border-transparent text-gray-700 "
       } ${
         value === selectedTabValue && box === true
