@@ -1,8 +1,7 @@
 "use client";
-import Button from "@/app/components/Button";
 import Sidebar from "../../components/Sidebar";
 import React, { useState } from "react";
-import AddCircleFillIcon from "remixicon-react/AddCircleFillIcon";
+import {  RiAddCircleFill} from "@remixicon/react";
 import BreadCrumb from "@/app/components/Breadcrumbs";
 
 const Dashboard = () => {
@@ -14,7 +13,7 @@ const Dashboard = () => {
         {
           label: "Dashboard",
           href: "/pages/dashboard",
-          icon: <AddCircleFillIcon size={18} />,
+          icon: <RiAddCircleFill size={18} />,
         },
         {
           label: "Team",
