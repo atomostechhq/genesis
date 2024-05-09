@@ -1,6 +1,5 @@
 "use client";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useAppContext } from "./context";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
@@ -38,10 +37,6 @@ interface Option {
 }
 
 const Test = () => {
-  const { color, colors, setColor } = useAppContext();
-  const handleColorChange = (e: any) => {
-    setColor(e.target.value);
-  };
 
   // tabs
   const [activeTab, setActiveTab] = useState("tab1");
@@ -135,6 +130,7 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
+  console.log("multiSelect", multiSelect)
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
 
@@ -145,10 +141,10 @@ const Test = () => {
   ];
 
   const multiOptions = [
-    { label: "apple", value: "apple" },
-    { label: "banana", value: "banana" },
+    { label: "apple", value: "apple", info: "info1", addInfo:"djkhdjkhsad", tooltipContent:"hjsghjwg" },
+    { label: "banana", value: "banana", addInfo:"jdhjaldh" },
     { label: "strawberry", value: "strawberry" },
-    { label: "kiwi", value: "kiwi" },
+    { label: "kiwi", value: "kiwi", info: "info4" },
     { label: "orange", value: "orange" },
     { label: "grapes", value: "grapes" },
     { label: "melon", value: "melon" },
@@ -297,7 +293,7 @@ const Test = () => {
       {/* select a color  */}
       <div>
         <label className="block mt-5">Select a color:</label>
-        <div className="flex justify-between space-x-8 mt-2">
+        {/* <div className="flex justify-between space-x-8 mt-2">
           {colors?.map((c: any) => (
             <label
               key={c}
@@ -315,20 +311,7 @@ const Test = () => {
               {c}
             </label>
           ))}
-        </div>
-      </div>
-      <div className={"flex gap-4 items-center mt-5"}>
-        <span className="bg-primary-25">{color} Primary 25</span>
-        <span className="bg-primary-50">{color} Primary 50</span>
-        <span className="bg-primary-100">{color} Primary 100</span>
-        <span className="bg-primary-200">{color} Primary 200</span>
-        <span className="bg-primary-300">{color} Primary 300</span>
-        <span className="bg-primary-400">{color} Primary 400</span>
-        <span className="bg-primary-500">{color} Primary 500</span>
-        <span className="bg-primary-600">{color} Primary 600</span>
-        <span className="bg-primary-700">{color} Primary 700</span>
-        <span className="bg-primary-800">{color} Primary 800</span>
-        <span className="bg-primary-900">{color} Primary 900</span>
+        </div> */}
       </div>
       <Button variant="filled" onClick={() => setOpen(true)}>
         Show Notice
@@ -437,12 +420,7 @@ const Test = () => {
             search={true}
             multiple={true}
             dropDownTooltip={true}
-            tooltipContent="info"
             dropdownFooter={true}
-            info={info?.map((i: any) => (
-              <>{i}</>
-            ))}
-            addInfo="Awesome additional info"
             onApply={() => {
               console.log("Apply button clicked");
             }}
@@ -457,8 +435,7 @@ const Test = () => {
             // search={true}
             multiple={false}
             info="info"
-            dropDownTooltip={true}
-            tooltipContent="info"
+            // dropDownTooltip={true}
           />
         </section>
       </div>
