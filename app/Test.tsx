@@ -2,7 +2,6 @@
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import { isValid, parse, isAfter, format, subMonths, subDays } from "date-fns";
 import { DateRange, SelectRangeEventHandler } from "react-day-picker";
-import { useAppContext } from "./context";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";

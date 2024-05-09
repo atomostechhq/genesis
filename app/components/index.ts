@@ -29,3 +29,6 @@ export {
 } from "./TableComponents";
 export { default as Modal } from "./Modal";
 export { default as Loading } from "./Loading";
+export {default as DatePicker } from "./DatePicker";
+export { default as DateRangePicker } from "./DateRangePicker";
+export { default as Pagination } from "./Pagination"
