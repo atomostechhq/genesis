@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/app/components/TableComponents";
 import React, { useState } from "react";
-import SortAscIcon from "remixicon-react/SortDescIcon";
+import {RiSortAsc} from '@remixicon/react'
 import Chip from "../Chip";
 import Checkbox from "../Checkbox";
 import Pagination from "../Pagination";
@@ -100,34 +100,34 @@ const TableSorting = () => {
                 onChange={toggleSelectAll}
               />
             </TableHeadCell>
-            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy("id")} />}>
+            <TableHeadCell icon={<RiSortAsc onClick={() => sortBy("id")} />}>
               ID
             </TableHeadCell>
             <TableHeadCell
-              icon={<SortAscIcon onClick={() => sortBy("firstName")} />}
+              icon={<RiSortAsc onClick={() => sortBy("firstName")} />}
             >
               First Name
             </TableHeadCell>
             <TableHeadCell
-              icon={<SortAscIcon onClick={() => sortBy("lastName")} />}
+              icon={<RiSortAsc onClick={() => sortBy("lastName")} />}
             >
               Last Name
             </TableHeadCell>
-            <TableHeadCell icon={<SortAscIcon onClick={() => sortBy("age")} />}>
+            <TableHeadCell icon={<RiSortAsc onClick={() => sortBy("age")} />}>
               Age
             </TableHeadCell>
             <TableHeadCell
-              icon={<SortAscIcon onClick={() => sortBy("progress")} />}
+              icon={<RiSortAsc onClick={() => sortBy("progress")} />}
             >
               Progress
             </TableHeadCell>
             <TableHeadCell
-              icon={<SortAscIcon onClick={() => sortBy("status")} />}
+              icon={<RiSortAsc onClick={() => sortBy("status")} />}
             >
               Status
             </TableHeadCell>
             <TableHeadCell
-              icon={<SortAscIcon onClick={() => sortBy("visits")} />}
+              icon={<RiSortAsc onClick={() => sortBy("visits")} />}
             >
               Visits
             </TableHeadCell>

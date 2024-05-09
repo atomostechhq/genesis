@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState, useEffect, ReactNode } from "react";
-import CalendarLineIcon from "remixicon-react/CalendarLineIcon";
+import { RiCalendarLine } from "@remixicon/react";
 import {
   DayPicker,
   SelectRangeEventHandler,
@@ -91,7 +91,7 @@ const DateRangePicker = ({
       <div ref={popperRef} className="relative">
         <Input
           className="w-[250px]"
-          startIcon={<CalendarLineIcon size={16} />}
+          startIcon={<RiCalendarLine size={16} />}
           placeholder="DD/MM/YYYY - DD/MM/YYYY"
           value={dateRangeInput}
           onChange={handleInputChange}

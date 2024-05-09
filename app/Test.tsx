@@ -6,10 +6,8 @@ import { useAppContext } from "./context";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
-import MailLineIcon from "remixicon-react/MailLineIcon";
+import { RiMailLine, RiAlertFill, RiListCheck, RiLogoutBoxRLine, RiCircleFill } from "@remixicon/react";
 import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
-import AlertFillIcon from "remixicon-react/AlertFillIcon";
-import ListCheckIcon from "remixicon-react/ListCheckIcon";
 import Tooltip from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
@@ -25,8 +23,6 @@ import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Dropdown from "./components/Dropdown";
 import Sidebar from "./components/Sidebar";
-import LogoutBoxRLineIcon from "remixicon-react/LogoutBoxRLineIcon";
-import CircleFillIcon from "remixicon-react/AddCircleFillIcon";
 import BreadCrumb from "./components/Breadcrumbs";
 import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 import Link from "next/link";
@@ -181,12 +177,12 @@ const Test = () => {
         {
           label: "Dashboard",
           href: "/",
-          icon: <CircleFillIcon size={18} />,
+          icon: <RiCircleFill size={18} />,
         },
         {
           label: "Team",
           href: "/pages/team",
-          icon: <AlertFillIcon size={18} />,
+          icon: <RiAlertFill size={18} />,
         },
       ],
     },
@@ -196,12 +192,12 @@ const Test = () => {
         {
           label: "Setting 1",
           href: "/setting1",
-          icon: <AlertFillIcon size={18} />,
+          icon: <RiAlertFill size={18} />,
         },
         {
           label: "Setting 2",
           href: "/setting2",
-          icon: <CircleFillIcon size={18} />,
+          icon: <RiCircleFill size={18} />,
         },
       ],
     },
@@ -214,12 +210,12 @@ const Test = () => {
         {
           label: "Subitem 1",
           href: "/subitem1",
-          icon: <AlertFillIcon size={18} />,
+          icon: <RiAlertFill size={18} />,
         },
         {
           label: "Subitem 2",
           href: "/subitem2",
-          icon: <AlertFillIcon size={18} />,
+          icon: <RiAlertFill size={18} />,
         },
       ],
     },
@@ -229,12 +225,12 @@ const Test = () => {
         {
           label: "Subitem 3",
           href: "/subitem3",
-          icon: <AlertFillIcon size={18} />,
+          icon: <RiAlertFill size={18} />,
         },
         {
           label: "Subitem 4",
           href: "/subitem4",
-          icon: <AlertFillIcon size={18} />,
+          icon: <RiAlertFill size={18} />,
         },
       ],
     },
@@ -568,7 +564,7 @@ const Test = () => {
         >
           <TabList>
             <Tab value="tab1">
-              <ListCheckIcon size={16} /> Tab 1
+              <RiListCheck size={16} /> Tab 1
             </Tab>
             <Tab value="tab2">Tab 2</Tab>
             <Tab value="tab3">Tab 3</Tab>
@@ -652,15 +648,15 @@ const Test = () => {
         <section className="flex items-center gap-4">
           <Button
             variant="filled"
-            startIcon={<AlertFillIcon size={20} />}
-            endIcon={<ListCheckIcon size={20} />}
+            startIcon={<RiAlertFill size={20} />}
+            endIcon={<RiListCheck size={20} />}
           >
             Filled
           </Button>
           <Button
             variant="outlined"
-            startIcon={<AlertFillIcon size={20} />}
-            endIcon={<ListCheckIcon size={20} />}
+            startIcon={<RiAlertFill size={20} />}
+            endIcon={<RiListCheck size={20} />}
           >
             Outlined
           </Button>
@@ -875,7 +871,7 @@ const Test = () => {
           <h1>States:</h1>
           <Input
             type="text"
-            startIcon={<MailLineIcon size={16} />}
+            startIcon={<RiMailLine size={16} />}
             size="lg"
             placeholder="olivia@untitledui.com"
           />
@@ -895,7 +891,7 @@ const Test = () => {
               type="text"
               onChange={handleChange}
               endIcon={
-                <ListCheckIcon
+                <RiListCheck
                   size={16}
                   className={cn(error && "text-error-500")}
                 />
@@ -1007,7 +1003,7 @@ const Test = () => {
               className="w-full"
               variant="outlined"
               intent="default-outlined"
-              startIcon={<LogoutBoxRLineIcon size={20} />}
+              startIcon={<RiLogoutBoxRLine size={20} />}
             >
               {!collapsed ? "" : "Logout"}
             </Button>

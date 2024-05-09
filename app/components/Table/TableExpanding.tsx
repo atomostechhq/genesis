@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/app/components/TableComponents";
 import React, { useState } from "react";
-import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
+import { RiArrowDownSLine } from "@remixicon/react";
 import Pagination from "../Pagination";
 
 const TableExpanding = () => {
@@ -72,7 +72,7 @@ const TableExpanding = () => {
                     {data.subRows && data.subRows.length > 0 && (
                       <span className="p-1 rounded-md hover:bg-gray-200">
                         {" "}
-                        <ArrowDownSLineIcon cursor="pointer" size={18} />
+                        <RiArrowDownSLine cursor="pointer" size={18} />
                       </span>
                     )}
                   </div>

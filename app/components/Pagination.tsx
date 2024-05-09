@@ -1,10 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Button from "./Button";
-import ArrowLeftLineIcon from "remixicon-react/ArrowLeftLineIcon";
-import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
-import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
-import ArrowUpSLineIcon from "remixicon-react/ArrowUpSLineIcon";
+import { RiArrowLeftLine, RiArrowRightLine, RiArrowDownSLine, RiArrowUpSLine } from "@remixicon/react";
 
 type TablePaginationProps = {
   count: number;
@@ -55,7 +52,7 @@ const Pagination: React.FC<TablePaginationProps> = ({
             onClick={() => setShowOptions(!showOptions)}
           >
             {rowsPerPage}{" "}
-            {!showOptions ? <ArrowDownSLineIcon size={14} /> : <ArrowUpSLineIcon size={14} />}
+            {!showOptions ? <RiArrowDownSLine size={14} /> : <RiArrowUpSLine size={14} />}
           </div>
           {showOptions && (
             <div className="absolute top-full left-0 shadow bg-white rounded-md text-sm mt-1 z-50">
@@ -94,7 +91,7 @@ const Pagination: React.FC<TablePaginationProps> = ({
           <Button
             variant="outlined"
             intent="default-outlined"
-            startIcon={<ArrowLeftLineIcon size={20} />}
+            startIcon={<RiArrowLeftLine size={20} />}
             onClick={handlePrevPageClick}
             disabled={page === 0}
             className="rounded-none h-[32px] rounded-l-lg"
@@ -102,7 +99,7 @@ const Pagination: React.FC<TablePaginationProps> = ({
           <Button
             variant="outlined"
             intent="default-outlined"
-            startIcon={<ArrowRightLineIcon size={20} />}
+            startIcon={<RiArrowRightLine size={20} />}
             onClick={handleNextPageClick}
             disabled={page === totalPages - 1}
             className="rounded-none h-[32px] rounded-r-lg"

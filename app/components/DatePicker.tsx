@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useRef, useState, useEffect } from "react";
 import { format } from "date-fns";
 import {
@@ -7,9 +7,7 @@ import {
   SelectSingleEventHandler,
   useNavigation,
 } from "react-day-picker";
-import CalendarLineIcon from "remixicon-react/CalendarLineIcon";
-import ArrowRightSLineIcon from "remixicon-react/ArrowRightSLineIcon";
-import ArrowLeftSLineIcon from "remixicon-react/ArrowLeftSLineIcon";
+import {RiCalendarLine, RiArrowRightSLine, RiArrowLeftSLine} from "@remixicon/react";
 import Input from "./Input";
 
 interface DatePickerProps {
@@ -84,7 +82,7 @@ const DatePicker = ({
           disabled={!previousMonth}
           onClick={() => previousMonth && goToMonth(previousMonth)}
         >
-          <ArrowLeftSLineIcon />
+          <RiArrowLeftSLine />
         </button>
         {format(props.displayMonth, "MMM yyy")}
         <button
@@ -92,7 +90,7 @@ const DatePicker = ({
           disabled={!nextMonth}
           onClick={() => nextMonth && goToMonth(nextMonth)}
         >
-          <ArrowRightSLineIcon />
+          <RiArrowRightSLine />
         </button>
       </div>
     );
@@ -110,7 +108,7 @@ const DatePicker = ({
         <Input
           type="text"
           className="w-[150px]"
-          startIcon={<CalendarLineIcon size={16} />}
+          startIcon={<RiCalendarLine size={16} />}
           placeholder={format(new Date(), "MMM dd, y")}
           value={inputValue}
           onChange={handleInputChange}

@@ -1,14 +1,17 @@
 import React, { InputHTMLAttributes, ReactNode } from "react";
-import FileLineIcon from "remixicon-react/FileLineIcon";
-import Upload2LineIcon from "remixicon-react/Upload2LineIcon";
-import DeleteBinLineIcon from "remixicon-react/DeleteBinLineIcon";
-import Music2LineIcon from "remixicon-react/Music2LineIcon";
-import VideoLineIcon from "remixicon-react/VideoLineIcon";
-import ImageLineIcon from "remixicon-react/ImageLineIcon";
-import FileExcel2LineIcon from "remixicon-react/FileExcel2LineIcon";
-import FileWord2LineIcon from "remixicon-react/FileWord2LineIcon";
-import FilePpt2LineIcon from "remixicon-react/FilePpt2LineIcon";
-import FileZipLineIcon from "remixicon-react/FileZipLineIcon";
+import {
+  RiFileLine,
+  RiUpload2Line,
+  RiDeleteBinLine,
+  RiMusic2Line,
+  RiVideoLine,
+  RiImageLine,
+  RiFileExcel2Line,
+  RiFileWord2Line,
+  RiFilePpt2Line,
+  RiFileZipLine,
+  RiFilePdf2Line,
+} from "@remixicon/react";
 import { cn } from "../utils/utils";
 
 interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -30,21 +33,21 @@ const getIconForMimeType = (fileName: string) => {
     case "svg":
     case "webp":
       iconComponent = (
-        <ImageLineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiImageLine className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
       );
       break;
     case "mp3":
     case "wav":
     case "ogg":
       iconComponent = (
-        <Music2LineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiMusic2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
       );
       break;
     case "mp4":
     case "avi":
     case "mkv":
       iconComponent = (
-        <VideoLineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiVideoLine className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
       );
       break;
     case "xls":
@@ -53,7 +56,7 @@ const getIconForMimeType = (fileName: string) => {
     case "txt":
     case "ods":
       iconComponent = (
-        <FileExcel2LineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiFileExcel2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
       );
       break;
     case "doc":
@@ -61,7 +64,7 @@ const getIconForMimeType = (fileName: string) => {
     case "odt":
     case "xml":
       iconComponent = (
-        <FileWord2LineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiFileWord2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
       );
       break;
     case "pptx":
@@ -69,19 +72,24 @@ const getIconForMimeType = (fileName: string) => {
     case "xps":
     case "ppsx":
       iconComponent = (
-        <FilePpt2LineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiFilePpt2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
       );
       break;
     case "rar":
     case "zip":
       iconComponent = (
-        <FileZipLineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiFileZipLine className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+      );
+      break;
+    case "pdf":
+      iconComponent = (
+        <RiFilePdf2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
       );
       break;
     default:
       // Return generic file icon
       iconComponent = (
-        <FileLineIcon className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiFileLine className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
       );
       break;
   }
@@ -119,7 +127,7 @@ const FileUpload = ({
         )}
       >
         <div className="w-10 h-10 border-[6px] border-gray-50 bg-gray-200 rounded-full p-1 flex justify-center items-center">
-          <Upload2LineIcon className="w-5 h-5" />
+          <RiUpload2Line className="w-5 h-5" />
         </div>
         <p className="text-center text-sm text-gray-600">
           <span className="text-primary-600 font-semibold">
@@ -141,7 +149,7 @@ const FileUpload = ({
                 <div className="w-full">{children}</div>
               </div>
             </div>
-            <DeleteBinLineIcon
+            <RiDeleteBinLine
               onClick={onDelete}
               className="text-gray-500 w-5 h-5 cursor-pointer"
             />

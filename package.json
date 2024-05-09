@@ -37,6 +37,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@remixicon/react": "^4.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
@@ -44,7 +45,6 @@
     "react": "^18",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
-    "remixicon-react": "^1.0.0",
     "tailwind-merge": "^2.2.2",
     "tsup": "^8.0.2"
   },

@@ -1,6 +1,6 @@
 "use client";
-import React, { useRef, useState } from "react";
-import CheckLineIcon from "remixicon-react/CheckLineIcon";
+import React, { useRef } from "react";
+import { RiCheckLine } from "@remixicon/react";
 import { cn } from "../utils/utils";
 
 interface StepConfig {
@@ -86,7 +86,7 @@ const Stepper = ({
 
                   {currentStep > index + 1 || isComplete ? (
                     <span>
-                      <CheckLineIcon size={12} color="#fff" />{" "}
+                      <RiCheckLine size={12} color="#fff" />{" "}
                     </span>
                   ) : (
                     ""

@@ -6,7 +6,7 @@ import React, {
   ThHTMLAttributes,
 } from "react";
 import { cn } from "../utils/utils";
-import Pushpin2LineIcon from "remixicon-react/Pushpin2LineIcon";
+import { RiPushpin2Line } from "@remixicon/react";
 
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
@@ -69,22 +69,6 @@ export const TableHead = ({
   );
 };
 
-// export const TableHead = React.forwardRef<HTMLTableSectionElement, TableHeadProps>(({ children, className, ...props }, ref) => {
-//   return (
-//     <thead ref={ref} {...props} className={cn("your-default-classes", className)}>
-//       {children}
-//     </thead>
-//   );
-// });
-
-// export const TableBody = React.forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(({ children, className, ...props }, ref) => {
-//   return (
-//     <tbody ref={ref} {...props} className={cn(className)}>
-//       {children}
-//     </tbody>
-//   );
-// });
-
 export const TableBody = ({
   children,
   className,
@@ -104,14 +88,6 @@ export const TableRow = ({ children, className,indent, ...props }: TableRowProps
     </tr>
   );
 };
-
-// export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(({ children, className, indent, ...props }, ref) => {
-//   return (
-//     <tr ref={ref} {...props} className={cn("border border-gray-200 hover:bg-gray-50", indent && "group/indent border-none", className)}>
-//       {children}
-//     </tr>
-//   );
-// });
 
 export const TableHeadCell = ({
   children,
@@ -139,7 +115,7 @@ export const TableHeadCell = ({
     >
       <div className="flex items-center">
         <span>
-          {sticky && <Pushpin2LineIcon className="w-3.5 h-3.5" />}
+          {sticky && <RiPushpin2Line className="w-3.5 h-3.5" />}
         </span>
         <span className="font-medium text-xs">{children}</span>
         <span
