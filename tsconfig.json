@@ -1,3 +1,4 @@
+
 {
   "compilerOptions": {
     "lib": [
@@ -9,7 +10,6 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
-    "sourceMap": true,
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -32,7 +32,6 @@
     "incremental": false
   },
   "include": [
-    "app/**/*",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

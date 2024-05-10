@@ -274,9 +274,9 @@ const Test = () => {
           href: "/subitem2",
           icon: <RiAlertFill size={18} />,
         },
-          {
+        {
+            label: "Setting 2",
             
-          label: "Setting 2",
           href: "/setting2",
           icon: <RiCircleFill size={18} />,
         },
@@ -292,17 +292,7 @@ const Test = () => {
           label: "Subitem 3",
           href: "/subitem3",
           icon: <RiAlertFill size={18} />,
-        },
-          {
-            
-          label: "Subitem 1",
-          href: "/subitem1",
-          icon: <RiAlertFill size={18} />,
-        },
-        {
-          label: "Subitem 4",
-          href: "/subitem4",
-          icon: <RiAlertFill size={18} />,
+          
         },
       ],
     },
