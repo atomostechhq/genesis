@@ -177,27 +177,12 @@ const Test = () => {
         {
           label: "Dashboard",
           href: "/",
-          icon: <CircleFillIcon size={18} />,
+          icon: <RiCircleFill size={18} />,
         },
         {
           label: "Team",
           href: "/pages/team",
-          icon: <AlertFillIcon size={18} />,
-        },
-      ],
-    },
-    {
-      label: "Page",
-      items: [
-        {
-          label: "Dashboard",
-          href: "/",
-          icon: <CircleFillIcon size={18} />,
-        },
-        {
-          label: "Team",
-          href: "/pages/team",
-          icon: <AlertFillIcon size={18} />,
+          icon: <RiAlertFill size={18} />,
         },
       ],
     },
@@ -222,12 +207,27 @@ const Test = () => {
         {
           label: "Dashboard",
           href: "/",
-          icon: <CircleFillIcon size={18} />,
+          icon: <RiCircleFill size={18} />,
         },
         {
           label: "Team",
           href: "/pages/team",
-          icon: <AlertFillIcon size={18} />,
+          icon: <RiAlertFill size={18} />,
+        },
+      ],
+    },
+    {
+      label: "Page",
+      items: [
+        {
+          label: "Dashboard",
+          href: "/",
+          icon: <RiCircleFill size={18} />,
+        },
+        {
+          label: "Team",
+          href: "/pages/team",
+          icon: <RiAlertFill size={18} />,
         },
       ],
     },
@@ -273,9 +273,12 @@ const Test = () => {
           label: "Subitem 2",
           href: "/subitem2",
           icon: <RiAlertFill size={18} />,
-          label: "Setting 2",
+        },
+        {
+            label: "Setting 2",
+            
           href: "/setting2",
-          icon: <CircleFillIcon size={18} />,
+          icon: <RiCircleFill size={18} />,
         },
       ],
     },
@@ -289,14 +292,7 @@ const Test = () => {
           label: "Subitem 3",
           href: "/subitem3",
           icon: <RiAlertFill size={18} />,
-          label: "Subitem 1",
-          href: "/subitem1",
-          icon: <AlertFillIcon size={18} />,
-        },
-        {
-          label: "Subitem 4",
-          href: "/subitem4",
-          icon: <RiAlertFill size={18} />,
+          
         },
       ],
     },
@@ -640,7 +636,7 @@ const Test = () => {
         >
           <TabList>
             <Tab value="tab1">
-              <ListCheckIcon size={16} /> Tab 1
+              <RiListCheck size={16} /> Tab 1
             </Tab>
             <Tab value="tab2">Tab 2</Tab>
             <Tab value="tab3">Tab 3</Tab>
