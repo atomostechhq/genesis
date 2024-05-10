@@ -1,0 +1,4 @@
+tsup.config.ts merge=ours
+tsconfig.json merge=ours
+tailwind.config.ts merge=ours
+postcss.config.js merge=ours
