@@ -473,7 +473,7 @@ const Test = () => {
             </span>
             <Button
               variant="filled"
-              startIcon={<AlertFillIcon size={16} />}
+              startIcon={<RiAlertFill size={16} />}
               endIcon={<ListCheckIcon size={16} />}
             >
               Filled
