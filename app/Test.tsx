@@ -5,8 +5,14 @@ import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
-import { RiMailLine, RiAlertFill, RiListCheck, RiLogoutBoxRLine, RiCircleFill } from "@remixicon/react";
-import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
+import {
+  RiMailLine,
+  RiAlertFill,
+  RiListCheck,
+  RiLogoutBoxRLine,
+  RiCircleFill,
+} from "@remixicon/react";
+import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
@@ -38,7 +44,12 @@ interface Option {
 
 const Test = () => {
   // tabs
-  const [activeTab, setActiveTab] = useState("tab1");
+  const [value, setValue] = useState("1");
+
+  const handleTabChange = (newValue: string) => {
+    setValue(newValue);
+  };
+
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
@@ -52,10 +63,6 @@ const Test = () => {
     } else {
       setError("");
     }
-  };
-
-  const handleTabChange = (value: string) => {
-    setActiveTab(value);
   };
 
   // single file upload
@@ -275,8 +282,8 @@ const Test = () => {
           icon: <RiAlertFill size={18} />,
         },
         {
-            label: "Setting 2",
-            
+          label: "Setting 2",
+
           href: "/setting2",
           icon: <RiCircleFill size={18} />,
         },
@@ -292,7 +299,6 @@ const Test = () => {
           label: "Subitem 3",
           href: "/subitem3",
           icon: <RiAlertFill size={18} />,
-          
         },
       ],
     },
@@ -576,7 +582,7 @@ const Test = () => {
       {/* Tabs */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Tabs:</h1>
-        <TabContext
+        {/* <TabContext
           box={false}
           value={activeTab}
           position="top"
@@ -598,12 +604,47 @@ const Test = () => {
           <TabPanel value="tab3">
             <div className="m-4"> Content for Tab 3 </div>
           </TabPanel>
-        </TabContext>
+        </TabContext> */}
+        <TabsContainer value={value}>
+          <TabList
+            onChange={handleTabChange}
+            ariaLabel="lab API tabs example"
+            box={false}
+          >
+            <Tab
+              label="Item One"
+              value="1"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Two"
+              value="2"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Three"
+              value="3"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+          </TabList>
+          <TabPanel value="1" currentValue={value}>
+            Item One Content
+          </TabPanel>
+          <TabPanel value="2" currentValue={value}>
+            Item Two Content
+          </TabPanel>
+          <TabPanel value="3" currentValue={value}>
+            Item Three Content
+          </TabPanel>
+        </TabsContainer>
       </div>
       <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Box Tabs:</h1>
-        <TabContext
-          box={true}
+        <h1 className="text-display-sm text-primary-400">Tabs:</h1>
+        {/* <TabContext
+          box={false}
           value={activeTab}
           position="top"
           onChange={handleTabChange}
@@ -624,33 +665,42 @@ const Test = () => {
           <TabPanel value="tab3">
             <div className="m-4"> Content for Tab 3 </div>
           </TabPanel>
-        </TabContext>
-      </div>
-      <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Box Tabs:</h1>
-        <TabContext
-          box={true}
-          value={activeTab}
-          position="top"
-          onChange={handleTabChange}
-        >
-          <TabList>
-            <Tab value="tab1">
-              <RiListCheck size={16} /> Tab 1
-            </Tab>
-            <Tab value="tab2">Tab 2</Tab>
-            <Tab value="tab3">Tab 3</Tab>
+        </TabContext> */}
+        <TabsContainer value={value}>
+          <TabList
+            onChange={handleTabChange}
+            ariaLabel="lab API tabs example"
+            box={true}
+          >
+            <Tab
+              label="Item One"
+              value="1"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Two"
+              value="2"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Three"
+              value="3"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
           </TabList>
-          <TabPanel value="tab1">
-            <div className="m-4">Content for Tab 1</div>
+          <TabPanel value="1" currentValue={value}>
+            Item One Content
           </TabPanel>
-          <TabPanel value="tab2">
-            <div className="m-4"> Content for Tab 2</div>{" "}
+          <TabPanel value="2" currentValue={value}>
+            Item Two Content
           </TabPanel>
-          <TabPanel value="tab3">
-            <div className="m-4"> Content for Tab 3 </div>
+          <TabPanel value="3" currentValue={value}>
+            Item Three Content
           </TabPanel>
-        </TabContext>
+        </TabsContainer>
       </div>
       {/* Buttons  */}
       <div className="flex flex-col gap-5">
@@ -825,7 +875,6 @@ const Test = () => {
           </section>
         </div>
       </div>
-      {/* <Sidebar /> */}
       {/* skeleton */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Skeleton:</h1>

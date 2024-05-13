@@ -44,6 +44,8 @@ interface DropdownProps {
   dropdownFooter?: boolean | undefined;
 }
 
+// dont show tooltip if no value is present
+
 const defaultRenderItem = (option: Option) => {
   return <MenuItem label={option.label} value={option.value} />;
 };
