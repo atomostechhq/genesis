@@ -1,12 +1,16 @@
 "use client";
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
-import { isValid, parse, isAfter, format, subMonths, subDays } from "date-fns";
-import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
-import { RiMailLine, RiAlertFill, RiListCheck, RiLogoutBoxRLine, RiCircleFill } from "@remixicon/react";
-import TabContext, { Tab, TabList, TabPanel } from "./components/Tabs";
+import {
+  RiMailLine,
+  RiAlertFill,
+  RiListCheck,
+  RiLogoutBoxRLine,
+  RiCircleFill,
+} from "@remixicon/react";
+import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
 import ProgressBar from "./components/Progress";
 import Label from "./components/Label";
@@ -28,8 +32,6 @@ import Link from "next/link";
 import Loading from "./components/Loading";
 import Divider from "./components/Divider";
 import Modal from "./components/Modal";
-import DatePicker from "./components/DatePicker";
-import DateRangePicker from "./components/DateRangePicker";
 
 interface Option {
   label: string;
@@ -38,7 +40,6 @@ interface Option {
 
 const Test = () => {
   // tabs
-  const [activeTab, setActiveTab] = useState("tab1");
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
@@ -52,10 +53,6 @@ const Test = () => {
     } else {
       setError("");
     }
-  };
-
-  const handleTabChange = (value: string) => {
-    setActiveTab(value);
   };
 
   // single file upload
@@ -82,6 +79,13 @@ const Test = () => {
     setSelectedFiles((prevFiles) =>
       prevFiles.filter((file) => file !== fileName)
     );
+  };
+
+  // tabs
+  const [value, setValue] = useState("1");
+
+  const handleTabChange = (newValue: string) => {
+    setValue(newValue);
   };
 
   // Stepper
@@ -275,8 +279,8 @@ const Test = () => {
           icon: <RiAlertFill size={18} />,
         },
         {
-            label: "Setting 2",
-            
+          label: "Setting 2",
+
           href: "/setting2",
           icon: <RiCircleFill size={18} />,
         },
@@ -292,81 +296,10 @@ const Test = () => {
           label: "Subitem 3",
           href: "/subitem3",
           icon: <RiAlertFill size={18} />,
-          
         },
       ],
     },
   ];
-
-  // date picker
-  const [selected, setSelected] = useState<Date>();
-  const [inputValueDate, setInputValueDate] = useState<string>("");
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setInputValue(e.currentTarget.value);
-    const date = parse(e.currentTarget.value, "y-MM-dd", new Date());
-    isValid(date) ? setSelected(date) : setSelected(undefined);
-  };
-
-  // date range picker
-  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>();
-  const [dateRangeInput, setDateRangeInput] = useState<string>("");
-
-  const handleRangeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDateRangeInput(value);
-    const [fromDateString, toDateString] = value.split(" – ");
-    const fromDate = parse(fromDateString, "y-MM-dd", new Date());
-    const toDate = parse(toDateString, "y-MM-dd", new Date());
-
-    if (isValid(fromDate) && isValid(toDate) && isAfter(toDate, fromDate)) {
-      setSelectedRange({ from: fromDate, to: toDate });
-    } else {
-      setSelectedRange(undefined);
-    }
-  };
-
-  const handleRangeSelect: SelectRangeEventHandler = (
-    range: DateRange | undefined
-  ) => {
-    setSelectedRange(range);
-    if (range) {
-      setDateRangeInput(
-        `${range.from ? format(range.from, "MMM dd, y") : ""} – ${
-          range.to ? format(range.to, "MMM dd, y") : ""
-        }`
-      );
-    } else {
-      setDateRangeInput("");
-    }
-  };
-
-  const applyPreset = (preset: "last2Months" | "last2Days") => {
-    let fromDate;
-    let toDate = new Date(); // End date is today by default
-
-    switch (preset) {
-      case "last2Months":
-        fromDate = subMonths(toDate, 2);
-        break;
-      case "last2Days":
-        fromDate = subDays(toDate, 2);
-        break;
-      default:
-        return;
-    }
-
-    setSelectedRange({ from: fromDate, to: toDate });
-    setDateRangeInput(
-      `${format(fromDate, "MMM dd, y")} – ${format(toDate, "MMM dd, y")}`
-    );
-  };
-
-  const handleApply = () => {
-    // Apply the selected date range
-    console.log("range selected", selectedRange);
-  };
-
-  const info: any = ["one", "two"];
 
   useEffect(() => {
     setTimeout(() => {
@@ -576,81 +509,79 @@ const Test = () => {
       {/* Tabs */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Tabs:</h1>
-        <TabContext
-          box={false}
-          value={activeTab}
-          position="top"
-          onChange={handleTabChange}
-        >
-          <TabList>
-            <Tab value="tab1">
-              <RiListCheck size={16} /> Tab 1
-            </Tab>
-            <Tab value="tab2">Tab 2</Tab>
-            <Tab value="tab3">Tab 3</Tab>
+        <TabsContainer value={value}>
+          <TabList
+            onChange={handleTabChange}
+            ariaLabel="lab API tabs example"
+            box={false}
+          >
+            <Tab
+              label="Item One"
+              value="1"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Two"
+              value="2"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Three"
+              value="3"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
           </TabList>
-          <TabPanel value="tab1">
-            <div className="m-4">Content for Tab 1</div>
+          <TabPanel value="1" currentValue={value}>
+            Item One Content
           </TabPanel>
-          <TabPanel value="tab2">
-            <div className="m-4"> Content for Tab 2</div>{" "}
+          <TabPanel value="2" currentValue={value}>
+            Item Two Content
           </TabPanel>
-          <TabPanel value="tab3">
-            <div className="m-4"> Content for Tab 3 </div>
+          <TabPanel value="3" currentValue={value}>
+            Item Three Content
           </TabPanel>
-        </TabContext>
+        </TabsContainer>
       </div>
       <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Box Tabs:</h1>
-        <TabContext
-          box={true}
-          value={activeTab}
-          position="top"
-          onChange={handleTabChange}
-        >
-          <TabList>
-            <Tab value="tab1">
-              <RiListCheck size={16} /> Tab 1
-            </Tab>
-            <Tab value="tab2">Tab 2</Tab>
-            <Tab value="tab3">Tab 3</Tab>
+        <h1 className="text-display-sm text-primary-400">Tabs Box:</h1>
+        <TabsContainer value={value}>
+          <TabList
+            onChange={handleTabChange}
+            ariaLabel="lab API tabs example"
+            box={true}
+          >
+            <Tab
+              label="Item One"
+              value="1"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Two"
+              value="2"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Three"
+              value="3"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
           </TabList>
-          <TabPanel value="tab1">
-            <div className="m-4">Content for Tab 1</div>
+          <TabPanel value="1" currentValue={value}>
+            Item One Content
           </TabPanel>
-          <TabPanel value="tab2">
-            <div className="m-4"> Content for Tab 2</div>{" "}
+          <TabPanel value="2" currentValue={value}>
+            Item Two Content
           </TabPanel>
-          <TabPanel value="tab3">
-            <div className="m-4"> Content for Tab 3 </div>
+          <TabPanel value="3" currentValue={value}>
+            Item Three Content
           </TabPanel>
-        </TabContext>
-      </div>
-      <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Box Tabs:</h1>
-        <TabContext
-          box={true}
-          value={activeTab}
-          position="top"
-          onChange={handleTabChange}
-        >
-          <TabList>
-            <Tab value="tab1">
-              <RiListCheck size={16} /> Tab 1
-            </Tab>
-            <Tab value="tab2">Tab 2</Tab>
-            <Tab value="tab3">Tab 3</Tab>
-          </TabList>
-          <TabPanel value="tab1">
-            <div className="m-4">Content for Tab 1</div>
-          </TabPanel>
-          <TabPanel value="tab2">
-            <div className="m-4"> Content for Tab 2</div>{" "}
-          </TabPanel>
-          <TabPanel value="tab3">
-            <div className="m-4"> Content for Tab 3 </div>
-          </TabPanel>
-        </TabContext>
+        </TabsContainer>
       </div>
       {/* Buttons  */}
       <div className="flex flex-col gap-5">
@@ -1014,47 +945,6 @@ const Test = () => {
             disabled
           ></Textarea>
         </section>
-      </section>
-      <section className="py-10">
-        <div className="space-y-4">
-          <p className="text-primary-500">Date Picker</p>
-          <DatePicker
-            selected={selected}
-            setSelected={setSelected}
-            inputValue={inputValueDate}
-            setInputValue={setInputValueDate}
-            handleInputChange={handleInputChange}
-          />
-        </div>
-        <div className="space-y-4">
-          <p className="text-primary-500">Date Range Picker</p>
-          <DateRangePicker
-            selectedRange={selectedRange}
-            setSelectedRange={setSelectedRange}
-            dateRangeInput={dateRangeInput}
-            setDateRangeInput={setDateRangeInput}
-            handleInputChange={handleInputChange}
-            handleRangeSelect={handleRangeSelect}
-            handleApply={handleApply}
-          >
-            <Button
-              variant={"outlined"}
-              intent="default-outlined"
-              className="border-none"
-              onClick={() => applyPreset("last2Months")}
-            >
-              Last 2 Months
-            </Button>
-            <Button
-              variant={"outlined"}
-              intent="default-outlined"
-              className="border-none"
-              onClick={() => applyPreset("last2Days")}
-            >
-              Last 2 Days
-            </Button>
-          </DateRangePicker>
-        </div>
       </section>
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>

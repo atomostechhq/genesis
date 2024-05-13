@@ -7,7 +7,7 @@ interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof tooltupVariants> {
   children: ReactNode;
-  position: any;
+  position: "top" | "right" | "bottom" | "left";
   content: string;
 }
 

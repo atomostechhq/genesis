@@ -32,7 +32,6 @@ const chipVariants = cva("rounded-full capitalize flex items-center w-fit gap-2"
 const Chip = ({ children, className, size, intent }: ChipProps) => {
   return (
     <div className={cn(chipVariants({ intent, className, size }), "")}>
-      <span className={cn("w-[6px] rounded-full h-[6px]", intent === "default" ? "bg-gray-600" : intent === "success" ? "bg-success-600" : intent === "warning" ? "bg-warning-600" : intent === "error"? "bg-error-600": "bg-primary-600")}></span>
       <span>
       {children}
       </span>
