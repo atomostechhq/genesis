@@ -1,11 +1,9 @@
-import tailwindcss from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
-
-console.log("PostCSS config loaded");
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 export default {
-  plugins: [
-    tailwindcss,
-    autoprefixer
-  ]
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
 };

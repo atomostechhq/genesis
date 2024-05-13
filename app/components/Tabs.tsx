@@ -1,108 +1,87 @@
-"use client"
+import React from 'react';
+import { cn } from '../utils/utils';
 
-import React, { createContext, useContext } from "react";
-import { cn } from "../utils/utils";
+interface TabItem {
+  label: string;
+  value: string;
+}
 
-interface TabContextData {
-  position: string;
-  selectedTabValue: string;
-  handleTabChange: (value: string) => void;
+interface TabsContainerProps {
+  value: string;
+  children: React.ReactNode;
+}
+
+interface TabListProps extends Partial<TabItem> {
+  onChange: (value: string) => void;
+  ariaLabel?: string;
+  children: React.ReactNode;
   box?: boolean;
 }
 
-const defaultContextData: TabContextData = {
-  position: "top",
-  selectedTabValue: "",
-  handleTabChange: () => {},
-  box: false,
-};
-
-const TabsContainerContext = createContext<TabContextData>(defaultContextData);
-
-type TabContextProps = {
-  value: string;
-  position: string;
+interface TabProps extends TabItem {
   onChange: (value: string) => void;
-  children: React.ReactNode;
   box?: boolean;
-};
+  selectedTabValue: string;
+}
 
-export const TabContext = ({
-  value,
-  position,
-  children,
-  onChange,
-  box,
-}: TabContextProps) => {
-  const data = {
-    position,
-    box,
-    selectedTabValue: value,
-    handleTabChange: onChange,
-  };
-  return (
-    <TabsContainerContext.Provider value={data}>
-      {children}
-    </TabsContainerContext.Provider>
-  );
-};
-
-export const TabList = ({ children }: { children: React.ReactNode }) => {
-  const { box } = useContext(TabsContainerContext) || { box: "" };
-  const { position } = useContext(TabsContainerContext) || { position: "" };
-  return (
-    <ul
-      className={cn(
-        "flex items-center",
-        box ? "bg-gray-50 rounded-lg border border-gray-200" : "border-b border-gray-600"
-      )}
-    >
-      {children}
-    </ul>
-  );
-};
-
-type TabProps = {
+interface TabPanelProps {
   value: string;
+  currentValue: string;
   children: React.ReactNode;
+}
+
+const TabsContainer: React.FC<TabsContainerProps> = ({ children }) => {
+  return <div>{children}</div>;
 };
 
-export const Tab = ({ value, children }: TabProps) => {
-  const { selectedTabValue, handleTabChange, position, box } =
-    useContext(TabsContainerContext) || {};
-
-  const handleClick = () => {
-    if (value !== selectedTabValue && handleTabChange) {
-      handleTabChange(value);
-    }
+const TabList: React.FC<TabListProps> = ({ onChange, ariaLabel, children, box = false }) => {
+  const handleTabChange = (value: string) => {
+    onChange(value);
   };
 
   return (
-    <li
-      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium  cursor-pointer hover:bg-gray-100 hover:rounded-t transition-all ease-in-out duration-300 ${
-        value === selectedTabValue && box === false
-          ? "text-primary-600 border-b-2 border-primary-600"
-          : "border-b-2 border-transparent text-gray-700 "
+    <div
+      className={cn(
+        'flex items-center',
+        box ? 'bg-gray-50 rounded-lg border border-gray-200' : 'border-b border-gray-600'
+      )}
+      role="tablist"
+      aria-label={ariaLabel}
+    >
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child as React.ReactElement<TabProps>, { onChange: handleTabChange, box });
+        }
+        return null;
+      })}
+    </div>
+  );
+};
+
+const Tab: React.FC<TabProps> = ({ label, value, onChange, box = false, selectedTabValue }) => {
+  const handleClick = () => {
+    onChange(value);
+  };
+
+  const isSelected = value === selectedTabValue;
+
+  return (
+    <button
+      role="tab"
+      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium cursor-pointer hover:bg-gray-100 hover:rounded-t transition-all ease-in-out duration-200 ${
+        isSelected && !box ? 'text-primary-600 border-b-2 border-primary-600' : 'border-b-2 border-transparent text-gray-700'
       } ${
-        value === selectedTabValue && box === true
-          ? "bg-white hover:bg-white shadow-md"
-          : ""
-      }  ${box === true ? "m-1 rounded-lg" : "m-0"}`}
+        isSelected && box ? 'bg-white hover:bg-white shadow-md' : ''
+      } ${box ? 'm-1 rounded-lg' : 'm-0'}`}
       onClick={handleClick}
     >
-      {children}
-    </li>
+      {label}
+    </button>
   );
 };
 
-type TabPanelProps = {
-  value: string;
-  children: React.ReactNode;
+const TabPanel: React.FC<TabPanelProps> = ({ value, currentValue, children }) => {
+  return value === currentValue ? <div>{children}</div> : null;
 };
 
-export const TabPanel = ({ value, children }: TabPanelProps) => {
-  const { selectedTabValue } = useContext(TabsContainerContext) || {};
-  return value === selectedTabValue ? <div className="">{children}</div> : null;
-};
-
-export default TabContext;
+export { TabsContainer, TabList, Tab, TabPanel };
