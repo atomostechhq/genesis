@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
@@ -39,7 +39,6 @@ interface Option {
 }
 
 const Test = () => {
-  // tabs
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
