@@ -30,11 +30,11 @@ interface TabPanelProps {
   children: React.ReactNode;
 }
 
-const TabsContainer: React.FC<TabsContainerProps> = ({ children }) => {
+export const TabsContainer: React.FC<TabsContainerProps> = ({ children }) => {
   return <div>{children}</div>;
 };
 
-const TabList: React.FC<TabListProps> = ({ onChange, ariaLabel, children, box = false }) => {
+export const TabList: React.FC<TabListProps> = ({ onChange, ariaLabel, children, box = false }) => {
   const handleTabChange = (value: string) => {
     onChange(value);
   };
@@ -58,7 +58,7 @@ const TabList: React.FC<TabListProps> = ({ onChange, ariaLabel, children, box = 
   );
 };
 
-const Tab: React.FC<TabProps> = ({ label, value, onChange, box = false, selectedTabValue }) => {
+export const Tab: React.FC<TabProps> = ({ label, value, onChange, box = false, selectedTabValue }) => {
   const handleClick = () => {
     onChange(value);
   };
@@ -80,8 +80,8 @@ const Tab: React.FC<TabProps> = ({ label, value, onChange, box = false, selected
   );
 };
 
-const TabPanel: React.FC<TabPanelProps> = ({ value, currentValue, children }) => {
+export const TabPanel: React.FC<TabPanelProps> = ({ value, currentValue, children }) => {
   return value === currentValue ? <div>{children}</div> : null;
 };
 
-export { TabsContainer, TabList, Tab, TabPanel };
+export default TabsContainer;
