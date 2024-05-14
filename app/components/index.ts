@@ -1,7 +1,7 @@
 export { default as Button } from "./Button";
 export { default as Toggle } from "./Toggle";
 export { default as Chip } from "./Chip";
-export { default as TabContext, Tab, TabList, TabPanel } from "./Tabs";
+export { default as TabsContainer, TabList, TabPanel, Tab } from "./Tabs";
 export { default as Tooltip } from "./Tooltip";
 export { default as ProgressBar } from "./Progress";
 export { default as Label } from "./Label";
@@ -29,6 +29,4 @@ export {
 } from "./TableComponents";
 export { default as Modal } from "./Modal";
 export { default as Loading } from "./Loading";
-export {default as DatePicker } from "./DatePicker";
-export { default as DateRangePicker } from "./DateRangePicker";
 export { default as Pagination } from "./Pagination";
