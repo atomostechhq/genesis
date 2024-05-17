@@ -13,6 +13,11 @@ import {
   RiSearchLine,
   RiErrorWarningLine,
 } from "@remixicon/react";
+import {
+  RiArrowDownSLine,
+  RiSearchLine,
+  RiErrorWarningLine,
+} from "@remixicon/react";
 import { cn } from "../utils/utils";
 import Label from "./Label";
 import Tooltip from "./Tooltip";
@@ -45,6 +50,7 @@ interface DropdownProps {
   info?: any;
   addInfo?: any;
   tooltipContent?: string;
+  width?: string;
   dropDownTooltip?: boolean | undefined;
   dropdownFooter?: boolean | undefined;
 }
@@ -64,6 +70,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   children,
   icon,
   tooltipContent,
+  width,
   info,
   addInfo,
   dropDownTooltip = false,
@@ -158,7 +165,13 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <div ref={dropdownRef} className="relative w-[320px]">
+    <div
+      ref={dropdownRef}
+      className={cn("relative", !width && "w-full")}
+      style={{
+        width: width,
+      }}
+    >
       <div
         onClick={() => setDropdownMenu((prev) => !prev)}
         className={cn(
@@ -278,11 +291,11 @@ const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
   tooltipContent,
 }) => {
   const content = tooltipContent || "";
-  return (
+  return content ? (
     <Tooltip position="right" content={content}>
       <RiErrorWarningLine color="#98A2B3" size={14} />
     </Tooltip>
-  );
+  ) : null;
 };
 
 interface DropdownFooterProps {
