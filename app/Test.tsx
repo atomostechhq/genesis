@@ -152,7 +152,7 @@ const Test = () => {
     { label: "banana", value: "banana", addInfo: "jdhjaldh" },
     { label: "strawberry", value: "strawberry" },
     { label: "kiwi", value: "kiwi", info: "info4" },
-    { label: "orange", value: "orange" },
+    { label: "orange", value: "orange", tooltipContent: "hjsghjwg" },
     { label: "grapes", value: "grapes" },
     { label: "melon", value: "melon" },
     { label: "mango", value: "mango" },
@@ -860,11 +860,11 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Input Field:</h1>
         <section className="flex items-center gap-4">
           <h1>Size with Text:</h1>
-          <div>
+          <div className="w-[500px]">
             <Label required htmlFor="">
               Email
             </Label>
-            <Input type="text" size="sm" placeholder="olivia@untitledui.com" />
+            <Input type="text" placeholder="olivia@untitledui.com" />
             <HelperText size="sm">This is a hint text to help user.</HelperText>
           </div>
           <div>
