@@ -2,25 +2,38 @@ import React, { HTMLAttributes, InputHTMLAttributes } from "react";
 import { cn } from "../utils/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
-interface CheckboxProps extends Omit<HTMLAttributes<HTMLInputElement>,"size">, VariantProps<typeof checkboxVariant> {
+interface CheckboxProps
+  extends Omit<HTMLAttributes<HTMLInputElement>, "size">,
+    VariantProps<typeof checkboxVariant> {
   size?: "sm" | "lg";
-  disabled?:boolean;
+  disabled?: boolean;
   checked?: boolean;
+  children?: never;
 }
 
-const checkboxVariant = cva("peer relative cursor-pointer appearance-none rounded-[4px] border border-gray-300 transition-all checked:border-primary-600 checked:bg-primary-50 hover:bg-primary-50 disabled:opacity-30 disabled:pointer-events-none",{
-  variants:{
-    size:{
-      sm:"h-3 w-3",
-      lg:"h-3.5 w-3.5"
-    }
-  },
-  defaultVariants:{
-    size:"lg"
+const checkboxVariant = cva(
+  "peer relative cursor-pointer appearance-none rounded-[4px] border border-gray-300 transition-all checked:border-primary-600 checked:bg-primary-50 hover:bg-primary-50 disabled:opacity-30 disabled:pointer-events-none",
+  {
+    variants: {
+      size: {
+        sm: "h-3 w-3",
+        lg: "h-3.5 w-3.5",
+      },
+    },
+    defaultVariants: {
+      size: "lg",
+    },
   }
-})
+);
 
-const Checkbox = ({ disabled, checked,size, className,children , ...props }: CheckboxProps) => {
+const Checkbox = ({
+  disabled,
+  checked,
+  size,
+  className,
+  children,
+  ...props
+}: CheckboxProps) => {
   return (
     <div className="inline-flex relative items-center">
       <input
@@ -28,7 +41,7 @@ const Checkbox = ({ disabled, checked,size, className,children , ...props }: Che
         {...props}
         disabled={disabled}
         checked={checked}
-        className={cn(checkboxVariant({className, size}))}
+        className={cn(checkboxVariant({ className, size }))}
       />
       <span className="absolute text-primary-600 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
         <svg

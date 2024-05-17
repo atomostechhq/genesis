@@ -1,7 +1,7 @@
 {
   "name": "@atomos_tech/genesis",
   "description": "list of components for your project",
-  "version": "0.0.9-alpha",
+  "version": "0.0.10-alpha",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -70,7 +70,6 @@
     "eslint-config-next": "14.2.1",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
-    "rollup": "^4.17.2",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
