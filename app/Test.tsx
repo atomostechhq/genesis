@@ -770,7 +770,7 @@ const Test = () => {
           <section className="flex items-center gap-4">
             <h1>Size with Text:</h1>
             <div className="flex items-center gap-2">
-              <Checkbox id="large" size="lg"/>
+              <Checkbox id="large" size="lg" />
               <Label htmlFor="large">Large</Label>
             </div>
             <div className="flex items-center gap-2">
@@ -860,11 +860,11 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Input Field:</h1>
         <section className="flex items-center gap-4">
           <h1>Size with Text:</h1>
-          <div>
+          <div className="w-[500px]">
             <Label required htmlFor="">
               Email
             </Label>
-            <Input type="text" size="sm" placeholder="olivia@untitledui.com" />
+            <Input type="text" placeholder="olivia@untitledui.com" />
             <HelperText size="sm">This is a hint text to help user.</HelperText>
           </div>
           <div>
