@@ -152,7 +152,7 @@ const Test = () => {
     { label: "banana", value: "banana", addInfo: "jdhjaldh" },
     { label: "strawberry", value: "strawberry" },
     { label: "kiwi", value: "kiwi", info: "info4" },
-    { label: "orange", value: "orange" },
+    { label: "orange", value: "orange",tooltipContent: "hjsghjwg", },
     { label: "grapes", value: "grapes" },
     { label: "melon", value: "melon" },
     { label: "mango", value: "mango" },
