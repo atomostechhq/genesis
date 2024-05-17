@@ -9,6 +9,10 @@ import {
   RiListCheck,
   RiLogoutBoxRLine,
   RiCircleFill,
+  RiSearch2Line,
+  RiHome2Line,
+  RiArrowRightSLine,
+  RiGlobalLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -26,12 +30,12 @@ import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Dropdown from "./components/Dropdown";
 import Sidebar from "./components/Sidebar";
-import BreadCrumb from "./components/Breadcrumbs";
 import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 import Link from "next/link";
 import Loading from "./components/Loading";
 import Divider from "./components/Divider";
 import Modal from "./components/Modal";
+import Breadcrumb from "./components/Breadcrumb";
 
 interface Option {
   label: string;
@@ -52,6 +56,13 @@ const Test = () => {
     } else {
       setError("");
     }
+  };
+
+  // tabs
+  const [value, setValue] = useState("1");
+
+  const handleTabChange = (newValue: string) => {
+    setValue(newValue);
   };
 
   // single file upload
@@ -81,11 +92,18 @@ const Test = () => {
   };
 
   // tabs
-  const [value, setValue] = useState("1");
 
-  const handleTabChange = (newValue: string) => {
-    setValue(newValue);
-  };
+  // const router = useRouter();
+  // const initialTab = router.query.tab;
+  // const [value, setValue] = useState(initialTab || "1");
+
+  // const handleTabChange = (newValue: string) => {
+  //   setValue(newValue);
+  //   router.push({ query: { tab: value } });
+  // }
+  // useEffect(() => {
+  //   setValue(router.query.tab);
+  // }, [router.query.tab]);
 
   // Stepper
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -462,6 +480,7 @@ const Test = () => {
             setSelected={setMultiSelect}
             search={true}
             multiple={true}
+            icon={<RiGlobalLine size={16} />}
             dropDownTooltip={true}
             dropdownFooter={true}
             onApply={() => {
@@ -516,6 +535,8 @@ const Test = () => {
           >
             <Tab
               label="Item One"
+              content="(12)"
+              icon={<RiSearch2Line size={16} />}
               value="1"
               onChange={handleTabChange}
               selectedTabValue={value}
@@ -555,6 +576,8 @@ const Test = () => {
             <Tab
               label="Item One"
               value="1"
+              content="(12)"
+              icon={<RiSearch2Line size={16} />}
               onChange={handleTabChange}
               selectedTabValue={value}
             />
@@ -738,8 +761,8 @@ const Test = () => {
             setCurrentStep={setCurrentStep}
             isComplete={isComplete}
             setIsComplete={setIsComplete}
-            // position="vertical"
-            position="horizontal"
+            position="vertical"
+            // position="horizontal"
           />
           <section className="my-5 flex justify-end items-center gap-4">
             <Button
@@ -947,7 +970,18 @@ const Test = () => {
       </section>
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
-        <BreadCrumb />
+        <Breadcrumb
+          homeElement={<RiHome2Line size={18} />}
+          separator={
+            <span>
+              <RiArrowRightSLine size={18} color="gray" />
+            </span>
+          }
+          activeClasses="bg-gray-200"
+          containerClasses="flex gap-[6px] items-center"
+          listClasses="hover:bg-gray-100 rounded-lg py-[6px] px-3 text-text-xs font-semibold font-bold cursor-pointer"
+          capitalizeLinks
+        />
       </div>
       {/* sidebar */}
       <section className="">
