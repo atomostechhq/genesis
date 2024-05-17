@@ -152,7 +152,7 @@ const Test = () => {
     { label: "banana", value: "banana", addInfo: "jdhjaldh" },
     { label: "strawberry", value: "strawberry" },
     { label: "kiwi", value: "kiwi", info: "info4" },
-    { label: "orange", value: "orange",tooltipContent: "hjsghjwg", },
+    { label: "orange", value: "orange", tooltipContent: "hjsghjwg" },
     { label: "grapes", value: "grapes" },
     { label: "melon", value: "melon" },
     { label: "mango", value: "mango" },
@@ -770,7 +770,7 @@ const Test = () => {
           <section className="flex items-center gap-4">
             <h1>Size with Text:</h1>
             <div className="flex items-center gap-2">
-              <Checkbox id="large" size="lg" />
+              <Checkbox id="large" size="lg"/>
               <Label htmlFor="large">Large</Label>
             </div>
             <div className="flex items-center gap-2">
