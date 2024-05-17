@@ -16,7 +16,7 @@ export { default as FileUpload } from "./FileUpload";
 export { default as Textarea } from "./Textarea";
 export { default as Dropdown } from "./Dropdown";
 export { default as Sidebar } from "./Sidebar";
-export { default as BreadCrumb } from "./Breadcrumbs";
+export { default as BreadCrumb } from "./Breadcrumb";
 export { default as EmptyState, Text, Desc } from "./EmptyState";
 export { default as Divider } from "./Divider";
 export {
