@@ -13,11 +13,6 @@ import {
   RiSearchLine,
   RiErrorWarningLine,
 } from "@remixicon/react";
-import {
-  RiArrowDownSLine,
-  RiSearchLine,
-  RiErrorWarningLine,
-} from "@remixicon/react";
 import { cn } from "../utils/utils";
 import Label from "./Label";
 import Tooltip from "./Tooltip";
