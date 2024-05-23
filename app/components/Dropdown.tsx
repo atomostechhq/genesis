@@ -4,6 +4,7 @@ import React, {
   useState,
   useMemo,
   useCallback,
+  forwardRef,
   useRef,
 } from "react";
 import Checkbox from "./Checkbox";
@@ -32,6 +33,7 @@ interface MenuItemProps {
 }
 
 interface DropdownProps {
+  icon?: JSX.Element;
   options: Option[];
   selected?: Option[];
   setSelected?: React.Dispatch<React.SetStateAction<Option[]>>;
@@ -53,223 +55,232 @@ const defaultRenderItem = (option: Option) => {
   return <MenuItem label={option.label} value={option.value} />;
 };
 
-const Dropdown: React.FC<DropdownProps> = ({
-  options,
-  selected,
-  setSelected,
-  search = false,
-  multiple = false,
-  dropdownText = "Select...",
-  renderItem = defaultRenderItem,
-  children,
-  tooltipContent,
-  width,
-  info,
-  addInfo,
-  dropDownTooltip = false,
-  dropdownFooter = false,
-  onApply,
-}) => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [filteredOptions, setFilteredOptions] = useState<Option[]>(
-    options || []
-  );
-
-  const [dropdownMenu, setDropdownMenu] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (options) {
-      setFilteredOptions(options);
-    }
-  }, [options]);
-
-  const memoizedFilteredOptions = useMemo(() => {
-    if (!search) return filteredOptions;
-    return filteredOptions.filter((option) =>
-      option.label.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [search, searchQuery, filteredOptions]);
-
-  const handleSearchChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchQuery(e.target.value);
+const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
+  (
+    {
+      options,
+      selected,
+      setSelected,
+      search = false,
+      multiple = false,
+      dropdownText = "Select...",
+      renderItem = defaultRenderItem,
+      children,
+      icon,
+      tooltipContent,
+      width,
+      info,
+      addInfo,
+      dropDownTooltip = false,
+      dropdownFooter = false,
+      onApply,
     },
-    []
-  );
+    ref
+  ) => {
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [filteredOptions, setFilteredOptions] = useState<Option[]>(
+      options || []
+    );
 
-  const toggleOption = useCallback(
-    (option: Option) => {
-      if (multiple && setSelected) {
-        setSelected((prevSelected) =>
-          prevSelected.some((item) => item.value === option.value)
-            ? prevSelected.filter((item) => item.value !== option.value)
-            : [...prevSelected, option]
-        );
-      } else if (setSelected) {
-        setSelected([option]);
+    const [dropdownMenu, setDropdownMenu] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      if (options) {
+        setFilteredOptions(options);
+      }
+    }, [options]);
+
+    const memoizedFilteredOptions = useMemo(() => {
+      if (!search) return filteredOptions;
+      return filteredOptions.filter((option) =>
+        option.label.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }, [search, searchQuery, filteredOptions]);
+
+    const handleSearchChange = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+      },
+      []
+    );
+
+    const toggleOption = useCallback(
+      (option: Option) => {
+        if (multiple && setSelected) {
+          setSelected((prevSelected) =>
+            prevSelected.some((item) => item.value === option.value)
+              ? prevSelected.filter((item) => item.value !== option.value)
+              : [...prevSelected, option]
+          );
+        } else if (setSelected) {
+          setSelected([option]);
+          setDropdownMenu(false);
+        }
+      },
+      [multiple, setSelected]
+    );
+
+    const handleCheckboxChange = useCallback(
+      (option: Option) => {
+        if (multiple && setSelected) {
+          setSelected((prevSelected) =>
+            prevSelected.some((item) => item.value === option.value)
+              ? prevSelected.filter((item) => item.value !== option.value)
+              : [...prevSelected, option]
+          );
+        } else if (setSelected) {
+          setSelected([option]);
+        }
+      },
+      [multiple, setSelected]
+    );
+
+    const handleSelectAll = () => {
+      if (selected?.length === filteredOptions.length) {
+        setSelected?.([]);
+      } else {
+        setSelected?.(filteredOptions);
+      }
+    };
+
+    const handleReset = () => {
+      setSelected?.([]);
+    };
+
+    useEffect(() => {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, []);
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setDropdownMenu(false);
       }
-    },
-    [multiple, setSelected]
-  );
-
-  const handleCheckboxChange = useCallback(
-    (option: Option) => {
-      if (multiple && setSelected) {
-        setSelected((prevSelected) =>
-          prevSelected.some((item) => item.value === option.value)
-            ? prevSelected.filter((item) => item.value !== option.value)
-            : [...prevSelected, option]
-        );
-      } else if (setSelected) {
-        setSelected([option]);
-      }
-    },
-    [multiple, setSelected]
-  );
-
-  const handleSelectAll = () => {
-    if (selected?.length === filteredOptions.length) {
-      setSelected?.([]);
-    } else {
-      setSelected?.(filteredOptions);
-    }
-  };
-
-  const handleReset = () => {
-    setSelected?.([]);
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setDropdownMenu(false);
-    }
-  };
-
-  return (
-    <div
-      ref={dropdownRef}
-      className={cn("relative", !width && "w-full")}
-      style={{
-        width: width,
-      }}
-    >
+    return (
       <div
-        onClick={() => setDropdownMenu((prev) => !prev)}
-        className={cn(
-          "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 text-text-sm cursor-pointer",
-          dropdownMenu ? "border border-gray-800" : "border border-gray-200"
-        )}
+        ref={dropdownRef}
+        className={cn("relative", !width && "w-full")}
+        style={{
+          width: width,
+        }}
       >
-        <section>
-          {multiple
-            ? `${`${selected?.length} Selected` || dropdownText}`
-            : selected?.[0]?.label
-            ? selected?.[0]?.label
-            : dropdownText}
-        </section>
-        <RiArrowDownSLine size={18} />
-      </div>
-      {dropdownMenu && (
-        <ul className="shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in-out">
-          {search && (
-            <Input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
-              endIcon={<RiSearchLine size={18} />}
-            />
+        <div
+          onClick={() => setDropdownMenu((prev) => !prev)}
+          className={cn(
+            "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 text-text-sm cursor-pointer",
+            dropdownMenu ? "border border-gray-800" : "border border-gray-200"
           )}
-          {multiple && (
-            <p
-              onClick={handleSelectAll}
-              className="text-text-sm py-[6px] hover:text-primary-700 px-[14px] text-primary-600 cursor-pointer"
-            >
-              Select all
-            </p>
-          )}
-          <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
-            {options
-              ? memoizedFilteredOptions.map((option) => (
-                  <React.Fragment key={option.label}>
-                    {multiple ? (
-                      <Label
-                        className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
-                        htmlFor={`checkbox-${option.value}`}
-                        key={option.label}
-                      >
-                        <section className="flex items-center justify-between gap-2 w-full">
-                          <div className="flex gap-2">
-                            <Checkbox
-                              id={`checkbox-${option.value}`}
-                              checked={selected?.some(
-                                (item) => item.value === option.value
-                              )}
-                              onChange={() => handleCheckboxChange(option)}
-                            />
-                            <div className="flex items-center gap-1">
-                              <span>{renderItem(option)}</span>
-                              {dropDownTooltip && (
-                                <DropdownTooltip
-                                  tooltipContent={option?.tooltipContent}
-                                />
-                              )}
-                            </div>
-                          </div>
-                          <span className="text-gray-500">{option?.info}</span>
-                        </section>
-                        <span className="pt-[2px] text-text-sm text-gray-500">
-                          {option?.addInfo}
-                        </span>
-                      </Label>
-                    ) : (
-                      <Label
-                        key={option.label}
-                        className={cn(
-                          "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
-                          {
-                            "bg-primary-50 border-primary-600":
-                              selected && selected[0]?.value === option.value,
-                          }
-                        )}
-                        onClick={() => toggleOption(option)}
-                      >
-                        <div className="flex items-center gap-1">
-                          <span>{renderItem(option)}</span>
-                          {dropDownTooltip && (
-                            <DropdownTooltip
-                              tooltipContent={option?.tooltipContent}
-                            />
-                          )}
-                        </div>
-                        <span className="text-gray-500">{info}</span>
-                      </Label>
-                    )}
-                  </React.Fragment>
-                ))
-              : children}
+        >
+          <section className="flex items-center gap-2">
+            {icon && <span>{icon}</span>}
+            {multiple
+              ? `${`${selected?.length} Selected` || dropdownText}`
+              : selected?.[0]?.label
+              ? selected?.[0]?.label
+              : dropdownText}
           </section>
-          {dropdownFooter && (
-            <DropdownFooter onReset={handleReset} onApply={onApply} />
-          )}
-        </ul>
-      )}
-    </div>
-  );
-};
+          <RiArrowDownSLine size={18} />
+        </div>
+        {dropdownMenu && (
+          <ul className="shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in-out">
+            {search && (
+              <Input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
+                endIcon={<RiSearchLine size={18} />}
+              />
+            )}
+            {multiple && (
+              <p
+                onClick={handleSelectAll}
+                className="text-text-sm py-[6px] hover:text-primary-700 px-[14px] text-primary-600 cursor-pointer"
+              >
+                Select all
+              </p>
+            )}
+            <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
+              {options
+                ? memoizedFilteredOptions.map((option) => (
+                    <React.Fragment key={option.label}>
+                      {multiple ? (
+                        <Label
+                          className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
+                          htmlFor={`checkbox-${option.value}`}
+                          key={option.label}
+                        >
+                          <section className="flex items-center justify-between gap-2 w-full">
+                            <div className="flex gap-2">
+                              <Checkbox
+                                id={`checkbox-${option.value}`}
+                                checked={selected?.some(
+                                  (item) => item.value === option.value
+                                )}
+                                onChange={() => handleCheckboxChange(option)}
+                              />
+                              <div className="flex items-center gap-1">
+                                <span>{renderItem(option)}</span>
+                                {dropDownTooltip && (
+                                  <DropdownTooltip
+                                    tooltipContent={option?.tooltipContent}
+                                  />
+                                )}
+                              </div>
+                            </div>
+                            <span className="text-gray-500">
+                              {option?.info}
+                            </span>
+                          </section>
+                          <span className="pt-[2px] text-text-sm text-gray-500">
+                            {option?.addInfo}
+                          </span>
+                        </Label>
+                      ) : (
+                        <Label
+                          key={option.label}
+                          className={cn(
+                            "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
+                            {
+                              "bg-primary-50 border-primary-600":
+                                selected && selected[0]?.value === option.value,
+                            }
+                          )}
+                          onClick={() => toggleOption(option)}
+                        >
+                          <div className="flex items-center gap-1">
+                            <span>{renderItem(option)}</span>
+                            {dropDownTooltip && (
+                              <DropdownTooltip
+                                tooltipContent={option?.tooltipContent}
+                              />
+                            )}
+                          </div>
+                          <span className="text-gray-500">{info}</span>
+                        </Label>
+                      )}
+                    </React.Fragment>
+                  ))
+                : children}
+            </section>
+            {dropdownFooter && (
+              <DropdownFooter onReset={handleReset} onApply={onApply} />
+            )}
+          </ul>
+        )}
+      </div>
+    );
+  }
+);
 
 export const MenuItem: React.FC<MenuItemProps> = ({ label, children }) => {
   return <p>{label || children}</p>;
