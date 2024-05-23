@@ -204,7 +204,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
             {options
               ? memoizedFilteredOptions.map((option) => (
-                  <>
+                  <React.Fragment key={option.label}>
                     {multiple ? (
                       <Label
                         className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
@@ -258,7 +258,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                         <span className="text-gray-500">{info}</span>
                       </Label>
                     )}
-                  </>
+                  </React.Fragment>
                 ))
               : children}
           </section>
