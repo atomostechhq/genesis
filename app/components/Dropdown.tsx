@@ -328,4 +328,6 @@ export const DropdownFooter: React.FC<DropdownFooterProps> = ({
   );
 };
 
+Dropdown.displayName = "Dropdown";
+
 export default Dropdown;
