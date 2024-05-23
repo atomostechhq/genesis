@@ -35,7 +35,7 @@ const Stepper = ({
   const ActiveComponent = stepsConfig[currentStep - 1]?.Component;
 
   return (
-    <div className={cn("", position === "horizontal" ? "" : " flex")}>
+    <div className={cn(position !== "horizontal" && "flex")}>
       <div
         className={cn(
           "relative",
@@ -59,7 +59,9 @@ const Stepper = ({
             <div
               className={cn(
                 "",
-                position === "horizontal" ? "flex items-center" : "flex flex-col"
+                position === "horizontal"
+                  ? "flex items-center"
+                  : "flex flex-col"
               )}
             >
               <div
@@ -86,7 +88,9 @@ const Stepper = ({
                 <div
                   className={cn(
                     "mx-auto rounded-lg bg-gray-200",
-                    position === "horizontal" ? "w-[80%] h-1" : "h-[100px] w-1 my-2"
+                    position === "horizontal"
+                      ? "w-[80%] h-1"
+                      : "h-[100px] w-1 my-2"
                   )}
                 >
                   <p
