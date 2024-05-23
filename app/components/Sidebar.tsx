@@ -127,28 +127,28 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
             </p>
 
             {
-              <ul className="">
+              <ul>
                 {parentItem?.items.map((item, index) => (
-                  <li
-                    key={index}
-                    className={cn({
-                      "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold whitespace-nowrap overflow-hidden":
-                        true,
-                      "text-white bg-primary-600":
-                        currentPath === `${item?.href}`,
-                      "text-gray-700": currentPath !== `${item?.href}`,
-                      "hover:bg-primary-600": currentPath === `${item?.href}`,
-                    })}
-                  >
+                  <li key={index}>
                     <Link
-                      className={`flex items-center gap-2 whitespace-nowrap`}
+                      className={cn({
+                        "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold whitespace-nowrap overflow-hidden":
+                          true,
+                        "text-white bg-primary-600": currentPath === item?.href,
+                        "text-gray-700": currentPath !== item?.href,
+                        "hover:bg-primary-600": currentPath === item?.href,
+                      })}
                       href={item.href}
                       passHref
                     >
-                      <span className="text-text-sm"> {item.icon}</span>
-                      <span className={`${!collapsed ? "opacity-0" : ""}`}>
-                        {item.label}
-                      </span>
+                      <div
+                        className={`flex items-center gap-2 whitespace-nowrap`}
+                      >
+                        <span className="text-text-sm"> {item.icon}</span>
+                        <span className={cn(!collapsed ? "opacity-0" : "")}>
+                          {item.label}
+                        </span>
+                      </div>
                     </Link>
                   </li>
                 ))}
@@ -200,28 +200,29 @@ const Footer: React.FC<FooterProps> = ({
                 {parentItem.label}
               </p>
               {
-                <ul className="">
+                <ul>
                   {parentItem?.items.map((item, index) => (
-                    <li
-                      key={index}
-                      className={cn({
-                        "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold whitespace-nowrap overflow-hidden":
-                          true,
-                        "text-white bg-primary-600":
-                          currentPath === `${item?.href}`,
-                        "text-gray-700": currentPath !== `${item?.href}`,
-                        "hover:bg-primary-600": currentPath === `${item?.href}`,
-                      })}
-                    >
+                    <li key={index}>
                       <Link
-                        className={`flex items-center gap-2 whitespace-nowrap`}
+                        className={cn({
+                          "hover:bg-gray-100 px-3 py-2 flex items-center mb-[6px] cursor-pointer rounded-md transition-colors duration-300 font-semibold whitespace-nowrap overflow-hidden":
+                            true,
+                          "text-white bg-primary-600":
+                            currentPath === item?.href,
+                          "text-gray-700": currentPath !== item?.href,
+                          "hover:bg-primary-600": currentPath === item?.href,
+                        })}
                         href={item.href}
                         passHref
                       >
-                        <span className="text-text-sm"> {item.icon}</span>
-                        <span className={`${!collapsed ? "opacity-0" : ""}`}>
-                          {item.label}
-                        </span>
+                        <div
+                          className={`flex items-center gap-2 whitespace-nowrap`}
+                        >
+                          <span className="text-text-sm"> {item.icon}</span>
+                          <span className={cn(!collapsed ? "opacity-0" : "")}>
+                            {item.label}
+                          </span>
+                        </div>
                       </Link>
                     </li>
                   ))}

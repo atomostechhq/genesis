@@ -196,7 +196,7 @@ const Test = () => {
       label: "Page",
       items: [
         {
-          label: "Dashboard",
+          label: "Home",
           href: "/",
           icon: <RiCircleFill size={18} />,
         },
@@ -212,7 +212,7 @@ const Test = () => {
       items: [
         {
           label: "Dashboard",
-          href: "/",
+          href: "/pages/dashboard",
           icon: <RiCircleFill size={18} />,
         },
         {
@@ -227,7 +227,7 @@ const Test = () => {
       items: [
         {
           label: "Dashboard",
-          href: "/",
+          href: "/pages/dashboard",
           icon: <RiCircleFill size={18} />,
         },
         {
@@ -242,7 +242,7 @@ const Test = () => {
       items: [
         {
           label: "Dashboard",
-          href: "/",
+          href: "/pages/dashboard",
           icon: <RiCircleFill size={18} />,
         },
         {
@@ -257,7 +257,7 @@ const Test = () => {
       items: [
         {
           label: "Dashboard",
-          href: "/",
+          href: "/pages/dashboard",
           icon: <RiCircleFill size={18} />,
         },
         {
