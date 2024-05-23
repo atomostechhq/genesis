@@ -6,6 +6,7 @@ import React, {
   useCallback,
   forwardRef,
   useRef,
+  useImperativeHandle,
 } from "react";
 import Checkbox from "./Checkbox";
 import Input from "./Input";
@@ -84,6 +85,8 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
     const [dropdownMenu, setDropdownMenu] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useImperativeHandle(ref, () => dropdownRef.current!);
 
     useEffect(() => {
       if (options) {
