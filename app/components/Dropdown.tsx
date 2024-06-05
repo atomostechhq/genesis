@@ -215,12 +215,12 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
               {options
                 ? memoizedFilteredOptions.map((option) => (
-                    <React.Fragment key={option.label}>
+                    <React.Fragment key={option.value}>
                       {multiple ? (
                         <Label
                           className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
                           htmlFor={`checkbox-${option.value}`}
-                          key={option.label}
+                          key={option.value}
                         >
                           <section className="flex items-center justify-between gap-2 w-full">
                             <div className="flex gap-2">
@@ -250,7 +250,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                         </Label>
                       ) : (
                         <Label
-                          key={option.label}
+                          key={option.value}
                           className={cn(
                             "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
                             {
