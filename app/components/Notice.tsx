@@ -72,7 +72,7 @@ const noticeVariants = cva("p-4 w-fit rounded-[6px]", {
       default: "bg-gray-25 border border-gray-600",
     },
     position: {
-      top: "top-4 transition-all duration-700 left-[40%]",
+      top: "top-4 transition-all duration-700 m-auto left-0 right-0",
       bottom: "bottom-4 transition-all duration-700 right-4",
     },
   },
