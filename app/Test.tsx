@@ -998,13 +998,7 @@ const Test = () => {
           We are running into some issues :&#40;
         </p>
         <Button>
-          Loading{" "}
-          <Loading
-            width="15px"
-            height="15px"
-            variant="light"
-            loaderColor="red"
-          />
+          Loading <Loading width="15px" height="15px" variant="light" />
         </Button>
         <Button variant="outlined">
           Loading <Loading width="15px" height="15px" variant="light" />
