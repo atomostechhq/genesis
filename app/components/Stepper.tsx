@@ -50,8 +50,8 @@ const Stepper = ({
             ref={(el: any) => (stepRef.current[index] = el)}
             className={`w-full ${
               position === "horizontal"
-                ? "flex flex-col"
-                : "flex gap-4 justify-start"
+                ? "flex gap-4 flex-col"
+                : "flex gap-6 justify-start"
             } ${currentStep > index + 1 || isComplete ? "complete" : ""} ${
               currentStep === index + 1 ? "" : ""
             }`}

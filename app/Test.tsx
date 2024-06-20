@@ -110,22 +110,22 @@ const Test = () => {
 
   const stepsConfig = [
     {
-      name: "Step One",
+      name: "Step Name One",
       helperName: "step1",
       Component: () => <div>Step 1 Component</div>,
     },
     {
-      name: "Step Two",
+      name: "Step Name Two",
       helperName: "step2",
       Component: () => <div>Step 2 Component</div>,
     },
     {
-      name: "Step Three",
+      name: "Step Name Three",
       helperName: "step3",
       Component: () => <div>Step 3 Component</div>,
     },
     {
-      name: "Step Four",
+      name: "Step Name Four",
       helperName: "step4",
       Component: () => <div>Step 4 Component</div>,
     },
@@ -356,7 +356,7 @@ const Test = () => {
         return (
           <div key={item} className="cardSkeleton">
             <div className="cardSkeletonImage">
-              <Skeleton width="80px" height="80px" variant="circle" />
+              <Skeleton width="80px" height="80px" circle />
               <Skeleton width="100%" height="20px" />
             </div>
             <div className="cardSkeletonTitle">
@@ -725,8 +725,8 @@ const Test = () => {
             setCurrentStep={setCurrentStep}
             isComplete={isComplete}
             setIsComplete={setIsComplete}
-            position="vertical"
-            // position="horizontal"
+            // position="vertical"
+            position="horizontal"
           />
           <section className="my-5 flex justify-end items-center gap-4">
             <Button
@@ -746,7 +746,7 @@ const Test = () => {
       {/* skeleton */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
-        <Skeleton width="200px" height="38px" />
+        <Skeleton width="80px" height="80px" circle />
         <div>
           <h2>Card Skeleton</h2>
           <div className="cardBlock">{cardBlockData()}</div>
