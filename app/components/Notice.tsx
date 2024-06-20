@@ -2,7 +2,14 @@ import { VariantProps, cva } from "class-variance-authority";
 import { HTMLAttributes, ReactNode } from "react";
 import React from "react";
 import { cn } from "../utils/utils";
-import { RiAlertFill, RiCloseLine, RiErrorWarningLine, RiQuestionLine, RiThumbUpLine, RiShieldCheckLine } from "@remixicon/react";
+import {
+  RiAlertFill,
+  RiCloseLine,
+  RiErrorWarningLine,
+  RiQuestionLine,
+  RiThumbUpLine,
+  RiShieldCheckLine,
+} from "@remixicon/react";
 
 interface VariantIconProps {
   variant: "success" | "warning" | "info" | "error" | "default";
@@ -52,7 +59,7 @@ interface NoticeProps
   position?: "top" | "bottom";
   showIcon?: boolean;
   open?: boolean;
-  setOpen?: any
+  setOpen?: any;
 }
 
 const noticeVariants = cva("p-4 w-fit rounded-[6px]", {
@@ -65,7 +72,7 @@ const noticeVariants = cva("p-4 w-fit rounded-[6px]", {
       default: "bg-gray-25 border border-gray-600",
     },
     position: {
-      top: "top-4 transition-all duration-700 left-[35%]",
+      top: "top-4 transition-all duration-700 left-[40%]",
       bottom: "bottom-4 transition-all duration-700 right-4",
     },
   },
@@ -89,7 +96,7 @@ const Notice = ({
             noticeVariants({ variant, position }),
             `fixed z-10`,
             position === "top" && open && `animate-slide-in-top`,
-            position === "bottom" && open && `animate-slide-in-right`,
+            position === "bottom" && open && `animate-slide-in-right`
           )}
         >
           <div className="relative">
@@ -98,10 +105,7 @@ const Notice = ({
                 <div className="flex items-start">
                   <VariantIcon variant={variant} />
                   <span className="ml-2 mr-8 text-text-sm">{children}</span>
-                  <span
-
-                    onClick={handleClose}
-                  >
+                  <span onClick={handleClose}>
                     <RiCloseLine size={20} />
                   </span>
                 </div>
@@ -133,9 +137,7 @@ const Notice = ({
                   className={cn("absolute top-0 right-0 cursor-pointer")}
                   onClick={handleClose}
                 >
-                  <RiCloseLine
-                    size={20}
-                  />
+                  <RiCloseLine size={20} />
                 </span>
                 <p className="text-text-sm">{children}</p>
               </div>
@@ -147,4 +149,4 @@ const Notice = ({
   );
 };
 
-export default Notice
+export default Notice;

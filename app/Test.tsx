@@ -30,7 +30,6 @@ import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Dropdown from "./components/Dropdown";
 import Sidebar from "./components/Sidebar";
-import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 import Link from "next/link";
 import Loading from "./components/Loading";
 import Divider from "./components/Divider";
@@ -394,42 +393,6 @@ const Test = () => {
             <Button>Apply</Button>
           </section>
         </Notice>
-        {/* <Notice
-          open={open}
-          setOpen={setOpen}
-          variant="success"
-          noticeTitle="false"
-          showIcon={false}
-          position="bottom"
-        >
-          This is a success Alert with an encouraging title without icon.
-        </Notice> */}
-        {/* 
-        <Notice
-          open={open}
-          setOpen={setOpen}
-          variant="success"
-          noticeTitle=""
-          showIcon={true}
-        >
-          <div>
-            <span>
-              Lorem ipsum dolor sit amet consectetur. Imperdiet accumsan
-              habitant mi mus. Morbi feugiat placerat eu aliquam aenean lobortis
-              semper amet. Diam duis sit donec volutpat bibendum dolor nullam
-              pharetra etiam. Aliquet lorem pulvinar egestas amet eu semper
-              condimentum. Massa pharetra commodo adipiscing nulla in. Varius
-              etiam adipiscing risus tempor risus velit consectetur sed mattis.
-            </span>
-            <Button
-              variant="filled"
-              startIcon={<RiAlertFill size={16} />}
-              endIcon={<ListCheckIcon size={16} />}
-            >
-              Filled
-            </Button>
-          </div>
-        </Notice> */}
       </div>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
@@ -461,7 +424,9 @@ const Test = () => {
       </div>
       {/* Chips  */}
       <div className="my-5 flex items-center gap-4">
-        <Chip intent="primary">primary</Chip>
+        <Chip intent="primary" dot>
+          primary
+        </Chip>
         <Chip intent="warning">warning</Chip>
         <Chip intent="success">success</Chip>
         <Chip intent="error">error</Chip>
@@ -501,7 +466,6 @@ const Test = () => {
           />
         </section>
       </div>
-
       {/* Tooltip */}
       <div className="flex items-center gap-5 my-5">
         <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
@@ -1025,20 +989,7 @@ const Test = () => {
         />
         <Divider position="horizontal" className="my-4" />
       </div>
-      {/* Empty State */}
-      <section>
-        <EmptyState>
-          <EmptyImageSVG />
-          <Text>Something went wrong</Text>
-          <Desc>
-            We are aware of the issue and are working to fix it. Please try
-            again later.
-          </Desc>
-          <Button intent="default-outlined" variant="outlined">
-            Reload Page
-          </Button>
-        </EmptyState>
-      </section>
+
       {/* Loading State */}
       <div className="flex flex-col items-center justify-center gap-2">
         <Loading width="50px" height="50px" />
@@ -1052,7 +1003,7 @@ const Test = () => {
             width="15px"
             height="15px"
             variant="light"
-            loaderColor="white"
+            loaderColor="red"
           />
         </Button>
         <Button variant="outlined">
