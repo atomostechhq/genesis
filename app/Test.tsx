@@ -661,15 +661,29 @@ const Test = () => {
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Progress:</h1>
         <ProgressBar
+          progressColor="bg-success-600"
+          progress={progress}
+          progressText={`${progress}%`}
+          progressTextPosition="top"
+        />
+        <ProgressBar
           progressColor="bg-primary-600"
           progress={progress}
           progressText={`${progress}%`}
+          progressTextPosition="right"
         />
         <section className="w-[320px]">
           <ProgressBar
             progressColor="bg-success-600"
             progress={progress}
             progressText={`${progress}%`}
+            progressTextPosition="left"
+          />
+          <ProgressBar
+            progressColor="bg-success-600"
+            progress={progress}
+            progressText={`${progress}%`}
+            progressTextPosition="bottom"
           />
         </section>
       </div>
