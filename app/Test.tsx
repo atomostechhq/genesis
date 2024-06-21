@@ -569,6 +569,46 @@ const Test = () => {
           </TabPanel>
         </TabsContainer>
       </div>
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Custom styling for Tabs:</h1>
+        <TabsContainer value={value}>
+          <TabList
+            onChange={handleTabChange}
+            ariaLabel="lab API tabs example"
+            className="border-none"
+          >
+            <Tab
+              label="Item One"
+              value="1"
+              // icon={<RiSearch2Line size={16} />}
+              onChange={handleTabChange}
+              selectedTabValue={value}
+              className="bg-primary-600 text-white rounded-2xl hover:bg-primary-100 hover:text-black border-b-0 hover:rounded-2xl"
+            />
+            <Tab
+              label="Item Two"
+              value="2"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Three"
+              value="3"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+          </TabList>
+          <TabPanel value="1" currentValue={value}>
+            Item One Content
+          </TabPanel>
+          <TabPanel value="2" currentValue={value}>
+            Item Two Content
+          </TabPanel>
+          <TabPanel value="3" currentValue={value}>
+            Item Three Content
+          </TabPanel>
+        </TabsContainer>
+      </div>
       {/* Buttons  */}
       <div className="flex flex-col gap-5">
         <h1 className="text-display-sm text-primary-400">Button:</h1>
