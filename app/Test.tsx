@@ -465,6 +465,18 @@ const Test = () => {
             // dropDownTooltip={true}
           />
         </section>
+        <section>
+          <h1 className="text-display-sm text-primary-400">Disabled Dropdown</h1>
+          <Dropdown
+            options={singleOptions}
+            selected={singleSelect}
+            setSelected={setSingleSelect}
+            // search={true}
+            multiple={false}
+            info="info"
+            disabled={true}
+          />
+        </section>
       </div>
       {/* Tooltip */}
       <div className="flex items-center gap-5 my-5">
