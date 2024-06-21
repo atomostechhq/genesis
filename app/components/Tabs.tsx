@@ -88,7 +88,7 @@ export const Tab: React.FC<TabProps> = ({
   return (
     <button
       role="tab"
-      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium cursor-pointer hover:bg-gray-100 hover:rounded-t transition-all ease-in-out duration-200 ${
+      className={`flex items-center gap-2 px-4 py-3 text-text-sm font-medium cursor-pointer hover:bg-gray-100 hover:rounded-t transition-all ease-linear duration-200 delay-75 ${
         isSelected && !box
           ? "text-primary-600 border-b-2 border-primary-600"
           : "border-b-2 border-transparent text-gray-700"
