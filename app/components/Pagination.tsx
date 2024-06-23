@@ -43,7 +43,7 @@ const Pagination: React.FC<TablePaginationProps> = ({
   };
 
   return (
-    <div className="border border-gray-200 px-6 py-4 flex justify-between items-center">
+    <div className="border border-gray-200 px-6 py-4 flex justify-between items-center w-full">
       <section className="flex gap-[6px] items-center">
         <span className="text-gray-800 text-text-sm font-medium">Items per page</span>
         <div className="relative z-[100]">

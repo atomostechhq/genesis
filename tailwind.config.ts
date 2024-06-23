@@ -10,36 +10,6 @@ const config: Config = {
     "./app/**/**/*.{js,jsx,ts,tsx}",
     "./app/**/*.{js,jsx,ts,tsx}",
   ],
-  // safelist: [
-  //   'text-xs', 'text-sm', 'text-md', 'text-lg', 'text-xl',
-  //   'bg-red-500', 'bg-blue-500', 'bg-green-500',
-  //   'p-1', 'p-2', 'p-3', 'p-4',
-  //   'm-1', 'm-2', 'm-3', 'm-4',
-  //   'border', 'border-red-500',
-  //   'flex',               'items-center',       'border-b',
-  //   'border-gray-600',    'gap-2',              'px-4',
-  //   'py-3',               'text-text-sm',       'font-medium',
-  //   'hover:bg-gray-100',  'cursor-pointer',     'value',
-  //   'selectedTabValue',   'text-primary-700',   'border-b-2',
-  //   'border-primary-700', ':',                  'border-transparent',
-  //   'text-gray-700',      'w-full',             'position',
-  //   'horizontal',         'flex-col',           'gap-4',
-  //   'justify-start',      'currentStep',        'index','isComplete',         'complete',
-  //   'rounded-full',       'bg-gray-100',        'justify-center',
-  //   'border',             'border-primary-600', 'border-gray-200',
-  //   'bg-primary-600',     'border-none',        'skeleton',
-  //   'whitespace-nowrap',  'collapsed',          'opacity-0',
-  //   'h-full',             'transition-all',     'delay-1000',
-  //   'duration-700',       'rounded',            'ease-in',
-  //   'capitalize',         'px-3',               'text-text-xs',
-  //   'font-semibold',      'rounded-lg',         'isActive',
-  //   'bg-gray-200',        'length',
-  //   {
-  //     pattern: /bg-(red|green|blue)-(100|200|300|400|500|600|700|800|900)/,
-  //     variants: ['hover', 'focus', 'active']
-  //   }
-  // ],
-
   theme: {
     extend: {
       colors: {

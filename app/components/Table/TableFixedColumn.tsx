@@ -56,72 +56,72 @@ const TableFixedColumn = () => {
         </div>
       </div>
       <div className="overflow-auto">
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableHeadCell sticky left="0px" shadow>
-              ID
-            </TableHeadCell>
-            <TableHeadCell>First Name</TableHeadCell>
-            <TableHeadCell>Last Name</TableHeadCell>
-            <TableHeadCell>Age</TableHeadCell>
-            <TableHeadCell>Progress</TableHeadCell>
-            <TableHeadCell>Status</TableHeadCell>
-            <TableHeadCell>Visits</TableHeadCell>
-            <TableHeadCell>Progress Extra</TableHeadCell>
-            <TableHeadCell>Status Extra</TableHeadCell>
-            <TableHeadCell>Visits Extra</TableHeadCell>
-            <TableHeadCell>Progress Extra</TableHeadCell>
-            <TableHeadCell>Status Extra</TableHeadCell>
-            <TableHeadCell>Visits Extra</TableHeadCell>
-            <TableHeadCell>Progress Extra</TableHeadCell>
-            <TableHeadCell>Status Extra</TableHeadCell>
-            <TableHeadCell>Visits Extra</TableHeadCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {currentPageData?.map((item) => {
-            return (
-              <TableRow key={item.id}>
-                <TableDataCell sticky left="0px" shadow>
-                  {item.id}
-                </TableDataCell>
-                <TableDataCell>{item.firstName}</TableDataCell>
-                <TableDataCell>{item.lastName}</TableDataCell>
-                <TableDataCell>{item.age}</TableDataCell>
-                <TableDataCell>{item.progress}</TableDataCell>
-                <TableDataCell>
-                  <Chip intent={"primary"} size={"md"}>
-                    {item.status}
-                  </Chip>
-                </TableDataCell>
-                <TableDataCell>{item.visits}</TableDataCell>
-                <TableDataCell>{item.progress}</TableDataCell>
-                <TableDataCell>
-                  <Chip intent={"primary"} size={"md"}>
-                    {item.status}
-                  </Chip>
-                </TableDataCell>
-                <TableDataCell>{item.visits}</TableDataCell>
-                <TableDataCell>{item.progress}</TableDataCell>
-                <TableDataCell>
-                  <Chip intent={"primary"} size={"md"}>
-                    {item.status}
-                  </Chip>
-                </TableDataCell>
-                <TableDataCell>{item.visits}</TableDataCell>
-                <TableDataCell>{item.progress}</TableDataCell>
-                <TableDataCell>
-                  <Chip intent={"primary"} size={"md"}>
-                    {item.status}
-                  </Chip>
-                </TableDataCell>
-                <TableDataCell>{item.visits}</TableDataCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeadCell sticky left="0px" shadow>
+                ID
+              </TableHeadCell>
+              <TableHeadCell>First Name</TableHeadCell>
+              <TableHeadCell>Last Name</TableHeadCell>
+              <TableHeadCell>Age</TableHeadCell>
+              <TableHeadCell>Progress</TableHeadCell>
+              <TableHeadCell>Status</TableHeadCell>
+              <TableHeadCell>Visits</TableHeadCell>
+              <TableHeadCell>Progress Extra</TableHeadCell>
+              <TableHeadCell>Status Extra</TableHeadCell>
+              <TableHeadCell>Visits Extra</TableHeadCell>
+              <TableHeadCell>Progress Extra</TableHeadCell>
+              <TableHeadCell>Status Extra</TableHeadCell>
+              <TableHeadCell>Visits Extra</TableHeadCell>
+              <TableHeadCell>Progress Extra</TableHeadCell>
+              <TableHeadCell>Status Extra</TableHeadCell>
+              <TableHeadCell>Visits Extra</TableHeadCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {currentPageData?.map((item) => {
+              return (
+                <TableRow key={item.id}>
+                  <TableDataCell sticky left="0px" shadow>
+                    {item.id}
+                  </TableDataCell>
+                  <TableDataCell>{item.firstName}</TableDataCell>
+                  <TableDataCell>{item.lastName}</TableDataCell>
+                  <TableDataCell>{item.age}</TableDataCell>
+                  <TableDataCell>{item.progress}</TableDataCell>
+                  <TableDataCell>
+                    <Chip intent={"primary"} size={"md"}>
+                      {item.status}
+                    </Chip>
+                  </TableDataCell>
+                  <TableDataCell>{item.visits}</TableDataCell>
+                  <TableDataCell>{item.progress}</TableDataCell>
+                  <TableDataCell>
+                    <Chip intent={"primary"} size={"md"}>
+                      {item.status}
+                    </Chip>
+                  </TableDataCell>
+                  <TableDataCell>{item.visits}</TableDataCell>
+                  <TableDataCell>{item.progress}</TableDataCell>
+                  <TableDataCell>
+                    <Chip intent={"primary"} size={"md"}>
+                      {item.status}
+                    </Chip>
+                  </TableDataCell>
+                  <TableDataCell>{item.visits}</TableDataCell>
+                  <TableDataCell>{item.progress}</TableDataCell>
+                  <TableDataCell>
+                    <Chip intent={"primary"} size={"md"}>
+                      {item.status}
+                    </Chip>
+                  </TableDataCell>
+                  <TableDataCell>{item.visits}</TableDataCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </div>
       <Pagination
         count={tableData?.length}

@@ -10,7 +10,7 @@ import { RiPushpin2Line } from "@remixicon/react";
 
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
-  dense?:boolean;
+  dense?: boolean;
 }
 
 interface TableHeadProps extends HTMLAttributes<HTMLTableSectionElement> {
@@ -19,7 +19,7 @@ interface TableHeadProps extends HTMLAttributes<HTMLTableSectionElement> {
 
 interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   children?: ReactNode;
-  indent?:boolean;
+  indent?: boolean;
 }
 
 interface TableHeadCellProps extends ThHTMLAttributes<HTMLTableCellElement> {
@@ -28,7 +28,7 @@ interface TableHeadCellProps extends ThHTMLAttributes<HTMLTableCellElement> {
   sticky?: boolean;
   left?: string;
   stickyIcon?: JSX.Element;
-  shadow?:boolean;
+  shadow?: boolean;
 }
 
 interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
@@ -36,15 +36,15 @@ interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   icon?: JSX.Element;
   sticky?: boolean;
   left?: string;
-  shadow?:boolean;
+  shadow?: boolean;
 }
 
-export const Table = ({ children, className,dense, ...props }: TableProps) => {
+export const Table = ({ children, className, dense, ...props }: TableProps) => {
   return (
     <table
       {...props}
       className={cn(
-      dense && "group",
+        dense && "group",
         "bg-white text-left w-full whitespace-nowrap relative border",
         className
       )}
@@ -81,9 +81,21 @@ export const TableBody = ({
   );
 };
 
-export const TableRow = ({ children, className,indent, ...props }: TableRowProps) => {
+export const TableRow = ({
+  children,
+  className,
+  indent,
+  ...props
+}: TableRowProps) => {
   return (
-    <tr {...props} className={cn("border border-gray-200 hover:bg-gray-50",indent && "group/indent border-none",className)}>
+    <tr
+      {...props}
+      className={cn(
+        "border border-gray-200 hover:bg-gray-50",
+        indent && "group/indent border-none",
+        className
+      )}
+    >
       {children}
     </tr>
   );
@@ -114,18 +126,16 @@ export const TableHeadCell = ({
       }}
     >
       <div className="flex items-center">
-        <span>
-          {sticky && <RiPushpin2Line className="w-3.5 h-3.5" />}
-        </span>
         <span className="font-medium text-xs">{children}</span>
-        <span
-          className={cn(
-            icon &&
+        {icon && (
+          <span
+            className={
               "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
-          )}
-        >
-          {icon}
-        </span>
+            }
+          >
+            {icon}
+          </span>
+        )}
       </div>
     </th>
   );
@@ -145,7 +155,7 @@ export const TableDataCell = ({
       {...props}
       className={cn(
         "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2 first:group-has-[td]/indent:pl-[60px]",
-        sticky &&`sticky bg-white`,
+        sticky && `sticky bg-white`,
         sticky && shadow && "shadow-table",
         left,
         className
@@ -155,17 +165,17 @@ export const TableDataCell = ({
       }}
     >
       <span className="font-medium text-sm">{children}</span>
-      <span
-        className={cn(
-          icon
-            ? "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
-            : "hidden"
-        )}
-      >
-        {icon}
-      </span>
+      {icon && (
+        <span
+          className={
+            "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
+          }
+        >
+          {icon}
+        </span>
+      )}
     </td>
   );
 };
 
-export default Table
+export default Table;

@@ -30,7 +30,6 @@ import FileUpload from "./components/FileUpload";
 import Textarea from "./components/Textarea";
 import Dropdown from "./components/Dropdown";
 import Sidebar from "./components/Sidebar";
-import EmptyState, { Text, Desc, EmptyImageSVG } from "./components/EmptyState";
 import Link from "next/link";
 import Loading from "./components/Loading";
 import Divider from "./components/Divider";
@@ -111,22 +110,22 @@ const Test = () => {
 
   const stepsConfig = [
     {
-      name: "Step One",
+      name: "Step Name One",
       helperName: "step1",
       Component: () => <div>Step 1 Component</div>,
     },
     {
-      name: "Step Two",
+      name: "Step Name Two",
       helperName: "step2",
       Component: () => <div>Step 2 Component</div>,
     },
     {
-      name: "Step Three",
+      name: "Step Name Three",
       helperName: "step3",
       Component: () => <div>Step 3 Component</div>,
     },
     {
-      name: "Step Four",
+      name: "Step Name Four",
       helperName: "step4",
       Component: () => <div>Step 4 Component</div>,
     },
@@ -356,7 +355,7 @@ const Test = () => {
         return (
           <div key={item} className="cardSkeleton">
             <div className="cardSkeletonImage">
-              <Skeleton width="80px" height="80px" variant="circle" />
+              <Skeleton width="80px" height="80px" circle />
               <Skeleton width="100%" height="20px" />
             </div>
             <div className="cardSkeletonTitle">
@@ -393,42 +392,6 @@ const Test = () => {
             <Button>Apply</Button>
           </section>
         </Notice>
-        {/* <Notice
-          open={open}
-          setOpen={setOpen}
-          variant="success"
-          noticeTitle="false"
-          showIcon={false}
-          position="bottom"
-        >
-          This is a success Alert with an encouraging title without icon.
-        </Notice> */}
-        {/* 
-        <Notice
-          open={open}
-          setOpen={setOpen}
-          variant="success"
-          noticeTitle=""
-          showIcon={true}
-        >
-          <div>
-            <span>
-              Lorem ipsum dolor sit amet consectetur. Imperdiet accumsan
-              habitant mi mus. Morbi feugiat placerat eu aliquam aenean lobortis
-              semper amet. Diam duis sit donec volutpat bibendum dolor nullam
-              pharetra etiam. Aliquet lorem pulvinar egestas amet eu semper
-              condimentum. Massa pharetra commodo adipiscing nulla in. Varius
-              etiam adipiscing risus tempor risus velit consectetur sed mattis.
-            </span>
-            <Button
-              variant="filled"
-              startIcon={<RiAlertFill size={16} />}
-              endIcon={<ListCheckIcon size={16} />}
-            >
-              Filled
-            </Button>
-          </div>
-        </Notice> */}
       </div>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
@@ -460,7 +423,9 @@ const Test = () => {
       </div>
       {/* Chips  */}
       <div className="my-5 flex items-center gap-4">
-        <Chip intent="primary">primary</Chip>
+        <Chip intent="primary" dot>
+          primary
+        </Chip>
         <Chip intent="warning">warning</Chip>
         <Chip intent="success">success</Chip>
         <Chip intent="error">error</Chip>
@@ -499,8 +464,19 @@ const Test = () => {
             // dropDownTooltip={true}
           />
         </section>
+        <section>
+          <h1 className="text-display-sm text-primary-400">Disabled Dropdown</h1>
+          <Dropdown
+            options={singleOptions}
+            selected={singleSelect}
+            setSelected={setSingleSelect}
+            // search={true}
+            multiple={false}
+            info="info"
+            disabled={true}
+          />
+        </section>
       </div>
-
       {/* Tooltip */}
       <div className="flex items-center gap-5 my-5">
         <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
@@ -579,6 +555,46 @@ const Test = () => {
               icon={<RiSearch2Line size={16} />}
               onChange={handleTabChange}
               selectedTabValue={value}
+            />
+            <Tab
+              label="Item Two"
+              value="2"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+            <Tab
+              label="Item Three"
+              value="3"
+              onChange={handleTabChange}
+              selectedTabValue={value}
+            />
+          </TabList>
+          <TabPanel value="1" currentValue={value}>
+            Item One Content
+          </TabPanel>
+          <TabPanel value="2" currentValue={value}>
+            Item Two Content
+          </TabPanel>
+          <TabPanel value="3" currentValue={value}>
+            Item Three Content
+          </TabPanel>
+        </TabsContainer>
+      </div>
+      <div className="my-5">
+        <h1 className="text-display-sm text-primary-400">Custom styling for Tabs:</h1>
+        <TabsContainer value={value}>
+          <TabList
+            onChange={handleTabChange}
+            ariaLabel="lab API tabs example"
+            className="border-none"
+          >
+            <Tab
+              label="Item One"
+              value="1"
+              // icon={<RiSearch2Line size={16} />}
+              onChange={handleTabChange}
+              selectedTabValue={value}
+              className="bg-primary-600 text-white rounded-2xl hover:bg-primary-100 hover:text-black border-b-0 hover:rounded-2xl"
             />
             <Tab
               label="Item Two"
@@ -696,15 +712,29 @@ const Test = () => {
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Progress:</h1>
         <ProgressBar
+          progressColor="bg-success-600"
+          progress={progress}
+          progressText={`${progress}%`}
+          progressTextPosition="top"
+        />
+        <ProgressBar
           progressColor="bg-primary-600"
           progress={progress}
           progressText={`${progress}%`}
+          progressTextPosition="right"
         />
         <section className="w-[320px]">
           <ProgressBar
             progressColor="bg-success-600"
             progress={progress}
             progressText={`${progress}%`}
+            progressTextPosition="left"
+          />
+          <ProgressBar
+            progressColor="bg-success-600"
+            progress={progress}
+            progressText={`${progress}%`}
+            progressTextPosition="bottom"
           />
         </section>
       </div>
@@ -760,8 +790,8 @@ const Test = () => {
             setCurrentStep={setCurrentStep}
             isComplete={isComplete}
             setIsComplete={setIsComplete}
-            position="vertical"
-            // position="horizontal"
+            // position="vertical"
+            position="horizontal"
           />
           <section className="my-5 flex justify-end items-center gap-4">
             <Button
@@ -781,7 +811,7 @@ const Test = () => {
       {/* skeleton */}
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
-        <Skeleton width="200px" height="38px" />
+        <Skeleton width="80px" height="80px" circle />
         <div>
           <h2>Card Skeleton</h2>
           <div className="cardBlock">{cardBlockData()}</div>
@@ -1024,20 +1054,7 @@ const Test = () => {
         />
         <Divider position="horizontal" className="my-4" />
       </div>
-      {/* Empty State */}
-      <section>
-        <EmptyState>
-          <EmptyImageSVG />
-          <Text>Something went wrong</Text>
-          <Desc>
-            We are aware of the issue and are working to fix it. Please try
-            again later.
-          </Desc>
-          <Button intent="default-outlined" variant="outlined">
-            Reload Page
-          </Button>
-        </EmptyState>
-      </section>
+
       {/* Loading State */}
       <div className="flex flex-col items-center justify-center gap-2">
         <Loading width="50px" height="50px" />
@@ -1046,13 +1063,7 @@ const Test = () => {
           We are running into some issues :&#40;
         </p>
         <Button>
-          Loading{" "}
-          <Loading
-            width="15px"
-            height="15px"
-            variant="light"
-            loaderColor="white"
-          />
+          Loading <Loading width="15px" height="15px" variant="light" />
         </Button>
         <Button variant="outlined">
           Loading <Loading width="15px" height="15px" variant="light" />
