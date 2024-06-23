@@ -50,6 +50,7 @@ interface DropdownProps {
   width?: string;
   dropDownTooltip?: boolean | undefined;
   dropdownFooter?: boolean | undefined;
+  disabled?: boolean;
 }
 
 const defaultRenderItem = (option: Option) => {
@@ -75,6 +76,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       dropDownTooltip = false,
       dropdownFooter = false,
       onApply,
+      disabled = false,
     },
     ref
   ) => {
@@ -170,16 +172,23 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     return (
       <div
         ref={dropdownRef}
-        className={cn("relative", !width && "w-full")}
+        // className={cn("relative", !width && "w-full")}
+        className={cn(
+          "relative",
+          !width && "w-full",
+          disabled && "cursor-not-allowed opacity-50"
+        )}
         style={{
           width: width,
         }}
       >
         <div
-          onClick={() => setDropdownMenu((prev) => !prev)}
+          // onClick={() => setDropdownMenu((prev) => !prev)}
+          onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
           className={cn(
             "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 text-text-sm cursor-pointer",
-            dropdownMenu ? "border border-gray-800" : "border border-gray-200"
+            dropdownMenu ? "border border-gray-800" : "border border-gray-200",
+            disabled && "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
           )}
         >
           <section className="flex items-center gap-2">
@@ -192,94 +201,96 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           </section>
           <RiArrowDownSLine size={18} />
         </div>
-        {dropdownMenu && (
-          <ul className="shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in-out">
-            {search && (
-              <Input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
-                endIcon={<RiSearchLine size={18} />}
-              />
-            )}
-            {multiple && (
-              <p
-                onClick={handleSelectAll}
-                className="text-text-sm py-[6px] hover:text-primary-700 px-[14px] text-primary-600 cursor-pointer"
-              >
-                Select all
-              </p>
-            )}
-            <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
-              {options
-                ? memoizedFilteredOptions.map((option) => (
-                    <React.Fragment key={option.label}>
-                      {multiple ? (
-                        <Label
-                          className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
-                          htmlFor={`checkbox-${option.value}`}
-                          key={option.label}
-                        >
-                          <section className="flex items-center justify-between gap-2 w-full">
-                            <div className="flex gap-2">
-                              <Checkbox
-                                id={`checkbox-${option.value}`}
-                                checked={selected?.some(
-                                  (item) => item.value === option.value
-                                )}
-                                onChange={() => handleCheckboxChange(option)}
-                              />
-                              <div className="flex items-center gap-1">
-                                <span>{renderItem(option)}</span>
-                                {dropDownTooltip && (
-                                  <DropdownTooltip
-                                    tooltipContent={option?.tooltipContent}
-                                  />
-                                )}
-                              </div>
+        <ul
+          className={cn(
+            "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
+            dropdownMenu &&
+              "max-h-[320px] opacity-[1] transition-all ease-in duration-150"
+          )}
+        >
+          {search && (
+            <Input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
+              endIcon={<RiSearchLine size={18} />}
+            />
+          )}
+          {multiple && (
+            <p
+              onClick={handleSelectAll}
+              className="text-text-sm py-[6px] hover:text-primary-700 px-[14px] text-primary-600 cursor-pointer"
+            >
+              Select all
+            </p>
+          )}
+          <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
+            {options
+              ? memoizedFilteredOptions.map((option) => (
+                  <React.Fragment key={option.value}>
+                    {multiple ? (
+                      <Label
+                        className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
+                        htmlFor={`checkbox-${option.value}`}
+                        key={option.value}
+                      >
+                        <section className="flex items-center justify-between gap-2 w-full">
+                          <div className="flex gap-2">
+                            <Checkbox
+                              id={`checkbox-${option.value}`}
+                              checked={selected?.some(
+                                (item) => item.value === option.value
+                              )}
+                              onChange={() => handleCheckboxChange(option)}
+                            />
+                            <div className="flex items-center gap-1">
+                              <span>{renderItem(option)}</span>
+                              {dropDownTooltip && (
+                                <DropdownTooltip
+                                  tooltipContent={option?.tooltipContent}
+                                />
+                              )}
                             </div>
-                            <span className="text-gray-500">
-                              {option?.info}
-                            </span>
-                          </section>
-                          <span className="pt-[2px] text-text-sm text-gray-500">
-                            {option?.addInfo}
-                          </span>
-                        </Label>
-                      ) : (
-                        <Label
-                          key={option.label}
-                          className={cn(
-                            "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
-                            {
-                              "bg-primary-50 border-primary-600":
-                                selected && selected[0]?.value === option.value,
-                            }
-                          )}
-                          onClick={() => toggleOption(option)}
-                        >
-                          <div className="flex items-center gap-1">
-                            <span>{renderItem(option)}</span>
-                            {dropDownTooltip && (
-                              <DropdownTooltip
-                                tooltipContent={option?.tooltipContent}
-                              />
-                            )}
                           </div>
-                          <span className="text-gray-500">{info}</span>
-                        </Label>
-                      )}
-                    </React.Fragment>
-                  ))
-                : children}
-            </section>
-            {dropdownFooter && (
-              <DropdownFooter onReset={handleReset} onApply={onApply} />
-            )}
-          </ul>
-        )}
+                          <span className="text-gray-500">{option?.info}</span>
+                        </section>
+                        <span className="pt-[2px] text-text-sm text-gray-500">
+                          {option?.addInfo}
+                        </span>
+                      </Label>
+                    ) : (
+                      <Label
+                        key={option.value}
+                        className={cn(
+                          "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
+                          {
+                            "bg-primary-50 border-primary-600":
+                              selected && selected[0]?.value === option.value,
+                          }
+                        )}
+                        onClick={() => toggleOption(option)}
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>{renderItem(option)}</span>
+                          {dropDownTooltip && (
+                            <DropdownTooltip
+                              tooltipContent={option?.tooltipContent}
+                            />
+                          )}
+                        </div>
+                        <span className="text-gray-500">{info}</span>
+                      </Label>
+                    )}
+                  </React.Fragment>
+                ))
+              : children}
+          </section>
+          {dropdownFooter && (
+            <DropdownFooter onReset={handleReset} onApply={onApply} />
+          )}
+        </ul>
       </div>
     );
   }
