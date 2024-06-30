@@ -13,6 +13,7 @@ import {
   RiFilePdf2Line,
 } from "@remixicon/react";
 import { cn } from "../utils/utils";
+import Label from "./Label";
 
 interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
   selectedFile?: string[];
@@ -119,7 +120,7 @@ const FileUpload = ({
         multiple={multiple}
         hidden
       />
-      <label
+      <Label
         htmlFor="custom-input"
         className={cn(
           "max-w-lg w-full h-[126px] border-2 border-dashed border-gray-200 hover:bg-gray-200 cursor-pointer rounded-lg px-6 py-4 flex flex-col items-center gap-2",
@@ -135,7 +136,7 @@ const FileUpload = ({
           </span>{" "}
           <br /> {title}
         </p>
-      </label>
+      </Label>
       <div className="flex flex-col gap-2">
         {selectedFile?.map((file, index) => (
           <div
