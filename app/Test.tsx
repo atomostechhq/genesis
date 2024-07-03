@@ -372,28 +372,7 @@ const Test = () => {
   };
 
   return (
-    <div className="m-5">
-      <div className="flex flex-col w-fit my-5">
-        <h1 className="text-display-sm text-primary-400">Notice:</h1>
-        <Button variant="filled" onClick={() => setOpen(true)}>
-          Show Notice
-        </Button>
-        <Notice
-          open={open}
-          setOpen={setOpen}
-          variant="default"
-          noticeTitle="Notice Header"
-          position="bottom"
-        >
-          This is a success Alert with an encouraging title and both icons.
-          <section className="flex gap-2 items-center mt-3">
-            <Button variant="outlined" intent="error-outlined">
-              Cancel
-            </Button>
-            <Button>Apply</Button>
-          </section>
-        </Notice>
-      </div>
+    <div className="m-5 space-y-5">
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
@@ -422,205 +401,6 @@ const Test = () => {
           <h1 className="font-bold">Bold</h1>
         </section>
       </div>
-      {/* Chips  */}
-      <div className="my-5 flex items-center gap-4">
-        <Chip intent="primary" dot>
-          primary
-        </Chip>
-        <Chip intent="warning">warning</Chip>
-        <Chip intent="success">success</Chip>
-        <Chip intent="error">error</Chip>
-        <Chip intent="default">default</Chip>
-      </div>
-      {/* Dropdown  */}
-      <h1 className="text-display-sm text-primary-400">Dropdown</h1>
-      <div className="flex gap-10">
-        <section>
-          <h1 className="text-display-sm text-primary-400">
-            Multiple Dropdown
-          </h1>
-          <Dropdown
-            options={multiOptions}
-            selected={multiSelect}
-            setSelected={setMultiSelect}
-            search={true}
-            multiple={true}
-            icon={<RiGlobalLine size={16} />}
-            dropDownTooltip={true}
-            dropdownFooter={true}
-            onApply={() => {
-              alert("Apply button clicked");
-            }}
-          />
-        </section>
-        <section>
-          <h1 className="text-display-sm text-primary-400">Single Dropdown</h1>
-          <Dropdown
-            options={singleOptions}
-            selected={singleSelect}
-            setSelected={setSingleSelect}
-            // search={true}
-            multiple={false}
-            info="info"
-            // dropDownTooltip={true}
-          />
-        </section>
-        <section>
-          <h1 className="text-display-sm text-primary-400">Disabled Dropdown</h1>
-          <Dropdown
-            options={singleOptions}
-            selected={singleSelect}
-            setSelected={setSingleSelect}
-            // search={true}
-            multiple={false}
-            info="info"
-            disabled={true}
-          />
-        </section>
-      </div>
-      {/* Tooltip */}
-      <div className="flex items-center gap-5 my-5">
-        <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
-        <Tooltip
-          position="top"
-          content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
-        >
-          Top
-        </Tooltip>
-        <Tooltip position="right" content="Right">
-          Right
-        </Tooltip>
-        <Tooltip
-          position="bottom"
-          content="Tooltips are used to describe or identify an element. In most scenarios"
-        >
-          Bottom
-        </Tooltip>
-        <Tooltip position="left" content="Tooltips are used">
-          Left
-        </Tooltip>
-      </div>
-      {/* Tabs */}
-      <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Tabs:</h1>
-        <TabsContainer value={value}>
-          <TabList
-            onChange={handleTabChange}
-            ariaLabel="lab API tabs example"
-            box={false}
-          >
-            <Tab
-              label="Item One"
-              content="(12)"
-              icon={<RiSearch2Line size={16} />}
-              value="1"
-              onChange={handleTabChange}
-              selectedTabValue={value}
-            />
-            <Tab
-              label="Item Two"
-              value="2"
-              onChange={handleTabChange}
-              selectedTabValue={value}
-            />
-            <Tab
-              label="Item Three"
-              value="3"
-              onChange={handleTabChange}
-              selectedTabValue={value}
-            />
-          </TabList>
-          <TabPanel value="1" currentValue={value}>
-            Item One Content
-          </TabPanel>
-          <TabPanel value="2" currentValue={value}>
-            Item Two Content
-          </TabPanel>
-          <TabPanel value="3" currentValue={value}>
-            Item Three Content
-          </TabPanel>
-        </TabsContainer>
-      </div>
-      <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Tabs Box:</h1>
-        <TabsContainer value={value}>
-          <TabList
-            onChange={handleTabChange}
-            ariaLabel="lab API tabs example"
-            box={true}
-          >
-            <Tab
-              label="Item One"
-              value="1"
-              content="(12)"
-              icon={<RiSearch2Line size={16} />}
-              onChange={handleTabChange}
-              selectedTabValue={value}
-            />
-            <Tab
-              label="Item Two"
-              value="2"
-              onChange={handleTabChange}
-              selectedTabValue={value}
-            />
-            <Tab
-              label="Item Three"
-              value="3"
-              onChange={handleTabChange}
-              selectedTabValue={value}
-            />
-          </TabList>
-          <TabPanel value="1" currentValue={value}>
-            Item One Content
-          </TabPanel>
-          <TabPanel value="2" currentValue={value}>
-            Item Two Content
-          </TabPanel>
-          <TabPanel value="3" currentValue={value}>
-            Item Three Content
-          </TabPanel>
-        </TabsContainer>
-      </div>
-      <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Custom styling for Tabs:</h1>
-        <TabsContainer value={value}>
-          <TabList
-            onChange={handleTabChange}
-            ariaLabel="lab API tabs example"
-            className="border-none"
-          >
-            <Tab
-              label="Item One"
-              value="1"
-              // icon={<RiSearch2Line size={16} />}
-              onChange={handleTabChange}
-              selectedTabValue={value}
-              className="bg-primary-600 text-white rounded-2xl hover:bg-primary-100 hover:text-black border-b-0 hover:rounded-2xl"
-            />
-            <Tab
-              label="Item Two"
-              value="2"
-              onChange={handleTabChange}
-              selectedTabValue={value}
-            />
-            <Tab
-              label="Item Three"
-              value="3"
-              onChange={handleTabChange}
-              selectedTabValue={value}
-            />
-          </TabList>
-          <TabPanel value="1" currentValue={value}>
-            Item One Content
-          </TabPanel>
-          <TabPanel value="2" currentValue={value}>
-            Item Two Content
-          </TabPanel>
-          <TabPanel value="3" currentValue={value}>
-            Item Three Content
-          </TabPanel>
-        </TabsContainer>
-      </div>
       {/* Buttons  */}
       <div className="flex flex-col gap-5">
         <h1 className="text-display-sm text-primary-400">Button:</h1>
@@ -647,13 +427,13 @@ const Test = () => {
         <section className="flex items-center gap-4">
           <h1>Size:</h1>
           <Button variant="filled" intent={"default"} size="sm">
-            Default
+            Size sm
           </Button>
           <Button variant="filled" intent={"error"} size="md">
-            Error
+            Size md
           </Button>
           <Button variant="filled" intent={"primary"} size="lg">
-            Primary
+            Size lg
           </Button>
         </section>
         <section className="flex items-center gap-4">
@@ -698,48 +478,67 @@ const Test = () => {
             startIcon={<RiAlertFill size={20} />}
             endIcon={<RiListCheck size={20} />}
           >
-            Filled
+            Filled With Icons
           </Button>
           <Button
             variant="outlined"
             startIcon={<RiAlertFill size={20} />}
             endIcon={<RiListCheck size={20} />}
           >
-            Outlined
+            Outlined With Icons
+          </Button>
+          <Button
+            variant={"outlined"}
+            intent={"default-outlined"}
+            className="border-none"
+          >
+            Custom Button
           </Button>
         </section>
       </div>
-      {/* progress */}
-      <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Progress:</h1>
-        <ProgressBar
-          progressColor="bg-success-600"
-          progress={progress}
-          progressText={`${progress}%`}
-          progressTextPosition="top"
-        />
-        <ProgressBar
-          progressColor="bg-primary-600"
-          progress={progress}
-          progressText={`${progress}%`}
-          progressTextPosition="right"
-        />
-        <section className="w-[320px]">
-          <ProgressBar
-            progressColor="bg-success-600"
-            progress={progress}
-            progressText={`${progress}%`}
-            progressTextPosition="left"
-          />
-          <ProgressBar
-            progressColor="bg-success-600"
-            progress={progress}
-            progressText={`${progress}%`}
-            progressTextPosition="bottom"
-          />
+      {/* Chips  */}
+      <div className="space-y-5">
+        <h1 className="text-display-sm text-primary-400">Chip:</h1>
+        <section className="flex items-center gap-4">
+          <p>Chips with sizes</p>
+          <Chip intent="primary" size={"sm"}>
+            Size sm
+          </Chip>
+          <Chip intent="primary" size={"md"}>
+            Size md
+          </Chip>
+          <Chip intent="primary" size={"lg"}>
+            Size lg
+          </Chip>
+        </section>
+        <section className="flex items-center gap-4">
+          <p>Chips with dot</p>
+          <Chip intent="primary" dot>
+            primary
+          </Chip>
+          <Chip dot intent="warning">
+            warning
+          </Chip>
+          <Chip dot intent="success">
+            success
+          </Chip>
+          <Chip dot intent="error">
+            error
+          </Chip>
+          <Chip dot intent="default">
+            default
+          </Chip>
+        </section>
+        <section className="flex items-center gap-4">
+          <p>Chips without dot</p>
+          <Chip intent="primary">primary</Chip>
+          <Chip intent="warning">warning</Chip>
+          <Chip intent="success">success</Chip>
+          <Chip intent="error">error</Chip>
+          <Chip intent="default">default</Chip>
         </section>
       </div>
-      {/* toggle  */}
+      {/* Toggle  */}
       <div className="flex flex-col gap-5">
         <h1 className="text-display-sm text-primary-400">Toggle:</h1>
         <section className="flex items-center gap-4">
@@ -765,148 +564,95 @@ const Test = () => {
           </div>
         </section>
       </div>
-      {/* Notice  */}
-      <Button variant="filled" onClick={() => setOpen(true)}>
-        Show Notice
-      </Button>
-      <div className="flex flex-col gap-5 my-5">
-        <h1 className="text-display-sm text-primary-400">Notice:</h1>
-        <Notice
-          open={open}
-          setOpen={setOpen}
-          variant="success"
-          noticeTitle="Notice Header"
-          position="top"
-        >
-          This is a success Alert with an encouraging title and both icons.
-        </Notice>
+      {/* checkbox */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-400">Checkbox:</h1>
+        <section className="flex items-center gap-4">
+          <h1>Size with Text:</h1>
+          <div className="flex items-center gap-2">
+            <Checkbox id="large" size="lg" />
+            <Label htmlFor="large">Large</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox id="small" size="sm" />
+            <Label htmlFor="small">Small</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States:</h1>
+          <div className="flex items-center gap-2">
+            <Checkbox id="disable" size="lg" disabled />
+            <Label disabled htmlFor="disable">
+              Disabled
+            </Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox id="check" size="lg" checked />
+            <Label htmlFor="check">Checked</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Checkbox with Text and Subtext: </h1>
+          <div className="flex items-start gap-2">
+            <Checkbox id="smallText" size="sm" />
+            <div className="flex flex-col -mt-1">
+              <Label htmlFor="smallText">Text with small checkbox</Label>
+              <HelperText size="sm">This is a helper text</HelperText>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Checkbox id="largeText" size="lg" />
+            <div className="flex flex-col -mt-1">
+              <Label htmlFor="largeText">Text with large checkbox</Label>
+              <HelperText size="lg">This is a helper text</HelperText>
+            </div>
+          </div>
+        </section>
       </div>
-      {/* stepper */}
-      <div>
-        <h1 className="text-display-sm text-primary-400">Stepper:</h1>
-        <div className="w-[50%] mx-auto">
-          <Stepper
-            stepsConfig={stepsConfig}
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-            isComplete={isComplete}
-            setIsComplete={setIsComplete}
-            // position="vertical"
-            position="horizontal"
-          />
-          <section className="my-5 flex justify-end items-center gap-4">
-            <Button
-              variant="outlined"
-              onClick={handlePrev}
-              disabled={currentStep === 1}
-            >
-              Prev
-            </Button>
-            <Button variant="filled" onClick={handleNext}>
-              {currentStep === stepsConfig.length ? "Finish" : "Next"}
-            </Button>
-          </section>
-        </div>
-      </div>
-      {/* <Sidebar /> */}
-      {/* skeleton */}
-      <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
-        <Skeleton width="80px" height="80px" circle />
-        <div>
-          <h2>Card Skeleton</h2>
-          <div className="cardBlock">{cardBlockData()}</div>
-        </div>
-        {/* checkbox */}
-        <div className="flex flex-col gap-1">
-          <h1 className="text-display-sm text-primary-400">Checkbox:</h1>
-          <section className="flex items-center gap-4">
-            <h1>Size with Text:</h1>
-            <div className="flex items-center gap-2">
-              <Checkbox id="large" size="lg" />
-              <Label htmlFor="large">Large</Label>
+      {/* Radio */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-400">Radio:</h1>
+        <section className="flex items-center gap-4">
+          <h1>Size with Text:</h1>
+          <div className="flex items-center gap-2">
+            <Radio id="radioTextLarge" size="lg" />
+            <Label htmlFor="radioTextLarge">Large</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Radio id="radioTextSmall" size="sm" />
+            <Label htmlFor="radioTextSmall">Small</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>States:</h1>
+          <div className="flex items-center gap-2">
+            <Radio id="disable" size="lg" disabled />
+            <Label disabled htmlFor="disable">
+              Disabled
+            </Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Radio id="check" size="lg" readOnly checked />
+            <Label htmlFor="check">Checked</Label>
+          </div>
+        </section>
+        <section className="flex items-center gap-4">
+          <h1>Radio with Text and Subtext: </h1>
+          <div className="flex items-start gap-2">
+            <Radio name="radioWithText" id="smallRadio" size="sm" />
+            <div className="flex flex-col -mt-1">
+              <Label htmlFor="smallRadio">Text with small radio button</Label>
+              <HelperText size="sm">This is a helper text</HelperText>
             </div>
-            <div className="flex items-center gap-2">
-              <Checkbox id="small" size="sm" />
-              <Label htmlFor="small">Small</Label>
+          </div>
+          <div className="flex items-start gap-2">
+            <Radio name="radioWithText" id="largeRadio" size="lg" />
+            <div className="flex flex-col -mt-1">
+              <Label htmlFor="largeRadio">Text with large radio button</Label>
+              <HelperText size="lg">This is a helper text</HelperText>
             </div>
-          </section>
-          <section className="flex items-center gap-4">
-            <h1>States:</h1>
-            <div className="flex items-center gap-2">
-              <Checkbox id="disable" size="lg" disabled />
-              <Label disabled htmlFor="disable">
-                Disabled
-              </Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <Checkbox id="check" size="lg" checked />
-              <Label htmlFor="check">Checked</Label>
-            </div>
-          </section>
-          <section className="flex items-center gap-4">
-            <h1>Checkbox with Text and Subtext: </h1>
-            <div className="flex items-start gap-2">
-              <Checkbox id="smallText" size="sm" />
-              <div className="flex flex-col -mt-1">
-                <Label htmlFor="smallText">Text with small checkbox</Label>
-                <HelperText size="sm">This is a helper text</HelperText>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <Checkbox id="largeText" size="lg" />
-              <div className="flex flex-col -mt-1">
-                <Label htmlFor="largeText">Text with large checkbox</Label>
-                <HelperText size="lg">This is a helper text</HelperText>
-              </div>
-            </div>
-          </section>
-        </div>
-        {/* Radio */}
-        <div className="flex flex-col gap-1">
-          <h1 className="text-display-sm text-primary-400">Radio:</h1>
-          <section className="flex items-center gap-4">
-            <h1>Size with Text:</h1>
-            <div className="flex items-center gap-2">
-              <Radio id="radioTextLarge" size="lg" />
-              <Label htmlFor="radioTextLarge">Large</Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <Radio id="radioTextSmall" size="sm" />
-              <Label htmlFor="radioTextSmall">Small</Label>
-            </div>
-          </section>
-          <section className="flex items-center gap-4">
-            <h1>States:</h1>
-            <div className="flex items-center gap-2">
-              <Radio id="disable" size="lg" disabled />
-              <Label disabled htmlFor="disable">
-                Disabled
-              </Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <Radio id="check" size="lg" readOnly checked />
-              <Label htmlFor="check">Checked</Label>
-            </div>
-          </section>
-          <section className="flex items-center gap-4">
-            <h1>Radio with Text and Subtext: </h1>
-            <div className="flex items-start gap-2">
-              <Radio name="radioWithText" id="smallRadio" size="sm" />
-              <div className="flex flex-col -mt-1">
-                <Label htmlFor="smallRadio">Text with small radio button</Label>
-                <HelperText size="sm">This is a helper text</HelperText>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <Radio name="radioWithText" id="largeRadio" size="lg" />
-              <div className="flex flex-col -mt-1">
-                <Label htmlFor="largeRadio">Text with large radio button</Label>
-                <HelperText size="lg">This is a helper text</HelperText>
-              </div>
-            </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </div>
       {/* <Input /> */}
       <div className="flex flex-col gap-1">
@@ -966,8 +712,227 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* table */}
+      <section className="my-5">
+        <h1 className="text-display-sm text-primary-400">
+          <Link href="/pages/tables">Go to Table component</Link>
+        </h1>
+      </section>
+      {/* Modal */}
+      <section className="my-5">
+        <Button onClick={() => setShowModal(true)}>Show Modal</Button>
+        <Modal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          closeModal={true}
+        >
+          <div className="w-[500px] h-[300px]">content</div>
+        </Modal>
+      </section>
+      {/* Dropdown  */}
+      <h1 className="text-display-sm text-primary-400">Dropdown</h1>
+      <section className="flex gap-10">
+        <div>
+          <h1 className="text-lg">Multiple Dropdown</h1>
+          <Dropdown
+            options={multiOptions}
+            selected={multiSelect}
+            setSelected={setMultiSelect}
+            search={true}
+            multiple={true}
+            width="200px"
+            icon={<RiGlobalLine size={16} />}
+            dropDownTooltip={true}
+            dropdownFooter={true}
+            onApply={() => {
+              alert("Apply button clicked");
+            }}
+          />
+        </div>
+        <div>
+          <h1 className="text-lg">Single Dropdown</h1>
+          <Dropdown
+            options={singleOptions}
+            selected={singleSelect}
+            setSelected={setSingleSelect}
+            width="200px"
+            // search={true}
+            multiple={false}
+            info="info"
+            // dropDownTooltip={true}
+          />
+        </div>
+        <div>
+          <h1 className="text-lg">Disabled Dropdown</h1>
+          <Dropdown
+            options={singleOptions}
+            selected={singleSelect}
+            setSelected={setSingleSelect}
+            width="200px"
+            // search={true}
+            multiple={false}
+            info="info"
+            disabled={true}
+          />
+        </div>
+      </section>
+      {/* Tabs */}
+      <div>
+        <h1 className="text-display-sm text-primary-400">Tabs</h1>
+        <section className="my-5">
+          <h1 className="text-lg">Default Tabs</h1>
+          <TabsContainer value={value}>
+            <TabList
+              onChange={handleTabChange}
+              ariaLabel="lab API tabs example"
+              box={false}
+            >
+              <Tab
+                label="Item One"
+                content="(12)"
+                icon={<RiSearch2Line size={16} />}
+                value="1"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Two"
+                value="2"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Three"
+                value="3"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+            </TabList>
+            <TabPanel value="1" currentValue={value}>
+              Item One Content
+            </TabPanel>
+            <TabPanel value="2" currentValue={value}>
+              Item Two Content
+            </TabPanel>
+            <TabPanel value="3" currentValue={value}>
+              Item Three Content
+            </TabPanel>
+          </TabsContainer>
+        </section>
+        <section className="my-5">
+          <h1 className="text-lg">Tab with box variant</h1>
+          <TabsContainer value={value}>
+            <TabList
+              onChange={handleTabChange}
+              ariaLabel="lab API tabs example"
+              box={true}
+            >
+              <Tab
+                label="Item One"
+                value="1"
+                content="(12)"
+                icon={<RiSearch2Line size={16} />}
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Two"
+                value="2"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Three"
+                value="3"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+            </TabList>
+            <TabPanel value="1" currentValue={value}>
+              Item One Content
+            </TabPanel>
+            <TabPanel value="2" currentValue={value}>
+              Item Two Content
+            </TabPanel>
+            <TabPanel value="3" currentValue={value}>
+              Item Three Content
+            </TabPanel>
+          </TabsContainer>
+        </section>
+        <section className="my-5">
+          <h1 className="text-lg">Custom styling for Tabs:</h1>
+          <TabsContainer value={value}>
+            <TabList
+              onChange={handleTabChange}
+              ariaLabel="lab API tabs example"
+              className="border-none"
+            >
+              <Tab
+                label="Item One"
+                value="1"
+                // icon={<RiSearch2Line size={16} />}
+                onChange={handleTabChange}
+                selectedTabValue={value}
+                className="bg-primary-600 text-white rounded-2xl hover:bg-primary-100 hover:text-black border-b-0 hover:rounded-2xl"
+              />
+              <Tab
+                label="Item Two"
+                value="2"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Three"
+                value="3"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+            </TabList>
+            <TabPanel value="1" currentValue={value}>
+              Item One Content
+            </TabPanel>
+            <TabPanel value="2" currentValue={value}>
+              Item Two Content
+            </TabPanel>
+            <TabPanel value="3" currentValue={value}>
+              Item Three Content
+            </TabPanel>
+          </TabsContainer>
+        </section>
+      </div>
+      {/* notice */}
+      <section className="flex flex-col w-fit">
+        <h1 className="text-display-sm text-primary-400">Notice:</h1>
+        <Button variant="filled" onClick={() => setOpen(true)}>
+          Show Notice
+        </Button>
+        <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="default"
+          noticeTitle="Notice Header"
+          position="bottom"
+        >
+          This is a success Alert with an encouraging title and both icons.
+          <section className="flex gap-2 items-center mt-3">
+            <Button variant="outlined" intent="error-outlined">
+              Cancel
+            </Button>
+            <Button>Apply</Button>
+          </section>
+        </Notice>
+        <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="success"
+          noticeTitle="Notice Header"
+          position="top"
+        >
+          This is a success Alert with an encouraging title and both icons.
+        </Notice>
+      </section>
       {/* File Upload */}
-      <div className="flex flex-col gap-2">
+      <section className="flex flex-col gap-2">
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
           onDelete={() => handleDeleteFile(selectedFiles[0])}
@@ -980,25 +945,117 @@ const Test = () => {
         >
           <ProgressBar progressColor="bg-primary-600" progress={50} />
         </FileUpload>
-      </div>
-      {/* Textarea */}
-      <section className="flex flex-col gap-1">
-        <h1 className="text-display-sm text-primary-400">Textarea</h1>
-        <section className="flex items-center gap-4">
-          <h1>States</h1>
-          <Textarea
-            placeholder="This is a placeholder"
-            rows={4}
-            size="lg"
-          ></Textarea>
-          <Textarea
-            placeholder="This is a placeholder"
-            size="sm"
-            disabled
-          ></Textarea>
-        </section>
       </section>
-      <div className="my-5">
+      {/* progress */}
+      <section className="my-5 w-[500px]">
+        <h1 className="text-display-sm text-primary-400">Progress:</h1>
+        <ProgressBar
+          progressColor="bg-success-600"
+          progress={progress}
+          progressText={"Progress text on top"}
+          progressTextPosition="top"
+        />
+        <ProgressBar
+          progressColor="bg-primary-600"
+          progress={progress}
+          progressText={"Progress text on right"}
+          progressTextPosition="right"
+        />
+        <ProgressBar
+          progressColor="bg-success-600"
+          progress={progress}
+          progressText={"Progress text on left"}
+          progressTextPosition="left"
+        />
+        <ProgressBar
+          progressColor="bg-success-600"
+          progress={progress}
+          progressText={"Progress text on bottom"}
+          progressTextPosition="bottom"
+        />
+      </section>
+      {/* Tooltip */}
+      <section className="flex items-center gap-5 my-5">
+        <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
+        <Tooltip
+          position="top"
+          content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
+        >
+          Top
+        </Tooltip>
+        <Tooltip position="right" content="Right">
+          Right
+        </Tooltip>
+        <Tooltip
+          position="bottom"
+          content="Tooltips are used to describe or identify an element. In most scenarios"
+        >
+          Bottom
+        </Tooltip>
+        <Tooltip position="left" content="Tooltips are used">
+          Left
+        </Tooltip>
+      </section>
+      {/* skeleton */}
+      <section className="my-5">
+        <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
+        <div className="flex flex-col gap-2">
+          <Skeleton width="80px" height="80px" circle />
+          <Skeleton width="167px" height="14px" />
+          <Skeleton width="138px" height="42px" />
+        </div>
+      </section>
+      {/* stepper */}
+      <section>
+        <h1 className="text-display-sm text-primary-400">Stepper:</h1>
+        <div className="w-[50%] mx-auto">
+          <Stepper
+            stepsConfig={stepsConfig}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            isComplete={isComplete}
+            setIsComplete={setIsComplete}
+            // position="vertical"
+            position="horizontal"
+          />
+          <section className="my-5 flex justify-end items-center gap-4">
+            <Button
+              variant="outlined"
+              onClick={handlePrev}
+              disabled={currentStep === 1}
+            >
+              Prev
+            </Button>
+            <Button variant="filled" onClick={handleNext}>
+              {currentStep === stepsConfig.length ? "Finish" : "Next"}
+            </Button>
+          </section>
+        </div>
+        <div className="w-[50%] mx-auto">
+          <Stepper
+            stepsConfig={stepsConfig}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            isComplete={isComplete}
+            setIsComplete={setIsComplete}
+            position="vertical"
+          />
+          <section className="my-5 flex justify-end items-center gap-4">
+            <Button
+              variant="outlined"
+              onClick={handlePrev}
+              disabled={currentStep === 1}
+            >
+              Prev
+            </Button>
+            <Button variant="filled" onClick={handleNext}>
+              {currentStep === stepsConfig.length ? "Finish" : "Next"}
+            </Button>
+          </section>
+        </div>
+      </section>
+      {/* Breadcrumbs */}
+      <section className="my-5">
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
         <Breadcrumb
           homeElement={<RiHome2Line size={18} />}
@@ -1012,9 +1069,9 @@ const Test = () => {
           listClasses="hover:bg-gray-100 rounded-lg py-[6px] px-3 text-text-xs font-semibold font-bold cursor-pointer"
           capitalizeLinks
         />
-      </div>
-      {/* sidebar */}
-      <section className="">
+      </section>
+      {/* Sidebar */}
+      <section>
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
           <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
             <span>Logo</span>
@@ -1041,24 +1098,39 @@ const Test = () => {
           </Sidebar.Footer>
         </Sidebar>
       </section>
-      <div className="my-5">
-        <h1 className="text-display-sm text-primary-400">
-          <Link href="/pages/tables">Go to Table component</Link>
-        </h1>
-      </div>
-      <h1 className="text-display-sm text-primary-400">Divider</h1>
-      <div className="w-[50%] border border-primary-600 p-5 flex justify-center gap-6 items-center">
-        <Divider
-          position="vertical"
-          height="200px"
-          className="my-4 border-primary-600"
-        />
-        <Divider position="horizontal" className="my-4" />
-      </div>
-
+      {/* Textarea */}
+      <section className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-400">Textarea</h1>
+        <section className="flex items-center gap-4">
+          <h1>States</h1>
+          <Textarea
+            placeholder="This is a placeholder"
+            rows={4}
+            size="lg"
+          ></Textarea>
+          <Textarea
+            placeholder="This is a placeholder"
+            size="sm"
+            disabled
+          ></Textarea>
+        </section>
+      </section>
+      {/* Divider */}
+      <section>
+        <h1 className="text-display-sm text-primary-400">Divider</h1>
+        <div className="w-[50%] border border-primary-600 p-5 flex justify-center gap-6 items-center">
+          <Divider
+            position="vertical"
+            height="200px"
+            className="my-4 border-primary-600"
+          />
+          <Divider position="horizontal" className="my-4" />
+        </div>
+      </section>
       {/* Loading State */}
-      <div className="flex flex-col items-center justify-center gap-2">
-        <Loading width="50px" height="50px" />
+      <section className="flex flex-col items-center justify-center gap-2">
+        <h1 className="text-display-sm text-primary-400">Loading</h1>
+        <Loading width="50px" height="50px" loaderColor="green" />
         <span className="font-bold">Hold On ...</span>
         <p className="text-sm text-gray-500">
           We are running into some issues :&#40;
@@ -1069,17 +1141,7 @@ const Test = () => {
         <Button variant="outlined">
           Loading <Loading width="15px" height="15px" variant="light" />
         </Button>
-      </div>
-      <div className="my-5">
-        <Button onClick={() => setShowModal(true)}>Show Modal</Button>
-        <Modal
-          showModal={showModal}
-          setShowModal={setShowModal}
-          closeModal={true}
-        >
-          <div className="w-[500px] h-[300px]">content</div>
-        </Modal>
-      </div>
+      </section>
     </div>
   );
 };
