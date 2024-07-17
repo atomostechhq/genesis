@@ -143,14 +143,17 @@ const Test = () => {
   };
 
   const handlePrev = () => {
+
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
+  // console.log("multiSelect", multiSelect)
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
+  console.log("singleSelect", singleSelect)
 
   const singleOptions = [
     { label: "Option 1", value: "1" },
@@ -513,7 +516,7 @@ const Test = () => {
         </section>
         <section className="flex items-center gap-4">
           <p>Chips with dot</p>
-          <Chip intent="primary" dot>
+          <Chip intent="primary" dot dotColor="bg-red-400">
             primary
           </Chip>
           <Chip dot intent="warning">
@@ -616,7 +619,7 @@ const Test = () => {
           <h1>Size with Text:</h1>
           <div className="flex items-center gap-2">
             <Radio id="radioTextLarge" size="lg" />
-            <Label htmlFor="radioTextLarge">Large</Label>
+            <Label htmlFor="radioTextLarge" required>Large</Label>
           </div>
           <div className="flex items-center gap-2">
             <Radio id="radioTextSmall" size="sm" />
@@ -725,6 +728,7 @@ const Test = () => {
           showModal={showModal}
           setShowModal={setShowModal}
           closeModal={true}
+          closeOnOutsideClick={true}
         >
           <div className="w-[500px] h-[300px]">content</div>
         </Modal>
@@ -740,7 +744,7 @@ const Test = () => {
             setSelected={setMultiSelect}
             search={true}
             multiple={true}
-            width="200px"
+            width="300px"
             icon={<RiGlobalLine size={16} />}
             dropDownTooltip={true}
             dropdownFooter={true}
@@ -909,7 +913,7 @@ const Test = () => {
         <Notice
           open={open}
           setOpen={setOpen}
-          variant="default"
+          variant="warning"
           noticeTitle="Notice Header"
           position="bottom"
         >
@@ -1122,7 +1126,7 @@ const Test = () => {
           <Divider
             position="vertical"
             height="200px"
-            className="my-4 border-primary-600"
+            className="my-4 border-red-600"
           />
           <Divider position="horizontal" className="my-4" />
         </div>
@@ -1139,7 +1143,7 @@ const Test = () => {
           Loading <Loading width="15px" height="15px" variant="light" />
         </Button>
         <Button variant="outlined">
-          Loading <Loading width="15px" height="15px" variant="light" />
+          Loading <Loading width="15px" height="15px" variant="heavy" />
         </Button>
       </section>
     </div>

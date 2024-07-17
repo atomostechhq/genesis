@@ -6,6 +6,7 @@ interface ModalProps {
   showModal?: boolean;
   closeModal?: boolean;
   setShowModal?: any;
+  closeOnOutsideClick?: boolean;
 }
 
 export default function Modal({
@@ -13,12 +14,18 @@ export default function Modal({
   showModal,
   setShowModal,
   closeModal = true,
+  closeOnOutsideClick = true,
 }: ModalProps) {
+  const handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget && closeOnOutsideClick) {
+      setShowModal(false);
+    }
+  };
   return (
     <>
       {showModal && (
-        <div className="w-full h-full bg-backdrop bg-blend-overlay fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-[1000] overflow-hidden">
-          <div className="relative bg-white shadow-boxShadow rounded-xl p-[18px] transition-all duration-700 ease-in-out">
+        <div onClick={handleClickOutside} className="w-full h-full bg-backdrop bg-blend-overlay fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-[1000000] overflow-hidden">
+          <div className="relative bg-white shadow-boxShadow rounded-xl p-[18px] transition-all duration-150 fade-in-down">
             <div>{children}</div>
             {closeModal && (
               <div
