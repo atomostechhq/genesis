@@ -106,7 +106,6 @@ export const TableHeadCell = ({
   className,
   icon,
   sticky,
-  stickyIcon,
   shadow,
   left,
   ...props

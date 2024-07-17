@@ -932,7 +932,7 @@ const Test = () => {
         </Notice>
       </section>
       {/* File Upload */}
-      <section className="flex flex-col gap-2">
+      <section className="flex flex-col gap-2 max-w-lg">
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
           onDelete={() => handleDeleteFile(selectedFiles[0])}
