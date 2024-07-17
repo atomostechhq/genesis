@@ -130,6 +130,7 @@ const TableFixedColumn = () => {
         rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        className="rounded-b-xl"
       />
     </div>
   );

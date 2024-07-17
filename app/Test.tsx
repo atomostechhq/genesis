@@ -13,6 +13,7 @@ import {
   RiHome2Line,
   RiArrowRightSLine,
   RiGlobalLine,
+  RiInformation2Line,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -587,7 +588,7 @@ const Test = () => {
             </Label>
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox id="check" size="lg" checked />
+            <Checkbox id="check" size="lg" checked aria-readonly />
             <Label htmlFor="check">Checked</Label>
           </div>
         </section>
@@ -985,6 +986,21 @@ const Test = () => {
         </Tooltip>
         <Tooltip position="right" content="Right">
           Right
+        </Tooltip>
+        <Tooltip
+          position="right"
+          content={
+            <div>
+              <h1 className="font-semibold text-xs">This is a tooltip</h1>
+              <p className="font-normal text-xs">
+                Tooltips are used to describe or identify an element. In most
+                scenarios, tooltips help the user understand the meaning,
+                function or alt-text of an element.
+              </p>
+            </div>
+          }
+        >
+          <RiInformation2Line size={15} />
         </Tooltip>
         <Tooltip
           position="bottom"
