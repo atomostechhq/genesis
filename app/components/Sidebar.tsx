@@ -10,6 +10,7 @@ interface SidebarProps {
   children: React.ReactNode;
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
+  scroll?: boolean;
   navItems?: {
     label: string;
     items: {
@@ -29,6 +30,7 @@ interface SidebarHeaderProps {
 interface SidebarMenuProps {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
+  scroll?: boolean;
   navItems?: {
     label: string;
     items: {
@@ -67,9 +69,7 @@ const Sidebar: React.FC<SidebarProps> & {
       // onMouseLeave={() => setHoverCollapse(false)}
       className={cn(
         "border border-gray-200 shadow-sm relative flex flex-col min-h-screen transition-all duration-300 ease-in-out cursor-pointer",
-        !collapsed
-          ? "w-[80px] py-[21px] px-[17px]"
-          : "w-[308px] py-[22px] px-6",
+        !collapsed ? "w-[80px] py-[21px] px-[17px]" : "w-[308px] py-[22px] px-6"
         // hoverCollapse ? "bg-pink-200" : "bg-red-200"
       )}
     >
@@ -114,6 +114,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({
   collapsed,
   setCollapsed,
   navItems,
+  scroll = false,
 }) => {
   const currentPath = usePathname();
 
@@ -121,7 +122,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({
     <nav
       onMouseEnter={() => setCollapsed(true)}
       onMouseLeave={() => setCollapsed(false)}
-      className={`max-h-[60vh] overflow-y-scroll customScroll`}
+      className={`max-h-[60vh] ${scroll && "overflow-y-auto customScroll"}  `}
     >
       <ul className="my-2 flex flex-col gap-2 items-stretch">
         {navItems?.map((parentItem, parentIndex) => (

@@ -14,6 +14,7 @@ import {
   RiArrowRightSLine,
   RiGlobalLine,
   RiInformation2Line,
+  RiFilterLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -36,6 +37,7 @@ import Loading from "./components/Loading";
 import Divider from "./components/Divider";
 import Modal from "./components/Modal";
 import Breadcrumb from "./components/Breadcrumb";
+import DropdownWithIcon from "./components/DropdownWithIcon";
 
 interface Option {
   label: string;
@@ -155,6 +157,8 @@ const Test = () => {
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
   // console.log("singleSelect", singleSelect);
 
+  const [dropdownMenu, setDropdownMenu] = useState(false);
+
   const singleOptions = [
     { label: "Option 1", value: "1" },
     { label: "Option 2", value: "2" },
@@ -163,16 +167,20 @@ const Test = () => {
 
   const multiOptions = [
     {
-      label: "apple",
+      label: "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       value: "apple",
-      info: "info1",
-      addInfo: "djkhdjkhsad",
+      info: "Modals",
+      addInfo: "Be a direct child descendent of the modal.",
       tooltipContent: "hjsghjwg",
     },
     { label: "banana", value: "banana", addInfo: "jdhjaldh" },
     { label: "strawberry", value: "strawberry" },
     { label: "kiwi", value: "kiwi", info: "info4" },
-    { label: "orange", value: "orange", tooltipContent: "hjsghjwg" },
+    {
+      label: "orangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      value: "orange",
+      tooltipContent: "lower-level components:",
+    },
     { label: "grapes", value: "grapes" },
     { label: "melon", value: "melon" },
     { label: "mango", value: "mango" },
@@ -696,6 +704,40 @@ const Test = () => {
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <section className="flex gap-10">
         <div>
+          <h1>Dropdown with icon</h1>
+          <DropdownWithIcon
+            options={multiOptions}
+            selected={multiSelect}
+            setSelected={setMultiSelect}
+            search={true}
+            multiple={true}
+            width="100px"
+            trigger={
+              <RiFilterLine
+                className="hover:bg-gray-200 rounded"
+                cursor="pointer"
+                size={14}
+              />
+            }
+            // dropdownMenu={dropdownMenu}
+            // setDropdownMenu={setDropdownMenu}
+          />
+        </div>
+        <div>
+          <h1>Dropdown with icon</h1>
+          <DropdownWithIcon
+            options={multiOptions}
+            selected={multiSelect}
+            setSelected={setMultiSelect}
+            search={true}
+            multiple={true}
+            width="100px"
+            trigger={
+             <span>dropdown</span>
+            }
+          />
+        </div>
+        <div>
           <h1 className="text-lg">Multiple Dropdown</h1>
           <Dropdown
             options={multiOptions}
@@ -996,9 +1038,7 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
         <div className="flex flex-col gap-2">
           {/* in percent */}
-          <div
-            className="w-[400px] h-[200px]"
-          >
+          <div className="w-[400px] h-[200px]">
             <Skeleton width="100%" height="100%" />
           </div>
           <Skeleton width="80px" height="80px" circle />
@@ -1079,6 +1119,7 @@ const Test = () => {
               <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
             </Sidebar.Header>
             <Sidebar.Menu
+              scroll
               collapsed={collapsed}
               setCollapsed={setCollapsed}
               navItems={navItems}
