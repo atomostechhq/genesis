@@ -6,7 +6,6 @@ import React, {
   ThHTMLAttributes,
 } from "react";
 import { cn } from "../utils/utils";
-import { RiPushpin2Line } from "@remixicon/react";
 
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
@@ -45,7 +44,7 @@ export const Table = ({ children, className, dense, ...props }: TableProps) => {
       {...props}
       className={cn(
         dense && "group",
-        "bg-white text-left w-full whitespace-nowrap relative border",
+        "bg-white text-left w-full whitespace-nowrap border",
         className
       )}
     >
@@ -124,12 +123,12 @@ export const TableHeadCell = ({
         left: left,
       }}
     >
-      <div className="flex items-center">
+      <div className="flex items-center gap-1">
         <span className="font-medium text-xs">{children}</span>
         {icon && (
           <span
             className={
-              "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
+              "hover:bg-gray-200 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
             }
           >
             {icon}
@@ -153,7 +152,7 @@ export const TableDataCell = ({
     <td
       {...props}
       className={cn(
-        "px-6 py-4 text-sm font-medium space-x-2 group-has-[td]:py-2 first:group-has-[td]/indent:pl-[60px]",
+        "px-6 py-4 text-sm font-medium group-has-[td]:py-2 first:group-has-[td]/indent:pl-[60px]",
         sticky && `sticky bg-white`,
         sticky && shadow && "shadow-table",
         left,
@@ -167,7 +166,7 @@ export const TableDataCell = ({
       {icon && (
         <span
           className={
-            "hover:bg-gray-100 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
+            "hover:bg-gray-200 w-5 h-5 flex items-center justify-center p-1 rounded focus:bg-gray-300 active:bg-gray-300"
           }
         >
           {icon}

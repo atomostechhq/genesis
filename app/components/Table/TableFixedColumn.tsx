@@ -12,7 +12,8 @@ import React, { useState } from "react";
 import Chip from "../Chip";
 import Button from "../Button";
 import Pagination from "../Pagination";
-import { cn } from "@/app/utils/utils";
+import { RiInformation2Line } from "@remixicon/react";
+import Tooltip from "../Tooltip";
 
 const TableFixedColumn = () => {
   const [data, setdata] = useState(tableData);
@@ -59,11 +60,48 @@ const TableFixedColumn = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeadCell sticky left="0px" shadow>
+              <TableHeadCell sticky left="0px" shadow className="z-[100]">
                 ID
               </TableHeadCell>
               <TableHeadCell>First Name</TableHeadCell>
-              <TableHeadCell>Last Name</TableHeadCell>
+              <TableHeadCell
+                icon={
+                  <Tooltip
+                    position="right"
+                    content={
+                      <div>
+                        <h1 className="font-semibold text-xs">
+                          This is a tooltip
+                        </h1>
+                        <p className="font-normal text-xs">
+                          Tooltips are used to describe or identify an element.
+                          In most scenarios, tooltips help the user understand
+                          the meaning, function or alt-text of an element. Lorem
+                          ipsum dolor sit amet, consectetur adipisicing elit.
+                          Error quo totam voluptatibus incidunt recusandae, quas
+                          obcaecati sequi quia id, delectus temporibus optio
+                          commodi maiores aperiam laborum, quis exercitationem
+                          mollitia tenetur! Temporibus similique, facilis
+                          tempore nostrum placeat dolorem amet modi possimus.
+                          Incidunt animi quas deserunt recusandae ipsam, nemo
+                          quos nobis exercitationem fugit officiis atque error
+                          repellat omnis adipisci dicta magni! Ratione odit id
+                          neque corrupti mollitia iusto, harum quia expedita
+                          ipsam facilis. Eum eaque tempora itaque illo minus
+                          ratione quam ipsam corrupti vitae dolorum sit omnis
+                          molestiae fugit enim quidem animi nesciunt,
+                          dignissimos in beatae nemo qui. Laudantium ipsum
+                          repellat quia?
+                        </p>
+                      </div>
+                    }
+                  >
+                    <RiInformation2Line size={15} />
+                  </Tooltip>
+                }
+              >
+                Last Name
+              </TableHeadCell>
               <TableHeadCell>Age</TableHeadCell>
               <TableHeadCell>Progress</TableHeadCell>
               <TableHeadCell>Status</TableHeadCell>

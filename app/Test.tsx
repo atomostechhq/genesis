@@ -329,49 +329,6 @@ const Test = () => {
     return () => clearTimeout(timer);
   }, [progress]);
 
-  // skeleton data
-  const cardBlockData = () => {
-    if (loadingState) {
-      return [...Array(4)].map((item, index) => {
-        return (
-          <div key={index}>
-            <div>
-              <h2>What is Lorem ?</h2>
-            </div>
-            <div>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry&apos;s standard
-                dummy text ever since the 1500s, when an unknown printer took a
-                galley of type and scrambled it to make a type specimen book. It
-                has survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letra
-              </p>
-            </div>
-          </div>
-        );
-      });
-    } else {
-      return [...Array(4)].map((index, item) => {
-        return (
-          <div key={item} className="cardSkeleton">
-            <div className="cardSkeletonImage">
-              <Skeleton width="80px" height="80px" circle />
-              <Skeleton width="100%" height="20px" />
-            </div>
-            <div className="cardSkeletonTitle">
-              <Skeleton width="100%" height="30px" />
-            </div>
-            <div className="cardSkeletonBody">
-              <Skeleton width="250px" height="300px" />
-            </div>
-          </div>
-        );
-      });
-    }
-  };
-
   return (
     <div className="m-5 space-y-5">
       {/* Typography */}
@@ -984,7 +941,23 @@ const Test = () => {
         >
           Top
         </Tooltip>
-        <Tooltip position="right" content="Right">
+        <Tooltip
+          position="right"
+          content=" Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Laborum incidunt perferendis
+                sapiente eos? Error aut accusamus odio officiis eaque
+                consectetur obcaecati doloribus, inventore ut reiciendis maiores
+                facere veritatis, corrupti autem illo deleniti eveniet
+                repudiandae iste harum. Voluptate minima ab tenetur veritatis
+                neque dolorem voluptates, praesentium a, velit doloremque
+                impedit facilis vel exercitationem assumenda. Esse labore
+                mollitia enim beatae officia? Delectus exercitationem voluptatem
+                consectetur quae veniam odit ut explicabo voluptas. Doloremque
+                nesciunt deleniti aliquam quibusdam nulla ipsa repudiandae
+                aspernatur placeat fuga officia. Natus itaque inventore eligendi
+                eveniet, nemo saepe voluptatum et ducimus provident suscipit
+                dolore, incidunt esse est iusto consequatur reprehenderit."
+        >
           Right
         </Tooltip>
         <Tooltip
