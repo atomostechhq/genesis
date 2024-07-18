@@ -152,7 +152,7 @@ const Test = () => {
   // console.log("multiSelect", multiSelect)
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
-  console.log("singleSelect", singleSelect);
+  // console.log("singleSelect", singleSelect);
 
   const singleOptions = [
     { label: "Option 1", value: "1" },
@@ -1006,6 +1006,12 @@ const Test = () => {
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
         <div className="flex flex-col gap-2">
+          {/* in percent */}
+          <div
+            className="w-[400px] h-[200px]"
+          >
+            <Skeleton width="100%" height="100%" />
+          </div>
           <Skeleton width="80px" height="80px" circle />
           <Skeleton width="167px" height="14px" />
           <Skeleton width="138px" height="42px" />

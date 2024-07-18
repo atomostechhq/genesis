@@ -153,6 +153,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
     const handleReset = () => {
       setSelected?.([]);
+      setDropdownMenu(false)
     };
 
     useEffect(() => {
@@ -291,7 +292,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               : children}
           </section>
           {dropdownFooter && (
-            <DropdownFooter onReset={handleReset} onApply={onApply} />
+            <DropdownFooter setDropdownMenu={setDropdownMenu} onReset={handleReset} onApply={onApply} />
           )}
         </ul>
       </div>
@@ -321,11 +322,13 @@ const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
 interface DropdownFooterProps {
   onReset: () => void;
   onApply?: () => any;
+  setDropdownMenu?:any
 }
 
 export const DropdownFooter: React.FC<DropdownFooterProps> = ({
   onReset,
   onApply,
+  setDropdownMenu
 }) => {
   return (
     <div className="flex justify-between border-t border-gray-200 px-[14px] py-[8px] text-text-sm">
@@ -335,7 +338,12 @@ export const DropdownFooter: React.FC<DropdownFooterProps> = ({
       >
         Reset
       </button>
-      <button className="text-brand-600 hover:text-brand-700" onClick={onApply}>
+      <button className="text-brand-600 hover:text-brand-700"  onClick={() => {
+          if (onApply) {
+            onApply();
+          }
+          setDropdownMenu(false); 
+        }}>
         Apply
       </button>
     </div>
