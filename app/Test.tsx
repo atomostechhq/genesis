@@ -143,7 +143,6 @@ const Test = () => {
   };
 
   const handlePrev = () => {
-
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
@@ -153,7 +152,7 @@ const Test = () => {
   // console.log("multiSelect", multiSelect)
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
-  console.log("singleSelect", singleSelect)
+  console.log("singleSelect", singleSelect);
 
   const singleOptions = [
     { label: "Option 1", value: "1" },
@@ -619,7 +618,9 @@ const Test = () => {
           <h1>Size with Text:</h1>
           <div className="flex items-center gap-2">
             <Radio id="radioTextLarge" size="lg" />
-            <Label htmlFor="radioTextLarge" required>Large</Label>
+            <Label htmlFor="radioTextLarge" required>
+              Large
+            </Label>
           </div>
           <div className="flex items-center gap-2">
             <Radio id="radioTextSmall" size="sm" />
@@ -748,6 +749,7 @@ const Test = () => {
             icon={<RiGlobalLine size={16} />}
             dropDownTooltip={true}
             dropdownFooter={true}
+            position="bottom"
             onApply={() => {
               alert("Apply button clicked");
             }}
@@ -1075,33 +1077,47 @@ const Test = () => {
         />
       </section>
       {/* Sidebar */}
-      <section>
-        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
-          <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
-            <span>Logo</span>
-          </Sidebar.Header>
-          <Sidebar.Menu
-            collapsed={collapsed}
-            setCollapsed={setCollapsed}
-            navItems={navItems}
-          />
-          <Sidebar.Footer
-            collapsed={collapsed}
-            setCollapsed={setCollapsed}
-            navItems={footerItems}
-          >
-            <Divider className="mb-3" />
-            <Button
-              className="w-full"
-              variant="outlined"
-              intent="default-outlined"
-              startIcon={<RiLogoutBoxRLine size={20} />}
+      <div className="relative flex gap-3 bg-white">
+        <section className=" bg-white">
+          <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
+            <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
+              <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
+            </Sidebar.Header>
+            <Sidebar.Menu
+              collapsed={collapsed}
+              setCollapsed={setCollapsed}
+              navItems={navItems}
+            />
+            <Sidebar.Footer
+              collapsed={collapsed}
+              setCollapsed={setCollapsed}
+              navItems={footerItems}
             >
-              {!collapsed ? "" : "Logout"}
-            </Button>
-          </Sidebar.Footer>
-        </Sidebar>
-      </section>
+              <Divider className="mb-3" />
+              <Button
+                className="w-full"
+                variant="outlined"
+                intent="default-outlined"
+                startIcon={<RiLogoutBoxRLine size={20} />}
+              >
+                {!collapsed ? "" : "Logout"}
+              </Button>
+            </Sidebar.Footer>
+          </Sidebar>
+        </section>
+        <section className="flex-grow ml-[80px] transition-all duration-300 ease-in-out">
+          <h1>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Repellendus, fugiat.
+          </h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Consequuntur nesciunt adipisci modi culpa voluptas accusamus
+            corporis.
+          </p>
+        </section>
+      </div>
+
       {/* Textarea */}
       <section className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-400">Textarea</h1>
