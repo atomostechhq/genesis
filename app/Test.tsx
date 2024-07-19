@@ -732,9 +732,7 @@ const Test = () => {
             search={true}
             multiple={true}
             width="100px"
-            trigger={
-             <span>dropdown</span>
-            }
+            trigger={<span>dropdown</span>}
           />
         </div>
         <div>
