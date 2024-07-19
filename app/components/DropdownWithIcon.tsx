@@ -9,8 +9,11 @@ import React, {
   useImperativeHandle,
 } from "react";
 import { RiErrorWarningLine, RiSearchLine } from "@remixicon/react";
-import { Checkbox, Input, Label, Tooltip } from "@atomos_tech/genesis";
 import { cn } from "../utils/utils";
+import Input from "./Input";
+import Label from "./Label";
+import Checkbox from "./Checkbox";
+import Tooltip from "./Tooltip";
 
 type Option = {
   label: string;
@@ -144,7 +147,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
 
     const handleReset = () => {
       setSelected?.([]);
-      setDropdownMenu(false)
+      setDropdownMenu(false);
     };
 
     useEffect(() => {

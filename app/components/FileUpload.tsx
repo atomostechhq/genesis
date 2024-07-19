@@ -151,7 +151,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
               <div className="flex items-center gap-2 w-full">
                 {getIconForMimeType(file)}
                 <div className="flex flex-col gap-1 w-full">
-                  <p className="text-sm line-clamp-2">{file}</p>
+                  <p className="text-sm line-clamp-2 break-all">{file}</p>
                   <div className="w-full">{children}</div>
                 </div>
               </div>
