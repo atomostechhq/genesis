@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "../utils/utils";
 import { RiArrowLeftSLine } from "@remixicon/react";
@@ -61,16 +61,13 @@ const Sidebar: React.FC<SidebarProps> & {
   Menu: React.FC<SidebarMenuProps>;
   Footer: React.FC<FooterProps>;
 } = ({ children, collapsed, setCollapsed }) => {
-  // const [hoverCollapse, setHoverCollapse] = useState(false);
   return (
     <div
-      // onClick={() => setHoverCollapse((prev) => !prev)}
-      // onMouseEnter={() => setHoverCollapse(true)}
-      // onMouseLeave={() => setHoverCollapse(false)}
+      onMouseEnter={() => setCollapsed(true)}
+      onMouseLeave={() => setCollapsed(false)}
       className={cn(
         "border border-gray-200 shadow-sm relative flex flex-col min-h-screen transition-all duration-300 ease-in-out cursor-pointer",
         !collapsed ? "w-[80px] py-[21px] px-[17px]" : "w-[308px] py-[22px] px-6"
-        // hoverCollapse ? "bg-pink-200" : "bg-red-200"
       )}
     >
       <div className="">{children}</div>
@@ -112,7 +109,6 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
 // SidebarMenu component
 const SidebarMenu: React.FC<SidebarMenuProps> = ({
   collapsed,
-  setCollapsed,
   navItems,
   scroll = false,
 }) => {
@@ -120,9 +116,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({
 
   return (
     <nav
-      onMouseEnter={() => setCollapsed(true)}
-      onMouseLeave={() => setCollapsed(false)}
-      className={`max-h-[60vh] ${scroll && "overflow-y-auto customScroll"}  `}
+      className={`max-h-[60vh] ${scroll && "overflow-y-auto customScroll"}`}
     >
       <ul className="my-2 flex flex-col gap-2 items-stretch">
         {navItems?.map((parentItem, parentIndex) => (
