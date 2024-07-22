@@ -781,6 +781,26 @@ const Test = () => {
             disabled={true}
           />
         </div>
+        <div className="ml-10">
+        <DropdownWithIcon
+            options={multiOptions}
+            selected={multiSelect}
+            setSelected={setMultiSelect}
+            search={true}
+            multiple={true}
+            width="100px"
+            position="right"
+            trigger={
+              <RiFilterLine
+                className="hover:bg-gray-200 rounded"
+                cursor="pointer"
+                size={14}
+              />
+            }
+            // dropdownMenu={dropdownMenu}
+            // setDropdownMenu={setDropdownMenu}
+          />
+        </div>
       </section>
       {/* Tabs */}
       <div>

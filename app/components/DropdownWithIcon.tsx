@@ -48,7 +48,7 @@ interface DropdownProps {
   children?: React.ReactNode;
   trigger?: React.ReactNode;
   dropdownMenu?: boolean;
-  position?: "top" | "bottom";
+  position?: "top" | "bottom" | "left" | "right";
   setDropdownMenu?: (value: boolean) => void;
   info?: any;
   addInfo?: any;
@@ -185,7 +185,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
         <ul
           className={cn(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
-            position === "top" ? "top-10" : "bottom-10",
+            position === "top" ? "top-10" : position === "bottom" ? "bottom-10" : position === "left" ? "left-0" : position === "right" ? "right-[90%]" : "top-10",
             dropdownMenu &&
               "max-h-[320px] opacity-[1] transition-all ease-in duration-150"
           )}

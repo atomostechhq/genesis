@@ -25,7 +25,7 @@ export default function Modal({
     <>
       {showModal && (
         <div onClick={handleClickOutside} className="w-full h-full bg-backdrop bg-blend-overlay fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-[1000000] overflow-hidden">
-          <div className="relative bg-white shadow-boxShadow rounded-xl p-[18px] transition-all duration-150 fade-in-down">
+          <div className="relative bg-white shadow-boxShadow rounded-xl p-[18px] transition-all duration-150 fade-in-grow">
             <div>{children}</div>
             {closeModal && (
               <div

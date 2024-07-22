@@ -195,7 +195,7 @@ input[type="number"] {
   }
 }
 
-.fade-in-down {
+.fade-in-grow {
   animation: fadeInGrow 0.3s ease;
 }
 
