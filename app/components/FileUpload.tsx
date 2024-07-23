@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, ReactNode } from "react";
+import React, { InputHTMLAttributes, ReactNode, forwardRef } from "react";
 import {
   RiFileLine,
   RiUpload2Line,
@@ -13,12 +13,13 @@ import {
   RiFilePdf2Line,
 } from "@remixicon/react";
 import { cn } from "../utils/utils";
+import Label from "./Label";
 
 interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
   selectedFile?: string[];
   setSelectedFile?: (files: string[]) => void;
   children?: ReactNode;
-  onDelete?: (value: any) => void;
+  onDelete?: () => void;
   title?: string;
 }
 
@@ -96,68 +97,76 @@ const getIconForMimeType = (fileName: string) => {
   return iconComponent;
 };
 
-const FileUpload = ({
-  selectedFile,
-  onChange,
-  multiple,
-  setSelectedFile,
-  onDelete,
-  children,
-  title,
-  className,
-  accept,
-  ...props
-}: FileUploadProps) => {
-  return (
-    <div className="flex flex-col gap-2">
-      <input
-        type="file"
-        {...props}
-        accept={accept}
-        id="custom-input"
-        onChange={onChange}
-        multiple={multiple}
-        hidden
-      />
-      <label
-        htmlFor="custom-input"
-        className={cn(
-          "max-w-lg w-full h-[126px] border-2 border-dashed border-gray-200 hover:bg-gray-200 cursor-pointer rounded-lg px-6 py-4 flex flex-col items-center gap-2",
-          className
-        )}
-      >
-        <div className="w-10 h-10 border-[6px] border-gray-50 bg-gray-200 rounded-full p-1 flex justify-center items-center">
-          <RiUpload2Line className="w-5 h-5" />
-        </div>
-        <p className="text-center text-sm text-gray-600">
-          <span className="text-primary-600 font-semibold">
-            Click to upload
-          </span>{" "}
-          <br /> {title}
-        </p>
-      </label>
+const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
+  (
+    {
+      selectedFile,
+      onChange,
+      multiple,
+      setSelectedFile,
+      onDelete,
+      children,
+      title,
+      className,
+      accept,
+      ...props
+    },
+    ref
+  ) => {
+    return (
       <div className="flex flex-col gap-2">
-        {selectedFile?.map((file, index) => (
-          <div
-            key={index}
-            className="p-4 border border-gray-200 rounded-lg w-[512px] flex items-center justify-between gap-5"
-          >
-            <div className="flex items-center gap-2 w-full">
-              {getIconForMimeType(file)}
-              <div className="flex flex-col gap-1 w-full">
-                <p className="text-sm">{file}</p>
-                <div className="w-full">{children}</div>
-              </div>
-            </div>
-            <RiDeleteBinLine
-              onClick={onDelete}
-              className="text-gray-500 w-5 h-5 cursor-pointer"
-            />
+        <input
+          type="file"
+          {...props}
+          accept={accept}
+          id="custom-input"
+          onChange={onChange}
+          multiple={multiple}
+          hidden
+          ref={ref}
+        />
+        <Label
+          htmlFor="custom-input"
+          className={cn(
+            "w-full h-[126px] border-2 border-dashed border-gray-200 hover:bg-gray-200 cursor-pointer rounded-lg px-6 py-4 flex flex-col items-center gap-2",
+            className
+          )}
+        >
+          <div className="w-10 h-10 border-[6px] border-gray-50 bg-gray-200 rounded-full p-1 flex justify-center items-center">
+            <RiUpload2Line className="w-5 h-5" />
           </div>
-        ))}
+          <p className="text-center text-sm text-gray-600">
+            <span className="text-primary-600 font-semibold">
+              Click to upload
+            </span>{" "}
+            <br /> {title}
+          </p>
+        </Label>
+        <div className="flex flex-col gap-2">
+          {selectedFile?.map((file, index) => (
+            <div
+              key={index}
+              className="p-4 border border-gray-200 rounded-lg flex items-center justify-between gap-5"
+            >
+              <div className="flex items-center gap-2 w-full">
+                {getIconForMimeType(file)}
+                <div className="flex flex-col gap-1 w-full">
+                  <p className="text-sm line-clamp-2 break-all">{file}</p>
+                  <div className="w-full">{children}</div>
+                </div>
+              </div>
+              <RiDeleteBinLine
+                onClick={onDelete}
+                className="text-gray-500 w-5 h-5 cursor-pointer"
+              />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+
+FileUpload.displayName = "FileUpload";
 
 export default FileUpload;

@@ -119,7 +119,6 @@ const Stepper = ({
         ))}
       </div>
 
-      {/* Conditional rendering of ActiveComponent */}
       {ActiveComponent && <ActiveComponent />}
     </div>
   );

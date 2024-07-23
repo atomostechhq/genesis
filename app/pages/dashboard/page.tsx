@@ -6,9 +6,13 @@ import {
   RiArrowRightSLine,
   RiHome2Line,
 } from "@remixicon/react";
-import Breadcrumb from "@/app/components/Breadcrumb";
+import { usePathname } from "next/navigation";
+import Breadcrumbs from "@/app/components/Breadcrumb";
+import Link from "next/link";
 
 const Dashboard = () => {
+  const pathname = usePathname();
+  const pathnames = pathname.split("/").filter((x) => x);
   const [collapsed, setCollapsed] = useState(false);
   const navItems = [
     {
@@ -43,18 +47,32 @@ const Dashboard = () => {
     <div className="">
       <div className="my-5">
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
-        <Breadcrumb
-          homeElement={<RiHome2Line size={18} />}
-          separator={
-            <span>
-              <RiArrowRightSLine size={18} color="gray" />
-            </span>
-          }
-          activeClasses="bg-gray-200"
-          containerClasses="flex gap-[6px] items-center"
-          listClasses="hover:bg-gray-100 rounded-lg py-[6px] px-3 text-text-xs font-semibold font-bold cursor-pointer"
-          capitalizeLinks
-        />
+        <Breadcrumbs aria-label="breadcrumb" separator=">">
+          <Link href="/" className="text-decoration-none text-inherit">
+            Home
+          </Link>
+          {pathnames.map((name, index) => {
+            const href = `/${pathnames.slice(0, index + 1).join("/")}`;
+            const isActive = href === pathname;
+            const isLast = index === pathnames.length - 1;
+
+            return (
+              <React.Fragment key={href}>
+                <Link
+                  href={href}
+                  className={`${
+                    isActive
+                      ? "bg-blue-500 text-white px-2 py-1 rounded-full"
+                      : "text-decoration-none text-inherit"
+                  } ${isLast ? "font-semibold" : ""}`}
+                >
+                  {name.replace(/-/g, " ").toUpperCase()}
+                </Link>
+                {/* {!isLast && <span className="mx-2">></span>} */}
+              </React.Fragment>
+            );
+          })}
+        </Breadcrumbs>
       </div>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
         <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>

@@ -3,20 +3,16 @@ import React, {
   useEffect,
   useState,
   useMemo,
-  useCallback,
   forwardRef,
+  useCallback,
   useRef,
   useImperativeHandle,
 } from "react";
-import Checkbox from "./Checkbox";
-import Input from "./Input";
-import {
-  RiArrowDownSLine,
-  RiSearchLine,
-  RiErrorWarningLine,
-} from "@remixicon/react";
+import { RiErrorWarningLine, RiSearchLine } from "@remixicon/react";
 import { cn } from "../utils/utils";
+import Input from "./Input";
 import Label from "./Label";
+import Checkbox from "./Checkbox";
 import Tooltip from "./Tooltip";
 
 type Option = {
@@ -33,25 +29,33 @@ interface MenuItemProps {
   children?: React.ReactNode;
 }
 
+interface DropdownFooterProps {
+  //   onReset?: () => void;
+  onApply?: (() => void) | undefined;
+  setDropdownMenu?: any;
+}
+
 interface DropdownProps {
   icon?: JSX.Element;
   options: Option[];
   selected?: Option[];
   setSelected?: React.Dispatch<React.SetStateAction<Option[]>>;
   onApply?: () => void;
-  onReset?: () => void;
   dropdownText?: string;
   search?: boolean;
   multiple?: boolean;
   renderItem?: (option: Option) => React.ReactNode;
   children?: React.ReactNode;
-  position?: "top" | "bottom";
+  trigger?: React.ReactNode;
+  dropdownMenu?: boolean;
+  position?: "top" | "bottom" | "left" | "right";
+  setDropdownMenu?: (value: boolean) => void;
   info?: any;
   addInfo?: any;
   tooltipContent?: string;
   width?: string;
   dropDownTooltip?: boolean | undefined;
-  dropdownFooter?: boolean | undefined;
+  dropdownFooter?: boolean;
   disabled?: boolean;
 }
 
@@ -59,53 +63,41 @@ const defaultRenderItem = (option: Option) => {
   return <MenuItem label={option.label} value={option.value} />;
 };
 
-const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
+const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
   (
     {
       options,
-      selected,
+      selected = [],
       setSelected,
       search = false,
       multiple = false,
-      dropdownText = "Select...",
       renderItem = defaultRenderItem,
       children,
-      icon,
+      trigger,
+      //   dropdownMenu = false,
       position = "top",
-      tooltipContent,
+      //   setDropdownMenu = () => {},
       width,
       info,
-      addInfo,
       dropDownTooltip = false,
       dropdownFooter = false,
       onApply,
-      onReset,
       disabled = false,
     },
     ref
   ) => {
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [filteredOptions, setFilteredOptions] = useState<Option[]>(
-      options || []
-    );
-
+    const localDropdownRef = useRef<HTMLDivElement>(null);
     const [dropdownMenu, setDropdownMenu] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
 
-    useImperativeHandle(ref, () => dropdownRef.current!);
-
-    useEffect(() => {
-      if (options) {
-        setFilteredOptions(options);
-      }
-    }, [options]);
+    useImperativeHandle(ref, () => localDropdownRef.current!);
 
     const memoizedFilteredOptions = useMemo(() => {
-      if (!search) return filteredOptions;
-      return filteredOptions.filter((option) =>
-        option.label.toLowerCase().includes(searchQuery.toLowerCase())
+      if (!search) return options;
+      return options.filter((option) =>
+        option.value.toLowerCase().includes(searchQuery.toLowerCase())
       );
-    }, [search, searchQuery, filteredOptions]);
+    }, [search, searchQuery, options]);
 
     const handleSearchChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,7 +119,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           setDropdownMenu(false);
         }
       },
-      [multiple, setSelected]
+      [multiple, setSelected, setDropdownMenu]
     );
 
     const handleCheckboxChange = useCallback(
@@ -146,10 +138,10 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     );
 
     const handleSelectAll = () => {
-      if (selected?.length === filteredOptions.length) {
+      if (selected.length === options.length) {
         setSelected?.([]);
       } else {
-        setSelected?.(filteredOptions);
+        setSelected?.(options);
       }
     };
 
@@ -159,25 +151,24 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     };
 
     useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (
+          localDropdownRef.current &&
+          !localDropdownRef.current.contains(event.target as Node)
+        ) {
+          setDropdownMenu(false);
+        }
+      };
+
       document.addEventListener("mousedown", handleClickOutside);
       return () => {
         document.removeEventListener("mousedown", handleClickOutside);
       };
-    }, []);
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownMenu(false);
-      }
-    };
+    }, [setDropdownMenu]);
 
     return (
       <div
-        ref={dropdownRef}
-        // className={cn("relative", !width && "w-full")}
+        ref={localDropdownRef}
         className={cn(
           "relative",
           !width && "w-full",
@@ -187,32 +178,22 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           width: width,
         }}
       >
-        <div
-          // onClick={() => setDropdownMenu((prev) => !prev)}
-          onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
-          className={cn(
-            "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 text-text-sm cursor-pointer",
-            dropdownMenu ? "border border-gray-800" : "border border-gray-200",
-            disabled && "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
-          )}
-        >
-          <section className="flex items-center gap-2">
-            {icon && <span>{icon}</span>}
-            {multiple
-              ? `${`${selected?.length} Selected` || dropdownText}`
-              : selected?.[0]?.label
-              ? selected?.[0]?.label
-              : dropdownText}
-          </section>
-          <RiArrowDownSLine size={18} />
+        {/* <div onClick={() => setDropdownMenu(!dropdownMenu)}>{trigger}</div> */}
+        <div onClick={() => !disabled && setDropdownMenu((prev) => !prev)}>
+          {trigger}
         </div>
         <ul
           className={cn(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
-            position === "top" ? "top-10" : "bottom-10",
+            position === "top" ? "top-10" : position === "bottom" ? "bottom-10" : position === "left" ? "left-0" : position === "right" ? "right-[90%]" : "top-10",
             dropdownMenu &&
               "max-h-[320px] opacity-[1] transition-all ease-in duration-150"
           )}
+          style={{
+            width: width,
+            minWidth: "200px",
+            top: "calc(100% + 4px)",
+          }}
         >
           {search && (
             <Input
@@ -240,13 +221,13 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               </button>
             </section>
           )}
-          <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
+          <section className="max-h-[200px] z-[1000] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
             {options
               ? memoizedFilteredOptions.map((option) => (
                   <React.Fragment key={option.value}>
                     {multiple ? (
                       <Label
-                        className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
+                        className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] break-words cursor-pointer border-l-4 border-transparent"
                         htmlFor={`checkbox-${option.value}`}
                         key={option.value}
                       >
@@ -260,7 +241,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                               onChange={() => handleCheckboxChange(option)}
                             />
                             <div className="flex items-center gap-1">
-                              <span>{renderItem(option)}</span>
+                              <div className="break-words">
+                                {renderItem(option)}
+                              </div>
                               {dropDownTooltip && (
                                 <DropdownTooltip
                                   tooltipContent={option?.tooltipContent}
@@ -301,12 +284,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 ))
               : children}
           </section>
-          {dropdownFooter && (
-            <DropdownFooter
-              setDropdownMenu={setDropdownMenu}
-              onApply={onApply}
-            />
-          )}
+          {dropdownFooter && <DropdownFooter onApply={onApply} />}
         </ul>
       </div>
     );
@@ -318,32 +296,25 @@ export const MenuItem: React.FC<MenuItemProps> = ({ label, children }) => {
 };
 
 interface DropdownTooltipProps {
-  tooltipContent?: string;
+  tooltipContent?: string | undefined;
 }
 
 const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
   tooltipContent,
 }) => {
-  const content = tooltipContent || "";
-  return content ? (
-    <Tooltip position="right" content={content}>
+  return tooltipContent ? (
+    <Tooltip position="right" content={tooltipContent}>
       <RiErrorWarningLine color="#98A2B3" size={14} />
     </Tooltip>
   ) : null;
 };
 
-interface DropdownFooterProps {
-  onApply?: (() => void) | undefined;
-  setDropdownMenu?: any;
-}
-
-export const DropdownFooter: React.FC<DropdownFooterProps> = ({
-  // onReset,
+const DropdownFooter: React.FC<DropdownFooterProps> = ({
   onApply,
   setDropdownMenu,
 }) => {
   return (
-    <div className="flex justify-end border-t border-gray-200 px-[14px] py-[8px] text-text-sm">
+    <div className="flex justify-between border-t border-gray-200 px-[14px] py-[8px] text-text-sm">
       <button
         className="text-brand-600 hover:text-brand-700"
         onClick={() => {
@@ -359,6 +330,6 @@ export const DropdownFooter: React.FC<DropdownFooterProps> = ({
   );
 };
 
-Dropdown.displayName = "Dropdown";
+DropdownWithIcon.displayName = "DropdownWithIcon";
 
-export default Dropdown;
+export default DropdownWithIcon;
