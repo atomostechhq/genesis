@@ -10,6 +10,7 @@ interface SidebarProps {
   children: React.ReactNode;
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
+  scroll?: boolean;
   navItems?: {
     label: string;
     items: {
@@ -29,6 +30,7 @@ interface SidebarHeaderProps {
 interface SidebarMenuProps {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
+  scroll?: boolean;
   navItems?: {
     label: string;
     items: {
@@ -105,11 +107,17 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
 };
 
 // SidebarMenu component
-const SidebarMenu: React.FC<SidebarMenuProps> = ({ collapsed, navItems }) => {
+const SidebarMenu: React.FC<SidebarMenuProps> = ({
+  collapsed,
+  navItems,
+  scroll = false,
+}) => {
   const currentPath = usePathname();
 
   return (
-    <nav className={`max-h-[60vh] overflow-y-scroll`}>
+    <nav
+      className={`max-h-[60vh] ${scroll && "overflow-y-auto customScroll"}`}
+    >
       <ul className="my-2 flex flex-col gap-2 items-stretch">
         {navItems?.map((parentItem, parentIndex) => (
           <li

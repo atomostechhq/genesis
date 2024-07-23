@@ -53,13 +53,13 @@ const VariantIcon = ({ variant }: VariantIconProps) => {
 interface NoticeProps
   extends HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof noticeVariants> {
-  children: ReactNode;
+  children?: ReactNode;
   noticeTitle?: string;
   variant: "success" | "warning" | "info" | "error" | "default";
   position?: "top" | "bottom";
   showIcon?: boolean;
-  open?: boolean;
-  setOpen?: any;
+  open: boolean;
+  setOpen: (value: boolean) => void;
 }
 
 const noticeVariants = cva("p-4 w-fit rounded-[6px]", {

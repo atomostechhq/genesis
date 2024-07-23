@@ -6,14 +6,18 @@ interface SkeletonProps {
   circle?: boolean;
 }
 
-const Skeleton: React.FC<SkeletonProps> = ({ width = '100%', height = '100%', circle = false }) => {
+const Skeleton: React.FC<SkeletonProps> = ({
+  width = '100%',
+  height = '100%',
+  circle = false,
+}) => {
   const style: React.CSSProperties = {
-    width,
-    height,
+    width: typeof width === 'number' ? `${width}px` : width,
+    height: typeof height === 'number' ? `${height}px` : height,
     borderRadius: circle ? '50%' : undefined,
   };
 
-  return <span className={`skeleton ${circle ? 'circle' : ''}`} style={style}></span>;
+  return <span className={`skeleton rounded-lg ${circle ? 'circle' : ''}`} style={style}></span>;
 };
 
 export default Skeleton;
