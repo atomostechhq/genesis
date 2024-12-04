@@ -19,15 +19,15 @@ import Label from "./Label";
 
 export interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  selectedFile?: (string | File)[];
-  setSelectedFile?: (files: (string | File)[]) => void;
+  selectedFile?: File[];
+  setSelectedFile?: (files: File[]) => void;
   children?: ReactNode;
   onDelete?: () => void;
   title?: string;
   disabled?: boolean;
 }
 
-const getIconForMimeType = (file: string | File) => {
+const getIconForMimeType = (file: File) => {
   const fileName = typeof file === "string" ? file : file.name;
   const extension = fileName.split(".").pop()?.toLowerCase();
 
@@ -129,6 +129,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
           id={id}
           onChange={onChange}
           multiple={multiple}
+          disabled={disabled}
           hidden
           ref={ref}
         />

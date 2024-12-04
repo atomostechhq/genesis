@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
@@ -38,18 +38,13 @@ import Divider from "./components/Divider";
 import Modal from "./components/Modal";
 import Breadcrumb from "./components/Breadcrumb";
 import DropdownWithIcon from "./components/DropdownWithIcon";
-import { Language } from "./action";
 
 interface Option {
   label: string;
   value: string;
 }
 
-interface TestProps {
-  languages: Language[];
-}
-
-const Test = ({ languages }: TestProps) => {
+const Test = () => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
@@ -73,9 +68,7 @@ const Test = ({ languages }: TestProps) => {
   };
 
   // single file upload
-  const [selectedSingleFiles, setSelectedSingleFiles] = useState<
-    (string | File)[]
-  >([]);
+  const [selectedSingleFiles, setSelectedSingleFiles] = useState<File[]>([]);
 
   const handleFileChangeSingle = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -90,7 +83,7 @@ const Test = ({ languages }: TestProps) => {
   };
 
   // multiple file upload
-  const [selectedFiles, setSelectedFiles] = useState<(string | File)[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const handleFileChangeMultiple = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -343,13 +336,6 @@ const Test = ({ languages }: TestProps) => {
       setLoadingState(true);
     }, 2000);
   });
-
-  const dropdownOptions = useMemo(() => {
-    return languages.map((data) => ({
-      label: data.language_name,
-      value: data.language_code,
-    }));
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setProgress(80), 2000);
@@ -746,7 +732,7 @@ const Test = ({ languages }: TestProps) => {
         <div>
           <h1>Dropdown with icon</h1>
           <DropdownWithIcon
-            options={dropdownOptions}
+            options={multiOptions}
             selected={multiSelect}
             setSelected={setMultiSelect}
             search={true}
@@ -774,7 +760,7 @@ const Test = ({ languages }: TestProps) => {
         <div>
           <h1 className="text-lg">Single Dropdown Language</h1>
           <Dropdown
-            options={dropdownOptions}
+            options={multiOptions}
             selected={singleSelect}
             setSelected={setSingleSelect}
             width="200px"
@@ -1011,6 +997,7 @@ const Test = ({ languages }: TestProps) => {
         <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
         <Tooltip
           position="top"
+          className="text-red-500"
           content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
         >
           Top
