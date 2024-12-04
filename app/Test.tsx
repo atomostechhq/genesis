@@ -70,29 +70,34 @@ const Test = () => {
   };
 
   // single file upload
-  const [selectedFile, setSelectedFile] = useState<string[]>([]);
+  const [selectedSingleFiles, setSelectedSingleFiles] = useState<File[]>([]);
+
   const handleFileChangeSingle = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      setSelectedFiles([file.name]);
+    if (files) {
+      // Add both file objects and file names to the state
+      const newFiles = Array.from(files);
+      setSelectedSingleFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
+  };
+  const handleDeleteFileSingle = (file: string | File) => {
+    setSelectedSingleFiles((prevFiles) => prevFiles.filter((f) => f !== file));
   };
 
   // multiple file upload
-  const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
   const handleFileChangeMultiple = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      const newFileNames = Array.from(files).map((file) => file.name);
-      setSelectedFiles((prevFiles) => [...prevFiles, ...newFileNames]);
+      // Add both file objects and file names to the state
+      const newFiles = Array.from(files);
+      setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
 
-  const handleDeleteFile = (fileName: string) => {
-    setSelectedFiles((prevFiles) =>
-      prevFiles.filter((file) => file !== fileName)
-    );
+  const handleDeleteFile = (file: string | File) => {
+    setSelectedFiles((prevFiles) => prevFiles.filter((f) => f !== file));
   };
 
   // tabs
@@ -158,8 +163,6 @@ const Test = () => {
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
   // console.log("singleSelect", singleSelect);
-
-  const [dropdownMenu, setDropdownMenu] = useState(false);
 
   const singleOptions = [
     { label: "Option 1", value: "1" },
@@ -404,6 +407,9 @@ const Test = () => {
           </Button>
           <Button variant="filled" intent={"primary"} size="lg">
             Size lg
+          </Button>
+          <Button variant={"outlined"} intent={"success-outlined"}>
+            Submit
           </Button>
         </section>
         <section className="flex items-center gap-4">
@@ -743,8 +749,6 @@ const Test = () => {
             options={multiOptions}
             selected={multiSelect}
             setSelected={setMultiSelect}
-            search={true}
-            multiple={true}
             width="300px"
             icon={<RiGlobalLine size={16} />}
             dropDownTooltip={true}
@@ -756,9 +760,9 @@ const Test = () => {
           />
         </div>
         <div>
-          <h1 className="text-lg">Single Dropdown</h1>
+          <h1 className="text-lg">Single Dropdown Language</h1>
           <Dropdown
-            options={singleOptions}
+            options={multiOptions}
             selected={singleSelect}
             setSelected={setSingleSelect}
             width="200px"
@@ -961,12 +965,22 @@ const Test = () => {
       <section className="flex flex-col gap-2 max-w-lg">
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
-          onDelete={() => handleDeleteFile(selectedFiles[0])}
+          id="single"
+          selectedFile={selectedSingleFiles}
+          setSelectedFile={setSelectedSingleFiles}
+          onChange={handleFileChangeSingle}
+          onDelete={() => handleDeleteFileSingle(selectedSingleFiles[0])}
+          title="SVG, PNG, JPG or GIF (max. 800x400px)"
+        >
+          <ProgressBar progressColor="bg-primary-600" progress={50} />
+        </FileUpload>
+        <FileUpload
           multiple
-          id="multipleFileUpload"
+          id="multiple"
           selectedFile={selectedFiles}
           setSelectedFile={setSelectedFiles}
           onChange={handleFileChangeMultiple}
+          onDelete={() => handleDeleteFile(selectedFiles[0])}
           title="SVG, PNG, JPG or GIF (max. 800x400px)"
         >
           <ProgressBar progressColor="bg-primary-600" progress={50} />
@@ -989,7 +1003,7 @@ const Test = () => {
         />
         <ProgressBar
           progressColor="bg-success-600"
-          progress={progress}
+          progress={20}
           progressText={"Progress text on left"}
           progressTextPosition="left"
         />
@@ -1005,6 +1019,7 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
         <Tooltip
           position="top"
+          className="text-red-500"
           content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
         >
           Top
