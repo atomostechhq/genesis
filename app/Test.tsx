@@ -15,6 +15,7 @@ import {
   RiGlobalLine,
   RiInformation2Line,
   RiFilterLine,
+  RiStackLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -38,6 +39,7 @@ import Divider from "./components/Divider";
 import Modal from "./components/Modal";
 import Breadcrumb from "./components/Breadcrumb";
 import DropdownWithIcon from "./components/DropdownWithIcon";
+import Breadcrumbs from "./components/Breadcrumb";
 
 interface Option {
   label: string;
@@ -783,6 +785,26 @@ const Test = () => {
             disabled={true}
           />
         </div>
+        <div className="ml-10">
+        <DropdownWithIcon
+            options={multiOptions}
+            selected={multiSelect}
+            setSelected={setMultiSelect}
+            search={true}
+            multiple={true}
+            width="100px"
+            position="right"
+            trigger={
+              <RiFilterLine
+                className="hover:bg-gray-200 rounded"
+                cursor="pointer"
+                size={14}
+              />
+            }
+            // dropdownMenu={dropdownMenu}
+            // setDropdownMenu={setDropdownMenu}
+          />
+        </div>
       </section>
       {/* Tabs */}
       <div>
@@ -1111,7 +1133,7 @@ const Test = () => {
       {/* Breadcrumbs */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
-        <Breadcrumb
+        {/* <Breadcrumb
           homeElement={<RiHome2Line size={18} />}
           separator={
             <span>
@@ -1122,7 +1144,24 @@ const Test = () => {
           containerClasses="flex gap-[6px] items-center"
           listClasses="hover:bg-gray-100 rounded-lg py-[6px] px-3 text-text-xs font-semibold font-bold cursor-pointer"
           capitalizeLinks
-        />
+        /> */}
+        <Breadcrumbs aria-label="breadcrumb" separator="/">
+          <Link href="/">
+            <RiStackLine size={18} />
+          </Link>
+          <Link
+            href="/pages/dashboard"
+            // style={{ textDecoration: "none", color: "inherit" }}
+          >
+            Dashboard
+          </Link>
+          <Link
+            href="/pages/team"
+            // className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
+          >
+            Team
+          </Link>
+        </Breadcrumbs>
       </section>
       {/* Sidebar */}
       <div className="relative flex gap-3 bg-white">
