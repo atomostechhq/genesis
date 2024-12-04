@@ -48,7 +48,7 @@ interface DropdownProps {
   children?: React.ReactNode;
   trigger?: React.ReactNode;
   dropdownMenu?: boolean;
-  position?: "top" | "bottom";
+  position?: "top" | "bottom" | "left" | "right";
   setDropdownMenu?: (value: boolean) => void;
   info?: any;
   addInfo?: any;
@@ -94,14 +94,16 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
 
     const memoizedFilteredOptions = useMemo(() => {
       if (!search) return options;
-      return options.filter((option) =>
-        option.value.toLowerCase().includes(searchQuery.toLowerCase())
+      return options?.filter(
+        (option) =>
+          typeof option?.label === "string" &&
+          option?.label?.toLowerCase()?.includes(searchQuery?.toLowerCase())
       );
     }, [search, searchQuery, options]);
 
     const handleSearchChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(e.target.value);
+        setSearchQuery(e?.target?.value);
       },
       []
     );
@@ -110,8 +112,8 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
       (option: Option) => {
         if (multiple && setSelected) {
           setSelected((prevSelected) =>
-            prevSelected.some((item) => item.value === option.value)
-              ? prevSelected.filter((item) => item.value !== option.value)
+            prevSelected?.some((item) => item?.value === option?.value)
+              ? prevSelected?.filter((item) => item?.value !== option?.value)
               : [...prevSelected, option]
           );
         } else if (setSelected) {
@@ -126,8 +128,8 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
       (option: Option) => {
         if (multiple && setSelected) {
           setSelected((prevSelected) =>
-            prevSelected.some((item) => item.value === option.value)
-              ? prevSelected.filter((item) => item.value !== option.value)
+            prevSelected?.some((item) => item?.value === option?.value)
+              ? prevSelected?.filter((item) => item?.value !== option?.value)
               : [...prevSelected, option]
           );
         } else if (setSelected) {
@@ -138,7 +140,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
     );
 
     const handleSelectAll = () => {
-      if (selected.length === options.length) {
+      if (selected?.length === options?.length) {
         setSelected?.([]);
       } else {
         setSelected?.(options);
@@ -153,16 +155,16 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
         if (
-          localDropdownRef.current &&
-          !localDropdownRef.current.contains(event.target as Node)
+          localDropdownRef?.current &&
+          !localDropdownRef?.current?.contains(event?.target as Node)
         ) {
           setDropdownMenu(false);
         }
       };
 
-      document.addEventListener("mousedown", handleClickOutside);
+      document?.addEventListener("mousedown", handleClickOutside);
       return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+        document?.removeEventListener("mousedown", handleClickOutside);
       };
     }, [setDropdownMenu]);
 
@@ -185,7 +187,15 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
         <ul
           className={cn(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
-            position === "top" ? "top-10" : "bottom-10",
+            position === "top"
+              ? "top-10"
+              : position === "bottom"
+              ? "bottom-10"
+              : position === "left"
+              ? "left-0"
+              : position === "right"
+              ? "right-[90%]"
+              : "top-10",
             dropdownMenu &&
               "max-h-[320px] opacity-[1] transition-all ease-in duration-150"
           )}
@@ -223,20 +233,20 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
           )}
           <section className="max-h-[200px] z-[1000] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
             {options
-              ? memoizedFilteredOptions.map((option) => (
-                  <React.Fragment key={option.value}>
+              ? memoizedFilteredOptions?.map((option, i) => (
+                  <React.Fragment key={i}>
                     {multiple ? (
                       <Label
                         className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] break-words cursor-pointer border-l-4 border-transparent"
-                        htmlFor={`checkbox-${option.value}`}
-                        key={option.value}
+                        htmlFor={`checkbox-${option?.value}`}
+                        key={i}
                       >
                         <section className="flex items-center justify-between gap-2 w-full">
                           <div className="flex gap-2">
                             <Checkbox
-                              id={`checkbox-${option.value}`}
+                              id={`checkbox-${option?.value}`}
                               checked={selected?.some(
-                                (item) => item.value === option.value
+                                (item) => item?.value === option?.value
                               )}
                               onChange={() => handleCheckboxChange(option)}
                             />
@@ -259,12 +269,12 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
                       </Label>
                     ) : (
                       <Label
-                        key={option.value}
+                        key={i}
                         className={cn(
                           "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
                           {
                             "bg-primary-50 border-primary-600":
-                              selected && selected[0]?.value === option.value,
+                              selected && selected[0]?.value === option?.value,
                           }
                         )}
                         onClick={() => toggleOption(option)}
