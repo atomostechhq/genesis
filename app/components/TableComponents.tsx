@@ -44,7 +44,7 @@ export const Table = ({ children, className, dense, ...props }: TableProps) => {
       {...props}
       className={cn(
         dense && "group",
-        "bg-white text-left w-full whitespace-nowrap border",
+        "bg-white text-left w-full border",
         className
       )}
     >
