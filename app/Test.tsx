@@ -710,7 +710,7 @@ const Test = () => {
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
-      <section className="flex gap-10">
+      <section className="flex items-start gap-10">
         <div>
           <h1>Dropdown with icon</h1>
           <DropdownWithIcon
@@ -746,13 +746,24 @@ const Test = () => {
         <div>
           <h1 className="text-lg">Multiple Dropdown</h1>
           <Dropdown
-            options={multiOptions}
+            options={[
+              { label: "High", value: "High" },
+              { label: "Medium", value: "Medium" },
+              { label: "Low", value: "Low" },
+              { label: "High", value: "High" },
+              { label: "Medium", value: "Medium" },
+              { label: "Low", value: "Low" },
+              { label: "High", value: "High" },
+              { label: "Medium", value: "Medium" },
+              { label: "Low", value: "Low" },
+            ]}
             selected={multiSelect}
             setSelected={setMultiSelect}
             width="300px"
             icon={<RiGlobalLine size={16} />}
-            dropDownTooltip={true}
-            dropdownFooter={true}
+            dropdownText="Test Test"
+            multiple
+            search
             position="bottom"
             onApply={() => {
               alert("Apply button clicked");
@@ -764,12 +775,11 @@ const Test = () => {
           <Dropdown
             options={multiOptions}
             selected={singleSelect}
+            icon={<RiGlobalLine size={16} />}
             setSelected={setSingleSelect}
             width="200px"
-            // search={true}
-            multiple={false}
+            dropdownText="single text"
             info="info"
-            // dropDownTooltip={true}
           />
         </div>
         <div>
@@ -778,15 +788,13 @@ const Test = () => {
             options={singleOptions}
             selected={singleSelect}
             setSelected={setSingleSelect}
-            width="200px"
-            // search={true}
             multiple={false}
             info="info"
             disabled={true}
           />
         </div>
         <div className="ml-10">
-        <DropdownWithIcon
+          <DropdownWithIcon
             options={multiOptions}
             selected={multiSelect}
             setSelected={setMultiSelect}
@@ -801,8 +809,6 @@ const Test = () => {
                 size={14}
               />
             }
-            // dropdownMenu={dropdownMenu}
-            // setDropdownMenu={setDropdownMenu}
           />
         </div>
       </section>
