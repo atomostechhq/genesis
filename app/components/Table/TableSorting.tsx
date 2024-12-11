@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/app/components/TableComponents";
 import React, { useState } from "react";
-import {RiSortAsc} from '@remixicon/react'
+import { RiSortAsc } from "@remixicon/react";
 import Chip from "../Chip";
 import Checkbox from "../Checkbox";
 import Pagination from "../Pagination";
