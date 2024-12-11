@@ -8,15 +8,15 @@ import React, {
   useRef,
   useImperativeHandle,
 } from "react";
-import Checkbox from "./Checkbox";
-import Input from "./Input";
 import {
   RiArrowDownSLine,
   RiSearchLine,
   RiErrorWarningLine,
 } from "@remixicon/react";
 import { cn } from "../utils/utils";
+import Input from "./Input";
 import Label from "./Label";
+import Checkbox from "./Checkbox";
 import Tooltip from "./Tooltip";
 
 type Option = {
@@ -67,19 +67,16 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       setSelected,
       search = false,
       multiple = false,
-      dropdownText = "Select...",
+      dropdownText = "Select",
       renderItem = defaultRenderItem,
       children,
       icon,
       position = "top",
-      tooltipContent,
       width,
       info,
-      addInfo,
       dropDownTooltip = false,
       dropdownFooter = false,
       onApply,
-      onReset,
       disabled = false,
     },
     ref
@@ -174,12 +171,17 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       }
     };
 
+    // width adjustment
+
+    const numericWidth = width ? parseInt(width, 10) : 0;
+    const adjustedWidth = numericWidth - 50;
+
     return (
       <div
         ref={dropdownRef}
         // className={cn("relative", !width && "w-full")}
         className={cn(
-          "relative",
+          "relative ",
           !width && "w-full",
           disabled && "cursor-not-allowed opacity-50"
         )}
@@ -191,15 +193,22 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           // onClick={() => setDropdownMenu((prev) => !prev)}
           onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
           className={cn(
-            "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 text-text-sm cursor-pointer",
+            "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-text-sm cursor-pointer",
             dropdownMenu ? "border border-gray-800" : "border border-gray-200",
             disabled && "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
           )}
         >
-          <section className="flex items-center gap-2">
+          <section
+            className={cn(
+              "flex items-center gap-2 text-ellipsis overflow-hidden"
+            )}
+            style={{ width: `${adjustedWidth}px` }}
+          >
             {icon && <span>{icon}</span>}
             {multiple
-              ? `${`${selected?.length} Selected` || dropdownText}`
+              ? (selected?.length ?? 0) > 0
+                ? `${selected?.length} Selected`
+                : dropdownText
               : selected?.[0]?.label
               ? selected?.[0]?.label
               : dropdownText}
@@ -228,7 +237,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             <section className="py-[6px] px-[14px] flex justify-between items-center">
               <p
                 onClick={handleSelectAll}
-                className="text-text-sm  hover:text-primary-700  text-primary-600 cursor-pointer"
+                className="text-text-sm  hover:text-primary-700 text-primary-600 cursor-pointer"
               >
                 Select all
               </p>
@@ -242,21 +251,23 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           )}
           <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
             {options
-              ? memoizedFilteredOptions.map((option) => (
-                  <React.Fragment key={option.value}>
+              ? memoizedFilteredOptions.map((option, i) => (
+                  <React.Fragment key={i}>
                     {multiple ? (
                       <Label
                         className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
                         htmlFor={`checkbox-${option.value}`}
-                        key={option.value}
+                        key={i}
                       >
                         <section className="flex items-center justify-between gap-2 w-full">
                           <div className="flex gap-2">
                             <Checkbox
                               id={`checkbox-${option.value}`}
-                              checked={selected?.some(
-                                (item) => item.value === option.value
-                              )}
+                              checked={
+                                selected?.some(
+                                  (item) => item.value === option.value
+                                ) ?? false
+                              }
                               onChange={() => handleCheckboxChange(option)}
                             />
                             <div className="flex items-center gap-1">
@@ -276,7 +287,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                       </Label>
                     ) : (
                       <Label
-                        key={option.value}
+                        key={i}
                         className={cn(
                           "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
                           {
@@ -318,7 +329,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({ label, children }) => {
 };
 
 interface DropdownTooltipProps {
-  tooltipContent?: string;
+  tooltipContent?: string | undefined;
 }
 
 const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
@@ -345,7 +356,7 @@ export const DropdownFooter: React.FC<DropdownFooterProps> = ({
   return (
     <div className="flex justify-end border-t border-gray-200 px-[14px] py-[8px] text-text-sm">
       <button
-        className="text-brand-600 hover:text-brand-700"
+        className="text-primary-600 hover:text-primary-700"
         onClick={() => {
           if (onApply) {
             onApply();

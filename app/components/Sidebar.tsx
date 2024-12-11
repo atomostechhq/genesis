@@ -89,7 +89,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
     >
       <div className="flex justify-between items-center mb-4">
         <span className="whitespace-nowrap">{children}</span>
-        {collapsed && (
+        {/* {collapsed && (
           <button
             className={cn({
               "grid place-content-center": true,
@@ -100,7 +100,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
           >
             <RiArrowLeftSLine color="#101828" />
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );

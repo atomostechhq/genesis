@@ -9,6 +9,10 @@
 
 .tgz
 
+
+#dist
+/dist
+
 # testing
 /coverage
 

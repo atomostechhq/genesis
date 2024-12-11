@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes, ReactNode, forwardRef } from "react";
+import React, { forwardRef } from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
 import {
   RiFileLine,
   RiUpload2Line,
@@ -12,19 +13,24 @@ import {
   RiFileZipLine,
   RiFilePdf2Line,
 } from "@remixicon/react";
+
 import { cn } from "../utils/utils";
 import Label from "./Label";
 
-interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
-  selectedFile?: string[];
-  setSelectedFile?: (files: string[]) => void;
+export interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
+  id: string;
+  selectedFile?: File[];
+  setSelectedFile?: (files: File[]) => void;
   children?: ReactNode;
   onDelete?: () => void;
   title?: string;
+  disabled?: boolean;
 }
 
-const getIconForMimeType = (fileName: string) => {
+const getIconForMimeType = (file: File) => {
+  const fileName = typeof file === "string" ? file : file.name;
   const extension = fileName.split(".").pop()?.toLowerCase();
+
   let iconComponent: JSX.Element;
   switch (extension) {
     case "jpg":
@@ -103,10 +109,11 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       selectedFile,
       onChange,
       multiple,
-      setSelectedFile,
       onDelete,
       children,
+      disabled,
       title,
+      id,
       className,
       accept,
       ...props
@@ -114,21 +121,24 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     ref
   ) => {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 ">
         <input
           type="file"
           {...props}
           accept={accept}
-          id="custom-input"
+          id={id}
           onChange={onChange}
           multiple={multiple}
+          disabled={disabled}
           hidden
           ref={ref}
         />
         <Label
-          htmlFor="custom-input"
+          htmlFor={id}
+          disabled={disabled}
           className={cn(
             "w-full h-[126px] border-2 border-dashed border-gray-200 hover:bg-gray-200 cursor-pointer rounded-lg px-6 py-4 flex flex-col items-center gap-2",
+            disabled && "pointer-events-none",
             className
           )}
         >
@@ -151,7 +161,9 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
               <div className="flex items-center gap-2 w-full">
                 {getIconForMimeType(file)}
                 <div className="flex flex-col gap-1 w-full">
-                  <p className="text-sm line-clamp-2 break-all">{file}</p>
+                  <p className="text-sm line-clamp-2 break-all">
+                    {typeof file === "string" ? file : file.name}{" "}
+                  </p>
                   <div className="w-full">{children}</div>
                 </div>
               </div>
