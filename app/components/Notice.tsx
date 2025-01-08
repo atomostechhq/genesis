@@ -67,7 +67,7 @@ const noticeVariants = cva("p-4 w-fit rounded-[6px]", {
     variant: {
       success: "bg-success-25 border border-success-600",
       warning: "bg-warning-25 border border-warning-600",
-      info: "bg-brand-25 border border-brand-600",
+      info: "bg-primary-25 border border-primary-600",
       error: "bg-error-25 border border-error-600",
       default: "bg-gray-25 border border-gray-600",
     },

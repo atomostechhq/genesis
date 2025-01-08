@@ -326,7 +326,7 @@ const DropdownFooter: React.FC<DropdownFooterProps> = ({
   return (
     <div className="flex justify-between border-t border-gray-200 px-[14px] py-[8px] text-text-sm">
       <button
-        className="text-brand-600 hover:text-brand-700"
+        className="text-primary-600 hover:text-primary-700"
         onClick={() => {
           if (onApply) {
             onApply();
