@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="theme-brand">{children}</div>
+        <div className="theme-primary">{children}</div>
       </body>
     </html>
   );
