@@ -505,13 +505,21 @@ const Test = () => {
             default
           </Chip>
         </section>
-        <section className="flex items-center gap-4">
+        <section className="flex flex-wrap items-center gap-4">
           <p>Chips without dot</p>
           <Chip intent="primary">primary</Chip>
           <Chip intent="warning">warning</Chip>
           <Chip intent="success">success</Chip>
           <Chip intent="error">error</Chip>
           <Chip intent="default">default</Chip>
+          <Chip intent="bluegray">bluegray</Chip>
+          <Chip intent="bluelight">bluelight</Chip>
+          <Chip intent="violet">violet</Chip>
+          <Chip intent="indigo">indigo</Chip>
+          <Chip intent="purple">purple</Chip>
+          <Chip intent="pink">pink</Chip>
+          <Chip intent="rose">rose</Chip>
+          <Chip intent="orange">orange</Chip>
         </section>
       </div>
       {/* Toggle  */}
@@ -704,8 +712,9 @@ const Test = () => {
           setShowModal={setShowModal}
           closeModal={true}
           closeOnOutsideClick={true}
-        >
-          <div className="w-[500px] h-[300px]">content</div>
+          className="sm:w-[50%] w-full h-[50%]"
+          >
+          <div className="">content</div>
         </Modal>
       </section>
       {/* Dropdown  */}
