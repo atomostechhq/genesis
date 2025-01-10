@@ -312,7 +312,6 @@ const Test = () => {
         },
         {
           label: "Setting 2",
-
           href: "/setting2",
           icon: <RiCircleFill size={18} />,
         },
