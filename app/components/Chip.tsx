@@ -2,7 +2,6 @@ import React, { ReactNode, HTMLAttributes } from "react";
 import { cn } from "../utils/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
-// Variants for the Chip component
 const chipVariants = cva(
   "rounded-full capitalize flex items-center w-fit gap-2",
   {
@@ -51,7 +50,6 @@ const dotColorVariants: Record<string, string> = {
   orange: "bg-orange-600",
 };
 
-// Props for the Chip component
 interface ChipProps
   extends HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof chipVariants> {
@@ -60,7 +58,6 @@ interface ChipProps
   dotColor?: string;
 }
 
-// Chip component
 const Chip = ({
   children,
   className,
@@ -69,7 +66,7 @@ const Chip = ({
   dot,
   dotColor,
 }: ChipProps) => {
-  const resolvedIntent = intent ?? "default"; // Handle null intent
+  const resolvedIntent = intent ?? "default";
 
   return (
     <div className={cn(chipVariants({ intent: resolvedIntent, size }), className)}>
