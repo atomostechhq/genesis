@@ -40,7 +40,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
         />
         <span
           className={cn(
-            "absolute transition-opacity opacity-0 ease-in-out pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100 h-1.5 w-1.5 bg-primary-600 rounded-full duration-700",
+            "absolute transition-opacity opacity-0 ease-in-out pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100 h-1.5 w-1.5 bg-primary-600 rounded-full duration-300",
             size == "sm" && "h-[4.5px] w-[4.5px]"
           )}
         ></span>

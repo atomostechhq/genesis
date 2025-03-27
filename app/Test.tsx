@@ -10,8 +10,6 @@ import {
   RiCircleFill,
   RiLogoutBoxRLine,
   RiSearch2Line,
-  RiHome2Line,
-  RiArrowRightSLine,
   RiGlobalLine,
   RiInformation2Line,
   RiFilterLine,
@@ -37,7 +35,6 @@ import Link from "next/link";
 import Loading from "./components/Loading";
 import Divider from "./components/Divider";
 import Modal from "./components/Modal";
-import Breadcrumb from "./components/Breadcrumb";
 import DropdownWithIcon from "./components/DropdownWithIcon";
 import Breadcrumbs from "./components/Breadcrumb";
 
@@ -172,7 +169,8 @@ const Test = () => {
 
   const multiOptions = [
     {
-      label: "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      label:
+        "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       value: "apple",
       info: "Modals",
       addInfo: "Be a direct child descendent of the modal.",
@@ -712,11 +710,12 @@ const Test = () => {
           closeModal={true}
           closeOnOutsideClick={true}
           className="sm:w-[50%] w-full h-[50%]"
-          >
+        >
           <div className="">content</div>
         </Modal>
       </section>
       {/* Dropdown  */}
+
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <section className="flex items-start gap-10">
         <div>
@@ -785,7 +784,6 @@ const Test = () => {
             selected={singleSelect}
             icon={<RiGlobalLine size={16} />}
             setSelected={setSingleSelect}
-            width="200px"
             dropdownText="single text"
             info="info"
           />
