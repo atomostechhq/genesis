@@ -206,7 +206,7 @@ const Test = () => {
   const [showModal, setShowModal] = useState(false);
 
   // sidebar
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
 
   // progress bar
   const [progress, setProgress] = useState(0);
