@@ -41,7 +41,7 @@
     --gray-700: #344054;
     --gray-800: #1d2939;
     --gray-900: #101828;
-    
+
     /* Error Colors */
     --error-25: #fffbfa;
     --error-50: #fef3f2;
@@ -54,7 +54,7 @@
     --error-700: #b42318;
     --error-800: #912018;
     --error-900: #7a271a;
-    
+
     /* Warning Colors */
     --warning-25: #fffdf5;
     --warning-50: #fffaeb;
@@ -67,7 +67,7 @@
     --warning-700: #b54708;
     --warning-800: #93370d;
     --warning-900: #7a2e0e;
-    
+
     /* Success Colors */
     --success-25: #f6fef9;
     --success-50: #ecfdf3;
@@ -88,7 +88,6 @@
     --rdp-caption-font-size: 15px;
   }
 }
-
 
 .skeleton {
   border-radius: 2px;
