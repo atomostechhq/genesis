@@ -7,7 +7,15 @@ interface InputProps
   startIcon?: JSX.Element;
   endIcon?: JSX.Element;
   disabled?: boolean;
-  type: "text" | "url" | "email" | "password" | "number" | "tel" | "search";
+  type:
+    | "text"
+    | "url"
+    | "email"
+    | "password"
+    | "number"
+    | "tel"
+    | "search"
+    | "time";
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(

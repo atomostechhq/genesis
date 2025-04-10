@@ -10,8 +10,6 @@ import {
   RiCircleFill,
   RiLogoutBoxRLine,
   RiSearch2Line,
-  RiHome2Line,
-  RiArrowRightSLine,
   RiGlobalLine,
   RiInformation2Line,
   RiFilterLine,
@@ -37,9 +35,9 @@ import Link from "next/link";
 import Loading from "./components/Loading";
 import Divider from "./components/Divider";
 import Modal from "./components/Modal";
-import Breadcrumb from "./components/Breadcrumb";
 import DropdownWithIcon from "./components/DropdownWithIcon";
 import Breadcrumbs from "./components/Breadcrumb";
+import CircularProgress from "./components/CircularProgress";
 
 interface Option {
   label: string;
@@ -172,7 +170,8 @@ const Test = () => {
 
   const multiOptions = [
     {
-      label: "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      label:
+        "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       value: "apple",
       info: "Modals",
       addInfo: "Be a direct child descendent of the modal.",
@@ -190,6 +189,12 @@ const Test = () => {
     { label: "melon", value: "melon" },
     { label: "mango", value: "mango" },
   ];
+
+  const handleReset = () => {
+    setMultiSelect([]);
+    setSingleSelect([]);
+    alert("Reset button clicked");
+  };
 
   // notice
   const [open, setOpen] = useState(false);
@@ -712,7 +717,7 @@ const Test = () => {
           closeModal={true}
           closeOnOutsideClick={true}
           className="sm:w-[50%] w-full h-[50%]"
-          >
+        >
           <div className="">content</div>
         </Modal>
       </section>
@@ -749,6 +754,7 @@ const Test = () => {
             multiple={true}
             width="100px"
             trigger={<span>dropdown</span>}
+            onReset={handleReset}
           />
         </div>
         <div>
@@ -776,6 +782,7 @@ const Test = () => {
             onApply={() => {
               alert("Apply button clicked");
             }}
+            onReset={handleReset}
           />
         </div>
         <div>
@@ -785,7 +792,6 @@ const Test = () => {
             selected={singleSelect}
             icon={<RiGlobalLine size={16} />}
             setSelected={setSingleSelect}
-            width="200px"
             dropdownText="single text"
             info="info"
           />
@@ -1028,12 +1034,27 @@ const Test = () => {
           progressTextPosition="bottom"
         />
       </section>
+      {/* Circular Progress */}
+      <section className="my-5">
+        <h1 className="text-display-sm text-primary-400">Circular Progress:</h1>
+        <div className="flex items-center gap-5 py-10">
+          <CircularProgress size={120} strokeWidth={4} percentage={50} />
+          <CircularProgress size={120} strokeWidth={10} percentage={70} />
+          <CircularProgress
+            size={120}
+            strokeWidth={8}
+            percentage={60}
+            text="60%"
+            textClassName="text-primary-600 font-semibold"
+          />
+        </div>
+      </section>
       {/* Tooltip */}
       <section className="flex items-center gap-5 my-5">
         <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
         <Tooltip
           position="top"
-          className="text-red-500"
+          className="text-success-500"
           content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
         >
           Top
@@ -1219,7 +1240,6 @@ const Test = () => {
           </p>
         </section>
       </div>
-
       {/* Textarea */}
       <section className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-400">Textarea</h1>

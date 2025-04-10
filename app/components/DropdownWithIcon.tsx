@@ -36,12 +36,11 @@ interface DropdownFooterProps {
 }
 
 interface DropdownProps {
-  icon?: JSX.Element;
   options: Option[];
   selected?: Option[];
   setSelected?: React.Dispatch<React.SetStateAction<Option[]>>;
   onApply?: () => void;
-  dropdownText?: string;
+  onReset?: () => void;
   search?: boolean;
   multiple?: boolean;
   renderItem?: (option: Option) => React.ReactNode;
@@ -83,6 +82,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
       dropdownFooter = false,
       onApply,
       disabled = false,
+      onReset,
     },
     ref
   ) => {
@@ -148,6 +148,9 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
     };
 
     const handleReset = () => {
+      if (onReset) {
+        onReset();
+      }
       setSelected?.([]);
       setDropdownMenu(false);
     };

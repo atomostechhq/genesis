@@ -31,12 +31,15 @@ const Tooltip: React.FC<TooltipProps> = ({
   position,
   content,
   children,
+  className,
   ...props
 }) => {
   return (
     <div {...props} className="relative cursor-pointer text-sm group">
       <div>{children}</div>
-      <span className={cn(tooltipVariants({ position }))}>{content}</span>
+      <span className={cn(tooltipVariants({ position }), className)}>
+        {content}
+      </span>
     </div>
   );
 };

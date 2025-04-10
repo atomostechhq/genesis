@@ -78,6 +78,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       dropdownFooter = false,
       onApply,
       disabled = false,
+      onReset,
     },
     ref
   ) => {
@@ -151,6 +152,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     };
 
     const handleReset = () => {
+      if (onReset) {
+        onReset();
+      }
       setSelected?.([]);
       setDropdownMenu(false);
     };
@@ -172,9 +176,6 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     };
 
     // width adjustment
-
-    const numericWidth = width ? parseInt(width, 10) : 0;
-    const adjustedWidth = numericWidth - 50;
 
     return (
       <div
@@ -202,16 +203,17 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             className={cn(
               "flex items-center gap-2 text-ellipsis overflow-hidden"
             )}
-            style={{ width: `${adjustedWidth}px` }}
           >
             {icon && <span>{icon}</span>}
-            {multiple
-              ? (selected?.length ?? 0) > 0
-                ? `${selected?.length} Selected`
-                : dropdownText
-              : selected?.[0]?.label
-              ? selected?.[0]?.label
-              : dropdownText}
+            <p className="line-clamp-1 w-full">
+              {multiple
+                ? (selected?.length ?? 0) > 0
+                  ? `${selected?.length} Selected`
+                  : dropdownText
+                : selected?.[0]?.label
+                ? selected?.[0]?.label
+                : dropdownText}
+            </p>
           </section>
           <RiArrowDownSLine size={18} />
         </div>
