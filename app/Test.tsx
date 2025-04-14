@@ -14,6 +14,7 @@ import {
   RiInformation2Line,
   RiFilterLine,
   RiStackLine,
+  RiExternalLinkLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -38,11 +39,47 @@ import Modal from "./components/Modal";
 import DropdownWithIcon from "./components/DropdownWithIcon";
 import Breadcrumbs from "./components/Breadcrumb";
 import CircularProgress from "./components/CircularProgress";
+import Slider from "./components/Slider";
+import GlobalNavigation from "./components/GlobalNavigation";
 
 interface Option {
   label: string;
   value: string;
 }
+
+const GlobalNavigationComponent = () => {
+  return (
+    <>
+      <div>
+        <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
+          JD
+        </p>
+      </div>
+      <div className="text-center text-gray-900">
+        <p className="text-base font-semibold w-[250px] whitespace-nowrap text-ellipsis overflow-hidden block">
+          John Doe
+        </p>
+        <HelperText
+          size="sm"
+          className="w-[250px] whitespace-nowrap text-ellipsis overflow-hidden block"
+        >
+          john.doe@email.com
+        </HelperText>
+      </div>
+      <Divider />
+      <Button
+        className="w-full"
+        variant="outlined"
+        intent="default-outlined"
+        size={"sm"}
+        fullWidth
+        startIcon={<RiLogoutBoxRLine size={20} />}
+      >
+        Logout
+      </Button>
+    </>
+  );
+};
 
 const Test = () => {
   const [inputValue, setInputValue] = useState("");
@@ -195,6 +232,16 @@ const Test = () => {
     setSingleSelect([]);
     alert("Reset button clicked");
   };
+
+  // slider
+  const [sliderValue, setSliderValue] = useState<number>(50);
+
+  const handleSliderChange = (value: number) => {
+    setSliderValue(value);
+  };
+
+  // global navigation
+  const [isOpen, setIsOpen] = useState(false);
 
   // notice
   const [open, setOpen] = useState(false);
@@ -702,10 +749,29 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* Slider */}
+      <div className="space-y-6">
+        <h1 className="text-display-sm text-primary-400">Slider:</h1>
+        <Slider
+          value={sliderValue}
+          min={10}
+          max={200}
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
+        <Slider
+          value={sliderValue}
+          min={10}
+          max={200}
+          size="lg"
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
+      </div>
       {/* table */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">
-          <Link href="/pages/tables">Go to Table component</Link>
+          <Link href="/pages/tables" className="flex items-center gap-2">
+            Go to Table component <RiExternalLinkLine />
+          </Link>
         </h1>
       </section>
       {/* Modal */}
@@ -1102,6 +1168,64 @@ const Test = () => {
         <Tooltip position="left" content="Tooltips are used">
           Left
         </Tooltip>
+      </section>
+      {/* Global Navigation */}
+      <section className="my-5">
+        <h1 className="text-display-sm text-primary-400">Global Navigation:</h1>
+        <div className="flex items-center w-full justify-evenly">
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="bottom-left"
+            trigger={
+              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
+                JD
+              </p>
+            }
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="top-left"
+            trigger={
+              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
+                JD
+              </p>
+            }
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="bottom-right"
+            trigger={
+              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
+                JD
+              </p>
+            }
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="top-right"
+            trigger={
+              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
+                JD
+              </p>
+            }
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+        </div>
       </section>
       {/* skeleton */}
       <section className="my-5">

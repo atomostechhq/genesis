@@ -7,6 +7,7 @@ export { default as Divider } from "./Divider";
 export { default as Dropdown } from "./Dropdown";
 export { default as DropdownWithIcon } from "./DropdownWithIcon";
 export { default as FileUpload } from "./FileUpload";
+export { default as GlobalNavigation } from "./GlobalNavigation";
 export { default as HelperText } from "./HelperText";
 export { default as Input } from "./Input";
 export { default as Label } from "./Label";
@@ -17,6 +18,7 @@ export { default as Pagination } from "./Pagination";
 export { default as ProgressBar } from "./Progress";
 export { default as Radio } from "./Radio";
 export { default as Sidebar } from "./Sidebar";
+export { default as Slider } from "./Slider";
 export { default as Skeleton } from "./Skeleton";
 export { default as Stepper } from "./Stepper";
 export {
