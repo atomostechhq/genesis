@@ -15,6 +15,7 @@ import {
   RiFilterLine,
   RiStackLine,
   RiExternalLinkLine,
+  RiAddLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -41,6 +42,8 @@ import Breadcrumbs from "./components/Breadcrumb";
 import CircularProgress from "./components/CircularProgress";
 import Slider from "./components/Slider";
 import GlobalNavigation from "./components/GlobalNavigation";
+import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
+import ListItem from "./components/ListItem";
 
 interface Option {
   label: string;
@@ -891,6 +894,45 @@ const Test = () => {
             }
           />
         </div>
+      </section>
+      {/* Menu Items */}
+      <section>
+        <h1 className="text-display-sm text-primary-400">MenuItems:</h1>
+        <MenuDropdown
+          className=""
+          trigger={
+            <ListItem
+              as="button"
+              title="Products"
+              icon={<RiAddLine size={20} />}
+              className="w-max bg-primary-100 hover:bg-primary-200 rounded-full border border-primary-400"
+            />
+          }
+        >
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Inertia" />
+          </Link>
+          <MenuItem content={<h6>Blaze</h6>}>
+            <MenuSubItem label="Flames" onClick={() => alert("clicked")} />
+            <MenuSubItem label="Blaze" onClick={() => alert("click")} />
+            <MenuSubItem label="Admin" onClick={() => alert("click")} />
+          </MenuItem>
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Qiwi" />
+          </Link>
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Audit" />
+          </Link>
+        </MenuDropdown>
       </section>
       {/* Tabs */}
       <div>

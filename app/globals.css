@@ -95,12 +95,6 @@
     --success-800: #05603a;
     --success-900: #054f31;
   }
-
-  /* RDP Styles */
-  .rdp {
-    --rdp-cell-size: 28px;
-    --rdp-caption-font-size: 15px;
-  }
 }
 
 .skeleton {
