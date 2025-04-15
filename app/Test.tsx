@@ -16,6 +16,7 @@ import {
   RiStackLine,
   RiExternalLinkLine,
   RiAddLine,
+  RiUserLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -45,6 +46,7 @@ import GlobalNavigation from "./components/GlobalNavigation";
 import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
 import ListItem from "./components/ListItem";
 import Avatar from "./components/Avatar";
+import AvatarGroup from "./components/AvatarGroup";
 
 interface Option {
   label: string;
@@ -84,6 +86,12 @@ const GlobalNavigationComponent = () => {
     </>
   );
 };
+
+const ImageSrc =
+  "https://images.unsplash.com/vector-1738312097380-45562da00459?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+const ImageSrc2 =
+  "https://images.unsplash.com/photo-1540206395-68808572332f?q=80&w=2626&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const Test = () => {
   const [inputValue, setInputValue] = useState("");
@@ -1237,12 +1245,7 @@ const Test = () => {
             className="text-gray-600"
             icon={<RiLogoutBoxRLine size={20} />}
           />
-          <Avatar
-            type="image"
-            size="sm"
-            src="https://images.unsplash.com/vector-1738312097380-45562da00459?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="avatar"
-          />
+          <Avatar type="image" size="sm" src={ImageSrc} alt="avatar" />
           <Avatar
             type="image"
             size="md"
@@ -1250,18 +1253,67 @@ const Test = () => {
             rounded
             onClick={() => alert("clicked")}
             borderWidth="2px"
+            src={ImageSrc}
             className="cursor-pointer"
             borderColor="var(--success-500)"
-            src="https://images.unsplash.com/vector-1738312097380-45562da00459?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="avatar"
           />
-          <Avatar
-            type="image"
-            size="lg"
-            src="https://images.unsplash.com/vector-1738312097380-45562da00459?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="avatar"
-          />
+          <Avatar src={ImageSrc} type="image" size="lg" alt="avatar" />
         </div>
+        <AvatarGroup
+          avatars={[
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+          ]}
+          size="md"
+          max={6}
+        />
       </section>
       {/* Global Navigation */}
       <section className="my-5">

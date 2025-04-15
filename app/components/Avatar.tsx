@@ -15,18 +15,18 @@ interface BaseProps {
   disabled?: boolean;
 }
 
-interface ImageProps extends BaseProps {
+export interface ImageProps extends BaseProps {
   type: "image";
   src: string;
   alt?: string;
 }
 
-interface IconProps extends BaseProps {
+export interface IconProps extends BaseProps {
   type: "icon";
   icon: JSX.Element;
 }
 
-interface TextProps extends BaseProps {
+export interface TextProps extends BaseProps {
   type: "text";
   text: string;
 }
@@ -68,6 +68,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     <div
       ref={ref}
       className={cn(
+        "relative -z-10",
         rounded && "rounded-full",
         border && "border border-gray-200",
         disabled && "opacity-50 pointer-events-none select-none"
@@ -81,8 +82,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
       {type === "image" && (
         <div
           className={cn(
-            "relative flex items-center justify-center",
-            rounded && "rounded-full",
+            "relative -z-10 flex items-center justify-center",
             sizes[size],
             className
           )}
@@ -90,6 +90,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
         >
           <Image
             fill
+            className={cn(rounded && "rounded-full", "object-cover")}
             src={(props as ImageProps).src}
             alt={(props as ImageProps).alt || ""}
           />
