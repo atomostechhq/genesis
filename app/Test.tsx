@@ -44,6 +44,7 @@ import Slider from "./components/Slider";
 import GlobalNavigation from "./components/GlobalNavigation";
 import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
 import ListItem from "./components/ListItem";
+import Avatar from "./components/Avatar";
 
 interface Option {
   label: string;
@@ -1146,8 +1147,8 @@ const Test = () => {
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">Circular Progress:</h1>
         <div className="flex items-center gap-5 py-10">
-          <CircularProgress size={120} strokeWidth={4} percentage={50} />
-          <CircularProgress size={120} strokeWidth={10} percentage={70} />
+          <CircularProgress size={50} strokeWidth={4} percentage={50} />
+          <CircularProgress size={90} strokeWidth={10} percentage={70} />
           <CircularProgress
             size={120}
             strokeWidth={8}
@@ -1211,6 +1212,57 @@ const Test = () => {
           Left
         </Tooltip>
       </section>
+      {/* Avatar */}
+      <section className="my-10 space-y-2">
+        <h1 className="text-display-sm text-primary-400">Avatar:</h1>
+        <div className="flex items-center gap-5">
+          <Avatar border radius="10px" type="text" size="sm" text="RV" />
+          <Avatar
+            border
+            borderColor="var(--primary-500)"
+            className="bg-primary-50"
+            borderWidth="2px"
+            rounded
+            type="text"
+            size="md"
+            disabled
+            text="Riya Vishwakarma"
+          />
+          <Avatar border rounded type="text" size="lg" text="RV" />
+          <Avatar
+            border
+            rounded
+            type="icon"
+            size="md"
+            className="text-gray-600"
+            icon={<RiLogoutBoxRLine size={20} />}
+          />
+          <Avatar
+            type="image"
+            size="sm"
+            src="https://images.unsplash.com/vector-1738312097380-45562da00459?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="avatar"
+          />
+          <Avatar
+            type="image"
+            size="md"
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            src="https://images.unsplash.com/vector-1738312097380-45562da00459?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="avatar"
+          />
+          <Avatar
+            type="image"
+            size="lg"
+            src="https://images.unsplash.com/vector-1738312097380-45562da00459?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="avatar"
+          />
+        </div>
+      </section>
       {/* Global Navigation */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">Global Navigation:</h1>
@@ -1219,11 +1271,7 @@ const Test = () => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             postion="bottom-left"
-            trigger={
-              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
-                JD
-              </p>
-            }
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
             className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
           >
             <GlobalNavigationComponent />
@@ -1232,11 +1280,7 @@ const Test = () => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             postion="top-left"
-            trigger={
-              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
-                JD
-              </p>
-            }
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
             className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
           >
             <GlobalNavigationComponent />
@@ -1245,11 +1289,7 @@ const Test = () => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             postion="bottom-right"
-            trigger={
-              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
-                JD
-              </p>
-            }
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
             className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
           >
             <GlobalNavigationComponent />
@@ -1258,11 +1298,7 @@ const Test = () => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             postion="top-right"
-            trigger={
-              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
-                JD
-              </p>
-            }
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
             className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
           >
             <GlobalNavigationComponent />
