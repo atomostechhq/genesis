@@ -761,9 +761,7 @@ const Test = () => {
               className={cn(error && "focus-within:border-error-500")}
               placeholder="olivia@untitledui.com"
             />
-            {error && (
-              <HelperText className="text-error-500">{error}</HelperText>
-            )}
+            {error && <HelperText error>{error}</HelperText>}
           </div>
         </section>
       </div>
