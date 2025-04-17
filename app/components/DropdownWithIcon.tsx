@@ -47,7 +47,7 @@ interface DropdownProps {
   children?: React.ReactNode;
   trigger?: React.ReactNode;
   dropdownMenu?: boolean;
-  position?: "top" | "bottom" | "left" | "right" | "left" | "right";
+  position?: "top" | "bottom" | "left" | "right";
   setDropdownMenu?: (value: boolean) => void;
   info?: any;
   addInfo?: any;

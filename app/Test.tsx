@@ -14,6 +14,10 @@ import {
   RiInformation2Line,
   RiFilterLine,
   RiStackLine,
+  RiExternalLinkLine,
+  RiAddLine,
+  RiCheckLine,
+  RiTimeFill,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -38,11 +42,62 @@ import Modal from "./components/Modal";
 import DropdownWithIcon from "./components/DropdownWithIcon";
 import Breadcrumbs from "./components/Breadcrumb";
 import CircularProgress from "./components/CircularProgress";
+import Slider from "./components/Slider";
+import GlobalNavigation from "./components/GlobalNavigation";
+import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
+import ListItem from "./components/ListItem";
+import Avatar from "./components/Avatar";
+import AvatarGroup from "./components/AvatarGroup";
+import Accordion, {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./components/Accordian";
 
 interface Option {
   label: string;
   value: string;
 }
+
+const GlobalNavigationComponent = () => {
+  return (
+    <>
+      <div>
+        <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
+          JD
+        </p>
+      </div>
+      <div className="text-center text-gray-900">
+        <p className="text-base font-semibold w-[250px] whitespace-nowrap text-ellipsis overflow-hidden block">
+          John Doe
+        </p>
+        <HelperText
+          size="sm"
+          className="w-[250px] whitespace-nowrap text-ellipsis overflow-hidden block"
+        >
+          john.doe@email.com
+        </HelperText>
+      </div>
+      <Divider />
+      <Button
+        className="w-full"
+        variant="outlined"
+        intent="default-outlined"
+        size={"sm"}
+        fullWidth
+        startIcon={<RiLogoutBoxRLine size={20} />}
+      >
+        Logout
+      </Button>
+    </>
+  );
+};
+
+const ImageSrc =
+  "https://images.unsplash.com/photo-1732157582696-b5cb6c3d73bd?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+const ImageSrc2 =
+  "https://images.unsplash.com/photo-1540206395-68808572332f?q=80&w=2626&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const Test = () => {
   const [inputValue, setInputValue] = useState("");
@@ -195,6 +250,16 @@ const Test = () => {
     setSingleSelect([]);
     alert("Reset button clicked");
   };
+
+  // slider
+  const [sliderValue, setSliderValue] = useState<number>(50);
+
+  const handleSliderChange = (value: number) => {
+    setSliderValue(value);
+  };
+
+  // global navigation
+  const [isOpen, setIsOpen] = useState(false);
 
   // notice
   const [open, setOpen] = useState(false);
@@ -696,16 +761,33 @@ const Test = () => {
               className={cn(error && "focus-within:border-error-500")}
               placeholder="olivia@untitledui.com"
             />
-            {error && (
-              <HelperText className="text-error-500">{error}</HelperText>
-            )}
+            {error && <HelperText error>{error}</HelperText>}
           </div>
         </section>
+      </div>
+      {/* Slider */}
+      <div className="space-y-6">
+        <h1 className="text-display-sm text-primary-400">Slider:</h1>
+        <Slider
+          value={sliderValue}
+          min={10}
+          max={200}
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
+        <Slider
+          value={sliderValue}
+          min={10}
+          max={200}
+          size="lg"
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
       </div>
       {/* table */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">
-          <Link href="/pages/tables">Go to Table component</Link>
+          <Link href="/pages/tables" className="flex items-center gap-2">
+            Go to Table component <RiExternalLinkLine />
+          </Link>
         </h1>
       </section>
       {/* Modal */}
@@ -825,6 +907,45 @@ const Test = () => {
             }
           />
         </div>
+      </section>
+      {/* Menu Items */}
+      <section>
+        <h1 className="text-display-sm text-primary-400">MenuItems:</h1>
+        <MenuDropdown
+          className=""
+          trigger={
+            <ListItem
+              as="button"
+              title="Products"
+              icon={<RiAddLine size={20} />}
+              className="w-max bg-primary-100 hover:bg-primary-200 rounded-full border border-primary-400"
+            />
+          }
+        >
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Inertia" />
+          </Link>
+          <MenuItem content={<h6>Blaze</h6>}>
+            <MenuSubItem label="Flames" onClick={() => alert("clicked")} />
+            <MenuSubItem label="Blaze" onClick={() => alert("click")} />
+            <MenuSubItem label="Admin" onClick={() => alert("click")} />
+          </MenuItem>
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Qiwi" />
+          </Link>
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Audit" />
+          </Link>
+        </MenuDropdown>
       </section>
       {/* Tabs */}
       <div>
@@ -1038,8 +1159,8 @@ const Test = () => {
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">Circular Progress:</h1>
         <div className="flex items-center gap-5 py-10">
-          <CircularProgress size={120} strokeWidth={4} percentage={50} />
-          <CircularProgress size={120} strokeWidth={10} percentage={70} />
+          <CircularProgress size={50} strokeWidth={4} percentage={50} />
+          <CircularProgress size={90} strokeWidth={10} percentage={70} />
           <CircularProgress
             size={120}
             strokeWidth={8}
@@ -1102,6 +1223,245 @@ const Test = () => {
         <Tooltip position="left" content="Tooltips are used">
           Left
         </Tooltip>
+      </section>
+      {/* Avatar */}
+      <section className="my-10 space-y-2">
+        <h1 className="text-display-sm text-primary-400">Avatar:</h1>
+        <div className="flex items-center gap-5">
+          <Avatar
+            type="text"
+            size="sm"
+            className="border border-gray-300 rounded-full"
+            text="RV"
+          />
+          <Avatar
+            border
+            borderColor="var(--primary-500)"
+            className="bg-primary-50"
+            borderWidth="2px"
+            rounded
+            type="text"
+            size="md"
+            disabled
+            text="Riya Vishwakarma"
+          />
+          <Avatar border rounded type="text" size="lg" text="RV" />
+          <Avatar
+            border
+            rounded
+            type="icon"
+            size="sm"
+            className="text-gray-600"
+            icon={<RiLogoutBoxRLine size={14} />}
+          />
+          <Avatar
+            type="image"
+            size="sm"
+            src={ImageSrc}
+            alt="avatar"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={10}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            type="image"
+            size="md"
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            src={ImageSrc}
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            alt="avatar"
+            statusIcon={
+              <RiCheckLine
+                size={10}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={10} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+        </div>
+        <AvatarGroup
+          avatars={[
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+          ]}
+          size="md"
+          max={4}
+        />
+      </section>
+      {/* Accordian */}
+      <section className="space-y-5">
+        <h1 className="text-display-sm text-primary-400">Accordian:</h1>
+        <div className="space-y-2">
+          <h2>Accordian Single</h2>
+          <Accordion type="single" collapsible className="w-full space-y-2">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                What is your favorite template from BRIX Templates?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>Is it styled?</AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It comes with default styles that match the other components'
+              aesthetic.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Is it animated?</AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It's animated by default, but you can disable it if you
+              prefer.`}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+        <div className="space-y-2">
+          <h2>Accordian Multiple</h2>
+          <Accordion type="multiple" collapsible className="w-full space-y-2">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                What is your favorite template from BRIX Templates?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2" disabled>
+              <AccordionTrigger>Is it styled?</AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It comes with default styles that match the other components'
+              aesthetic.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Is it animated?</AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It's animated by default, but you can disable it if you
+              prefer.`}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </section>
+      {/* Global Navigation */}
+      <section className="my-5">
+        <h1 className="text-display-sm text-primary-400">Global Navigation:</h1>
+        <div className="flex items-center w-full justify-evenly">
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="bottom-left"
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="top-left"
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="bottom-right"
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="top-right"
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+        </div>
       </section>
       {/* skeleton */}
       <section className="my-5">
