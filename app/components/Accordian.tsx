@@ -59,6 +59,7 @@ type AccordionItemProps = {
   openItems?: string[];
   handleToggle?: (value: string) => void;
   children: React.ReactNode;
+  className?: string;
 };
 
 export function AccordionItem({
@@ -67,6 +68,7 @@ export function AccordionItem({
   openItems,
   handleToggle,
   children,
+  className,
 }: AccordionItemProps) {
   const isOpen = openItems?.includes(value);
 
@@ -79,20 +81,32 @@ export function AccordionItem({
   return (
     <div
       className={cn(
-        "border p-3.5 rounded-lg shadow",
+        "border p-3.5 rounded-lg shadow transition-all duration-300 ease-in-out",
         disabled
           ? "opacity-50 pointer-events-none select-none"
-          : "cursor-pointer"
+          : "cursor-pointer",
+        className
       )}
     >
       <div
-        className="font-semibold space-y-2 transition-colors duration-200 ease-in-out"
+        className="font-semibold transition-all duration-300 ease-in-out"
         onClick={toggle}
       >
         {children && Array.isArray(children) ? (
           <>
             {React.cloneElement(children[0] as React.ReactElement, { isOpen })}
-            {isOpen && !disabled ? children[1] : null}
+            <div
+              className={cn(
+                "grid transition-all duration-300 ease-in-out",
+                isOpen
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "grid-rows-[0fr] opacity-0"
+              )}
+            >
+              <div className="overflow-hidden">
+                <div className={cn("pt-4")}>{children[1]}</div>
+              </div>
+            </div>
           </>
         ) : (
           children

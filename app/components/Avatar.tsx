@@ -13,6 +13,8 @@ interface BaseProps {
   borderWidth?: string;
   radius?: string;
   disabled?: boolean;
+  statusIcon?: JSX.Element;
+  statusPosition?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
 }
 
 export interface ImageProps extends BaseProps {
@@ -45,6 +47,8 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     borderWidth,
     radius,
     disabled,
+    statusIcon,
+    statusPosition = "bottom-right",
   } = props;
 
   const sizes = {
@@ -124,6 +128,19 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
         >
           {displayText}
         </p>
+      )}
+      {statusIcon && (
+        <span
+          className={cn(
+            "absolute w-2 h-2",
+            statusPosition === "bottom-left" && "bottom-0.5 left-0.5",
+            statusPosition === "bottom-right" && "bottom-0.5 right-0.5",
+            statusPosition === "top-left" && "top-0.5 left-0.5",
+            statusPosition === "top-right" && "top-0.5 right-0.5"
+          )}
+        >
+          {statusIcon}
+        </span>
       )}
     </div>
   );

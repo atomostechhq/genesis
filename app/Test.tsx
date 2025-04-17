@@ -16,7 +16,8 @@ import {
   RiStackLine,
   RiExternalLinkLine,
   RiAddLine,
-  RiUserLine,
+  RiCheckLine,
+  RiTimeFill,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -93,7 +94,7 @@ const GlobalNavigationComponent = () => {
 };
 
 const ImageSrc =
-  "https://images.unsplash.com/vector-1738312097380-45562da00459?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  "https://images.unsplash.com/photo-1732157582696-b5cb6c3d73bd?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const ImageSrc2 =
   "https://images.unsplash.com/photo-1540206395-68808572332f?q=80&w=2626&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -414,6 +415,138 @@ const Test = () => {
 
   return (
     <div className="m-5 space-y-5">
+      <section className="my-10 space-y-2">
+        <h1 className="text-display-sm text-primary-400">Avatar:</h1>
+        <div className="flex items-center gap-5">
+          <Avatar
+            type="text"
+            size="sm"
+            className="border border-gray-300 rounded-full"
+            text="RV"
+          />
+          <Avatar
+            border
+            borderColor="var(--primary-500)"
+            className="bg-primary-50"
+            borderWidth="2px"
+            rounded
+            type="text"
+            size="md"
+            disabled
+            text="Riya Vishwakarma"
+          />
+          <Avatar border rounded type="text" size="lg" text="RV" />
+          <Avatar
+            border
+            rounded
+            type="icon"
+            size="sm"
+            className="text-gray-600"
+            icon={<RiLogoutBoxRLine size={14} />}
+          />
+          <Avatar
+            type="image"
+            size="sm"
+            src={ImageSrc}
+            alt="avatar"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={10}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            type="image"
+            size="md"
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            src={ImageSrc}
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            alt="avatar"
+            statusIcon={
+              <RiCheckLine
+                size={10}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={10} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+        </div>
+        <AvatarGroup
+          avatars={[
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+          ]}
+          size="md"
+          max={4}
+        />
+      </section>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
@@ -1226,101 +1359,8 @@ const Test = () => {
         </Tooltip>
       </section>
       {/* Avatar */}
-      <section className="my-10 space-y-2">
-        <h1 className="text-display-sm text-primary-400">Avatar:</h1>
-        <div className="flex items-center gap-5">
-          <Avatar border radius="10px" type="text" size="sm" text="RV" />
-          <Avatar
-            border
-            borderColor="var(--primary-500)"
-            className="bg-primary-50"
-            borderWidth="2px"
-            rounded
-            type="text"
-            size="md"
-            disabled
-            text="Riya Vishwakarma"
-          />
-          <Avatar border rounded type="text" size="lg" text="RV" />
-          <Avatar
-            border
-            rounded
-            type="icon"
-            size="md"
-            className="text-gray-600"
-            icon={<RiLogoutBoxRLine size={20} />}
-          />
-          <Avatar type="image" size="sm" src={ImageSrc} alt="avatar" />
-          <Avatar
-            type="image"
-            size="md"
-            border
-            rounded
-            onClick={() => alert("clicked")}
-            borderWidth="2px"
-            src={ImageSrc}
-            className="cursor-pointer"
-            borderColor="var(--success-500)"
-            alt="avatar"
-          />
-          <Avatar src={ImageSrc} type="image" size="lg" alt="avatar" />
-        </div>
-        <AvatarGroup
-          avatars={[
-            {
-              type: "image",
-              src: ImageSrc2,
-              rounded: true,
-              border: true,
-              borderWidth: "2px",
-              borderColor: "var(--primary-500)",
-            },
-            {
-              type: "image",
-              src: ImageSrc2,
-              rounded: true,
-              border: true,
-              borderWidth: "2px",
-              borderColor: "var(--primary-500)",
-            },
-            {
-              type: "image",
-              src: ImageSrc2,
-              rounded: true,
-              border: true,
-              borderWidth: "2px",
-              borderColor: "var(--primary-500)",
-            },
-            {
-              type: "image",
-              src: ImageSrc2,
-              rounded: true,
-              border: true,
-              borderWidth: "2px",
-              borderColor: "var(--primary-500)",
-            },
-            {
-              type: "image",
-              src: ImageSrc2,
-              rounded: true,
-              border: true,
-              borderWidth: "2px",
-              borderColor: "var(--primary-500)",
-            },
-            {
-              type: "image",
-              src: ImageSrc2,
-              rounded: true,
-              border: true,
-              borderWidth: "2px",
-              borderColor: "var(--primary-500)",
-            },
-          ]}
-          size="md"
-          max={4}
-        />
-      </section>
-      {/*  */}
+
+      {/* Accordian */}
       <section className="space-y-5">
         <h1 className="text-display-sm text-primary-400">Accordian:</h1>
         <div className="space-y-2">
