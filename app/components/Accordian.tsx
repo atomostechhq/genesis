@@ -81,7 +81,7 @@ export function AccordionItem({
   return (
     <div
       className={cn(
-        "border p-3.5 rounded-lg shadow transition-all duration-300 ease-in-out",
+        "border rounded-lg shadow transition-all duration-300 ease-in-out",
         disabled
           ? "opacity-50 pointer-events-none select-none"
           : "cursor-pointer",
@@ -104,7 +104,7 @@ export function AccordionItem({
               )}
             >
               <div className="overflow-hidden">
-                <div className={cn("pt-4")}>{children[1]}</div>
+                <div className={cn("")}>{children[1]}</div>
               </div>
             </div>
           </>
@@ -123,7 +123,7 @@ type AccordionTriggerProps = {
 
 export function AccordionTrigger({ isOpen, children }: AccordionTriggerProps) {
   return (
-    <div className="flex justify-between items-center text-sm font-semibold transition-all delay-150 ease-in">
+    <div className="flex p-3.5 justify-between items-center text-sm font-semibold transition-all delay-150 ease-in">
       {children}
       <span
         className={cn(
@@ -146,7 +146,7 @@ export function AccordionContent({ isOpen, children }: AccordionContentProps) {
   return (
     <div
       className={cn(
-        "w-full font-normal text-sm overflow-hidden transition-all duration-500 ease-in",
+        "w-full font-normal px-3.5 pb-3.5 text-sm overflow-hidden transition-all duration-500 ease-in",
         !isOpen ? "max-h-full opacity-100" : "max-h-0 opacity-0"
       )}
     >

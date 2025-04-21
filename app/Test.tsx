@@ -1262,7 +1262,7 @@ const Test = () => {
             rounded
             statusIcon={
               <RiTimeFill
-                size={10}
+                size={14}
                 className="text-warning-400 bg-white rounded-full"
               />
             }
@@ -1281,9 +1281,248 @@ const Test = () => {
             alt="avatar"
             statusIcon={
               <RiCheckLine
-                size={10}
+                size={16}
                 className="bg-success-500 rounded-full text-white"
               />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+        </div>
+        <h1 className="text-display-sm text-primary-400">
+          Avatar Positions/Size:
+        </h1>
+        <div className="flex items-center gap-5">
+          <h2 className="text-display-sm text-primary-400">Avatar Small:</h2>
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="sm"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={14}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            type="icon"
+            size="sm"
+            icon={<RiCheckLine />}
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            statusIcon={
+              <RiCheckLine
+                size={14}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="top-right"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="sm"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={14}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="sm"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={14}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="sm"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={14} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="sm"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={14} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="sm"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={14} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="sm"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={14} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-right"
+          />
+        </div>
+        <div className="flex items-center gap-5">
+          <h2 className="text-display-sm text-primary-400">Avatar Medium:</h2>
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="md"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={16}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            type="icon"
+            size="md"
+            icon={<RiCheckLine />}
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            statusIcon={
+              <RiCheckLine
+                size={16}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="top-right"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="md"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={16}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="md"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={16}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={16} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={16} className="text-error-500 rounded-full" />
             }
             statusPosition="bottom-right"
           />
@@ -1297,9 +1536,150 @@ const Test = () => {
             borderWidth="2px"
             alt="avatar"
             statusIcon={
-              <RiCircleFill size={10} className="text-error-500 rounded-full" />
+              <RiCircleFill size={16} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={16} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-right"
+          />
+        </div>
+        <div className="flex items-center gap-5">
+          <h2 className="text-display-sm text-primary-400">Avatar Large:</h2>
+          <Avatar
+            type="icon"
+            size="lg"
+            icon={<RiCheckLine />}
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            statusIcon={
+              <RiCheckLine
+                size={18}
+                className="bg-success-500 rounded-full text-white"
+              />
             }
             statusPosition="bottom-right"
+          />
+          <Avatar
+            type="icon"
+            size="lg"
+            icon={<RiCheckLine />}
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            statusIcon={
+              <RiCheckLine
+                size={18}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="top-right"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="lg"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={18}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="lg"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={18}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-right"
           />
         </div>
         <AvatarGroup
