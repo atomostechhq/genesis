@@ -109,7 +109,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
       <section
         onClick={() => setIsSubOpen(!isSubOpen)}
         className={cn(
-          "cursor-pointer p-4 flex text-sm border-y-[0.5px] justify-between items-center gap-1 w-full text-left",
+          "cursor-pointer hover:bg-primary-50 p-4 flex text-sm border-y-[0.5px] justify-between items-center gap-1 w-full text-left",
           sectionClassName
         )}
       >
@@ -121,7 +121,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
         )}
       </section>
       {isSubOpen && (
-        <div className={cn(" border-primary-100", menuClassName)}>
+        <div className={cn(" border-primary-100 bg-gray-50", menuClassName)}>
           {children}
         </div>
       )}

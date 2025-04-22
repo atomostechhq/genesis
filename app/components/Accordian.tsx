@@ -81,10 +81,11 @@ export function AccordionItem({
   return (
     <div
       className={cn(
-        "border rounded-lg shadow transition-all duration-300 ease-in-out",
+        "bg-white hover:bg-gray-50 rounded-lg shadow transition-all duration-300 ease-in-out",
         disabled
           ? "opacity-50 pointer-events-none select-none"
           : "cursor-pointer",
+          isOpen ? "border border-gray-300" : "border",
         className
       )}
     >
