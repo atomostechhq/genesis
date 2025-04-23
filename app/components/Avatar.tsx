@@ -72,7 +72,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     <div
       ref={ref}
       className={cn(
-        "relative -z-10",
+        "relative -z-10 ",
         rounded && "rounded-full",
         border && "border border-gray-200",
         disabled && "opacity-50 pointer-events-none select-none"
@@ -133,10 +133,108 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
         <span
           className={cn(
             "absolute w-2 h-2",
-            statusPosition === "bottom-left" && "bottom-0.5 left-0.5",
-            statusPosition === "bottom-right" && "bottom-0.5 right-0.5",
-            statusPosition === "top-left" && "top-0.5 left-0.5",
-            statusPosition === "top-right" && "top-0.5 right-0.5"
+            // small
+            statusPosition === "bottom-left" &&
+              size === "sm" &&
+              type === "image" &&
+              "bottom-0",
+            statusPosition === "top-left" &&
+              size === "sm" &&
+              type === "image" &&
+              "top-0 -left-1.5",
+            statusPosition === "bottom-right" &&
+              size === "sm" &&
+              type === "image" &&
+              "bottom-0.5 right-0.5",
+            statusPosition === "top-right" &&
+              size === "sm" &&
+              type === "image" &&
+              "-top-[1.1px] right-0",
+            // sm text and icon
+            statusPosition === "bottom-left" &&
+              size === "sm" &&
+              (type === "text" || type === "icon") &&
+              "bottom-0",
+            statusPosition === "top-left" &&
+              size === "sm" &&
+              (type === "text" || type === "icon") &&
+              "-top-1 left-0",
+            statusPosition === "bottom-right" &&
+              size === "sm" &&
+              (type === "text" || type === "icon") &&
+              "bottom-0 right-1.5",
+            statusPosition === "top-right" &&
+              size === "sm" &&
+              (type === "text" || type === "icon") &&
+              "top-0 right-0.5",
+            // medium
+            statusPosition === "bottom-left" &&
+              size === "md" &&
+              type === "image" &&
+              "bottom-1",
+            statusPosition === "top-left" &&
+              size === "md" &&
+              type === "image" &&
+              "-top-1 left-0.5",
+            statusPosition === "bottom-right" &&
+              size === "md" &&
+              type === "image" &&
+              "bottom-1 right-2",
+            statusPosition === "top-right" &&
+              size === "md" &&
+              type === "image" &&
+              "top-0 right-1",
+            // medium text and icon
+            statusPosition === "bottom-left" &&
+              size === "md" &&
+              (type === "text" || type === "icon") &&
+              "bottom-1",
+            statusPosition === "top-left" &&
+              size === "md" &&
+              (type === "text" || type === "icon") &&
+              "-top-1 left-1",
+            statusPosition === "bottom-right" &&
+              size === "md" &&
+              (type === "text" || type === "icon") &&
+              "bottom-1 right-2",
+            statusPosition === "top-right" &&
+              size === "md" &&
+              (type === "text" || type === "icon") &&
+              "top-0 right-1.5",
+            // large
+            statusPosition === "bottom-left" &&
+              size === "lg" &&
+              type === "image" &&
+              "bottom-2 left-0",
+            statusPosition === "top-left" &&
+              size === "lg" &&
+              type === "image" &&
+              "top-0 left-0.5",
+            statusPosition === "bottom-right" &&
+              size === "lg" &&
+              type === "image" &&
+              "bottom-2.5 right-2",
+            statusPosition === "top-right" &&
+              size === "lg" &&
+              type === "image" &&
+              "top-0 right-2",
+            // large text and icon
+            statusPosition === "bottom-left" &&
+              size === "lg" &&
+              (type === "text" || type === "icon") &&
+              "bottom-1.5 left-1.5",
+            statusPosition === "top-left" &&
+              size === "lg" &&
+              (type === "text" || type === "icon") &&
+              "top-0 left-1",
+            statusPosition === "bottom-right" &&
+              size === "lg" &&
+              (type === "text" || type === "icon") &&
+              "bottom-2 right-2.5",
+            statusPosition === "top-right" &&
+              size === "lg" &&
+              (type === "text" || type === "icon") &&
+              "top-0 right-2.5"
           )}
         >
           {statusIcon}
