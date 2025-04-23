@@ -2,7 +2,6 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "../utils/utils";
-import { RiArrowLeftSLine } from "@remixicon/react";
 import { usePathname } from "next/navigation";
 import Divider from "@/app/components/Divider";
 

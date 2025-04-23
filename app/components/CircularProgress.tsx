@@ -1,5 +1,5 @@
-import { FC } from "react";
 import { cn } from "../utils/utils";
+import React from "react";
 
 interface CircularProgressBarProps {
   strokeWidth?: number;

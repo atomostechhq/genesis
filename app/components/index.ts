@@ -1,4 +1,9 @@
-export { default as Accordian } from "./Accordian";
+export {
+  default as Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./Accordian";
 export { default as Avatar } from "./Avatar";
 export { default as AvatarGroup } from "./AvatarGroup";
 export { default as BreadCrumb } from "./Breadcrumb";

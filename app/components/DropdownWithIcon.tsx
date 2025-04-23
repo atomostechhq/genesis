@@ -49,8 +49,8 @@ interface DropdownProps {
   dropdownMenu?: boolean;
   position?: "top" | "bottom" | "left" | "right";
   setDropdownMenu?: (value: boolean) => void;
-  info?: any;
-  addInfo?: any;
+  info?: string | number;
+  addInfo?: string | number;
   tooltipContent?: string;
   width?: string;
   dropDownTooltip?: boolean | undefined;
