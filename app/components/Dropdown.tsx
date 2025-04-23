@@ -46,8 +46,8 @@ interface DropdownProps {
   renderItem?: (option: Option) => React.ReactNode;
   children?: React.ReactNode;
   position?: "top" | "bottom";
-  info?: any;
-  addInfo?: any;
+  info?: string | number;
+  addInfo?: string | number;
   tooltipContent?: string;
   width?: string;
   dropDownTooltip?: boolean | undefined;
