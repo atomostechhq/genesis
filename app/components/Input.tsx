@@ -18,8 +18,6 @@ interface InputProps
     | "time";
 }
 
-// box-shadow: 0px 1px 2px 0px #1018280D;
-
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ size, startIcon, endIcon, className, type, disabled, ...props }, ref) => {
     return (

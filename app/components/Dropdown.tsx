@@ -180,7 +180,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       <div
         ref={dropdownRef}
         className={cn(
-          "relative bg-gray-25 shadow-[0px_1px_2px_0px_#1018280D]",
+          "relative bg-gray-25 shadow-[0px_1px_2px_0px_#1018280D] rounded-lg",
           !width && "w-full",
           disabled && "cursor-not-allowed opacity-50"
         )}

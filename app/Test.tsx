@@ -1105,7 +1105,7 @@ const Test = () => {
         </Notice>
       </section>
       {/* File Upload */}
-      <section>
+      <section className="max-w-lg space-y-3">
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
           id="single"
