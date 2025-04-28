@@ -18,12 +18,14 @@ interface InputProps
     | "time";
 }
 
+// box-shadow: 0px 1px 2px 0px #1018280D;
+
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ size, startIcon, endIcon, className, type, disabled, ...props }, ref) => {
     return (
       <div
         className={cn(
-          "group flex items-center gap-2 p-3.5 border border-gray-200 rounded-lg bg-white shadow-xs hover:bg-gray-50 hover:border-gray-300 focus-within:border-gray-800 focus-within:bg-gray-25 focus-within:hover:bg-gray-50 focus-within:hover:border-gray-800 has-[:disabled]:opacity-30 has-[:disabled]:bg-gray-300 has-[:disabled]:select-none has-[:disabled]:pointer-events-none",
+          "group flex items-center gap-2 p-3.5 border border-gray-200 rounded-lg bg-white shadow-[0px_1px_2px_0px_#1018280D] hover:bg-gray-50 hover:border-gray-300 focus-within:border-gray-800 focus-within:bg-gray-25 focus-within:hover:bg-gray-50 focus-within:hover:border-gray-800 has-[:disabled]:opacity-30 has-[:disabled]:bg-gray-300 has-[:disabled]:select-none has-[:disabled]:pointer-events-none",
           size === "sm"
             ? "w-[320px] h-10"
             : size === "lg"

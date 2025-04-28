@@ -252,7 +252,7 @@ const Test = () => {
   };
 
   // slider
-  const [sliderValue, setSliderValue] = useState<number>(50);
+  const [sliderValue, setSliderValue] = useState<number>(20);
 
   const handleSliderChange = (value: number) => {
     setSliderValue(value);
@@ -771,13 +771,14 @@ const Test = () => {
         <Slider
           value={sliderValue}
           min={10}
-          max={200}
+          max={100}
           onChange={(e) => handleSliderChange(Number(e.target.value))}
         />
         <Slider
           value={sliderValue}
           min={10}
-          max={200}
+          step={10}
+          max={100}
           size="lg"
           onChange={(e) => handleSliderChange(Number(e.target.value))}
         />
@@ -798,9 +799,9 @@ const Test = () => {
           setShowModal={setShowModal}
           closeModal={true}
           closeOnOutsideClick={true}
-          className="sm:w-[50%] w-full h-[50%]"
+          width="500px"
         >
-          <div className="">content</div>
+          Content
         </Modal>
       </section>
       {/* Dropdown  */}
@@ -1103,7 +1104,7 @@ const Test = () => {
         </Notice>
       </section>
       {/* File Upload */}
-      <section className="flex flex-col gap-2 max-w-lg">
+      <section>
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
           id="single"
@@ -1123,9 +1124,8 @@ const Test = () => {
           onChange={handleFileChangeMultiple}
           onDelete={() => handleDeleteFile(selectedFiles[0])}
           title="SVG, PNG, JPG or GIF (max. 800x400px)"
-        >
-          <ProgressBar progressColor="bg-primary-600" progress={50} />
-        </FileUpload>
+          filePreviewClassName="grid grid-cols-2 gap-2"
+        />
       </section>
       {/* progress */}
       <section className="my-5 w-[500px]">
