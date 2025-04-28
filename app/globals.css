@@ -97,7 +97,7 @@
   }
 }
 
-.skeleton {
+/* .skeleton {
   border-radius: 2px;
   display: inline-block;
   line-height: 100%;
@@ -113,7 +113,6 @@
   animation: placeholderShimmer 1.5s linear infinite forwards;
 }
 
-/* Skeleton animation*/
 @keyframes placeholderShimmer {
   0% {
     background-position: -500px 0;
@@ -129,6 +128,87 @@
 
 .handle {
   cursor: grabbing;
+} */
+
+.skeleton {
+  border-radius: 2px;
+  display: block;
+  line-height: 100%;
+  width: 100%;
+  background-color: #e8e8e8;
+}
+
+/* Shimmer animation */
+.skeleton.skeleton-shimmer {
+  background-size: 1000px 1000px;
+  background-image: linear-gradient(
+    100deg,
+    #e8e8e8 20%,
+    #fafafa 50%,
+    #e8e8e8 60%
+  );
+  animation: shimmer 1.5s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -500px 0;
+  }
+  100% {
+    background-position: 500px 0;
+  }
+}
+
+/* Wave animation */
+.skeleton.skeleton-wave {
+  position: relative;
+  overflow: hidden;
+  background-color: #e8e8e8;
+}
+
+.skeleton.skeleton-wave::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: wave 1.5s linear infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Pulse animation */
+.skeleton.skeleton-pulse {
+  background-color: #e8e8e8;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.skeleton.circle {
+  border-radius: 50%;
 }
 
 /* Chrome, Safari, Edge, Opera */
