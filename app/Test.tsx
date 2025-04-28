@@ -808,14 +808,15 @@ const Test = () => {
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <section className="flex items-start gap-10">
         <div>
-          <h1>Dropdown with icon</h1>
+          <h1 className="">Dropdown with icon</h1>
           <DropdownWithIcon
             options={multiOptions}
             selected={multiSelect}
             setSelected={setMultiSelect}
             search={true}
             multiple={true}
-            width="100px"
+            dropdownText={`Selected ${multiSelect?.length} items`}
+            width="200px"
             trigger={
               <RiFilterLine
                 className="hover:bg-gray-200 rounded"
@@ -844,7 +845,7 @@ const Test = () => {
           <h1 className="text-lg">Multiple Dropdown</h1>
           <Dropdown
             options={[
-              { label: "High", value: "High" },
+              { label: "High", value: "High", disabledOption: true },
               { label: "Medium", value: "Medium" },
               { label: "Low", value: "Low" },
               { label: "High", value: "High" },
@@ -1847,13 +1848,24 @@ const Test = () => {
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
         <div className="flex flex-col gap-2">
-          {/* in percent */}
-          <div className="w-[400px] h-[200px]">
+          {/* Fluid rectangle skeleton */}
+          <div className="w-full h-auto aspect-[2/1]">
+            <Skeleton animation="pulse" width="100%" height="100%" />
+          </div>
+
+          {/* Fluid circle skeleton */}
+          <div className="sm:w-[100px] sm:h-[100px] xl:w-[500px] xl:h-[500px]">
+            <Skeleton width="100%" height="100%" circle />
+          </div>
+
+          {/* Fluid text line skeletons */}
+          <div className="w-[20%] min-w-[120px] max-w-[167px] h-[14px]">
             <Skeleton width="100%" height="100%" />
           </div>
-          <Skeleton width="80px" height="80px" circle />
-          <Skeleton width="167px" height="14px" />
-          <Skeleton width="138px" height="42px" />
+
+          <div className="w-[15%] min-w-[100px] max-w-[138px] h-[42px]">
+            <Skeleton width="100%" height="100%" />
+          </div>
         </div>
       </section>
       {/* stepper */}

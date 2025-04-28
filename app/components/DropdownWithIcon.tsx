@@ -41,6 +41,7 @@ interface DropdownProps {
   setSelected?: React.Dispatch<React.SetStateAction<Option[]>>;
   onApply?: () => void;
   onReset?: () => void;
+  dropdownText?: string;
   search?: boolean;
   multiple?: boolean;
   renderItem?: (option: Option) => React.ReactNode;
@@ -70,12 +71,11 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
       setSelected,
       search = false,
       multiple = false,
+      dropdownText,
       renderItem = defaultRenderItem,
       children,
       trigger,
-      //   dropdownMenu = false,
       position = "top",
-      //   setDropdownMenu = () => {},
       width,
       info,
       dropDownTooltip = false,
@@ -183,9 +183,24 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
           width: width,
         }}
       >
-        {/* <div onClick={() => setDropdownMenu(!dropdownMenu)}>{trigger}</div> */}
-        <div onClick={() => !disabled && setDropdownMenu((prev) => !prev)}>
+        <div
+          className={cn(
+            "w-full",
+            disabled && "cursor-not-allowed opacity-50",
+            dropdownText && "flex items-center gap-2"
+          )}
+          onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
+        >
           {trigger}
+          {dropdownText && (
+            <span
+              className={cn(
+                "text-sm text-gray-800 cursor-pointer",
+              )}
+            >
+              {dropdownText}
+            </span>
+          )}
         </div>
         <ul
           className={cn(

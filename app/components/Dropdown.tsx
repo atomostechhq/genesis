@@ -25,6 +25,7 @@ type Option = {
   info?: string;
   addInfo?: string;
   tooltipContent?: string;
+  disabledOption?: boolean;
 };
 
 interface MenuItemProps {
@@ -175,14 +176,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       }
     };
 
-    // width adjustment
-
     return (
       <div
         ref={dropdownRef}
-        // className={cn("relative", !width && "w-full")}
         className={cn(
-          "relative ",
+          "relative bg-gray-25 shadow-[0px_1px_2px_0px_#1018280D]",
           !width && "w-full",
           disabled && "cursor-not-allowed opacity-50"
         )}
@@ -257,7 +255,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                   <React.Fragment key={i}>
                     {multiple ? (
                       <Label
-                        className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
+                        className={cn(
+                          "has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent",
+                          option?.disabledOption &&
+                            "opacity-50 cursor-not-allowed hover:bg-white text-gray-300 select-none"
+                        )}
                         htmlFor={`checkbox-${option.value}`}
                         key={i}
                       >
@@ -271,6 +273,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                                 ) ?? false
                               }
                               onChange={() => handleCheckboxChange(option)}
+                              disabled={option?.disabledOption}
                             />
                             <div className="flex items-center gap-1">
                               <span>{renderItem(option)}</span>
@@ -295,9 +298,13 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                           {
                             "bg-primary-50 border-primary-600":
                               selected && selected[0]?.value === option.value,
+                            "opacity-50 cursor-not-allowed hover:bg-white text-gray-500":
+                              option?.disabledOption,
                           }
                         )}
-                        onClick={() => toggleOption(option)}
+                        onClick={() =>
+                          !option?.disabledOption && toggleOption(option)
+                        }
                       >
                         <div className="flex items-center gap-1">
                           <span>{renderItem(option)}</span>

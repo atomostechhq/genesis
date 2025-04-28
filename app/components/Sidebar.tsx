@@ -114,7 +114,8 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({
   const currentPath = usePathname();
 
   return (
-    <nav className={`max-h-[60vh] ${scroll && "overflow-y-auto customScroll"}`}>
+    // <nav className={`max-h-[60vh] ${scroll && "overflow-y-auto customScroll"}`}>
+    <nav className={`max-h-[60vh] ${scroll && collapsed ? "overflow-y-auto customScroll" : ""}`}>
       <ul className="my-2 flex flex-col gap-2 items-stretch">
         {navItems?.map((parentItem, parentIndex) => (
           <li
