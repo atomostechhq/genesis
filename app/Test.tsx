@@ -807,14 +807,15 @@ const Test = () => {
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <section className="flex items-start gap-10">
         <div>
-          <h1>Dropdown with icon</h1>
+          <h1 className="">Dropdown with icon</h1>
           <DropdownWithIcon
             options={multiOptions}
             selected={multiSelect}
             setSelected={setMultiSelect}
             search={true}
             multiple={true}
-            width="100px"
+            dropdownText={`Selected ${multiSelect?.length} items`}
+            width="200px"
             trigger={
               <RiFilterLine
                 className="hover:bg-gray-200 rounded"
