@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "../utils/utils";
 
 interface SkeletonProps {
   width?: string | number;
@@ -22,9 +23,13 @@ const Skeleton: React.FC<SkeletonProps> = ({
 
   return (
     <span
-      className={`skeleton rounded-lg ${
-        circle ? "circle" : ""
-      } skeleton-${animation}`}
+      className={cn(
+        "skeleton rounded-lg",
+        circle ? "circle" : "",
+        animation === "shimmer" && "skeleton-shimmer",
+        animation === "wave" && "skeleton-wave",
+        animation === "pulse" && "skeleton-pulse"
+      )}
       style={style}
     ></span>
   );
