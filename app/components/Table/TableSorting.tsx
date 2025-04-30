@@ -90,7 +90,7 @@ const TableSorting = () => {
   const currentPageData = data?.slice(startIndex, endIndex);
 
   return (
-    <div className="overflow-auto">
+    <div className="overflow-auto shadow-sm rounded-xl">
       <Table dense>
         <TableHead>
           <TableRow className="text-left">
@@ -170,6 +170,7 @@ const TableSorting = () => {
         rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        className="rounded-b-xl"
       />
     </div>
   );

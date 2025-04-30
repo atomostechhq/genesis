@@ -35,27 +35,18 @@ const TableFixedColumn = () => {
 
   const currentPageData = data?.slice(startIndex, endIndex);
   return (
-    <div className="shadow-sm rounded-xl">
-      <div className="px-6 py-2 w-full h-[91px] border-b border-gray-200 flex items-center justify-between gap-2">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-lg font-medium">Heading</h1>
-            <Chip intent={"primary"}>Label</Chip>
-          </div>
-          <p className="text-sm text-gray-600">
-            Keep track of vendor and their security ratings.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Button variant={"outlined"} intent={"primary-outlined"}>
-            Button CTA
-          </Button>
-          <Button variant={"filled"} intent="primary">
-            Button CTA
-          </Button>
-        </div>
-      </div>
+    <div>
+      <Pagination
+        count={tableData?.length}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        variant="secondary"
+        countVariable="Logs"
+        itemsPerPage={false}
+      />
       <div className="overflow-auto">
         <Table>
           <TableHead>
@@ -169,6 +160,7 @@ const TableFixedColumn = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         className="rounded-b-xl"
+        variant="primary"
       />
     </div>
   );
