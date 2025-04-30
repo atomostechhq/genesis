@@ -115,11 +115,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({
   };
 
   return (
-    // <nav className={`max-h-[60vh] ${scroll && "overflow-y-auto customScroll"}`}>
     <nav
-      // className={`max-h-[60vh] ${
-      //   scroll && collapsed ? "overflow-y-auto customScroll" : "overflow-hidden"
-      // }`}
       className={cn(
         getMenuHeight(),
         "",
