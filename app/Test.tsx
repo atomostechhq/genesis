@@ -271,7 +271,7 @@ const Test = () => {
   const [showModal, setShowModal] = useState(false);
 
   // sidebar
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   // progress bar
   const [progress, setProgress] = useState(0);
@@ -1871,7 +1871,7 @@ const Test = () => {
       {/* stepper */}
       <section>
         <h1 className="text-display-sm text-primary-400">Stepper:</h1>
-        <div className="w-[50%] mx-auto">
+        <div className="mx-auto w-full">
           <Stepper
             stepsConfig={stepsConfig}
             currentStep={currentStep}

@@ -40,7 +40,7 @@ const Stepper = ({
         className={cn(
           "relative",
           position === "horizontal"
-            ? "flex justify-between items-start"
+            ? "flex justify-center items-start"
             : "flex flex-col"
         )}
       >

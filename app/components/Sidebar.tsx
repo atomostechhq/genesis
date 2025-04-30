@@ -88,18 +88,6 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
     >
       <div className="flex justify-between items-center mb-4">
         <span className="whitespace-nowrap">{children}</span>
-        {/* {collapsed && (
-          <button
-            className={cn({
-              "grid place-content-center": true,
-              "hover:bg-gray-100 ": true,
-              "rounded-full": true,
-            })}
-            onClick={() => setCollapsed(!collapsed)}
-          >
-            <RiArrowLeftSLine color="#101828" />
-          </button>
-        )} */}
       </div>
     </div>
   );
@@ -113,12 +101,30 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({
 }) => {
   const currentPath = usePathname();
 
+  // Calculate menu height based on footer items
+  const getMenuHeight = () => {
+    const footerItemsLength =
+      navItems?.reduce((acc, item) => acc + item.items.length, 0) || 0;
+    if (footerItemsLength <= 1) {
+      return "max-h-[80vh]";
+    } else if (footerItemsLength === 2) {
+      return "max-h-[70vh]";
+    } else {
+      return "max-h-[60vh]";
+    }
+  };
+
   return (
     // <nav className={`max-h-[60vh] ${scroll && "overflow-y-auto customScroll"}`}>
     <nav
-      className={`max-h-[60vh] ${
+      // className={`max-h-[60vh] ${
+      //   scroll && collapsed ? "overflow-y-auto customScroll" : "overflow-hidden"
+      // }`}
+      className={cn(
+        getMenuHeight(),
+        "",
         scroll && collapsed ? "overflow-y-auto customScroll" : "overflow-hidden"
-      }`}
+      )}
     >
       <ul className="my-2 flex flex-col gap-2 items-stretch">
         {navItems?.map((parentItem, parentIndex) => (
