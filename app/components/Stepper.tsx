@@ -48,13 +48,14 @@ const Stepper = ({
           <div
             key={index}
             ref={(el: any) => (stepRef.current[index] = el)}
-            className={`w-full ${
+            className={cn(
               position === "horizontal"
                 ? "flex gap-4 flex-col"
-                : "flex gap-6 justify-start"
-            } ${currentStep > index + 1 || isComplete ? "complete" : ""} ${
+                : "flex gap-6 justify-start",
+              index === stepsConfig.length - 1 ? "w-auto" : "w-full",
+              currentStep > index + 1 || isComplete ? "complete" : "",
               currentStep === index + 1 ? "" : ""
-            }`}
+            )}
           >
             <div
               className={cn(
@@ -95,7 +96,7 @@ const Stepper = ({
                 >
                   <p
                     className={cn(
-                      "h-full rounded-lg ",
+                      "h-full rounded-lg",
                       currentStep > index + 1 ? "bg-primary-600" : ""
                     )}
                   ></p>
