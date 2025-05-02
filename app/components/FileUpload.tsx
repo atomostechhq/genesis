@@ -13,7 +13,6 @@ import {
   RiFileZipLine,
   RiFilePdf2Line,
 } from "@remixicon/react";
-
 import { cn } from "../utils/utils";
 import Label from "./Label";
 
@@ -25,6 +24,7 @@ export interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
   onDelete?: () => void;
   title?: string;
   disabled?: boolean;
+  filePreviewClassName?: string;
 }
 
 const getIconForMimeType = (file: File) => {
@@ -113,6 +113,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       children,
       disabled,
       title,
+      filePreviewClassName,
       id,
       className,
       accept,
@@ -121,7 +122,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     ref
   ) => {
     return (
-      <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-2">
         <input
           type="file"
           {...props}
@@ -152,7 +153,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
             <br /> {title}
           </p>
         </Label>
-        <div className="flex flex-col gap-2">
+        <section className={cn(`grid gap-2`, filePreviewClassName)}>
           {selectedFile?.map((file, index) => (
             <div
               key={index}
@@ -173,7 +174,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
               />
             </div>
           ))}
-        </div>
+        </section>
       </div>
     );
   }

@@ -25,6 +25,7 @@ type Option = {
   info?: string;
   addInfo?: string;
   tooltipContent?: string;
+  disabledOption?: boolean;
 };
 
 interface MenuItemProps {
@@ -46,8 +47,8 @@ interface DropdownProps {
   renderItem?: (option: Option) => React.ReactNode;
   children?: React.ReactNode;
   position?: "top" | "bottom";
-  info?: any;
-  addInfo?: any;
+  info?: string | number;
+  addInfo?: string | number;
   tooltipContent?: string;
   width?: string;
   dropDownTooltip?: boolean | undefined;
@@ -78,6 +79,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       dropdownFooter = false,
       onApply,
       disabled = false,
+      onReset,
     },
     ref
   ) => {
@@ -151,6 +153,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     };
 
     const handleReset = () => {
+      if (onReset) {
+        onReset();
+      }
       setSelected?.([]);
       setDropdownMenu(false);
     };
@@ -171,17 +176,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       }
     };
 
-    // width adjustment
-
-    const numericWidth = width ? parseInt(width, 10) : 0;
-    const adjustedWidth = numericWidth - 50;
-
     return (
       <div
         ref={dropdownRef}
-        // className={cn("relative", !width && "w-full")}
         className={cn(
-          "relative ",
+          "relative bg-gray-25 shadow-[0px_1px_2px_0px_#1018280D] rounded-lg",
           !width && "w-full",
           disabled && "cursor-not-allowed opacity-50"
         )}
@@ -202,16 +201,17 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             className={cn(
               "flex items-center gap-2 text-ellipsis overflow-hidden"
             )}
-            style={{ width: `${adjustedWidth}px` }}
           >
             {icon && <span>{icon}</span>}
-            {multiple
-              ? (selected?.length ?? 0) > 0
-                ? `${selected?.length} Selected`
-                : dropdownText
-              : selected?.[0]?.label
-              ? selected?.[0]?.label
-              : dropdownText}
+            <p className="line-clamp-1 w-full">
+              {multiple
+                ? (selected?.length ?? 0) > 0
+                  ? `${selected?.length} Selected`
+                  : dropdownText
+                : selected?.[0]?.label
+                ? selected?.[0]?.label
+                : dropdownText}
+            </p>
           </section>
           <RiArrowDownSLine size={18} />
         </div>
@@ -255,7 +255,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                   <React.Fragment key={i}>
                     {multiple ? (
                       <Label
-                        className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent"
+                        className={cn(
+                          "has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent",
+                          option?.disabledOption &&
+                            "opacity-50 cursor-not-allowed hover:bg-white text-gray-300 select-none"
+                        )}
                         htmlFor={`checkbox-${option.value}`}
                         key={i}
                       >
@@ -269,6 +273,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                                 ) ?? false
                               }
                               onChange={() => handleCheckboxChange(option)}
+                              disabled={option?.disabledOption}
                             />
                             <div className="flex items-center gap-1">
                               <span>{renderItem(option)}</span>
@@ -293,9 +298,13 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                           {
                             "bg-primary-50 border-primary-600":
                               selected && selected[0]?.value === option.value,
+                            "opacity-50 cursor-not-allowed hover:bg-white text-gray-500":
+                              option?.disabledOption,
                           }
                         )}
-                        onClick={() => toggleOption(option)}
+                        onClick={() =>
+                          !option?.disabledOption && toggleOption(option)
+                        }
                       >
                         <div className="flex items-center gap-1">
                           <span>{renderItem(option)}</span>

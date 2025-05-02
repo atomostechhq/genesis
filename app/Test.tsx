@@ -10,12 +10,14 @@ import {
   RiCircleFill,
   RiLogoutBoxRLine,
   RiSearch2Line,
-  RiHome2Line,
-  RiArrowRightSLine,
   RiGlobalLine,
   RiInformation2Line,
   RiFilterLine,
   RiStackLine,
+  RiExternalLinkLine,
+  RiAddLine,
+  RiCheckLine,
+  RiTimeFill,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -37,14 +39,65 @@ import Link from "next/link";
 import Loading from "./components/Loading";
 import Divider from "./components/Divider";
 import Modal from "./components/Modal";
-import Breadcrumb from "./components/Breadcrumb";
 import DropdownWithIcon from "./components/DropdownWithIcon";
 import Breadcrumbs from "./components/Breadcrumb";
+import CircularProgress from "./components/CircularProgress";
+import Slider from "./components/Slider";
+import GlobalNavigation from "./components/GlobalNavigation";
+import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
+import ListItem from "./components/ListItem";
+import Avatar from "./components/Avatar";
+import AvatarGroup from "./components/AvatarGroup";
+import Accordion, {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./components/Accordian";
 
 interface Option {
   label: string;
   value: string;
 }
+
+const GlobalNavigationComponent = () => {
+  return (
+    <>
+      <div>
+        <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
+          JD
+        </p>
+      </div>
+      <div className="text-center text-gray-900">
+        <p className="text-base font-semibold w-[250px] whitespace-nowrap text-ellipsis overflow-hidden block">
+          John Doe
+        </p>
+        <HelperText
+          size="sm"
+          className="w-[250px] whitespace-nowrap text-ellipsis overflow-hidden block"
+        >
+          john.doe@email.com
+        </HelperText>
+      </div>
+      <Divider />
+      <Button
+        className="w-full"
+        variant="outlined"
+        intent="default-outlined"
+        size={"sm"}
+        fullWidth
+        startIcon={<RiLogoutBoxRLine size={20} />}
+      >
+        Logout
+      </Button>
+    </>
+  );
+};
+
+const ImageSrc =
+  "https://images.unsplash.com/photo-1732157582696-b5cb6c3d73bd?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+const ImageSrc2 =
+  "https://images.unsplash.com/photo-1540206395-68808572332f?q=80&w=2626&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const Test = () => {
   const [inputValue, setInputValue] = useState("");
@@ -172,7 +225,8 @@ const Test = () => {
 
   const multiOptions = [
     {
-      label: "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      label:
+        "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       value: "apple",
       info: "Modals",
       addInfo: "Be a direct child descendent of the modal.",
@@ -190,6 +244,22 @@ const Test = () => {
     { label: "melon", value: "melon" },
     { label: "mango", value: "mango" },
   ];
+
+  const handleReset = () => {
+    setMultiSelect([]);
+    setSingleSelect([]);
+    alert("Reset button clicked");
+  };
+
+  // slider
+  const [sliderValue, setSliderValue] = useState<number>(20);
+
+  const handleSliderChange = (value: number) => {
+    setSliderValue(value);
+  };
+
+  // global navigation
+  const [isOpen, setIsOpen] = useState(false);
 
   // notice
   const [open, setOpen] = useState(false);
@@ -691,16 +761,34 @@ const Test = () => {
               className={cn(error && "focus-within:border-error-500")}
               placeholder="olivia@untitledui.com"
             />
-            {error && (
-              <HelperText className="text-error-500">{error}</HelperText>
-            )}
+            {error && <HelperText error>{error}</HelperText>}
           </div>
         </section>
+      </div>
+      {/* Slider */}
+      <div className="space-y-6">
+        <h1 className="text-display-sm text-primary-400">Slider:</h1>
+        <Slider
+          value={sliderValue}
+          min={10}
+          max={100}
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
+        <Slider
+          value={sliderValue}
+          min={10}
+          step={10}
+          max={100}
+          size="lg"
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
       </div>
       {/* table */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">
-          <Link href="/pages/tables">Go to Table component</Link>
+          <Link href="/pages/tables" className="flex items-center gap-2">
+            Go to Table component <RiExternalLinkLine />
+          </Link>
         </h1>
       </section>
       {/* Modal */}
@@ -711,23 +799,24 @@ const Test = () => {
           setShowModal={setShowModal}
           closeModal={true}
           closeOnOutsideClick={true}
-          className="sm:w-[50%] w-full h-[50%]"
-          >
-          <div className="">content</div>
+          width="500px"
+        >
+          Content
         </Modal>
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <section className="flex items-start gap-10">
         <div>
-          <h1>Dropdown with icon</h1>
+          <h1 className="">Dropdown with icon</h1>
           <DropdownWithIcon
             options={multiOptions}
             selected={multiSelect}
             setSelected={setMultiSelect}
             search={true}
             multiple={true}
-            width="100px"
+            dropdownText={`Selected ${multiSelect?.length} items`}
+            width="200px"
             trigger={
               <RiFilterLine
                 className="hover:bg-gray-200 rounded"
@@ -749,13 +838,14 @@ const Test = () => {
             multiple={true}
             width="100px"
             trigger={<span>dropdown</span>}
+            onReset={handleReset}
           />
         </div>
         <div>
           <h1 className="text-lg">Multiple Dropdown</h1>
           <Dropdown
             options={[
-              { label: "High", value: "High" },
+              { label: "High", value: "High", disabledOption: true },
               { label: "Medium", value: "Medium" },
               { label: "Low", value: "Low" },
               { label: "High", value: "High" },
@@ -776,6 +866,7 @@ const Test = () => {
             onApply={() => {
               alert("Apply button clicked");
             }}
+            onReset={handleReset}
           />
         </div>
         <div>
@@ -785,7 +876,6 @@ const Test = () => {
             selected={singleSelect}
             icon={<RiGlobalLine size={16} />}
             setSelected={setSingleSelect}
-            width="200px"
             dropdownText="single text"
             info="info"
           />
@@ -819,6 +909,45 @@ const Test = () => {
             }
           />
         </div>
+      </section>
+      {/* Menu Items */}
+      <section>
+        <h1 className="text-display-sm text-primary-400">MenuItems:</h1>
+        <MenuDropdown
+          className=""
+          trigger={
+            <ListItem
+              as="button"
+              title="Products"
+              icon={<RiAddLine size={20} />}
+              className="w-max bg-primary-100 hover:bg-primary-200 rounded-full border border-primary-400"
+            />
+          }
+        >
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Inertia" />
+          </Link>
+          <MenuItem content={<h6>Blaze</h6>}>
+            <MenuSubItem label="Flames" onClick={() => alert("clicked")} />
+            <MenuSubItem label="Blaze" onClick={() => alert("click")} />
+            <MenuSubItem label="Admin" onClick={() => alert("click")} />
+          </MenuItem>
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Qiwi" />
+          </Link>
+          <Link
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
+            target="_blank"
+          >
+            <MenuSubItem label="Audit" />
+          </Link>
+        </MenuDropdown>
       </section>
       {/* Tabs */}
       <div>
@@ -976,7 +1105,7 @@ const Test = () => {
         </Notice>
       </section>
       {/* File Upload */}
-      <section className="flex flex-col gap-2 max-w-lg">
+      <section className="max-w-lg space-y-3">
         <h1 className="text-display-sm text-primary-400">File Upload</h1>
         <FileUpload
           id="single"
@@ -996,9 +1125,8 @@ const Test = () => {
           onChange={handleFileChangeMultiple}
           onDelete={() => handleDeleteFile(selectedFiles[0])}
           title="SVG, PNG, JPG or GIF (max. 800x400px)"
-        >
-          <ProgressBar progressColor="bg-primary-600" progress={50} />
-        </FileUpload>
+          filePreviewClassName="grid grid-cols-2 gap-2"
+        />
       </section>
       {/* progress */}
       <section className="my-5 w-[500px]">
@@ -1028,12 +1156,27 @@ const Test = () => {
           progressTextPosition="bottom"
         />
       </section>
+      {/* Circular Progress */}
+      <section className="my-5">
+        <h1 className="text-display-sm text-primary-400">Circular Progress:</h1>
+        <div className="flex items-center gap-5 py-10">
+          <CircularProgress size={50} strokeWidth={4} percentage={50} />
+          <CircularProgress size={90} strokeWidth={10} percentage={70} />
+          <CircularProgress
+            size={120}
+            strokeWidth={8}
+            percentage={60}
+            text="60%"
+            textClassName="text-primary-600 font-semibold"
+          />
+        </div>
+      </section>
       {/* Tooltip */}
       <section className="flex items-center gap-5 my-5">
         <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
         <Tooltip
           position="top"
-          className="text-red-500"
+          className="text-success-500"
           content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
         >
           Top
@@ -1082,23 +1225,653 @@ const Test = () => {
           Left
         </Tooltip>
       </section>
+      {/* Avatar */}
+      <section className="my-10 space-y-2">
+        <h1 className="text-display-sm text-primary-400">Avatar:</h1>
+        <div className="flex items-center gap-5">
+          <Avatar
+            type="text"
+            size="sm"
+            className="border border-gray-300 rounded-full"
+            text="RV"
+          />
+          <Avatar
+            border
+            borderColor="var(--primary-500)"
+            className="bg-primary-50"
+            borderWidth="2px"
+            rounded
+            type="text"
+            size="md"
+            disabled
+            text="Riya Vishwakarma"
+          />
+          <Avatar border rounded type="text" size="lg" text="RV" />
+          <Avatar
+            border
+            rounded
+            type="icon"
+            size="sm"
+            className="text-gray-600"
+            icon={<RiLogoutBoxRLine size={14} />}
+          />
+          <Avatar
+            type="image"
+            size="sm"
+            src={ImageSrc}
+            alt="avatar"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={14}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            type="image"
+            size="md"
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            src={ImageSrc}
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            alt="avatar"
+            statusIcon={
+              <RiCheckLine
+                size={16}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+        </div>
+        <h1 className="text-display-sm text-primary-400">
+          Avatar Positions/Size:
+        </h1>
+        <div className="flex items-center gap-5">
+          <h2 className="text-display-sm text-primary-400">Avatar Small:</h2>
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="sm"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={14}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            type="icon"
+            size="sm"
+            icon={<RiCheckLine />}
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            statusIcon={
+              <RiCheckLine
+                size={14}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="top-right"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="sm"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={14}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="sm"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={14}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="sm"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={14} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="sm"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={14} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="sm"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={14} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="sm"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={14} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-right"
+          />
+        </div>
+        <div className="flex items-center gap-5">
+          <h2 className="text-display-sm text-primary-400">Avatar Medium:</h2>
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="md"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={16}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            type="icon"
+            size="md"
+            icon={<RiCheckLine />}
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            statusIcon={
+              <RiCheckLine
+                size={16}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="top-right"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="md"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={16}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="md"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={16}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={16} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={16} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={16} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="md"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={16} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-right"
+          />
+        </div>
+        <div className="flex items-center gap-5">
+          <h2 className="text-display-sm text-primary-400">Avatar Large:</h2>
+          <Avatar
+            type="icon"
+            size="lg"
+            icon={<RiCheckLine />}
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            statusIcon={
+              <RiCheckLine
+                size={18}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            type="icon"
+            size="lg"
+            icon={<RiCheckLine />}
+            border
+            rounded
+            onClick={() => alert("clicked")}
+            borderWidth="2px"
+            className="cursor-pointer"
+            borderColor="var(--success-500)"
+            statusIcon={
+              <RiCheckLine
+                size={18}
+                className="bg-success-500 rounded-full text-white"
+              />
+            }
+            statusPosition="top-right"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="lg"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={18}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            type="text"
+            text="AV"
+            border
+            borderColor="var(--primary-500)"
+            borderWidth="2px"
+            size="lg"
+            rounded
+            statusIcon={
+              <RiTimeFill
+                size={18}
+                className="text-warning-400 bg-white rounded-full"
+              />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="bottom-right"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-left"
+          />
+          <Avatar
+            src={ImageSrc}
+            type="image"
+            size="lg"
+            rounded
+            border
+            borderColor="var(--error-300)"
+            borderWidth="2px"
+            alt="avatar"
+            statusIcon={
+              <RiCircleFill size={18} className="text-error-500 rounded-full" />
+            }
+            statusPosition="top-right"
+          />
+        </div>
+        <AvatarGroup
+          avatars={[
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+            {
+              type: "image",
+              src: ImageSrc2,
+              rounded: true,
+              border: true,
+              borderWidth: "2px",
+              borderColor: "var(--primary-500)",
+            },
+          ]}
+          size="md"
+          max={4}
+        />
+      </section>
+      {/* Accordian */}
+      <section className="space-y-5">
+        <h1 className="text-display-sm text-primary-400">Accordian:</h1>
+        <div className="space-y-2">
+          <h2>Accordian Single</h2>
+          <Accordion type="single" collapsible className="w-full space-y-2">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                What is your favorite template from BRIX Templates?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>Is it styled?</AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It comes with default styles that match the other components'
+              aesthetic.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Is it animated?</AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It's animated by default, but you can disable it if you
+              prefer.`}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+        <div className="space-y-2">
+          <h2>Accordian Multiple</h2>
+          <Accordion type="multiple" collapsible className="w-full space-y-2">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                What is your favorite template from BRIX Templates?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2" disabled>
+              <AccordionTrigger>Is it styled?</AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It comes with default styles that match the other components'
+              aesthetic.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Is it animated?</AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It's animated by default, but you can disable it if you
+              prefer.`}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </section>
+      {/* Global Navigation */}
+      <section className="my-5">
+        <h1 className="text-display-sm text-primary-400">Global Navigation:</h1>
+        <div className="flex items-center w-full justify-evenly">
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="bottom-left"
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="top-left"
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="bottom-right"
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+          <GlobalNavigation
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            postion="top-right"
+            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
+          >
+            <GlobalNavigationComponent />
+          </GlobalNavigation>
+        </div>
+      </section>
       {/* skeleton */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
         <div className="flex flex-col gap-2">
-          {/* in percent */}
-          <div className="w-[400px] h-[200px]">
+          {/* Fluid rectangle skeleton */}
+          <div className="w-full h-auto aspect-[2/1]">
+            <Skeleton animation="pulse" width="100%" height="100%" />
+          </div>
+
+          {/* Fluid circle skeleton */}
+          <div className="sm:w-[100px] sm:h-[100px] xl:w-[500px] xl:h-[500px]">
+            <Skeleton width="100%" height="100%" circle />
+          </div>
+
+          {/* Fluid text line skeletons */}
+          <div className="w-[20%] min-w-[120px] max-w-[167px] h-[14px]">
             <Skeleton width="100%" height="100%" />
           </div>
-          <Skeleton width="80px" height="80px" circle />
-          <Skeleton width="167px" height="14px" />
-          <Skeleton width="138px" height="42px" />
+
+          <div className="w-[15%] min-w-[100px] max-w-[138px] h-[42px]">
+            <Skeleton width="100%" height="100%" />
+          </div>
         </div>
       </section>
       {/* stepper */}
       <section>
         <h1 className="text-display-sm text-primary-400">Stepper:</h1>
-        <div className="w-[50%] mx-auto">
+        <div className="mx-auto w-full">
           <Stepper
             stepsConfig={stepsConfig}
             currentStep={currentStep}
@@ -1219,7 +1992,6 @@ const Test = () => {
           </p>
         </section>
       </div>
-
       {/* Textarea */}
       <section className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-400">Textarea</h1>

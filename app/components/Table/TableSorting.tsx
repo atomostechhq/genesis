@@ -13,6 +13,7 @@ import { RiSortAsc } from "@remixicon/react";
 import Chip from "../Chip";
 import Checkbox from "../Checkbox";
 import Pagination from "../Pagination";
+import Tooltip from "../Tooltip";
 
 const TableSorting = () => {
   const [data, setData] = useState<User[]>(tableData);
@@ -89,7 +90,7 @@ const TableSorting = () => {
   const currentPageData = data?.slice(startIndex, endIndex);
 
   return (
-    <div className="overflow-auto">
+    <div className="overflow-auto shadow-sm rounded-xl">
       <Table dense>
         <TableHead>
           <TableRow className="text-left">
@@ -135,28 +136,30 @@ const TableSorting = () => {
         </TableHead>
         <TableBody>
           {currentPageData.map((item) => (
-            <React.Fragment key={item.id}>
-              <TableRow className="text-left">
-                <TableDataCell>
-                  <Checkbox
-                    id={`check-${item.id}`}
-                    checked={item.isChecked}
-                    onChange={() => handleCheckboxChange(item.id)}
-                  />
-                </TableDataCell>
-                <TableDataCell>{item.id}</TableDataCell>
-                <TableDataCell>{item.firstName}</TableDataCell>
-                <TableDataCell>{item.lastName}</TableDataCell>
-                <TableDataCell>{item.age}</TableDataCell>
-                <TableDataCell>{item.progress}</TableDataCell>
-                <TableDataCell>
-                  <Chip intent={"primary"} size={"md"}>
-                    {item.status}
-                  </Chip>
-                </TableDataCell>
-                <TableDataCell>{item.visits}</TableDataCell>
-              </TableRow>
-            </React.Fragment>
+            <TableRow key={item.id} className="text-left">
+              <TableDataCell>
+                <Checkbox
+                  id={`check-${item.id}`}
+                  checked={item.isChecked}
+                  onChange={() => handleCheckboxChange(item.id)}
+                />
+              </TableDataCell>
+              <TableDataCell>{item.id}</TableDataCell>
+              <TableDataCell className="py-10">
+                <Tooltip position="top" content={item.firstName}>
+                  {item.firstName}
+                </Tooltip>
+              </TableDataCell>
+              <TableDataCell>{item.lastName}</TableDataCell>
+              <TableDataCell>{item.age}</TableDataCell>
+              <TableDataCell>{item.progress}</TableDataCell>
+              <TableDataCell>
+                <Chip intent={"primary"} size={"md"}>
+                  {item.status}
+                </Chip>
+              </TableDataCell>
+              <TableDataCell>{item.visits}</TableDataCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
@@ -167,6 +170,7 @@ const TableSorting = () => {
         rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        className="rounded-b-xl"
       />
     </div>
   );
