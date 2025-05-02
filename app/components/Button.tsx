@@ -10,6 +10,7 @@ interface ButtonProps
   endIcon?: JSX.Element;
   disabled?: boolean;
   fullWidth?: boolean;
+  type?: "submit" | "reset" | "button";
 }
 
 const buttonVariants = cva(
@@ -52,7 +53,7 @@ const buttonVariants = cva(
     },
     defaultVariants: {
       variant: "filled",
-      size: "md",
+      size: "sm",
     },
   }
 );
@@ -67,12 +68,14 @@ const Button = ({
   disabled,
   endIcon,
   size,
+  type = "button",
   ...props
 }: ButtonProps) => {
   return (
     <button
       {...props}
       disabled={disabled}
+      type={type}
       className={cn(
         fullWidth && "w-full",
         buttonVariants({ intent, className, variant, size }),

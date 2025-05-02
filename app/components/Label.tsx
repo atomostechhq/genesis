@@ -8,7 +8,7 @@ interface LabelProps
   htmlFor?: string;
   children: ReactNode;
   required?: boolean;
-  disabled?:boolean;
+  disabled?: boolean;
 }
 
 const labelVariants = cva("flex item-start", {
@@ -36,11 +36,19 @@ const Label = ({
   return (
     <label
       htmlFor={htmlFor}
-      className={cn("cursor-pointer",labelVariants({ className, size }),disabled === true ? "opacity-30 select-none":"opacity-100")}
+      className={cn(
+        "cursor-pointer",
+        labelVariants({ className, size }),
+        disabled === true
+          ? "opacity-30 select-none pointer-events-none"
+          : "opacity-100"
+      )}
       {...props}
     >
       {children}
-      <span className={cn(required === true ? "block text-red-500":"hidden")}>*</span>
+      <span className={cn(required === true ? "block text-red-500" : "hidden")}>
+        *
+      </span>
     </label>
   );
 };
