@@ -52,7 +52,7 @@ import Accordion, {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./components/Accordian";
+} from "./components/Accordion";
 
 interface Option {
   label: string;
@@ -1745,7 +1745,50 @@ const Test = () => {
           <h2>Accordian Single</h2>
           <Accordion type="single" collapsible className="w-full space-y-2">
             <AccordionItem value="item-1">
-              <AccordionTrigger>
+              <AccordionTrigger defaultOpen={true}>
+                <p className="">
+                  {" "}
+                  What is your favorite template from BRIX Templates?
+                </p>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="p-6 border">
+                  {` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.`}
+                  <Input type="text" />
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger defaultOpen={true}>
+                Is it styled?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It comes with default styles that match the other components'
+              aesthetic.`}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger defaultOpen={true}>
+                Is it animated?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Yes. It's animated by default, but you can disable it if you
+              prefer.`}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+        <div className="space-y-2">
+          <h2>Accordian Multiple</h2>
+          <Accordion type="multiple" collapsible className="w-full space-y-2">
+            <AccordionItem value="item-1">
+              <AccordionTrigger
+                className="text-yellow-500"
+                triggerIcon={<RiAlertFill />}
+              >
                 What is your favorite template from BRIX Templates?
               </AccordionTrigger>
               <AccordionContent>
@@ -1763,37 +1806,9 @@ const Test = () => {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
-              <AccordionTrigger>Is it animated?</AccordionTrigger>
-              <AccordionContent>
-                {` Yes. It's animated by default, but you can disable it if you
-              prefer.`}
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div className="space-y-2">
-          <h2>Accordian Multiple</h2>
-          <Accordion type="multiple" collapsible className="w-full space-y-2">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>
-                What is your favorite template from BRIX Templates?
+              <AccordionTrigger defaultOpen={true}>
+                Is it animated?
               </AccordionTrigger>
-              <AccordionContent>
-                {` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.`}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2" disabled>
-              <AccordionTrigger>Is it styled?</AccordionTrigger>
-              <AccordionContent>
-                {` Yes. It comes with default styles that match the other components'
-              aesthetic.`}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>Is it animated?</AccordionTrigger>
               <AccordionContent>
                 {` Yes. It's animated by default, but you can disable it if you
               prefer.`}
