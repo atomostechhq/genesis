@@ -217,6 +217,12 @@ const Test = () => {
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
   // console.log("singleSelect", singleSelect);
 
+  const [dropdownMenuOption, setDropdownMenuOption] = useState<Option[]>([]);
+
+  const [dropdownMenuOptionTwo, setDropdownMenuOptionTwo] = useState<Option[]>(
+    []
+  );
+
   const singleOptions = [
     { label: "Option 1", value: "1" },
     { label: "Option 2", value: "2" },
@@ -806,6 +812,41 @@ const Test = () => {
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
+      <section className="flex gap-6 items-center">
+        <h1 className="text-lg">Dropdown with icon</h1>
+        <DropdownWithIcon
+          options={multiOptions}
+          selected={dropdownMenuOption}
+          setSelected={setDropdownMenuOption}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionOne"
+          trigger={
+            <RiFilterLine
+              className="hover:bg-gray-200 rounded"
+              cursor="pointer"
+              size={14}
+            />
+          }
+        />
+        <DropdownWithIcon
+          options={multiOptions}
+          selected={dropdownMenuOptionTwo}
+          setSelected={setDropdownMenuOptionTwo}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionTwo"
+          trigger={
+            <RiFilterLine
+              className="hover:bg-gray-200 rounded"
+              cursor="pointer"
+              size={14}
+            />
+          }
+        />
+      </section>
       <section className="flex items-start gap-10">
         <div>
           <h1 className="">Dropdown with icon</h1>
