@@ -30,12 +30,12 @@ interface MenuItemProps {
 }
 
 interface DropdownFooterProps {
-  //   onReset?: () => void;
   onApply?: (() => void) | undefined;
   setDropdownMenu?: any;
 }
 
 interface DropdownProps {
+  id?: string;
   options: Option[];
   selected?: Option[];
   setSelected?: React.Dispatch<React.SetStateAction<Option[]>>;
@@ -66,6 +66,7 @@ const defaultRenderItem = (option: Option) => {
 const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
   (
     {
+      id = `dropdown-${Math.random().toString(36).substring(2, 11)}`,
       options,
       selected = [],
       setSelected,
@@ -173,6 +174,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
 
     return (
       <div
+        id={id}
         ref={localDropdownRef}
         className={cn(
           "relative",
@@ -193,11 +195,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
         >
           {trigger}
           {dropdownText && (
-            <span
-              className={cn(
-                "text-sm text-gray-800 cursor-pointer",
-              )}
-            >
+            <span className={cn("text-sm text-gray-800 cursor-pointer")}>
               {dropdownText}
             </span>
           )}
@@ -225,6 +223,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
         >
           {search && (
             <Input
+              id={`${id}-search`}
               type="text"
               placeholder="Search..."
               value={searchQuery}
@@ -256,13 +255,13 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
                     {multiple ? (
                       <Label
                         className="has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] break-words cursor-pointer border-l-4 border-transparent"
-                        htmlFor={`checkbox-${option?.value}`}
+                        htmlFor={`${id}-checkbox-${option.value}`}
                         key={i}
                       >
                         <section className="flex items-center justify-between gap-2 w-full">
                           <div className="flex gap-2">
                             <Checkbox
-                              id={`checkbox-${option?.value}`}
+                               id={`${id}-checkbox-${option.value}`}
                               checked={selected?.some(
                                 (item) => item?.value === option?.value
                               )}

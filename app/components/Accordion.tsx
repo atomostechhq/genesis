@@ -1,7 +1,6 @@
-"use client";
 import React, { useState } from "react";
-import { cn } from "../utils/utils";
 import { RiArrowDownSLine } from "@remixicon/react";
+import { cn } from "../utils/utils";
 
 type AccordionProps = {
   type?: "single" | "multiple";
@@ -16,7 +15,19 @@ export default function Accordion({
   className,
   children,
 }: AccordionProps) {
-  const [openItems, setOpenItems] = useState<string[]>([]);
+  const [openItems, setOpenItems] = useState<string[]>(() => {
+    const defaultOpen: string[] = [];
+    React.Children.forEach(children, (child) => {
+      if (React.isValidElement(child)) {
+        // Get the trigger element from AccordionItem children
+        const triggerChild = React.Children.toArray(child.props.children)[0];
+        if (React.isValidElement(triggerChild) && triggerChild.props.defaultOpen) {
+          defaultOpen.push((child.props as AccordionItemProps).value);
+        }
+      }
+    });
+    return defaultOpen;
+  });
 
   const handleToggle = (value: string) => {
     if (type === "single") {
@@ -81,38 +92,32 @@ export function AccordionItem({
   return (
     <div
       className={cn(
-        "bg-white hover:bg-gray-50 rounded-lg shadow transition-all duration-300 ease-in-out",
-        disabled
-          ? "opacity-50 pointer-events-none select-none"
-          : "cursor-pointer",
-          isOpen ? "border border-gray-300" : "border",
+        "bg-white rounded-lg shadow transition-all duration-300 ease-in-out",
+        disabled ? "opacity-50 pointer-events-none select-none" : "",
+        isOpen ? "border border-gray-300" : "border",
         className
       )}
     >
-      <div
-        className="font-semibold transition-all duration-300 ease-in-out"
-        onClick={toggle}
-      >
-        {children && Array.isArray(children) ? (
-          <>
+      {children && Array.isArray(children) ? (
+        <>
+          <div onClick={toggle} className="cursor-pointer">
             {React.cloneElement(children[0] as React.ReactElement, { isOpen })}
-            <div
-              className={cn(
-                "grid transition-all duration-300 ease-in-out",
-                isOpen
-                  ? "grid-rows-[1fr] opacity-100"
-                  : "grid-rows-[0fr] opacity-0"
-              )}
-            >
-              <div className="overflow-hidden">
-                <div className={cn("")}>{children[1]}</div>
-              </div>
-            </div>
-          </>
-        ) : (
-          children
-        )}
-      </div>
+          </div>
+          <div
+            className={cn(
+              "grid transition-all duration-300 ease-in-out",
+              isOpen
+                ? "grid-rows-[1fr] opacity-100"
+                : "grid-rows-[0fr] opacity-0"
+            )}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="overflow-hidden">{children[1]}</div>
+          </div>
+        </>
+      ) : (
+        children
+      )}
     </div>
   );
 }
@@ -120,11 +125,25 @@ export function AccordionItem({
 type AccordionTriggerProps = {
   isOpen?: boolean;
   children: React.ReactNode;
+  defaultOpen?: boolean;
+  className?: string;
+  triggerIcon?: React.ReactNode;
 };
 
-export function AccordionTrigger({ isOpen, children }: AccordionTriggerProps) {
+export function AccordionTrigger({
+  isOpen,
+  children,
+  className,
+  triggerIcon = <RiArrowDownSLine size={18} />,
+}: AccordionTriggerProps) {
   return (
-    <div className="flex p-3.5 justify-between items-center text-sm font-semibold transition-all delay-150 ease-in">
+    <div
+      className={cn(
+        "flex p-3.5 text-lg rounded-lg bg-white hover:bg-gray-50 justify-between items-center font-semibold transition-all delay-150 ease-in",
+        isOpen ? "bg-gray-100" : "",
+        className
+      )}
+    >
       {children}
       <span
         className={cn(
@@ -132,7 +151,7 @@ export function AccordionTrigger({ isOpen, children }: AccordionTriggerProps) {
           isOpen ? "rotate-180" : "rotate-0"
         )}
       >
-        <RiArrowDownSLine size={18} />
+        {triggerIcon}
       </span>
     </div>
   );
