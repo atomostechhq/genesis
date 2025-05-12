@@ -246,6 +246,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 Select all
               </p>
               <button
+                type="button"
                 className="text-text-sm text-warning-500 hover:text-warning-600"
                 onClick={handleReset}
               >
