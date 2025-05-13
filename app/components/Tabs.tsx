@@ -27,6 +27,9 @@ interface TabProps extends TabItem {
   selectedTabValue: string;
   icon?: JSX.Element;
   className?: string;
+  tabIndex?: number;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void; // Update event type
+  ref?: React.Ref<HTMLButtonElement>;
 }
 
 interface TabPanelProps {
@@ -50,8 +53,26 @@ export const TabList: React.FC<TabListProps> = ({
   box = false,
   className,
 }) => {
-  const handleTabChange = (value: string) => {
-    onChange(value);
+  const [focusIndex, setFocusIndex] = React.useState(0);
+  const tabRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    const tabCount = React.Children.count(children);
+
+    switch (e.key) {
+      case "ArrowRight":
+        e.preventDefault();
+        const nextIndex = (index + 1) % tabCount;
+        setFocusIndex(nextIndex);
+        tabRefs.current[nextIndex]?.focus();
+        break;
+      case "ArrowLeft":
+        e.preventDefault();
+        const prevIndex = (index - 1 + tabCount) % tabCount;
+        setFocusIndex(prevIndex);
+        tabRefs.current[prevIndex]?.focus();
+        break;
+    }
   };
 
   return (
@@ -65,13 +86,32 @@ export const TabList: React.FC<TabListProps> = ({
       )}
       role="tablist"
       aria-label={ariaLabel}
+      aria-orientation="horizontal"
     >
-      {React.Children.map(children, (child) => {
+      {React.Children.map(children, (child, index) => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child as React.ReactElement<TabProps>, {
-            onChange: handleTabChange,
+          const childProps = {
+            onChange,
             box,
-          });
+            onKeyDown: (e: React.KeyboardEvent) => handleKeyDown(e, index),
+            tabIndex: index === focusIndex ? 0 : -1,
+          };
+
+          return React.cloneElement(child, {
+            ...childProps,
+            ref: (el: HTMLButtonElement | null) => {
+              // Handle the ref
+              tabRefs.current[index] = el;
+              const originalRef = (child as any).ref;
+              if (originalRef) {
+                if (typeof originalRef === "function") {
+                  originalRef(el);
+                } else {
+                  originalRef.current = el;
+                }
+              }
+            },
+          } as any);
         }
         return null;
       })}
@@ -79,40 +119,52 @@ export const TabList: React.FC<TabListProps> = ({
   );
 };
 
-export const Tab: React.FC<TabProps> = ({
-  label,
-  value,
-  onChange,
-  icon,
-  content,
-  box = false,
-  selectedTabValue,
-  className,
-}) => {
-  const handleClick = () => {
-    onChange(value);
-  };
+export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
+  (
+    {
+      label,
+      value,
+      onChange,
+      icon,
+      content,
+      box = false,
+      selectedTabValue,
+      className,
+      onKeyDown,
+      tabIndex,
+    },
+    ref
+  ) => {
+    const isSelected = value === selectedTabValue;
 
-  const isSelected = value === selectedTabValue;
-
-  return (
-    <button
-      role="tab"
-      className={cn(
-        "flex items-center gap-2 px-4 py-3 text-text-sm font-medium cursor-pointer hover:bg-gray-100 hover:rounded-t transition-all ease-linear duration-200 delay-75",
-        isSelected && !box
-          ? "text-primary-600 border-b-2 border-primary-600"
-          : "border-b-2 border-transparent text-gray-700",
-        isSelected && box ? "bg-white hover:bg-white shadow-md" : "",
-        box ? "m-1 rounded-lg hover:rounded-lg" : "m-0",
-        className
-      )}
-      onClick={handleClick}
-    >
-      {icon} {label} {content}
-    </button>
-  );
-};
+    return (
+      <button
+        ref={ref}
+        role="tab"
+        aria-selected={isSelected}
+        aria-controls={`panel-${value}`}
+        id={`tab-${value}`}
+        tabIndex={tabIndex}
+        onKeyDown={onKeyDown}
+        className={cn(
+          "flex items-center gap-2 px-4 py-3 text-text-sm font-medium cursor-pointer",
+          isSelected && !box
+            ? "text-primary-600 border-b-2 border-primary-600"
+            : "border-b-2 border-transparent text-gray-700",
+          isSelected && box ? "bg-white hover:bg-white shadow-md" : "",
+          box ? "m-1 rounded-lg hover:rounded-lg" : "m-0",
+          "hover:bg-gray-100 hover:rounded-t transition-all ease-linear duration-200 delay-75",
+          className
+        )}
+        onClick={() => onChange(value)}
+      >
+        {icon && <span aria-hidden="true">{icon}</span>}
+        {label}
+        {content && <span aria-hidden="true">{content}</span>}
+      </button>
+    );
+  }
+);
 
 export const TabPanel: React.FC<TabPanelProps> = ({
   value,
@@ -121,8 +173,18 @@ export const TabPanel: React.FC<TabPanelProps> = ({
   className,
 }) => {
   return value === currentValue ? (
-    <div className={className}>{children}</div>
+    <div
+      role="tabpanel"
+      id={`panel-${value}`}
+      aria-labelledby={`tab-${value}`}
+      tabIndex={0}
+      className={className}
+    >
+      {children}
+    </div>
   ) : null;
 };
 
 export default TabsContainer;
+
+Tab.displayName = "Tab";

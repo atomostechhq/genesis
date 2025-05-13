@@ -629,6 +629,10 @@ const Test = () => {
         <section className="flex items-center gap-4">
           <h1>Size with Text:</h1>
           <div className="flex items-center gap-2">
+            <Checkbox id="xl" size="xl" />
+            <Label htmlFor="xl">XL</Label>
+          </div>
+          <div className="flex items-center gap-2">
             <Checkbox id="large" size="lg" />
             <Label htmlFor="large">Large</Label>
           </div>
@@ -673,6 +677,16 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Radio:</h1>
         <section className="flex items-center gap-4">
           <h1>Size with Text:</h1>
+          <div role="radiogroup" aria-label="Options">
+            <Label htmlFor="option1" className="flex items-center gap-2">
+              <Radio id="option1" name="options" />
+              Option 1
+            </Label>
+            <Label htmlFor="option2" className="flex items-center gap-2">
+              <Radio id="option2" name="options" />
+              Option 2
+            </Label>
+          </div>
           <div className="flex items-center gap-2">
             <Radio id="radioTextLarge" size="lg" />
             <Label htmlFor="radioTextLarge" required>
@@ -720,6 +734,18 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Input Field:</h1>
         <section className="flex items-center gap-4">
           <h1>Size with Text:</h1>
+          <div>
+            <Label htmlFor="email">Email address</Label>
+            <Input
+              id="email"
+              type="email"
+              aria-describedby="email-hint"
+              placeholder="Enter your email"
+            />
+            <p id="email-hint" className="text-sm text-gray-500">
+              We'll never share your email.
+            </p>
+          </div>
           <div className="w-[500px]">
             <Label required htmlFor="">
               Email
@@ -814,7 +840,7 @@ const Test = () => {
       <h1 className="text-display-sm text-primary-400">Dropdown</h1>
       <section className="flex gap-6 items-center">
         <h1 className="text-lg">Dropdown with icon</h1>
-        <DropdownWithIcon
+        <Dropdown
           options={multiOptions}
           selected={dropdownMenuOption}
           setSelected={setDropdownMenuOption}
@@ -822,13 +848,13 @@ const Test = () => {
           multiple={true}
           width="200px"
           id="dropdownMenuOptionOne"
-          trigger={
-            <RiFilterLine
-              className="hover:bg-gray-200 rounded"
-              cursor="pointer"
-              size={14}
-            />
-          }
+          // trigger={
+          //   <RiFilterLine
+          //     className="hover:bg-gray-200 rounded"
+          //     cursor="pointer"
+          //     size={14}
+          //   />
+          // }
           dropdownFooter={true}
           onApply={() => {
             alert("Apply button clicked");
@@ -1783,11 +1809,11 @@ const Test = () => {
           max={4}
         />
       </section>
-      {/* Accordian */}
+      {/* Accordion */}
       <section className="space-y-5">
-        <h1 className="text-display-sm text-primary-400">Accordian:</h1>
+        <h1 className="text-display-sm text-primary-400">Accordion:</h1>
         <div className="space-y-2">
-          <h2>Accordian Single</h2>
+          <h2>Accordion Single</h2>
           <Accordion type="single" collapsible className="w-full space-y-2">
             <AccordionItem value="item-1">
               <AccordionTrigger defaultOpen={true}>
@@ -1826,7 +1852,7 @@ const Test = () => {
           </Accordion>
         </div>
         <div className="space-y-2">
-          <h2>Accordian Multiple</h2>
+          <h2>Accordion Multiple</h2>
           <Accordion type="multiple" collapsible className="w-full space-y-2">
             <AccordionItem value="item-1">
               <AccordionTrigger

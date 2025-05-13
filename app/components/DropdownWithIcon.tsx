@@ -185,7 +185,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
           width: width,
         }}
       >
-        <div
+        {/* <div
           className={cn(
             "w-full",
             disabled && "cursor-not-allowed opacity-50",
@@ -199,8 +199,38 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
               {dropdownText}
             </span>
           )}
-        </div>
+        </div> */}
+        <button
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={dropdownMenu}
+          aria-labelledby={`${id}-label`}
+          disabled={disabled}
+          onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              !disabled && setDropdownMenu((prev) => !prev);
+            }
+          }}
+          className={cn(
+            "w-full",
+            disabled && "cursor-not-allowed opacity-50",
+            dropdownText && "flex items-center gap-2"
+          )}
+        >
+          {trigger}
+          {dropdownText && (
+            <span id={`${id}-label`} className="text-sm text-gray-800">
+              {dropdownText}
+            </span>
+          )}
+        </button>
         <ul
+          role="listbox"
+          aria-multiselectable={multiple}
+          aria-labelledby={`${id}-label`}
+          tabIndex={-1}
           className={cn(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
             position === "top"

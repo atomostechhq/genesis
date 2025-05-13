@@ -21,7 +21,10 @@ export default function Accordion({
       if (React.isValidElement(child)) {
         // Get the trigger element from AccordionItem children
         const triggerChild = React.Children.toArray(child.props.children)[0];
-        if (React.isValidElement(triggerChild) && triggerChild.props.defaultOpen) {
+        if (
+          React.isValidElement(triggerChild) &&
+          triggerChild.props.defaultOpen
+        ) {
           defaultOpen.push((child.props as AccordionItemProps).value);
         }
       }
@@ -44,7 +47,7 @@ export default function Accordion({
   };
 
   return (
-    <div className={className}>
+    <div className={className} role="region" aria-label="Accordion">
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(
@@ -82,6 +85,8 @@ export function AccordionItem({
   className,
 }: AccordionItemProps) {
   const isOpen = openItems?.includes(value);
+  const headerId = `accordion-header-${value}`;
+  const contentId = `accordion-content-${value}`;
 
   const toggle = () => {
     if (!disabled && handleToggle) {
@@ -100,10 +105,28 @@ export function AccordionItem({
     >
       {children && Array.isArray(children) ? (
         <>
-          <div onClick={toggle} className="cursor-pointer">
+          <div
+            onClick={toggle}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggle();
+              }
+            }}
+            role="button"
+            tabIndex={disabled ? -1 : 0}
+            aria-expanded={isOpen}
+            aria-disabled={disabled}
+            aria-controls={contentId}
+            id={headerId}
+            className="cursor-pointer"
+          >
             {React.cloneElement(children[0] as React.ReactElement, { isOpen })}
           </div>
           <div
+            id={contentId}
+            role="region"
+            aria-labelledby={headerId}
             className={cn(
               "grid transition-all duration-300 ease-in-out",
               isOpen
@@ -150,6 +173,7 @@ export function AccordionTrigger({
           "transition-transform duration-300 transform",
           isOpen ? "rotate-180" : "rotate-0"
         )}
+        aria-hidden="true"
       >
         {triggerIcon}
       </span>

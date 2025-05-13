@@ -191,22 +191,22 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           width: width,
         }}
       >
-        <div
-          // onClick={() => setDropdownMenu((prev) => !prev)}
+        <button
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={dropdownMenu}
+          aria-labelledby={`${id}-label`}
+          disabled={disabled}
           onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
           className={cn(
-            "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-text-sm cursor-pointer",
+            "w-full hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-text-sm cursor-pointer",
             dropdownMenu ? "border border-gray-800" : "border border-gray-200",
             disabled && "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
           )}
         >
-          <section
-            className={cn(
-              "flex items-center gap-2 text-ellipsis overflow-hidden"
-            )}
-          >
-            {icon && <span>{icon}</span>}
-            <p className="line-clamp-1 w-full">
+          <section className="flex items-center gap-2 text-ellipsis overflow-hidden">
+            {icon && <span aria-hidden="true">{icon}</span>}
+            <span id={`${id}-label`} className="line-clamp-1 w-full">
               {multiple
                 ? (selected?.length ?? 0) > 0
                   ? `${selected?.length} Selected`
@@ -214,11 +214,14 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 : selected?.[0]?.label
                 ? selected?.[0]?.label
                 : dropdownText}
-            </p>
+            </span>
           </section>
-          <RiArrowDownSLine size={18} />
-        </div>
+          <RiArrowDownSLine aria-hidden="true" size={18} />
+        </button>
         <ul
+          role="listbox"
+          aria-multiselectable={multiple}
+          aria-labelledby={`${id}-label`}
           className={cn(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
             position === "top" ? "top-10" : "bottom-10",
@@ -231,6 +234,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               id={`${id}-search`}
               type="text"
               placeholder="Search..."
+              aria-label="Search options"
               value={searchQuery}
               onChange={handleSearchChange}
               className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
