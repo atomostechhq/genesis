@@ -35,7 +35,11 @@ const Stepper = ({
   const ActiveComponent = stepsConfig[currentStep - 1]?.Component;
 
   return (
-    <div className={cn(position !== "horizontal" && "flex")}>
+    <div
+      role="region"
+      aria-label="Step Progress"
+      className={cn(position !== "horizontal" && "flex")}
+    >
       <div
         className={cn(
           "relative",
@@ -43,8 +47,10 @@ const Stepper = ({
             ? "flex justify-center items-start"
             : "flex flex-col"
         )}
+        role="list"
+        aria-label={`Progress: ${currentStep} of ${stepsConfig.length} steps`}
       >
-        {stepsConfig.map((step, index) => (
+        {stepsConfig?.map((step, index) => (
           <div
             key={index}
             ref={(el: any) => (stepRef.current[index] = el)}
@@ -56,6 +62,17 @@ const Stepper = ({
               currentStep > index + 1 || isComplete ? "complete" : "",
               currentStep === index + 1 ? "" : ""
             )}
+            role="listitem"
+            aria-current={currentStep === index + 1 ? "step" : undefined}
+            aria-label={`${step.name}${
+              step.helperName ? `, ${step.helperName}` : ""
+            }, ${
+              currentStep > index + 1 || isComplete
+                ? "completed"
+                : currentStep === index + 1
+                ? "current step"
+                : "pending"
+            }`}
           >
             <div
               className={cn(
@@ -75,12 +92,23 @@ const Stepper = ({
                     ? "bg-primary-600 border-none"
                     : ""
                 }`}
+                role="status"
+                aria-label={`Step ${index + 1} ${
+                  currentStep > index + 1 || isComplete
+                    ? "completed"
+                    : currentStep === index + 1
+                    ? "current"
+                    : "pending"
+                }`}
               >
                 {currentStep === index + 1 && !isComplete && (
-                  <span className="w-[10px] h-[10px] rounded-full bg-primary-600"></span>
+                  <span
+                    aria-hidden="true"
+                    className="w-[10px] h-[10px] rounded-full bg-primary-600"
+                  ></span>
                 )}
                 {(currentStep > index + 1 || isComplete) && (
-                  <span>
+                  <span aria-hidden="true">
                     <RiCheckLine size={12} color="#fff" />
                   </span>
                 )}
@@ -93,6 +121,7 @@ const Stepper = ({
                       ? "w-[80%] h-1"
                       : "h-[100px] w-1 my-2"
                   )}
+                  aria-hidden="true"
                 >
                   <p
                     className={cn(
@@ -106,12 +135,16 @@ const Stepper = ({
 
             {/* step name */}
             <div
+              aria-hidden={currentStep !== index + 1}
               className={cn(
                 "whitespace-nowrap",
                 position === "vertical" || step?.helperName ? "-mt-1" : ""
               )}
             >
-              <span className="text-gray-400 text-text-xs">
+              <span
+                aria-label="Helper text"
+                className="text-gray-400 text-text-xs"
+              >
                 {step?.helperName}
               </span>
               <p>{step?.name}</p>
@@ -120,7 +153,15 @@ const Stepper = ({
         ))}
       </div>
 
-      {ActiveComponent && <ActiveComponent />}
+      {ActiveComponent && (
+        <div
+          role="tabpanel"
+          aria-label={`Current step: ${stepsConfig[currentStep - 1]?.name}`}
+          tabIndex={0}
+        >
+          <ActiveComponent />
+        </div>
+      )}
     </div>
   );
 };

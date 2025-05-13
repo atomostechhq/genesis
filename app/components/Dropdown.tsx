@@ -26,6 +26,7 @@ type Option = {
   addInfo?: string;
   tooltipContent?: string;
   disabledOption?: boolean;
+  labelTextColor?: string;
 };
 
 interface MenuItemProps {
@@ -55,6 +56,7 @@ interface DropdownProps {
   dropDownTooltip?: boolean | undefined;
   dropdownFooter?: boolean | undefined;
   disabled?: boolean;
+  labelTextColor?: string;
 }
 
 const defaultRenderItem = (option: Option) => {
@@ -285,7 +287,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                               disabled={option?.disabledOption}
                             />
                             <div className="flex items-center gap-1">
-                              <span>{renderItem(option)}</span>
+                              <span style={{ color: option.labelTextColor }}>
+                                {renderItem(option)}
+                              </span>
                               {dropDownTooltip && (
                                 <DropdownTooltip
                                   tooltipContent={option?.tooltipContent}
@@ -316,7 +320,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                         }
                       >
                         <div className="flex items-center gap-1">
-                          <span>{renderItem(option)}</span>
+                          <span style={{ color: option.labelTextColor }}>
+                            {renderItem(option)}
+                          </span>
                           {dropDownTooltip && (
                             <DropdownTooltip
                               tooltipContent={option?.tooltipContent}

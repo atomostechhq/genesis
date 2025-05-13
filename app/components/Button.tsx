@@ -76,6 +76,7 @@ const Button = ({
       {...props}
       disabled={disabled}
       type={type}
+      aria-disabled={disabled}
       className={cn(
         fullWidth && "w-full",
         buttonVariants({ intent, className, variant, size }),

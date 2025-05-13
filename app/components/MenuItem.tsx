@@ -17,6 +17,9 @@ export default function MenuDropdown({
 }: MenuDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const menuId = useRef(
+    `menu-${Math.random().toString(36).substr(2, 9)}`
+  ).current;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,16 +37,28 @@ export default function MenuDropdown({
   }, []);
 
   return (
-    <div className={"relative w-full"} ref={dropdownRef}>
+    <div className="relative w-full" ref={dropdownRef}>
       <div
-        className="cursor-pointer"
+        className="cursor-pointer w-full text-left"
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Open menu"
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        aria-controls={menuId}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setIsOpen(!isOpen);
+          }
+        }}
       >
         {trigger}
       </div>
       {isOpen && (
         <div
+          id={menuId}
+          role="menu"
           style={{ width }}
           className={cn(
             "border border-gray-200 rounded-lg absolute left-0 mt-1 z-[100000] w-full bg-white shadow-sm",
@@ -80,6 +95,8 @@ export const MenuSubItem: React.FC<MenuSubItemProps> = ({
     )}
     onClick={onClick}
     disabled={disabled}
+    role="menuitem"
+    aria-disabled={disabled}
   >
     {label}
     {children && <>{children}</>}
@@ -103,25 +120,46 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   menuClassName = "",
 }) => {
   const [isSubOpen, setIsSubOpen] = useState(false);
+  const subMenuId = useRef(
+    `submenu-${Math.random().toString(36).substr(2, 9)}`
+  ).current;
 
   return (
-    <div className={cn("relative", className)}>
-      <section
+    <div className={cn("relative", className)} role="none">
+      <div
         onClick={() => setIsSubOpen(!isSubOpen)}
         className={cn(
           "cursor-pointer hover:bg-primary-50 p-4 flex text-sm border-y-[0.5px] justify-between items-center gap-1 w-full text-left",
           sectionClassName
         )}
+        role="menuitem"
+        aria-expanded={isSubOpen}
+        aria-haspopup="true"
+        aria-controls={subMenuId}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setIsSubOpen(!isSubOpen);
+          }
+        }}
       >
         {content}
-        {isSubOpen ? (
-          <RiArrowUpSLine size={20} />
-        ) : (
-          <RiArrowDownSLine size={20} />
-        )}
-      </section>
+        <span aria-hidden="true">
+          {isSubOpen ? (
+            <RiArrowUpSLine size={20} />
+          ) : (
+            <RiArrowDownSLine size={20} />
+          )}
+        </span>
+      </div>
       {isSubOpen && (
-        <div className={cn(" border-primary-100 bg-gray-50", menuClassName)}>
+        <div
+          id={subMenuId}
+          role="menu"
+          aria-label="Submenu"
+          className={cn("border-primary-100 bg-gray-50", menuClassName)}
+        >
           {children}
         </div>
       )}

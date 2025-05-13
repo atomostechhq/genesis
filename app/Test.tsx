@@ -237,6 +237,7 @@ const Test = () => {
       info: "Modals",
       addInfo: "Be a direct child descendent of the modal.",
       tooltipContent: "hjsghjwg",
+      labelTextColor: "oklch(49.6% 0.265 301.924)"
     },
     { label: "banana", value: "banana", addInfo: "jdhjaldh" },
     { label: "strawberry", value: "strawberry" },
@@ -2082,6 +2083,7 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-400">Textarea</h1>
         <section className="flex items-center gap-4">
           <h1>States</h1>
+          <Input type="text"/>
           <Textarea
             placeholder="This is a placeholder"
             rows={4}

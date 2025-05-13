@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { RiArrowDownSLine } from "@remixicon/react";
 import { cn } from "../utils/utils";
@@ -19,7 +20,6 @@ export default function Accordion({
     const defaultOpen: string[] = [];
     React.Children.forEach(children, (child) => {
       if (React.isValidElement(child)) {
-        // Get the trigger element from AccordionItem children
         const triggerChild = React.Children.toArray(child.props.children)[0];
         if (
           React.isValidElement(triggerChild) &&
