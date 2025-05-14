@@ -200,6 +200,12 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           aria-labelledby={`${id}-label`}
           disabled={disabled}
           onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              !disabled && setDropdownMenu((prev) => !prev);
+            }
+          }}
           className={cn(
             "w-full hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-text-sm cursor-pointer",
             dropdownMenu ? "border border-gray-800" : "border border-gray-200",
@@ -245,13 +251,16 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           )}
           {multiple && (
             <section className="py-[6px] px-[14px] flex justify-between items-center">
-              <p
+              <button
+                type="button"
+                aria-label="Select all"
                 onClick={handleSelectAll}
                 className="text-text-sm  hover:text-primary-700 text-primary-600 cursor-pointer"
               >
                 Select all
-              </p>
+              </button>
               <button
+                aria-label="Reset"
                 type="button"
                 className="text-text-sm text-warning-500 hover:text-warning-600"
                 onClick={handleReset}
@@ -262,7 +271,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           )}
           <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
             {options
-              ? memoizedFilteredOptions.map((option, i) => (
+              ? memoizedFilteredOptions?.map((option, i) => (
                   <React.Fragment key={i}>
                     {multiple ? (
                       <Label
@@ -287,9 +296,19 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                               disabled={option?.disabledOption}
                             />
                             <div className="flex items-center gap-1">
-                              <span style={{ color: option.labelTextColor }}>
+                              <div
+                                style={{
+                                  color: option?.disabledOption
+                                    ? "#D1D5DB"
+                                    : option.labelTextColor,
+                                }}
+                                className={cn(
+                                  "break-words",
+                                  option?.disabledOption && "text-gray-300"
+                                )}
+                              >
                                 {renderItem(option)}
-                              </span>
+                              </div>
                               {dropDownTooltip && (
                                 <DropdownTooltip
                                   tooltipContent={option?.tooltipContent}
@@ -306,6 +325,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                     ) : (
                       <Label
                         key={i}
+                        htmlFor={`${id}-checkbox-${option.value}`}
                         className={cn(
                           "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
                           {
@@ -319,15 +339,18 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                           !option?.disabledOption && toggleOption(option)
                         }
                       >
-                        <div className="flex items-center gap-1">
-                          <span style={{ color: option.labelTextColor }}>
-                            {renderItem(option)}
-                          </span>
-                          {dropDownTooltip && (
-                            <DropdownTooltip
-                              tooltipContent={option?.tooltipContent}
-                            />
+                        <div
+                          style={{
+                            color: option?.disabledOption
+                              ? "#D1D5DB"
+                              : option.labelTextColor,
+                          }}
+                          className={cn(
+                            "break-words",
+                            option?.disabledOption && "text-gray-300"
                           )}
+                        >
+                          {renderItem(option)}
                         </div>
                         <span className="text-gray-500">{info}</span>
                       </Label>

@@ -43,11 +43,17 @@ const Label = ({
           ? "opacity-30 select-none pointer-events-none"
           : "opacity-100"
       )}
+      aria-disabled={disabled}
+      aria-required={required}
       {...props}
     >
-      {children}
-      <span className={cn(required === true ? "block text-red-500" : "hidden")}>
-        *
+      <span className="flex items-center gap-1">
+        {children}
+        {required && (
+          <span className="text-red-500" aria-hidden="true">
+            *
+          </span>
+        )}
       </span>
     </label>
   );
