@@ -87,6 +87,9 @@ const GlobalNavigationComponent = () => {
         size={"sm"}
         fullWidth
         startIcon={<RiLogoutBoxRLine size={20} />}
+        onClick={() => {
+          alert("Logout button clicked");
+        }}
       >
         Logout
       </Button>
@@ -839,16 +842,18 @@ const Test = () => {
           setShowModal={setShowModal}
           closeModal={true}
           closeOnOutsideClick={true}
-          width="500px"
+          width="60%"
         >
-          Content
-          <Tooltip
-          position="right"
-          className="text-success-500 max-w-[900px]"
-          content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
-        >
-          Top
-        </Tooltip>
+          <div className="max-w-[500px]">
+            Content
+            <Tooltip
+              position="right"
+              className="text-success-500 max-w-[900px]"
+              content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
+            >
+              Top
+            </Tooltip>
+          </div>
         </Modal>
       </section>
       {/* Dropdown  */}
