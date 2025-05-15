@@ -842,6 +842,13 @@ const Test = () => {
           width="500px"
         >
           Content
+          <Tooltip
+          position="right"
+          className="text-success-500 max-w-[900px]"
+          content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
+        >
+          Top
+        </Tooltip>
         </Modal>
       </section>
       {/* Dropdown  */}
@@ -1255,7 +1262,7 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-600">Tooltip:</h1>
         <Tooltip
           position="top"
-          className="text-success-500"
+          className="text-success-500 max-w-[900px]"
           content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
         >
           Top
