@@ -1912,7 +1912,7 @@ const Test = () => {
           >
             <GlobalNavigationComponent />
           </GlobalNavigation>
-          <GlobalNavigation
+          {/* <GlobalNavigation
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             postion="top-left"
@@ -1938,7 +1938,7 @@ const Test = () => {
             className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
           >
             <GlobalNavigationComponent />
-          </GlobalNavigation>
+          </GlobalNavigation> */}
         </div>
       </section>
       {/* skeleton */}

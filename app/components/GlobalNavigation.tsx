@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, forwardRef } from "react";
 import { cn } from "../utils/utils";
+
 interface GlobalNavigationProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
@@ -22,47 +23,36 @@ const GlobalNavigation = forwardRef<HTMLDivElement, GlobalNavigationProps>(
     },
     ref
   ) => {
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const menuRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
-        const target = event.target as Node;
-        const isClickInsideButton = buttonRef.current?.contains(target);
-        const isClickInsideMenu = menuRef.current?.contains(target);
-
-        // Only close if click is outside both button and menu
-        if (!isClickInsideButton && !isClickInsideMenu) {
+        if (
+          !triggerRef.current?.contains(event.target as Node) &&
+          !contentRef.current?.contains(event.target as Node)
+        ) {
           setIsOpen(false);
         }
       };
 
-      if (isOpen) {
-        document.addEventListener("mousedown", handleClickOutside);
-      }
-
-      return () => {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () =>
         document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [isOpen, setIsOpen]);
+    }, [setIsOpen]);
 
     return (
       <div className="relative w-max" ref={ref}>
-        <button
-          type="button"
+        <div
           className="cursor-pointer"
-          ref={buttonRef}
+          ref={triggerRef}
           onClick={() => setIsOpen(!isOpen)}
-          aria-expanded={isOpen}
-          aria-haspopup="true"
         >
           {trigger}
-        </button>
+        </div>
         {isOpen && (
           <div
-            ref={menuRef}
-            role="menu"
-            aria-orientation="vertical"
+            ref={contentRef}
             className={cn(
               "absolute z-10 bg-white rounded-lg shadow-sm border min-w-[200px] p-4 transition-all duration-300 ease-in-out",
               postion === "bottom-left" && "left-0 top-4/4",

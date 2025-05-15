@@ -44,13 +44,17 @@ const Label = ({
           : "opacity-100"
       )}
       aria-disabled={disabled}
-      aria-required={required}
       {...props}
     >
       <span className="flex items-center gap-1">
         {children}
         {required && (
-          <span className="text-red-500" aria-hidden="true">
+          <span
+            aria-label="required field"
+            role="presentation"
+            className="text-red-500"
+            aria-hidden="true"
+          >
             *
           </span>
         )}
