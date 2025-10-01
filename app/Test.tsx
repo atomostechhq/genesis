@@ -18,6 +18,7 @@ import {
   RiAddLine,
   RiCheckLine,
   RiTimeFill,
+  RiInformationLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -498,7 +499,7 @@ const Test = () => {
             Submit
           </Button>
         </section>
-        <section className="flex items-center gap-4">
+        <section className="flex items-center gap-2">
           <h1>States Filled:</h1>
           <Button variant="filled" intent={"default"}>
             Default
@@ -515,8 +516,35 @@ const Test = () => {
           <Button variant="filled" intent={"warning"}>
             Warning
           </Button>
+          <Button variant="filled" intent={"blue"}>
+            Blue
+          </Button>
+          <Button variant="filled" intent={"bluegray"}>
+            Bluegray
+          </Button>
+          <Button variant="filled" intent={"bluelight"}>
+            Bluelight
+          </Button>
+          <Button variant="filled" intent={"indigo"}>
+            Indigo
+          </Button>
+          <Button variant="filled" intent={"purple"}>
+            Purple
+          </Button>
+          <Button variant="filled" intent={"violet"}>
+            Violet
+          </Button>
+          <Button variant="filled" intent={"pink"}>
+            Pink
+          </Button>
+          <Button variant="filled" intent={"rose"}>
+            Rose
+          </Button>
+          <Button variant="filled" intent={"orange"}>
+            Orange
+          </Button>
         </section>
-        <section className="flex items-center gap-4">
+        <section className="flex items-center gap-2">
           <h1>States Outlined:</h1>
           <Button variant="outlined" intent="default-outlined">
             Default
@@ -532,6 +560,33 @@ const Test = () => {
           </Button>
           <Button variant="outlined" intent="warning-outlined">
             Warning
+          </Button>
+          <Button variant="outlined" intent={"blue-outlined"}>
+            Blue
+          </Button>
+          <Button variant="outlined" intent={"bluegray-outlined"}>
+            Bluegray
+          </Button>
+          <Button variant="outlined" intent={"bluelight-outlined"}>
+            Bluelight
+          </Button>
+          <Button variant="outlined" intent={"indigo-outlined"}>
+            Indigo
+          </Button>
+          <Button variant="outlined" intent={"purple-outlined"}>
+            Purple
+          </Button>
+          <Button variant="outlined" intent={"violet-outlined"}>
+            Violet
+          </Button>
+          <Button variant="outlined" intent={"pink-outlined"}>
+            Pink
+          </Button>
+          <Button variant="outlined" intent={"rose-outlined"}>
+            Rose
+          </Button>
+          <Button variant="outlined" intent={"orange-outlined"}>
+            Orange
           </Button>
         </section>
         <section className="flex items-center gap-4">
@@ -569,7 +624,11 @@ const Test = () => {
           <Chip intent="primary" size={"md"}>
             Size md
           </Chip>
-          <Chip intent="primary" size={"lg"}>
+          <Chip
+            intent="primary"
+            size={"lg"}
+            endIcon={<RiInformationLine size={18} />}
+          >
             Size lg
           </Chip>
         </section>
@@ -594,13 +653,19 @@ const Test = () => {
         <section className="flex flex-wrap items-center gap-4">
           <p>Chips without dot</p>
           <Chip intent="primary">primary</Chip>
-          <Chip intent="warning">warning</Chip>
+          <Chip intent="warning" endIcon={<RiInformationLine size={18} />}>
+            warning
+          </Chip>
           <Chip intent="success">success</Chip>
           <Chip intent="error">error</Chip>
           <Chip intent="default">default</Chip>
           <Chip intent="bluegray">bluegray</Chip>
-          <Chip intent="bluelight">bluelight</Chip>
-          <Chip intent="violet">violet</Chip>
+          <Chip intent="bluelight" endIcon={<RiInformationLine size={18} />}>
+            bluelight
+          </Chip>
+          <Chip intent="violet" startIcon={<RiInformationLine size={18} />}>
+            violet
+          </Chip>
           <Chip intent="indigo">indigo</Chip>
           <Chip intent="purple">purple</Chip>
           <Chip intent="pink">pink</Chip>

@@ -26,8 +26,10 @@ interface TableHeadCellProps extends ThHTMLAttributes<HTMLTableCellElement> {
   icon?: JSX.Element;
   sticky?: boolean;
   left?: string;
+  right?: string;
   stickyIcon?: JSX.Element;
   shadow?: boolean;
+  shadowRight?: boolean;
 }
 
 interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
@@ -35,7 +37,9 @@ interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   icon?: JSX.Element;
   sticky?: boolean;
   left?: string;
+  right?: string;
   shadow?: boolean;
+  shadowRight?: boolean;
 }
 
 export const Table = ({ children, className, dense, ...props }: TableProps) => {
@@ -107,6 +111,8 @@ export const TableHeadCell = ({
   sticky,
   shadow,
   left,
+  shadowRight,
+  right,
   ...props
 }: TableHeadCellProps) => {
   return (
@@ -116,11 +122,14 @@ export const TableHeadCell = ({
         "px-6 py-3 text-left group-has-[th]/dense:py-2",
         sticky && `sticky bg-gray-50`,
         sticky && shadow && "shadow-table",
+        sticky && shadowRight && "shadow-tableRight",
         left,
+        right,
         className
       )}
       style={{
         left: left,
+        right: right,
       }}
     >
       <div className="flex items-center gap-1">
@@ -145,7 +154,9 @@ export const TableDataCell = ({
   icon,
   sticky,
   shadow,
+  shadowRight,
   left,
+  right,
   ...props
 }: TableCellProps) => {
   return (
@@ -155,11 +166,14 @@ export const TableDataCell = ({
         "px-6 py-4 text-sm font-medium group-has-[td]/dense:py-2 first:group-has-[td]/indent:pl-[60px]",
         sticky && `sticky bg-white`,
         sticky && shadow && "shadow-table",
+        sticky && shadowRight && "shadow-tableRight",
         left,
+        right,
         className
       )}
       style={{
         left: left,
+        right: right,
       }}
     >
       <span className="font-medium text-sm">{children}</span>
