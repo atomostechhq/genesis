@@ -43,6 +43,20 @@
       --primary-900: #3e1c96;
     } */
 
+    /* .theme-primary {
+      --primary-25: #ffffff;
+      --primary-50: #fff8e4;
+      --primary-100: #ffecba;
+      --primary-200: #ffe08f;
+      --primary-300: #ffd665;
+      --primary-400: #ffcb4c;
+      --primary-500: #ffc342;
+      --primary-600: #ffb53d;
+      --primary-700: #ffa33a;
+      --primary-800: #fd9438;
+      --primary-900: #f97835;
+    } */
+
     /* Gray Colors */
     --gray-25: #fff;
     --gray-50: #f9fafb;
@@ -171,9 +185,9 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.4), 
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
     transparent
   );
   transform: translateX(-100%);
