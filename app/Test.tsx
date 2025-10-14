@@ -1177,37 +1177,195 @@ const Test = () => {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outlined">Open</Button>
+            <Button variant="outlined">Bottom Menu</Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-56"
-            align="start"
-            side="bottom"
-            sideOffset={8}
-            alignOffset={10}
-          >
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                Profile
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-              </DropdownMenuItem>
-
-              <DropdownMenuSub side="right" sideOffset={4} alignOffset={-8}>
-                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+          <DropdownMenuContent className="w-56" side="bottom" sideOffset={5}>
+            <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownMenuSub side="right" sideOffset={5}>
+                <DropdownMenuSubTrigger>Submenu →</DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent>
                     <DropdownMenuItem>Email</DropdownMenuItem>
                     <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
-            </DropdownMenuGroup>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </section>
+      <div className="grid grid-cols-2 gap-4 p-8">
+        {/* Top-Left */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Top</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="start"
+              side="top"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Top Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="bottom" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Top-Right */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Top-End</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="end"
+              side="top"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Top End Aligned</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="bottom" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Bottom-Left */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Bottom</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="start"
+              side="bottom"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="right" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Bottom-Right */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Bottom-End</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="end"
+              side="bottom"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Bottom End Aligned</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="left" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Left */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Left</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="start"
+              side="left"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Left Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="right" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Right */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Right</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="start"
+              side="right"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Right Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="left" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
       {/* Tabs */}
       <div>
         <h1 className="text-display-sm text-primary-600">Tabs</h1>
