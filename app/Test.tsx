@@ -18,6 +18,7 @@ import {
   RiAddLine,
   RiCheckLine,
   RiTimeFill,
+  RiInformationLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -44,7 +45,7 @@ import Breadcrumbs from "./components/Breadcrumb";
 import CircularProgress from "./components/CircularProgress";
 import Slider from "./components/Slider";
 import GlobalNavigation from "./components/GlobalNavigation";
-import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
+// import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
 import ListItem from "./components/ListItem";
 import Avatar from "./components/Avatar";
 import AvatarGroup from "./components/AvatarGroup";
@@ -53,6 +54,7 @@ import Accordion, {
   AccordionItem,
   AccordionTrigger,
 } from "./components/Accordion";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "./components/MenuItem";
 
 interface Option {
   label: string | number;
@@ -494,7 +496,7 @@ const Test = () => {
             Submit
           </Button>
         </section>
-        <section className="flex items-center gap-4">
+        <section className="flex items-center gap-2">
           <h1>States Filled:</h1>
           <Button variant="filled" intent={"default"}>
             Default
@@ -511,8 +513,35 @@ const Test = () => {
           <Button variant="filled" intent={"warning"}>
             Warning
           </Button>
+          <Button variant="filled" intent={"blue"}>
+            Blue
+          </Button>
+          <Button variant="filled" intent={"bluegray"}>
+            Bluegray
+          </Button>
+          <Button variant="filled" intent={"bluelight"}>
+            Bluelight
+          </Button>
+          <Button variant="filled" intent={"indigo"}>
+            Indigo
+          </Button>
+          <Button variant="filled" intent={"purple"}>
+            Purple
+          </Button>
+          <Button variant="filled" intent={"violet"}>
+            Violet
+          </Button>
+          <Button variant="filled" intent={"pink"}>
+            Pink
+          </Button>
+          <Button variant="filled" intent={"rose"}>
+            Rose
+          </Button>
+          <Button variant="filled" intent={"orange"}>
+            Orange
+          </Button>
         </section>
-        <section className="flex items-center gap-4">
+        <section className="flex items-center gap-2">
           <h1>States Outlined:</h1>
           <Button variant="outlined" intent="default-outlined">
             Default
@@ -528,6 +557,33 @@ const Test = () => {
           </Button>
           <Button variant="outlined" intent="warning-outlined">
             Warning
+          </Button>
+          <Button variant="outlined" intent={"blue-outlined"}>
+            Blue
+          </Button>
+          <Button variant="outlined" intent={"bluegray-outlined"}>
+            Bluegray
+          </Button>
+          <Button variant="outlined" intent={"bluelight-outlined"}>
+            Bluelight
+          </Button>
+          <Button variant="outlined" intent={"indigo-outlined"}>
+            Indigo
+          </Button>
+          <Button variant="outlined" intent={"purple-outlined"}>
+            Purple
+          </Button>
+          <Button variant="outlined" intent={"violet-outlined"}>
+            Violet
+          </Button>
+          <Button variant="outlined" intent={"pink-outlined"}>
+            Pink
+          </Button>
+          <Button variant="outlined" intent={"rose-outlined"}>
+            Rose
+          </Button>
+          <Button variant="outlined" intent={"orange-outlined"}>
+            Orange
           </Button>
         </section>
         <section className="flex items-center gap-4">
@@ -565,7 +621,11 @@ const Test = () => {
           <Chip intent="primary" size={"md"}>
             Size md
           </Chip>
-          <Chip intent="primary" size={"lg"}>
+          <Chip
+            intent="primary"
+            size={"lg"}
+            endIcon={<RiInformationLine size={18} />}
+          >
             Size lg
           </Chip>
         </section>
@@ -590,13 +650,19 @@ const Test = () => {
         <section className="flex flex-wrap items-center gap-4">
           <p>Chips without dot</p>
           <Chip intent="primary">primary</Chip>
-          <Chip intent="warning">warning</Chip>
+          <Chip intent="warning" endIcon={<RiInformationLine size={18} />}>
+            warning
+          </Chip>
           <Chip intent="success">success</Chip>
           <Chip intent="error">error</Chip>
           <Chip intent="default">default</Chip>
           <Chip intent="bluegray">bluegray</Chip>
-          <Chip intent="bluelight">bluelight</Chip>
-          <Chip intent="violet">violet</Chip>
+          <Chip intent="bluelight" endIcon={<RiInformationLine size={18} />}>
+            bluelight
+          </Chip>
+          <Chip intent="violet" startIcon={<RiInformationLine size={18} />}>
+            violet
+          </Chip>
           <Chip intent="indigo">indigo</Chip>
           <Chip intent="purple">purple</Chip>
           <Chip intent="pink">pink</Chip>
@@ -992,9 +1058,9 @@ const Test = () => {
         </div>
       </section>
       {/* Menu Items */}
-      <section>
+      <section className="bg-red-50 p-5">
         <h1 className="text-display-sm text-primary-600">MenuItems:</h1>
-        <MenuDropdown
+        {/* <MenuDropdown
           className=""
           trigger={
             <ListItem
@@ -1028,8 +1094,255 @@ const Test = () => {
           >
             <MenuSubItem label="Audit" />
           </Link>
-        </MenuDropdown>
+        </MenuDropdown> */}
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outlined">Open</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="start">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                Profile
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Billing
+                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Settings
+                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Keyboard shortcuts
+                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+
+              <DropdownMenuItem>
+                New Team
+                <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>GitHub</DropdownMenuItem>
+            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuItem disabled>API</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              Log out
+              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outlined">Bottom Menu</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" side="bottom" sideOffset={5}>
+            <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownMenuSub side="right" sideOffset={5}>
+                <DropdownMenuSubTrigger>Submenu →</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </section>
+      <div className="grid grid-cols-2 gap-4 p-8">
+        {/* Top-Left */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Top</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="start"
+              side="top"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Top Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="bottom" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Top-Right */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Top-End</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="end"
+              side="top"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Top End Aligned</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="bottom" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Bottom-Left */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Bottom</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="start"
+              side="bottom"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="right" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Bottom-Right */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Bottom-End</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="end"
+              side="bottom"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Bottom End Aligned</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="left" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Left */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Left</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="start"
+              side="left"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Left Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="right" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Right */}
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outlined">Right</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="start"
+              side="right"
+              sideOffset={5}
+            >
+              <DropdownMenuLabel>Right Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub side="left" sideOffset={2}>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
       {/* Tabs */}
       <div>
         <h1 className="text-display-sm text-primary-600">Tabs</h1>
