@@ -17,18 +17,20 @@ interface TabListProps extends Partial<TabItem> {
   ariaLabel?: string;
   children: React.ReactNode;
   box?: boolean;
+  pill?: boolean;
   className?: string;
 }
 
 interface TabProps extends TabItem {
   onChange: (value: string) => void;
   box?: boolean;
+  pill?: boolean;
   content?: React.ReactNode;
   selectedTabValue: string;
   icon?: JSX.Element;
   className?: string;
   tabIndex?: number;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void; // Update event type
+  onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
   ref?: React.Ref<HTMLButtonElement>;
 }
 
@@ -51,6 +53,7 @@ export const TabList: React.FC<TabListProps> = ({
   ariaLabel,
   children,
   box = false,
+  pill = false,
   className,
 }) => {
   const [focusIndex, setFocusIndex] = React.useState(0);
@@ -81,6 +84,8 @@ export const TabList: React.FC<TabListProps> = ({
         "flex items-center",
         box
           ? "bg-gray-50 rounded-lg border border-gray-200"
+          : pill
+          ? "bg-gray-25 rounded-lg p-1"
           : "border-b border-gray-200",
         className
       )}
@@ -93,6 +98,7 @@ export const TabList: React.FC<TabListProps> = ({
           const childProps = {
             onChange,
             box,
+            pill,
             onKeyDown: (e: React.KeyboardEvent) => handleKeyDown(e, index),
             tabIndex: index === focusIndex ? 0 : -1,
           };
@@ -100,7 +106,6 @@ export const TabList: React.FC<TabListProps> = ({
           return React.cloneElement(child, {
             ...childProps,
             ref: (el: HTMLButtonElement | null) => {
-              // Handle the ref
               tabRefs.current[index] = el;
               const originalRef = (child as any).ref;
               if (originalRef) {
@@ -128,6 +133,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
       icon,
       content,
       box = false,
+      pill = false,
       selectedTabValue,
       className,
       onKeyDown,
@@ -136,6 +142,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
     ref
   ) => {
     const isSelected = value === selectedTabValue;
+    // const context = React.useContext(TabsContext);
 
     return (
       <button
@@ -148,12 +155,26 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
         onKeyDown={onKeyDown}
         className={cn(
           "flex items-center gap-2 px-4 py-3 text-text-sm font-medium cursor-pointer",
-          isSelected && !box
-            ? "text-primary-600 border-b-2 border-primary-600"
-            : "border-b-2 border-transparent text-gray-700",
-          isSelected && box ? "bg-white hover:bg-white shadow-md" : "",
-          box ? "m-1 rounded-lg hover:rounded-lg" : "m-0",
-          "hover:bg-gray-100 hover:rounded-t transition-all ease-linear duration-200 delay-75",
+          // Default variant (no box, no pill)
+          !box && !pill && [
+            isSelected
+              ? "text-primary-600 border-b-2 border-primary-600"
+              : "border-b-2 border-transparent text-gray-700",
+          ],
+          // Box variant
+          box && [
+            "m-1 rounded-lg hover:rounded-lg",
+            isSelected ? "bg-white hover:bg-white shadow-md" : "",
+          ],
+          // Pill variant
+          pill && [
+            "py-1 px-3.5 border border-gray-700 border-r-0 last:border-r last:rounded-r-lg first:rounded-l-lg",
+            isSelected
+              ? "bg-primary-600 border-primary-600 text-white hover:bg-primary-700"
+              : "bg-gray-25 text-gray-700 hover:bg-gray-100",
+          ],
+          // Common styles
+          "transition-all ease-linear duration-200 delay-75",
           className
         )}
         onClick={() => onChange(value)}

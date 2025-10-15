@@ -164,7 +164,7 @@ export function DropdownMenuContent({
         focus:outline-none z-50 ${alignmentClasses[align]} ${sideClasses[side]} ${className}
       `}
     >
-      <div className="py-1">{children}</div>
+      <div className="">{children}</div>
     </div>
   );
 }
@@ -271,7 +271,7 @@ export function DropdownMenuSeparator({
 }: {
   className?: string;
 }) {
-  return <div className={`border-t border-gray-100 my-1 ${className}`} />;
+  return <div className={`border-t border-gray-100 ${className}`} />;
 }
 
 // Shortcut Component
@@ -385,11 +385,11 @@ export function DropdownMenuSubTrigger({
       </DropdownMenuItemWrapper>
       {isSubOpen && submenuContent && (
         <div
-          className="absolute left-0 top-full w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
+          className="absolute left-0 top-full w-full rounded-b-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <div className="py-1">
+          <div className="">
             {submenuContent}
           </div>
         </div>
@@ -409,5 +409,3 @@ export function DropdownMenuSubContent({
   // Its content is extracted by DropdownMenuSub and used in the submenu
   return null;
 }
-
-// Remove DropdownMenuPortal since we're not using it anymore

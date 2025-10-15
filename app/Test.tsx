@@ -241,9 +241,9 @@ const Test = () => {
   );
 
   const singleOptions = [
-    { label: "Option 1", value: "1" },
-    { label: "Option 2", value: "2" },
-    { label: "Option 3", value: "3" },
+    { label: "Option 1", value: 1 },
+    { label: "Option 2", value: 2 },
+    { label: "Option 3", value: 3 },
   ];
 
   const multiOptions = [
@@ -441,8 +441,6 @@ const Test = () => {
     const timer = setTimeout(() => setProgress(80), 2000);
     return () => clearTimeout(timer);
   }, [progress]);
-
-  const [selected, setSelected] = useState(false);
 
   return (
     <div className="m-5 space-y-5">
@@ -947,7 +945,7 @@ const Test = () => {
           width="200px"
           id="dropdownMenuOptionOne"
           dropdownFooter={true}
-          dropDownTooltip
+          // dropDownTooltip
           onApply={() => {
             alert("Apply button clicked");
           }}
@@ -1035,7 +1033,7 @@ const Test = () => {
         <div>
           <h1 className="text-lg">Single Dropdown Language</h1>
           <Dropdown
-            options={multiOptions}
+            options={singleOptions}
             selected={singleSelect}
             icon={<RiGlobalLine size={16} />}
             setSelected={setSingleSelect}
@@ -1074,7 +1072,7 @@ const Test = () => {
         </div>
       </section>
       {/* Menu Items */}
-      <section className="bg-red-50 p-5">
+      <section className="p-5">
         <h1 className="text-display-sm text-primary-600">MenuItems:</h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -1138,8 +1136,8 @@ const Test = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className="w-56"
-              align="start"
-              side="top"
+              // align="start"
+              // side="top"
               sideOffset={5}
             >
               <DropdownMenuLabel>Top Position</DropdownMenuLabel>
@@ -1344,6 +1342,17 @@ const Test = () => {
                     <DropdownMenuItem>More options...</DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    Invite users with long text
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email invitation</DropdownMenuItem>
+                    <DropdownMenuItem>Message invitation</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More options...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -1399,6 +1408,46 @@ const Test = () => {
               onChange={handleTabChange}
               ariaLabel="lab API tabs example"
               box={true}
+            >
+              <Tab
+                label="Item One"
+                value="1"
+                content="(12)"
+                icon={<RiSearch2Line size={16} />}
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Two"
+                value="2"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Three"
+                value="3"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+            </TabList>
+            <TabPanel value="1" currentValue={value}>
+              Item One Content
+            </TabPanel>
+            <TabPanel value="2" currentValue={value}>
+              Item Two Content
+            </TabPanel>
+            <TabPanel value="3" currentValue={value}>
+              Item Three Content
+            </TabPanel>
+          </TabsContainer>
+        </section>
+        <section className="my-5">
+          <h1 className="text-lg">Tab with pill variant</h1>
+          <TabsContainer value={value}>
+            <TabList
+              onChange={handleTabChange}
+              ariaLabel="lab API tabs example"
+              pill={true}
             >
               <Tab
                 label="Item One"
@@ -1693,19 +1742,19 @@ const Test = () => {
         <Tooltip
           position="right"
           content=" Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Laborum incidunt perferendis
-                sapiente eos? Error aut accusamus odio officiis eaque
-                consectetur obcaecati doloribus, inventore ut reiciendis maiores
-                facere veritatis, corrupti autem illo deleniti eveniet
-                repudiandae iste harum. Voluptate minima ab tenetur veritatis
-                neque dolorem voluptates, praesentium a, velit doloremque
-                impedit facilis vel exercitationem assumenda. Esse labore
-                mollitia enim beatae officia? Delectus exercitationem voluptatem
-                consectetur quae veniam odit ut explicabo voluptas. Doloremque
-                nesciunt deleniti aliquam quibusdam nulla ipsa repudiandae
-                aspernatur placeat fuga officia. Natus itaque inventore eligendi
-                eveniet, nemo saepe voluptatum et ducimus provident suscipit
-                dolore, incidunt esse est iusto consequatur reprehenderit."
+          consectetur adipisicing elit. Laborum incidunt perferendis
+          sapiente eos? Error aut accusamus odio officiis eaque
+          consectetur obcaecati doloribus, inventore ut reiciendis maiores
+          facere veritatis, corrupti autem illo deleniti eveniet
+          repudiandae iste harum. Voluptate minima ab tenetur veritatis
+          neque dolorem voluptates, praesentium a, velit doloremque
+          impedit facilis vel exercitationem assumenda. Esse labore
+          mollitia enim beatae officia? Delectus exercitationem voluptatem
+          consectetur quae veniam odit ut explicabo voluptas. Doloremque
+          nesciunt deleniti aliquam quibusdam nulla ipsa repudiandae
+          aspernatur placeat fuga officia. Natus itaque inventore eligendi
+          eveniet, nemo saepe voluptatum et ducimus provident suscipit
+          dolore, incidunt esse est iusto consequatur reprehenderit."
         >
           Right
         </Tooltip>
