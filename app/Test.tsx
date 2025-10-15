@@ -53,11 +53,10 @@ import Accordion, {
   AccordionItem,
   AccordionTrigger,
 } from "./components/Accordion";
-import { info } from "console";
 
 interface Option {
-  label: string;
-  value: string;
+  label: string | number;
+  value: string | number;
 }
 
 const GlobalNavigationComponent = () => {
@@ -216,10 +215,8 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
-  // console.log("multiSelect", multiSelect)
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
-  // console.log("singleSelect", singleSelect);
 
   const [dropdownMenuOption, setDropdownMenuOption] = useState<Option[]>([]);
 
@@ -237,28 +234,27 @@ const Test = () => {
     {
       label:
         "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      value: "apple",
-      info: "Modals",
+      value: 1,
       tooltipContent: "hjsghjwg",
       labelTextColor: "oklch(49.6% 0.265 301.924)",
       disabledOption: true,
     },
     {
       label: "banana",
-      value: "banana",
+      value: 2,
       addInfo: "jdhjaldh",
       labelTextColor: "#1765dc",
     },
-    { label: "strawberry", value: "strawberry" },
-    { label: "kiwi", value: "kiwi", info: "info4" },
+    { label: "strawberry", value: 3 },
+    { label: "kiwi", value: 4, info: "info4" },
     {
       label: "orangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      value: "orange",
+      value: 5,
       tooltipContent: "lower-level components:",
       info: "info5",
     },
-    { label: "grapes", value: "grapes" },
-    { label: "melon", value: "melon" },
+    { label: "grapes", value: 6 },
+    { label: "melon", value: 7 },
     { label: "mango", value: "mango" },
   ];
 
@@ -868,14 +864,8 @@ const Test = () => {
           multiple={true}
           width="200px"
           id="dropdownMenuOptionOne"
-          // trigger={
-          //   <RiFilterLine
-          //     className="hover:bg-gray-200 rounded"
-          //     cursor="pointer"
-          //     size={14}
-          //   />
-          // }
           dropdownFooter={true}
+          dropDownTooltip
           onApply={() => {
             alert("Apply button clicked");
           }}

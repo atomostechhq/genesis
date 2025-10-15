@@ -16,8 +16,8 @@ import Checkbox from "./Checkbox";
 import Tooltip from "./Tooltip";
 
 type Option = {
-  label: string;
-  value: string;
+  label: string | number;
+  value: string | number;
   info?: string;
   addInfo?: string;
   tooltipContent?: string;
@@ -26,8 +26,8 @@ type Option = {
 };
 
 interface MenuItemProps {
-  label?: string;
-  value: string;
+  label?: string | number;
+  value: string | number;
   children?: React.ReactNode;
 }
 
