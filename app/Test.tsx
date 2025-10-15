@@ -19,6 +19,7 @@ import {
   RiCheckLine,
   RiTimeFill,
   RiInformationLine,
+  RiCloseLine,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -54,6 +55,7 @@ import Accordion, {
   AccordionItem,
   AccordionTrigger,
 } from "./components/Accordion";
+import Callout from "./components/Callout";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -439,6 +441,8 @@ const Test = () => {
     const timer = setTimeout(() => setProgress(80), 2000);
     return () => clearTimeout(timer);
   }, [progress]);
+
+  const [selected, setSelected] = useState(false);
 
   return (
     <div className="m-5 space-y-5">
@@ -1567,6 +1571,115 @@ const Test = () => {
           />
         </div>
       </section>
+      {/* callout */}
+      <section className="my-5 space-y-4">
+        <h1 className="text-display-sm text-primary-600">Callout:</h1>
+        <div className="space-y-3">
+          <h1 className="text-display-xs text-primary-600">Filled:</h1>
+          <Callout
+            size={"xs"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"sm"}
+            intent={"warning"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"md"}
+            intent={"error"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            intent={"success"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            intent={"default"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <h1 className="text-display-xs text-primary-600">Outlined:</h1>
+          <Callout
+            size={"xs"}
+            variant={"outlined"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"sm"}
+            variant={"outlined"}
+            intent={"warning"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"md"}
+            variant={"outlined"}
+            intent={"error"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            variant={"outlined"}
+            intent={"success"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={
+              <Button
+                size={"sm"}
+                intent={"success"}
+                className="whitespace-nowrap"
+              >
+                Contact Admin
+              </Button>
+            }
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            variant={"outlined"}
+            intent={"default"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+        </div>
+      </section>
       {/* Tooltip */}
       <section className="flex items-center gap-5 my-5">
         <h1 className="text-display-sm text-primary-600">Tooltip:</h1>
@@ -2411,7 +2524,6 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-600">Textarea</h1>
         <section className="flex items-center gap-4">
           <h1>States</h1>
-          <Input type="text" />
           <Textarea
             placeholder="This is a placeholder"
             rows={4}

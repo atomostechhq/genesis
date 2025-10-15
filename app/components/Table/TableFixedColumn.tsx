@@ -31,8 +31,6 @@ const TableFixedColumn = () => {
     setPage(0);
   };
 
-  console.log("tableData", tableData);
-
   const startIndex = page * rowsPerPage;
   const endIndex = (page + 1) * rowsPerPage;
 
