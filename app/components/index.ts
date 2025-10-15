@@ -19,6 +19,7 @@ export { default as GlobalNavigation } from "./GlobalNavigation";
 export { default as HelperText } from "./HelperText";
 export { default as Input } from "./Input";
 export { default as ListItem } from "./ListItem";
+export { default as ListPagination } from "./ListPagination";
 export { default as Label } from "./Label";
 export { default as Loading } from "./Loading";
 export { default as Modal } from "./Modal";
