@@ -153,8 +153,11 @@ const Test = () => {
       setSelectedSingleFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-  const handleDeleteFileSingle = (file: string | File) => {
-    setSelectedSingleFiles((prevFiles) => prevFiles.filter((f) => f !== file));
+
+  const handleDeleteFileSingle = (index: number) => {
+    setSelectedSingleFiles((prevFiles) =>
+      prevFiles.filter((_, i) => i !== index)
+    );
   };
 
   // multiple file upload
@@ -169,8 +172,8 @@ const Test = () => {
     }
   };
 
-  const handleDeleteFile = (file: string | File) => {
-    setSelectedFiles((prevFiles) => prevFiles.filter((f) => f !== file));
+  const handleDeleteFile = (index: number) => {
+    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
   // tabs
@@ -1532,7 +1535,7 @@ const Test = () => {
           selectedFile={selectedSingleFiles}
           setSelectedFile={setSelectedSingleFiles}
           onChange={handleFileChangeSingle}
-          onDelete={() => handleDeleteFileSingle(selectedSingleFiles[0])}
+          onDelete={handleDeleteFileSingle}
           title="SVG, PNG, JPG or GIF (max. 800x400px)"
         >
           <ProgressBar progressColor="bg-primary-600" progress={50} />
@@ -1543,7 +1546,7 @@ const Test = () => {
           selectedFile={selectedFiles}
           setSelectedFile={setSelectedFiles}
           onChange={handleFileChangeMultiple}
-          onDelete={() => handleDeleteFile(selectedFiles[0])}
+          onDelete={handleDeleteFile}
           title="SVG, PNG, JPG or GIF (max. 800x400px)"
           filePreviewClassName="grid grid-cols-2 gap-2"
         />
