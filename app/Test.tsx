@@ -69,6 +69,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./components/MenuItem";
+import TreeView from "./components/TreeView";
 
 interface Option {
   label: string | number;
@@ -305,6 +306,9 @@ const Test = () => {
   // progress bar
   const [progress, setProgress] = useState(0);
 
+  // tree view
+  const [selected, setSelected] = useState<string | null>(null);
+
   const navItems = [
     {
       label: "Page",
@@ -441,8 +445,6 @@ const Test = () => {
     const timer = setTimeout(() => setProgress(80), 2000);
     return () => clearTimeout(timer);
   }, [progress]);
-
-  const [selected, setSelected] = useState(false);
 
   return (
     <div className="m-5 space-y-5">
@@ -886,6 +888,125 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* tree view */}
+      <section className="my-5">
+        <h1 className="text-display-sm text-primary-600">Tree View:</h1>
+        {/* <TreeView aria-label="File explorer">
+          <TreeView.Item
+            id="src"
+            defaultExpanded
+            onSelect={setSelected}
+            selected={selected === "src"}
+          >
+            src
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="src-components"
+                onSelect={setSelected}
+                selected={selected === "src-components"}
+              >
+                components
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="src-components-button"
+                    onSelect={setSelected}
+                    selected={selected === "src-components-button"}
+                  >
+                    Button.tsx
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="src-components-input"
+                    onSelect={setSelected}
+                    selected={selected === "src-components-input"}
+                  >
+                    Input.tsx
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+              <TreeView.Item
+                id="src-utils"
+                onSelect={setSelected}
+                selected={selected === "src-utils"}
+              >
+                utils.ts
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+          <TreeView.Item
+            id="package.json"
+            onSelect={setSelected}
+            selected={selected === "package.json"}
+          >
+            package.json
+          </TreeView.Item>
+        </TreeView> */}
+
+        <TreeView aria-label="Complex project structure">
+          <TreeView.Item
+            id="frontend"
+            defaultExpanded
+            onSelect={setSelected}
+            selected={selected === "frontend"}
+          >
+            Frontend
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="frontend-react"
+                defaultExpanded
+                onSelect={setSelected}
+                selected={selected === "frontend-react"}
+              >
+                React App
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="frontend-react-components"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-react-components"}
+                  >
+                    Components
+                    <TreeView.SubTree>
+                      <TreeView.Item
+                        id="frontend-react-components-ui"
+                        onSelect={setSelected}
+                        selected={selected === "frontend-react-components-ui"}
+                      >
+                        UI
+                      </TreeView.Item>
+                      <TreeView.Item
+                        id="frontend-react-components-forms"
+                        onSelect={setSelected}
+                        selected={
+                          selected === "frontend-react-components-forms"
+                        }
+                      >
+                        Forms
+                      </TreeView.Item>
+                    </TreeView.SubTree>
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+
+          <TreeView.Item
+            id="backend"
+            defaultExpanded
+            onSelect={setSelected}
+            selected={selected === "backend"}
+          >
+            Backend
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="backend-api"
+                onSelect={setSelected}
+                selected={selected === "backend-api"}
+              >
+                API Routes
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+        </TreeView>
+      </section>
       {/* Slider */}
       <div className="space-y-6">
         <h1 className="text-display-sm text-primary-600">Slider:</h1>
@@ -1390,6 +1511,44 @@ const Test = () => {
             <TabPanel value="3" currentValue={value}>
               Item Three Content
             </TabPanel>
+          </TabsContainer>
+        </section>
+
+        <section>
+          <TabsContainer
+            value={value}
+            position="vertical"
+            className="flex gap-4"
+          >
+            <TabList
+              onChange={handleTabChange}
+              ariaLabel="Vertical tabs example"
+              position="vertical"
+              className="w-48"
+            >
+              <Tab
+                label="Item One"
+                value="1"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+                position="vertical"
+              />
+              <Tab
+                label="Item Two"
+                value="2"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+                position="vertical"
+              />
+            </TabList>
+            <div className="flex-1">
+              <TabPanel value="1" currentValue={value}>
+                Item One Content
+              </TabPanel>
+              <TabPanel value="2" currentValue={value}>
+                Item Two Content
+              </TabPanel>
+            </div>
           </TabsContainer>
         </section>
         <section className="my-5">
