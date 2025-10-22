@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
@@ -15,11 +15,11 @@ import {
   RiFilterLine,
   RiStackLine,
   RiExternalLinkLine,
-  RiAddLine,
   RiCheckLine,
   RiTimeFill,
   RiInformationLine,
   RiCloseLine,
+  RiUpload2Line,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -46,8 +46,6 @@ import Breadcrumbs from "./components/Breadcrumb";
 import CircularProgress from "./components/CircularProgress";
 import Slider from "./components/Slider";
 import GlobalNavigation from "./components/GlobalNavigation";
-// import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
-import ListItem from "./components/ListItem";
 import Avatar from "./components/Avatar";
 import AvatarGroup from "./components/AvatarGroup";
 import Accordion, {
@@ -71,6 +69,7 @@ import {
   DropdownMenuTrigger,
 } from "./components/MenuItem";
 import Drawer from "./components/Drawer";
+import FileSelector from "./components/FileSelector";
 
 interface Option {
   label: string;
@@ -177,6 +176,21 @@ const Test = () => {
     setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
+  const fileRef = useRef<HTMLInputElement>(null);
+  const fileMultiRef = useRef<HTMLInputElement>(null);
+
+  const handleSingleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      console.log("Selected file:", e.target.files[0]);
+    }
+  };
+
+  const handleMultipleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      console.log("Selected files:", Array.from(e.target.files));
+    }
+  };
+
   // tabs
 
   // const router = useRouter();
@@ -255,8 +269,7 @@ const Test = () => {
 
   const multiOptions = [
     {
-      label:
-        "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      label: "appleeeee appleeeee",
       value: "apple",
       info: "Modals",
       tooltipContent: "hjsghjwg",
@@ -272,7 +285,7 @@ const Test = () => {
     { label: "strawberry", value: "strawberry" },
     { label: "kiwi", value: "kiwi", info: "info4" },
     {
-      label: "orangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      label: "orange",
       value: "orange",
       tooltipContent: "lower-level components:",
       info: "info5",
@@ -1601,6 +1614,28 @@ const Test = () => {
           onDelete={handleDeleteFile}
           title="SVG, PNG, JPG or GIF (max. 800x400px)"
           filePreviewClassName="grid grid-cols-2 gap-2"
+        />
+        <FileSelector
+          ref={fileRef}
+          id="singleselect"
+          component={
+            <Button
+              size={"sm"}
+              variant={"outlined"}
+              endIcon={<RiUpload2Line size={18} />}
+            >
+              Upload Single File
+            </Button>
+          }
+          onChange={handleSingleChange}
+        />
+        <br />
+        <FileSelector
+          ref={fileMultiRef}
+          id="multiselect"
+          component={<Button>Upload Multiple Files</Button>}
+          multiple
+          onChange={handleMultipleChange}
         />
       </section>
       {/* progress */}
