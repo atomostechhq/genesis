@@ -70,6 +70,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./components/MenuItem";
+import Drawer from "./components/Drawer";
 
 interface Option {
   label: string;
@@ -306,6 +307,12 @@ const Test = () => {
   // modal
   const [showModal, setShowModal] = useState(false);
 
+  // drawer
+  type DrawerPosition = "top" | "right" | "bottom" | "left" | undefined;
+  const [openPosition, setOpenPosition] = useState<DrawerPosition>(undefined);
+
+  const positions: DrawerPosition[] = ["top", "right", "bottom", "left"];
+
   // sidebar
   const [collapsed, setCollapsed] = useState(true);
 
@@ -448,8 +455,6 @@ const Test = () => {
     const timer = setTimeout(() => setProgress(80), 2000);
     return () => clearTimeout(timer);
   }, [progress]);
-
-  const [selected, setSelected] = useState(false);
 
   return (
     <div className="m-5 space-y-5">
@@ -893,6 +898,23 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* Textarea */}
+      <section className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-600">Textarea</h1>
+        <section className="flex items-center gap-4">
+          <h1>States</h1>
+          <Textarea
+            placeholder="This is a placeholder"
+            rows={4}
+            size="lg"
+          ></Textarea>
+          <Textarea
+            placeholder="This is a placeholder"
+            size="sm"
+            disabled
+          ></Textarea>
+        </section>
+      </section>
       {/* Slider */}
       <div className="space-y-6">
         <h1 className="text-display-sm text-primary-600">Slider:</h1>
@@ -921,6 +943,7 @@ const Test = () => {
       </section>
       {/* Modal */}
       <section className="my-5">
+        <h1 className="text-display-sm text-primary-600">Modal:</h1>
         <Button onClick={() => setShowModal(true)}>Show Modal</Button>
         <Modal
           showModal={showModal}
@@ -940,6 +963,35 @@ const Test = () => {
             </Tooltip>
           </div>
         </Modal>
+      </section>
+      {/* Drawer */}
+      <section className="my-5 space-y-4">
+        <h1 className="text-display-sm text-primary-600">Drawer:</h1>
+
+        <div className="flex gap-3 flex-wrap">
+          {positions.map((pos) => (
+            <Button key={pos} onClick={() => setOpenPosition(pos)}>
+              Show {pos} Drawer
+            </Button>
+          ))}
+        </div>
+
+        {positions.map((pos) => (
+          <Drawer
+            key={pos}
+            isOpen={openPosition === pos}
+            setIsOpen={(isOpen) => {
+              if (!isOpen) setOpenPosition(undefined);
+            }}
+            closeOnOutsideClick={false}
+            position={pos}
+            width={pos === "left" || pos === "right" ? "w-[500px]" : undefined}
+            height={pos === "top" || pos === "bottom" ? "h-[500px]" : undefined}
+          >
+            <p>This is a {pos} drawer.</p>
+            <p>You can change its position, width, and height using props.</p>
+          </Drawer>
+        ))}
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-600">Dropdown</h1>
@@ -1594,7 +1646,7 @@ const Test = () => {
           />
         </div>
       </section>
-      {/* callout */}
+      {/* Callout */}
       <section className="my-5 space-y-4">
         <h1 className="text-display-sm text-primary-600">Callout:</h1>
         <div className="space-y-3">
@@ -2542,23 +2594,6 @@ const Test = () => {
           </p>
         </section>
       </div>
-      {/* Textarea */}
-      <section className="flex flex-col gap-1">
-        <h1 className="text-display-sm text-primary-600">Textarea</h1>
-        <section className="flex items-center gap-4">
-          <h1>States</h1>
-          <Textarea
-            placeholder="This is a placeholder"
-            rows={4}
-            size="lg"
-          ></Textarea>
-          <Textarea
-            placeholder="This is a placeholder"
-            size="sm"
-            disabled
-          ></Textarea>
-        </section>
-      </section>
       {/* Divider */}
       <section>
         <h1 className="text-display-sm text-primary-600">Divider</h1>
