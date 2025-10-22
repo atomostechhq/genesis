@@ -20,8 +20,8 @@ import Checkbox from "./Checkbox";
 import Tooltip from "./Tooltip";
 
 type Option = {
-  label: string;
-  value: string;
+  label: string | number;
+  value: string | number;
   info?: string;
   addInfo?: string;
   tooltipContent?: string;
@@ -30,8 +30,8 @@ type Option = {
 };
 
 interface MenuItemProps {
-  label?: string;
-  value: string;
+  label?: string | number;
+  value: string | number;
   children?: React.ReactNode;
 }
 
@@ -105,9 +105,12 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
     const memoizedFilteredOptions = useMemo(() => {
       if (!search) return filteredOptions;
-      return filteredOptions.filter((option) =>
-        option.label.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      return filteredOptions.filter((option) => {
+        if (typeof option.label === "string") {
+          return option.label.toLowerCase().includes(searchQuery.toLowerCase());
+        }
+        return option.label.toString().includes(searchQuery.toLowerCase());
+      });
     }, [search, searchQuery, filteredOptions]);
 
     const handleSearchChange = useCallback(
@@ -208,7 +211,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           }}
           className={cn(
             "w-full hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-text-sm cursor-pointer",
-            dropdownMenu ? "border border-gray-800" : "border border-gray-200",
+            dropdownMenu ? "border border-gray-300" : "border border-gray-200",
             disabled && "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
           )}
         >
@@ -231,7 +234,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           aria-multiselectable={multiple}
           aria-labelledby={`${id}-label`}
           className={cn(
-            "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
+            "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in border border-gray-300",
             position === "top" ? "top-10" : "bottom-10",
             dropdownMenu &&
               "max-h-[320px] opacity-[1] transition-all ease-in duration-150"
@@ -245,7 +248,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               aria-label="Search options"
               value={searchQuery}
               onChange={handleSearchChange}
-              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
+              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3 border-none"
               endIcon={<RiSearchLine size={18} />}
             />
           )}
@@ -384,7 +387,7 @@ const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
 }) => {
   const content = tooltipContent || "";
   return content ? (
-    <Tooltip position="right" content={content}>
+    <Tooltip position="right" className="" content={content}>
       <RiErrorWarningLine color="#98A2B3" size={14} />
     </Tooltip>
   ) : null;
