@@ -1,5 +1,12 @@
 "use client";
-import { Dispatch, FC, ReactNode, SetStateAction, useEffect } from "react";
+import {
+  Dispatch,
+  FC,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useEffect,
+} from "react";
 import { cn } from "../utils/utils";
 import Button from "./Button";
 import { RiCloseLine } from "@remixicon/react";
@@ -27,13 +34,16 @@ const Drawer: FC<DrawerProps> = ({
   showCloseButton = true,
   closeOnOutsideClick = true,
 }) => {
-  const handleClose = () => setIsOpen(false);
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
 
   // Prevent body scroll when open
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
   }, [isOpen]);
 
+  // Close on Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
@@ -43,7 +53,7 @@ const Drawer: FC<DrawerProps> = ({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, handleClose]);
 
   return (
     <div>

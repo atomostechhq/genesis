@@ -114,11 +114,13 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
         <section className={cn(`grid gap-2`, filePreviewClassName)}>
           {selectedFile?.map((file, index) => (
             <FileUploadPreview
+              key={file.name || index}
               file={file}
               index={index}
-              children={children}
               onDelete={onDelete}
-            />
+            >
+              {children}
+            </FileUploadPreview>
           ))}
         </section>
       </div>
