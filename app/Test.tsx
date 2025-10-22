@@ -911,6 +911,87 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* Textarea */}
+      <section className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-600">Textarea</h1>
+        <section className="flex items-center gap-4">
+          <h1>States</h1>
+          <Textarea
+            placeholder="This is a placeholder"
+            rows={4}
+            size="lg"
+          ></Textarea>
+          <Textarea
+            placeholder="This is a placeholder"
+            size="sm"
+            disabled
+          ></Textarea>
+        </section>
+      </section>
+      {/* File Upload */}
+      <section className="max-w-lg space-y-3">
+        <h1 className="text-display-sm text-primary-600">File Upload</h1>
+        <FileUpload
+          id="single"
+          selectedFile={selectedSingleFiles}
+          setSelectedFile={setSelectedSingleFiles}
+          onChange={handleFileChangeSingle}
+          onDelete={handleDeleteFileSingle}
+          title="SVG, PNG, JPG or GIF (max. 800x400px)"
+        >
+          <ProgressBar progressColor="bg-primary-600" progress={50} />
+        </FileUpload>
+        <FileUpload
+          multiple
+          id="multiple"
+          selectedFile={selectedFiles}
+          setSelectedFile={setSelectedFiles}
+          onChange={handleFileChangeMultiple}
+          onDelete={handleDeleteFile}
+          title="SVG, PNG, JPG or GIF (max. 800x400px)"
+          filePreviewClassName="grid grid-cols-2 gap-2"
+        />
+        <FileSelector
+          ref={fileRef}
+          id="singleselect"
+          component={
+            <Button
+              size={"sm"}
+              variant={"outlined"}
+              endIcon={<RiUpload2Line size={18} />}
+            >
+              Upload Single File
+            </Button>
+          }
+          onChange={handleSingleChange}
+        />
+        <br />
+        <FileSelector
+          ref={fileMultiRef}
+          id="multiselect"
+          component={<Button>Upload Multiple Files</Button>}
+          multiple
+          onChange={handleMultipleChange}
+        />
+      </section>
+      {/* Slider */}
+      <div className="space-y-6">
+        <h1 className="text-display-sm text-primary-600">Slider:</h1>
+        <Slider
+          value={sliderValue}
+          min={10}
+          max={100}
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
+        <Slider
+          value={sliderValue}
+          min={10}
+          step={10}
+          max={100}
+          size="lg"
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
+      </div>
       {/* tree view */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-600">Tree View:</h1>
@@ -1030,41 +1111,6 @@ const Test = () => {
           </TreeView.Item>
         </TreeView>
       </section>
-      {/* Textarea */}
-      <section className="flex flex-col gap-1">
-        <h1 className="text-display-sm text-primary-600">Textarea</h1>
-        <section className="flex items-center gap-4">
-          <h1>States</h1>
-          <Textarea
-            placeholder="This is a placeholder"
-            rows={4}
-            size="lg"
-          ></Textarea>
-          <Textarea
-            placeholder="This is a placeholder"
-            size="sm"
-            disabled
-          ></Textarea>
-        </section>
-      </section>
-      {/* Slider */}
-      <div className="space-y-6">
-        <h1 className="text-display-sm text-primary-600">Slider:</h1>
-        <Slider
-          value={sliderValue}
-          min={10}
-          max={100}
-          onChange={(e) => handleSliderChange(Number(e.target.value))}
-        />
-        <Slider
-          value={sliderValue}
-          min={10}
-          step={10}
-          max={100}
-          size="lg"
-          onChange={(e) => handleSliderChange(Number(e.target.value))}
-        />
-      </div>
       {/* table */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-600">
@@ -1732,52 +1778,6 @@ const Test = () => {
         >
           This is a success Alert with an encouraging title and both icons.
         </Notice>
-      </section>
-      {/* File Upload */}
-      <section className="max-w-lg space-y-3">
-        <h1 className="text-display-sm text-primary-600">File Upload</h1>
-        <FileUpload
-          id="single"
-          selectedFile={selectedSingleFiles}
-          setSelectedFile={setSelectedSingleFiles}
-          onChange={handleFileChangeSingle}
-          onDelete={handleDeleteFileSingle}
-          title="SVG, PNG, JPG or GIF (max. 800x400px)"
-        >
-          <ProgressBar progressColor="bg-primary-600" progress={50} />
-        </FileUpload>
-        <FileUpload
-          multiple
-          id="multiple"
-          selectedFile={selectedFiles}
-          setSelectedFile={setSelectedFiles}
-          onChange={handleFileChangeMultiple}
-          onDelete={handleDeleteFile}
-          title="SVG, PNG, JPG or GIF (max. 800x400px)"
-          filePreviewClassName="grid grid-cols-2 gap-2"
-        />
-        <FileSelector
-          ref={fileRef}
-          id="singleselect"
-          component={
-            <Button
-              size={"sm"}
-              variant={"outlined"}
-              endIcon={<RiUpload2Line size={18} />}
-            >
-              Upload Single File
-            </Button>
-          }
-          onChange={handleSingleChange}
-        />
-        <br />
-        <FileSelector
-          ref={fileMultiRef}
-          id="multiselect"
-          component={<Button>Upload Multiple Files</Button>}
-          multiple
-          onChange={handleMultipleChange}
-        />
       </section>
       {/* progress */}
       <section className="my-5 w-[500px]">
