@@ -69,6 +69,15 @@ import {
 } from "./components/MenuItem";
 import Drawer from "./components/Drawer";
 import FileSelector from "./components/FileSelector";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./components/Card";
 import TreeView from "./components/TreeView";
 import Spinner from "./components/Spinner";
 import OTPInput from "./components/OTPInput";
@@ -76,6 +85,16 @@ import OTPInput from "./components/OTPInput";
 interface Option {
   label: string | number;
   value: string | number;
+}
+
+interface DropdownOption {
+  label: string | number;
+  value: string | number;
+  info?: string;
+  addInfo?: string;
+  tooltipContent?: string;
+  disabledOption?: boolean;
+  labelTextColor?: string;
 }
 
 const GlobalNavigationComponent = () => {
@@ -255,24 +274,26 @@ const Test = () => {
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
 
-  const [dropdownMenuOption, setDropdownMenuOption] = useState<Option[]>([]);
+  const [dropdownMenuOption, setDropdownMenuOption] = useState<
+    DropdownOption[]
+  >([]);
+  console.log("dropdownMenuOption", dropdownMenuOption);
 
   const [dropdownMenuOptionTwo, setDropdownMenuOptionTwo] = useState<Option[]>(
     []
   );
 
   const singleOptions = [
-    { label: "Option 1", value: "1" },
-    { label: "Option 2", value: "2" },
-    { label: "Option 3", value: "3" },
+    { label: "Option 1", value: 1 },
+    { label: "Option 2", value: 2 },
+    { label: "Option 3", value: 3 },
   ];
 
-  const multiOptions = [
+  const multiOptions: DropdownOption[] = [
     {
       label: "appleeeee appleeeee",
       value: 1,
       tooltipContent: "hjsghjwg",
-      labelTextColor: "oklch(49.6% 0.265 301.924)",
       disabledOption: true,
     },
     {
@@ -281,7 +302,11 @@ const Test = () => {
       addInfo: "jdhjaldh",
       labelTextColor: "#1765dc",
     },
-    { label: "strawberry", value: 3 },
+    {
+      label: "strawberry",
+      value: 3,
+      labelTextColor: "oklch(49.6% 0.265 301.924)",
+    },
     { label: "kiwi", value: 4, info: "info4" },
     {
       label: "orange",
@@ -475,6 +500,68 @@ const Test = () => {
 
   return (
     <div className="m-5 space-y-5">
+      <section className="flex gap-6 items-center">
+        <h1 className="text-lg">Dropdown with icon</h1>
+        <Dropdown
+          options={multiOptions}
+          selected={dropdownMenuOption}
+          setSelected={setDropdownMenuOption}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionOne"
+          dropdownFooter={true}
+          onApply={() => {
+            alert("Apply button clicked");
+          }}
+          footerAction={
+            <div className="flex justify-end items-center">
+              <Button
+                size="sm"
+                className="h-[30px]"
+                onClick={() => {
+                  alert("Apply button clicked");
+                }}
+              >
+                Custom Action
+              </Button>
+            </div>
+          }
+        />
+        <DropdownWithIcon
+          options={multiOptions}
+          selected={dropdownMenuOptionTwo}
+          setSelected={setDropdownMenuOptionTwo}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionTwo"
+          trigger={
+            <RiFilterLine
+              className="hover:bg-gray-200 rounded"
+              cursor="pointer"
+              size={14}
+            />
+          }
+          dropdownFooter={true}
+          onApply={() => {
+            alert("Apply button clicked");
+          }}
+          footerAction={
+            <div className="flex justify-end items-center">
+              <Button
+                size="sm"
+                className="h-[30px]"
+                onClick={() => {
+                  alert("Apply button clicked");
+                }}
+              >
+                Custom Action
+              </Button>
+            </div>
+          }
+        />
+      </section>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
@@ -714,6 +801,51 @@ const Test = () => {
           <Chip intent="rose">rose</Chip>
           <Chip intent="orange">orange</Chip>
         </section>
+      </div>
+      {/* cards */}
+      <div className="space-y-5">
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+            <CardAction>
+              <Button>Action Button</Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
+      </div>
+      <div>
+        <h1>Customised card</h1>
+        <Card className="w-96 p-0 bg-yellow-50 text-green-600 rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-red-600">Project Dashboard</CardTitle>
+            <CardDescription>
+              Manage your projects and tasks efficiently
+            </CardDescription>
+            <CardAction>
+              <Button variant="outlined">Create New</Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <p>Active Projects: 12</p>
+              <p>Completed Tasks: 45</p>
+              <p>Pending Reviews: 3</p>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <div className="flex justify-between items-center w-full">
+              <span className="text-sm text-gray-500">Last updated: Today</span>
+              <Button size="sm">View All</Button>
+            </div>
+          </CardFooter>
+        </Card>
       </div>
       {/* Toggle  */}
       <div className="flex flex-col gap-5">
@@ -1187,39 +1319,7 @@ const Test = () => {
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-600">Dropdown</h1>
-      <section className="flex gap-6 items-center">
-        <h1 className="text-lg">Dropdown with icon</h1>
-        <Dropdown
-          options={multiOptions}
-          selected={dropdownMenuOption}
-          setSelected={setDropdownMenuOption}
-          search={true}
-          multiple={true}
-          width="200px"
-          id="dropdownMenuOptionOne"
-          dropdownFooter={true}
-          dropDownTooltip
-          onApply={() => {
-            alert("Apply button clicked");
-          }}
-        />
-        <DropdownWithIcon
-          options={multiOptions}
-          selected={dropdownMenuOptionTwo}
-          setSelected={setDropdownMenuOptionTwo}
-          search={true}
-          multiple={true}
-          width="200px"
-          id="dropdownMenuOptionTwo"
-          trigger={
-            <RiFilterLine
-              className="hover:bg-gray-200 rounded"
-              cursor="pointer"
-              size={14}
-            />
-          }
-        />
-      </section>
+
       <section className="flex items-start gap-10">
         <div>
           <h1 className="">Dropdown with icon</h1>
@@ -1286,7 +1386,7 @@ const Test = () => {
         <div>
           <h1 className="text-lg">Single Dropdown Language</h1>
           <Dropdown
-            options={multiOptions}
+            options={singleOptions}
             selected={singleSelect}
             icon={<RiGlobalLine size={16} />}
             setSelected={setSingleSelect}
@@ -1325,7 +1425,7 @@ const Test = () => {
         </div>
       </section>
       {/* Menu Items */}
-      <section className="bg-red-50 p-5">
+      <section className="p-5">
         <h1 className="text-display-sm text-primary-600">MenuItems:</h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -1389,8 +1489,8 @@ const Test = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className="w-56"
-              align="start"
-              side="top"
+              // align="start"
+              // side="top"
               sideOffset={5}
             >
               <DropdownMenuLabel>Top Position</DropdownMenuLabel>
@@ -1595,6 +1695,17 @@ const Test = () => {
                     <DropdownMenuItem>More options...</DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    Invite users with long text
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email invitation</DropdownMenuItem>
+                    <DropdownMenuItem>Message invitation</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More options...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -1722,6 +1833,46 @@ const Test = () => {
           </TabsContainer>
         </section>
         <section className="my-5">
+          <h1 className="text-lg">Tab with pill variant</h1>
+          <TabsContainer value={value}>
+            <TabList
+              onChange={handleTabChange}
+              ariaLabel="lab API tabs example"
+              pill={true}
+            >
+              <Tab
+                label="Item One"
+                value="1"
+                content="(12)"
+                icon={<RiSearch2Line size={16} />}
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Two"
+                value="2"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Three"
+                value="3"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+            </TabList>
+            <TabPanel value="1" currentValue={value}>
+              Item One Content
+            </TabPanel>
+            <TabPanel value="2" currentValue={value}>
+              Item Two Content
+            </TabPanel>
+            <TabPanel value="3" currentValue={value}>
+              Item Three Content
+            </TabPanel>
+          </TabsContainer>
+        </section>
+        <section className="my-5">
           <h1 className="text-lg">Custom styling for Tabs:</h1>
           <TabsContainer value={value}>
             <TabList
@@ -1768,6 +1919,21 @@ const Test = () => {
         <Button variant="filled" onClick={() => setOpen(true)}>
           Show Notice
         </Button>
+         <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="warning"
+          noticeTitle="Notice Header"
+          position="center"
+        >
+          This is a success Alert with an encouraging title and both icons.
+          <section className="flex gap-2 items-center mt-3">
+            <Button variant="outlined" intent="error-outlined">
+              Cancel
+            </Button>
+            <Button>Apply</Button>
+          </section>
+        </Notice>
         <Notice
           open={open}
           setOpen={setOpen}
@@ -1958,19 +2124,19 @@ const Test = () => {
         <Tooltip
           position="right"
           content=" Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Laborum incidunt perferendis
-                sapiente eos? Error aut accusamus odio officiis eaque
-                consectetur obcaecati doloribus, inventore ut reiciendis maiores
-                facere veritatis, corrupti autem illo deleniti eveniet
-                repudiandae iste harum. Voluptate minima ab tenetur veritatis
-                neque dolorem voluptates, praesentium a, velit doloremque
-                impedit facilis vel exercitationem assumenda. Esse labore
-                mollitia enim beatae officia? Delectus exercitationem voluptatem
-                consectetur quae veniam odit ut explicabo voluptas. Doloremque
-                nesciunt deleniti aliquam quibusdam nulla ipsa repudiandae
-                aspernatur placeat fuga officia. Natus itaque inventore eligendi
-                eveniet, nemo saepe voluptatum et ducimus provident suscipit
-                dolore, incidunt esse est iusto consequatur reprehenderit."
+          consectetur adipisicing elit. Laborum incidunt perferendis
+          sapiente eos? Error aut accusamus odio officiis eaque
+          consectetur obcaecati doloribus, inventore ut reiciendis maiores
+          facere veritatis, corrupti autem illo deleniti eveniet
+          repudiandae iste harum. Voluptate minima ab tenetur veritatis
+          neque dolorem voluptates, praesentium a, velit doloremque
+          impedit facilis vel exercitationem assumenda. Esse labore
+          mollitia enim beatae officia? Delectus exercitationem voluptatem
+          consectetur quae veniam odit ut explicabo voluptas. Doloremque
+          nesciunt deleniti aliquam quibusdam nulla ipsa repudiandae
+          aspernatur placeat fuga officia. Natus itaque inventore eligendi
+          eveniet, nemo saepe voluptatum et ducimus provident suscipit
+          dolore, incidunt esse est iusto consequatur reprehenderit."
         >
           Right
         </Tooltip>
