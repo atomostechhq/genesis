@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
@@ -15,11 +15,11 @@ import {
   RiFilterLine,
   RiStackLine,
   RiExternalLinkLine,
-  RiAddLine,
   RiCheckLine,
   RiTimeFill,
   RiInformationLine,
   RiCloseLine,
+  RiUpload2Line,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -46,8 +46,6 @@ import Breadcrumbs from "./components/Breadcrumb";
 import CircularProgress from "./components/CircularProgress";
 import Slider from "./components/Slider";
 import GlobalNavigation from "./components/GlobalNavigation";
-// import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
-import ListItem from "./components/ListItem";
 import Avatar from "./components/Avatar";
 import AvatarGroup from "./components/AvatarGroup";
 import Accordion, {
@@ -69,6 +67,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./components/MenuItem";
+import Drawer from "./components/Drawer";
+import FileSelector from "./components/FileSelector";
 import {
   Card,
   CardAction,
@@ -172,8 +172,11 @@ const Test = () => {
       setSelectedSingleFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-  const handleDeleteFileSingle = (file: string | File) => {
-    setSelectedSingleFiles((prevFiles) => prevFiles.filter((f) => f !== file));
+
+  const handleDeleteFileSingle = (index: number) => {
+    setSelectedSingleFiles((prevFiles) =>
+      prevFiles.filter((_, i) => i !== index)
+    );
   };
 
   // multiple file upload
@@ -188,8 +191,23 @@ const Test = () => {
     }
   };
 
-  const handleDeleteFile = (file: string | File) => {
-    setSelectedFiles((prevFiles) => prevFiles.filter((f) => f !== file));
+  const handleDeleteFile = (index: number) => {
+    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+
+  const fileRef = useRef<HTMLInputElement>(null);
+  const fileMultiRef = useRef<HTMLInputElement>(null);
+
+  const handleSingleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      console.log("Selected file:", e.target.files[0]);
+    }
+  };
+
+  const handleMultipleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      console.log("Selected files:", Array.from(e.target.files));
+    }
   };
 
   // tabs
@@ -271,8 +289,7 @@ const Test = () => {
 
   const multiOptions: DropdownOption[] = [
     {
-      label:
-        "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      label: "appleeeee appleeeee",
       value: 1,
       tooltipContent: "hjsghjwg",
       disabledOption: true,
@@ -290,7 +307,7 @@ const Test = () => {
     },
     { label: "kiwi", value: 4, info: "info4" },
     {
-      label: "orangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      label: "orange",
       value: 5,
       tooltipContent: "lower-level components:",
       info: "info5",
@@ -324,6 +341,12 @@ const Test = () => {
 
   // modal
   const [showModal, setShowModal] = useState(false);
+
+  // drawer
+  type DrawerPosition = "top" | "right" | "bottom" | "left" | undefined;
+  const [openPosition, setOpenPosition] = useState<DrawerPosition>(undefined);
+
+  const positions: DrawerPosition[] = ["top", "right", "bottom", "left"];
 
   // sidebar
   const [collapsed, setCollapsed] = useState(true);
@@ -1020,6 +1043,87 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* Textarea */}
+      <section className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-600">Textarea</h1>
+        <section className="flex items-center gap-4">
+          <h1>States</h1>
+          <Textarea
+            placeholder="This is a placeholder"
+            rows={4}
+            size="lg"
+          ></Textarea>
+          <Textarea
+            placeholder="This is a placeholder"
+            size="sm"
+            disabled
+          ></Textarea>
+        </section>
+      </section>
+      {/* File Upload */}
+      <section className="max-w-lg space-y-3">
+        <h1 className="text-display-sm text-primary-600">File Upload</h1>
+        <FileUpload
+          id="single"
+          selectedFile={selectedSingleFiles}
+          setSelectedFile={setSelectedSingleFiles}
+          onChange={handleFileChangeSingle}
+          onDelete={handleDeleteFileSingle}
+          title="SVG, PNG, JPG or GIF (max. 800x400px)"
+        >
+          <ProgressBar progressColor="bg-primary-600" progress={50} />
+        </FileUpload>
+        <FileUpload
+          multiple
+          id="multiple"
+          selectedFile={selectedFiles}
+          setSelectedFile={setSelectedFiles}
+          onChange={handleFileChangeMultiple}
+          onDelete={handleDeleteFile}
+          title="SVG, PNG, JPG or GIF (max. 800x400px)"
+          filePreviewClassName="grid grid-cols-2 gap-2"
+        />
+        <FileSelector
+          ref={fileRef}
+          id="singleselect"
+          component={
+            <Button
+              size={"sm"}
+              variant={"outlined"}
+              endIcon={<RiUpload2Line size={18} />}
+            >
+              Upload Single File
+            </Button>
+          }
+          onChange={handleSingleChange}
+        />
+        <br />
+        <FileSelector
+          ref={fileMultiRef}
+          id="multiselect"
+          component={<Button>Upload Multiple Files</Button>}
+          multiple
+          onChange={handleMultipleChange}
+        />
+      </section>
+      {/* Slider */}
+      <div className="space-y-6">
+        <h1 className="text-display-sm text-primary-600">Slider:</h1>
+        <Slider
+          value={sliderValue}
+          min={10}
+          max={100}
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
+        <Slider
+          value={sliderValue}
+          min={10}
+          step={10}
+          max={100}
+          size="lg"
+          onChange={(e) => handleSliderChange(Number(e.target.value))}
+        />
+      </div>
       {/* tree view */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-600">Tree View:</h1>
@@ -1139,24 +1243,6 @@ const Test = () => {
           </TreeView.Item>
         </TreeView>
       </section>
-      {/* Slider */}
-      <div className="space-y-6">
-        <h1 className="text-display-sm text-primary-600">Slider:</h1>
-        <Slider
-          value={sliderValue}
-          min={10}
-          max={100}
-          onChange={(e) => handleSliderChange(Number(e.target.value))}
-        />
-        <Slider
-          value={sliderValue}
-          min={10}
-          step={10}
-          max={100}
-          size="lg"
-          onChange={(e) => handleSliderChange(Number(e.target.value))}
-        />
-      </div>
       {/* table */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-600">
@@ -1167,6 +1253,7 @@ const Test = () => {
       </section>
       {/* Modal */}
       <section className="my-5">
+        <h1 className="text-display-sm text-primary-600">Modal:</h1>
         <Button onClick={() => setShowModal(true)}>Show Modal</Button>
         <Modal
           showModal={showModal}
@@ -1186,6 +1273,35 @@ const Test = () => {
             </Tooltip>
           </div>
         </Modal>
+      </section>
+      {/* Drawer */}
+      <section className="my-5 space-y-4">
+        <h1 className="text-display-sm text-primary-600">Drawer:</h1>
+
+        <div className="flex gap-3 flex-wrap">
+          {positions.map((pos) => (
+            <Button key={pos} onClick={() => setOpenPosition(pos)}>
+              Show {pos} Drawer
+            </Button>
+          ))}
+        </div>
+
+        {positions.map((pos) => (
+          <Drawer
+            key={pos}
+            isOpen={openPosition === pos}
+            setIsOpen={(isOpen) => {
+              if (!isOpen) setOpenPosition(undefined);
+            }}
+            closeOnOutsideClick={false}
+            position={pos}
+            width={pos === "left" || pos === "right" ? "w-[500px]" : undefined}
+            height={pos === "top" || pos === "bottom" ? "h-[500px]" : undefined}
+          >
+            <p>This is a {pos} drawer.</p>
+            <p>You can change its position, width, and height using props.</p>
+          </Drawer>
+        ))}
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-600">Dropdown</h1>
@@ -1829,30 +1945,6 @@ const Test = () => {
           This is a success Alert with an encouraging title and both icons.
         </Notice>
       </section>
-      {/* File Upload */}
-      <section className="max-w-lg space-y-3">
-        <h1 className="text-display-sm text-primary-600">File Upload</h1>
-        <FileUpload
-          id="single"
-          selectedFile={selectedSingleFiles}
-          setSelectedFile={setSelectedSingleFiles}
-          onChange={handleFileChangeSingle}
-          onDelete={() => handleDeleteFileSingle(selectedSingleFiles[0])}
-          title="SVG, PNG, JPG or GIF (max. 800x400px)"
-        >
-          <ProgressBar progressColor="bg-primary-600" progress={50} />
-        </FileUpload>
-        <FileUpload
-          multiple
-          id="multiple"
-          selectedFile={selectedFiles}
-          setSelectedFile={setSelectedFiles}
-          onChange={handleFileChangeMultiple}
-          onDelete={() => handleDeleteFile(selectedFiles[0])}
-          title="SVG, PNG, JPG or GIF (max. 800x400px)"
-          filePreviewClassName="grid grid-cols-2 gap-2"
-        />
-      </section>
       {/* progress */}
       <section className="my-5 w-[500px]">
         <h1 className="text-display-sm text-primary-600">Progress:</h1>
@@ -1896,7 +1988,7 @@ const Test = () => {
           />
         </div>
       </section>
-      {/* callout */}
+      {/* Callout */}
       <section className="my-5 space-y-4">
         <h1 className="text-display-sm text-primary-600">Callout:</h1>
         <div className="space-y-3">
@@ -2844,23 +2936,6 @@ const Test = () => {
           </p>
         </section>
       </div>
-      {/* Textarea */}
-      <section className="flex flex-col gap-1">
-        <h1 className="text-display-sm text-primary-600">Textarea</h1>
-        <section className="flex items-center gap-4">
-          <h1>States</h1>
-          <Textarea
-            placeholder="This is a placeholder"
-            rows={4}
-            size="lg"
-          ></Textarea>
-          <Textarea
-            placeholder="This is a placeholder"
-            size="sm"
-            disabled
-          ></Textarea>
-        </section>
-      </section>
       {/* Divider */}
       <section>
         <h1 className="text-display-sm text-primary-600">Divider</h1>
