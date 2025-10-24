@@ -3164,7 +3164,7 @@ const Test = () => {
       <div className="relative flex gap-3 bg-white">
         <section className=" bg-white">
           <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
-            <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
+            <Sidebar.Header>
               <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
             </Sidebar.Header>
             <Sidebar.Menu
@@ -3204,7 +3204,7 @@ const Test = () => {
       </div>
 
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
-        <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
+        <Sidebar.Header>
           <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
         </Sidebar.Header>
 
