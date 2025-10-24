@@ -53,10 +53,11 @@ interface DropdownProps {
   addInfo?: string | number;
   tooltipContent?: string;
   width?: string;
-  dropDownTooltip?: boolean | undefined;
+  // dropDownTooltip?: boolean | undefined;
   dropdownFooter?: boolean | undefined;
   disabled?: boolean;
   labelTextColor?: string;
+  footerAction?: React.ReactNode;
 }
 
 const defaultRenderItem = (option: Option) => {
@@ -79,11 +80,12 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       position = "top",
       width,
       info,
-      dropDownTooltip = false,
+      // dropDownTooltip = false,
       dropdownFooter = false,
       onApply,
       disabled = false,
       onReset,
+      footerAction,
     },
     ref
   ) => {
@@ -237,7 +239,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in border border-gray-300",
             position === "top" ? "top-10" : "bottom-10",
             dropdownMenu &&
-              "max-h-[320px] opacity-[1] transition-all ease-in duration-150"
+              "max-h-[360px] h-fit opacity-[1] transition-all ease-in duration-150"
           )}
         >
           {search && (
@@ -312,11 +314,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                               >
                                 {renderItem(option)}
                               </div>
-                              {dropDownTooltip && (
+                              {/* {dropDownTooltip && (
                                 <DropdownTooltip
                                   tooltipContent={option?.tooltipContent}
                                 />
-                              )}
+                              )} */}
                             </div>
                           </div>
                           <span className="text-gray-500">{option?.info}</span>
@@ -362,6 +364,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 ))
               : children}
           </section>
+          {footerAction && (
+            <div className="py-2 mt-1 px-2 border-t">{footerAction}</div>
+          )}
           {dropdownFooter && (
             <DropdownFooter
               setDropdownMenu={setDropdownMenu}
@@ -378,20 +383,20 @@ export const MenuItem: React.FC<MenuItemProps> = ({ label, children }) => {
   return <p className="break-all">{label || children}</p>;
 };
 
-interface DropdownTooltipProps {
-  tooltipContent?: string | undefined;
-}
+// interface DropdownTooltipProps {
+//   tooltipContent?: string | undefined;
+// }
 
-const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
-  tooltipContent,
-}) => {
-  const content = tooltipContent || "";
-  return content ? (
-    <Tooltip position="right" className="" content={content}>
-      <RiErrorWarningLine color="#98A2B3" size={14} />
-    </Tooltip>
-  ) : null;
-};
+// const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
+//   tooltipContent,
+// }) => {
+//   const content = tooltipContent || "";
+//   return content ? (
+//     <Tooltip position="right" className="" content={content}>
+//       <RiErrorWarningLine color="#98A2B3" size={14} />
+//     </Tooltip>
+//   ) : null;
+// };
 
 interface DropdownFooterProps {
   onApply?: (() => void) | undefined;

@@ -211,6 +211,7 @@ interface TabListProps extends Partial<TabItem> {
   ariaLabel?: string;
   children: React.ReactNode;
   box?: boolean;
+  pill?: boolean;
   className?: string;
   position?: "horizontal" | "vertical";
 }
@@ -218,6 +219,7 @@ interface TabListProps extends Partial<TabItem> {
 interface TabProps extends TabItem {
   onChange: (value: string) => void;
   box?: boolean;
+  pill?: boolean;
   content?: React.ReactNode;
   selectedTabValue: string;
   icon?: JSX.Element;
@@ -257,6 +259,7 @@ export const TabList: React.FC<TabListProps> = ({
   ariaLabel,
   children,
   box = false,
+  pill = false,
   className,
   position = "horizontal",
 }) => {
@@ -370,6 +373,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
       icon,
       content,
       box = false,
+      pill = false,
       selectedTabValue,
       className,
       onKeyDown,
@@ -379,6 +383,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
     ref
   ) => {
     const isSelected = value === selectedTabValue;
+    // const context = React.useContext(TabsContext);
 
     return (
       <button
