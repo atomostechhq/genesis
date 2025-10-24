@@ -477,6 +477,99 @@ const Test = () => {
     },
   ];
 
+  const navWithSubMenuItems = [
+    {
+      label: "Pages",
+      items: [
+        {
+          label: "Home",
+          href: "/",
+          icon: <RiCircleFill size={18} />,
+        },
+        {
+          label: "Team",
+          icon: <RiAlertFill size={18} />,
+          subItems: [
+            {
+              label: "Subteam 1",
+              href: "/pages/team/sub1",
+              icon: <RiCircleFill size={16} />,
+            },
+            {
+              label: "Subteam 2",
+              href: "/pages/team/sub2",
+              icon: <RiCircleFill size={16} />,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      label: "Dashboard",
+      items: [
+        {
+          label: "Analytics",
+          href: "/dashboard/analytics",
+          icon: <RiCircleFill size={18} />,
+        },
+        {
+          label: "Reports",
+          icon: <RiAlertFill size={18} />,
+          subItems: [
+            {
+              label: "Monthly",
+              href: "/dashboard/reports/monthly",
+              icon: <RiCircleFill size={16} />,
+            },
+            {
+              label: "Yearly",
+              icon: <RiCircleFill size={16} />,
+              subItems: [
+                {
+                  label: "2023",
+                  href: "/dashboard/reports/yearly/2023",
+                  icon: <RiCircleFill size={14} />,
+                },
+                {
+                  label: "2024",
+                  href: "/dashboard/reports/yearly/2024",
+                  icon: <RiCircleFill size={14} />,
+                },
+              ],
+            },
+          ],
+        },
+         {
+          label: "Reports",
+          icon: <RiAlertFill size={18} />,
+          subItems: [
+            {
+              label: "Monthly",
+              href: "/dashboard/reports/monthly",
+              icon: <RiCircleFill size={16} />,
+            },
+            {
+              label: "Yearly",
+              icon: <RiCircleFill size={16} />,
+              subItems: [
+                {
+                  label: "2023",
+                  href: "/dashboard/reports/yearly/2023",
+                  icon: <RiCircleFill size={14} />,
+                },
+                {
+                  label: "2024",
+                  href: "/dashboard/reports/yearly/2024",
+                  icon: <RiCircleFill size={14} />,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
   const footerItems = [
     {
       label: "Footer Item 1",
@@ -3077,7 +3170,7 @@ const Test = () => {
             <Sidebar.Menu
               scroll
               collapsed={collapsed}
-              setCollapsed={setCollapsed}
+              // setCollapsed={setCollapsed}
               navItems={navItems}
             />
             <Sidebar.Footer
@@ -3109,6 +3202,30 @@ const Test = () => {
           </p>
         </section>
       </div>
+
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
+        <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
+          <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
+        </Sidebar.Header>
+
+        <Sidebar.Menu scroll collapsed={collapsed} navItems={navWithSubMenuItems} />
+
+        <Sidebar.Footer
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          navItems={footerItems}
+        >
+          <Divider className="mb-3" />
+          <Button
+            className="w-full"
+            variant="outlined"
+            intent="default-outlined"
+            startIcon={<RiLogoutBoxRLine size={20} />}
+          >
+            {!collapsed ? "" : "Logout"}
+          </Button>
+        </Sidebar.Footer>
+      </Sidebar>
       {/* Divider */}
       <section>
         <h1 className="text-display-sm text-primary-600">Divider</h1>
