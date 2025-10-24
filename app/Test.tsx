@@ -79,6 +79,8 @@ import {
   CardTitle,
 } from "./components/Card";
 import TreeView from "./components/TreeView";
+import Spinner from "./components/Spinner";
+import OTPInput from "./components/OTPInput";
 
 interface Option {
   label: string | number;
@@ -493,6 +495,8 @@ const Test = () => {
     const timer = setTimeout(() => setProgress(80), 2000);
     return () => clearTimeout(timer);
   }, [progress]);
+
+  const [otp, setOtp] = useState("");
 
   return (
     <div className="m-5 space-y-5">
@@ -1043,6 +1047,16 @@ const Test = () => {
           </div>
         </section>
       </div>
+      {/* OTP */}
+      <section className="space-y-4">
+        <h1 className="text-display-sm text-primary-600">OTP Input Field:</h1>
+        <div className="space-y-2">
+          <OTPInput type="text" length={4} onChange={setOtp} />
+          <OTPInput type="number" length={5} onChange={setOtp} />
+          <OTPInput type="password" length={6} onChange={setOtp} />
+          <p className="mt-4 text-gray-700">Your OTP: {otp}</p>
+        </div>
+      </section>
       {/* Textarea */}
       <section className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-600">Textarea</h1>
@@ -2949,6 +2963,12 @@ const Test = () => {
         </div>
       </section>
       {/* Loading State */}
+      <section className="flex items-center gap-6">
+        <h1 className="text-display-sm text-primary-600">Spinner: </h1>
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" />
+      </section>
       <section className="flex flex-col items-center justify-center gap-2">
         <h1 className="text-display-sm text-primary-600">Loading</h1>
         <Loading width="50px" height="50px" loaderColor="green" />
