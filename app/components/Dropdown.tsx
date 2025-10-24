@@ -57,6 +57,7 @@ interface DropdownProps {
   dropdownFooter?: boolean | undefined;
   disabled?: boolean;
   labelTextColor?: string;
+  footerAction?: React.ReactNode;
 }
 
 const defaultRenderItem = (option: Option) => {
@@ -84,6 +85,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       onApply,
       disabled = false,
       onReset,
+      footerAction,
     },
     ref
   ) => {
@@ -237,7 +239,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in border border-gray-300",
             position === "top" ? "top-10" : "bottom-10",
             dropdownMenu &&
-              "max-h-[350px] h-fit opacity-[1] transition-all ease-in duration-150"
+              "max-h-[360px] h-fit opacity-[1] transition-all ease-in duration-150"
           )}
         >
           {search && (
@@ -362,7 +364,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 ))
               : children}
           </section>
-          {/* <div className="test">render this</div> */}
+          {footerAction && (
+            <div className="py-2 mt-1 px-2 border-t">{footerAction}</div>
+          )}
           {dropdownFooter && (
             <DropdownFooter
               setDropdownMenu={setDropdownMenu}

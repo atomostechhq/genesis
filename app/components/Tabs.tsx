@@ -85,7 +85,7 @@ export const TabList: React.FC<TabListProps> = ({
         box
           ? "bg-gray-50 rounded-lg border border-gray-200"
           : pill
-          ? "bg-gray-25 rounded-lg p-1"
+          ? "bg-gray-25 rounded-xl p-1"
           : "border-b border-gray-200",
         className
       )}
@@ -168,7 +168,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
           ],
           // Pill variant
           pill && [
-            "py-1 px-3.5 border border-gray-700 border-r-0 last:border-r last:rounded-r-lg first:rounded-l-lg",
+            "py-1 px-3.5 border border-gray-700 border-r-0 last:border-r last:rounded-r-xl first:rounded-l-xl",
             isSelected
               ? "bg-primary-600 border-primary-600 text-white hover:bg-primary-700"
               : "bg-gray-25 text-gray-700 hover:bg-gray-100",

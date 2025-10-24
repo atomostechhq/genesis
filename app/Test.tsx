@@ -69,10 +69,29 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./components/MenuItem";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./components/Card";
 
 interface Option {
   label: string | number;
   value: string | number;
+}
+
+interface DropdownOption {
+  label: string | number;
+  value: string | number;
+  info?: string;
+  addInfo?: string;
+  tooltipContent?: string;
+  disabledOption?: boolean;
+  labelTextColor?: string;
 }
 
 const GlobalNavigationComponent = () => {
@@ -234,7 +253,10 @@ const Test = () => {
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
 
-  const [dropdownMenuOption, setDropdownMenuOption] = useState<Option[]>([]);
+  const [dropdownMenuOption, setDropdownMenuOption] = useState<
+    DropdownOption[]
+  >([]);
+  console.log("dropdownMenuOption", dropdownMenuOption);
 
   const [dropdownMenuOptionTwo, setDropdownMenuOptionTwo] = useState<Option[]>(
     []
@@ -246,13 +268,12 @@ const Test = () => {
     { label: "Option 3", value: 3 },
   ];
 
-  const multiOptions = [
+  const multiOptions: DropdownOption[] = [
     {
       label:
         "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       value: 1,
       tooltipContent: "hjsghjwg",
-      labelTextColor: "oklch(49.6% 0.265 301.924)",
       disabledOption: true,
     },
     {
@@ -261,7 +282,11 @@ const Test = () => {
       addInfo: "jdhjaldh",
       labelTextColor: "#1765dc",
     },
-    { label: "strawberry", value: 3 },
+    {
+      label: "strawberry",
+      value: 3,
+      labelTextColor: "oklch(49.6% 0.265 301.924)",
+    },
     { label: "kiwi", value: 4, info: "info4" },
     {
       label: "orangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
@@ -444,6 +469,68 @@ const Test = () => {
 
   return (
     <div className="m-5 space-y-5">
+      <section className="flex gap-6 items-center">
+        <h1 className="text-lg">Dropdown with icon</h1>
+        <Dropdown
+          options={multiOptions}
+          selected={dropdownMenuOption}
+          setSelected={setDropdownMenuOption}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionOne"
+          dropdownFooter={true}
+          onApply={() => {
+            alert("Apply button clicked");
+          }}
+          footerAction={
+            <div className="flex justify-end items-center">
+              <Button
+                size="sm"
+                className="h-[30px]"
+                onClick={() => {
+                  alert("Apply button clicked");
+                }}
+              >
+                Custom Action
+              </Button>
+            </div>
+          }
+        />
+        <DropdownWithIcon
+          options={multiOptions}
+          selected={dropdownMenuOptionTwo}
+          setSelected={setDropdownMenuOptionTwo}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionTwo"
+          trigger={
+            <RiFilterLine
+              className="hover:bg-gray-200 rounded"
+              cursor="pointer"
+              size={14}
+            />
+          }
+          dropdownFooter={true}
+          onApply={() => {
+            alert("Apply button clicked");
+          }}
+          footerAction={
+            <div className="flex justify-end items-center">
+              <Button
+                size="sm"
+                className="h-[30px]"
+                onClick={() => {
+                  alert("Apply button clicked");
+                }}
+              >
+                Custom Action
+              </Button>
+            </div>
+          }
+        />
+      </section>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section>
@@ -683,6 +770,51 @@ const Test = () => {
           <Chip intent="rose">rose</Chip>
           <Chip intent="orange">orange</Chip>
         </section>
+      </div>
+      {/* cards */}
+      <div className="space-y-5">
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+            <CardAction>
+              <Button>Action Button</Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
+      </div>
+      <div>
+        <h1>Customised card</h1>
+        <Card className="w-96 p-0 bg-yellow-50 text-green-600 rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-red-600">Project Dashboard</CardTitle>
+            <CardDescription>
+              Manage your projects and tasks efficiently
+            </CardDescription>
+            <CardAction>
+              <Button variant="outlined">Create New</Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <p>Active Projects: 12</p>
+              <p>Completed Tasks: 45</p>
+              <p>Pending Reviews: 3</p>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <div className="flex justify-between items-center w-full">
+              <span className="text-sm text-gray-500">Last updated: Today</span>
+              <Button size="sm">View All</Button>
+            </div>
+          </CardFooter>
+        </Card>
       </div>
       {/* Toggle  */}
       <div className="flex flex-col gap-5">
@@ -934,39 +1066,7 @@ const Test = () => {
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-600">Dropdown</h1>
-      <section className="flex gap-6 items-center">
-        <h1 className="text-lg">Dropdown with icon</h1>
-        <Dropdown
-          options={multiOptions}
-          selected={dropdownMenuOption}
-          setSelected={setDropdownMenuOption}
-          search={true}
-          multiple={true}
-          width="200px"
-          id="dropdownMenuOptionOne"
-          dropdownFooter={true}
-          // dropDownTooltip
-          onApply={() => {
-            alert("Apply button clicked");
-          }}
-        />
-        <DropdownWithIcon
-          options={multiOptions}
-          selected={dropdownMenuOptionTwo}
-          setSelected={setDropdownMenuOptionTwo}
-          search={true}
-          multiple={true}
-          width="200px"
-          id="dropdownMenuOptionTwo"
-          trigger={
-            <RiFilterLine
-              className="hover:bg-gray-200 rounded"
-              cursor="pointer"
-              size={14}
-            />
-          }
-        />
-      </section>
+
       <section className="flex items-start gap-10">
         <div>
           <h1 className="">Dropdown with icon</h1>
@@ -1528,6 +1628,21 @@ const Test = () => {
         <Button variant="filled" onClick={() => setOpen(true)}>
           Show Notice
         </Button>
+         <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="warning"
+          noticeTitle="Notice Header"
+          position="center"
+        >
+          This is a success Alert with an encouraging title and both icons.
+          <section className="flex gap-2 items-center mt-3">
+            <Button variant="outlined" intent="error-outlined">
+              Cancel
+            </Button>
+            <Button>Apply</Button>
+          </section>
+        </Notice>
         <Notice
           open={open}
           setOpen={setOpen}

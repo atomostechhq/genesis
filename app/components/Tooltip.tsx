@@ -75,7 +75,7 @@ const arrowVariants = cva(
       position: {
         top: "top-full left-5 -translate-x-1/2 border-t-white border-t-[6px] border-x-[6px] border-x-transparent border-b-0",
         right: "right-full top-1/2 -translate-y-1/2 border-r-white border-r-[6px] border-y-[6px] border-y-transparent border-l-0",
-        bottom: "bottom-full left-1/2 -translate-x-1/2 border-b-black border-b-[6px] border-x-[6px] border-x-transparent border-t-0",
+        bottom: "bottom-full left-4 -translate-x-1/2 border-b-white border-b-[6px] border-x-[6px] border-x-transparent border-t-0",
         left: "left-full top-1/2 -translate-y-1/2 border-l-white border-l-[6px] border-y-[6px] border-y-transparent border-r-0",
       },
     },
