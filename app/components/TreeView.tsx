@@ -229,17 +229,6 @@ const TreeViewItem: React.FC<TreeViewItemProps> = ({
         onKeyDown={handleKeyDown}
         tabIndex={0}
       >
-        {/* Leading visual */}
-        {/* {leading.length > 0 ? (
-          leading
-        ) : hasSubTree && !flat ? (
-          <DefaultExpandIcon expanded={expanded} />
-        ) : null}
-
-        <span className="flex-1">{content}</span>
-        {trailing} */}
-        {/* Leading visual */}
-        {/* Leading visual */}
         <span className="flex items-center gap-1">
           {/* Show arrow only if there is no custom leading visual */}
           {!leading.length && hasSubTree && !flat && (
@@ -251,7 +240,6 @@ const TreeViewItem: React.FC<TreeViewItemProps> = ({
         <span className="flex-1">{content}</span>
         {trailing}
       </li>
-
       {processedSubTree}
     </>
   );
