@@ -307,3 +307,47 @@ input[type="number"] {
   border-radius: 0;
   cursor: pointer;
 }
+
+.spinner {
+  display: grid;
+  border-radius: 50%;
+  background: linear-gradient(
+        0deg,
+        var(--primary-500) 30%,
+        transparent 0 70%,
+        var(--primary-500) 0
+      )
+      50% / 8% 100%,
+    linear-gradient(
+        90deg,
+        var(--primary-200) 30%,
+        transparent 0 70%,
+        var(--primary-200) 0
+      )
+      50% / 100% 8%;
+  background-repeat: no-repeat;
+  animation: l23 2s infinite steps(12);
+  position: relative;
+}
+
+.spinner::before,
+.spinner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.915;
+  transform: rotate(30deg);
+}
+
+.spinner::after {
+  opacity: 0.83;
+  transform: rotate(60deg);
+}
+
+@keyframes l23 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
