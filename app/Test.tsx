@@ -1332,7 +1332,6 @@ const Test = () => {
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-600">Dropdown</h1>
-
       <section className="flex items-start gap-10">
         <div>
           <h1 className="">Dropdown with icon</h1>
