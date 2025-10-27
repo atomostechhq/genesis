@@ -63,11 +63,9 @@ import Callout from "./components/Callout";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -288,6 +286,9 @@ const Test = () => {
   const [dropdownMenuOptionTwo, setDropdownMenuOptionTwo] = useState<Option[]>(
     []
   );
+
+  // accordion
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const singleOptions = [
     { label: "Option 1", value: 1 },
@@ -540,7 +541,7 @@ const Test = () => {
             },
           ],
         },
-         {
+        {
           label: "Reports",
           icon: <RiAlertFill size={18} />,
           subItems: [
@@ -1504,7 +1505,7 @@ const Test = () => {
       </section>
       <Divider />
       <section className="my-5">
-        <h1>Accordion Mode (only one expanded)</h1>
+        <h1>Treeview Mode (only one expanded)</h1>
         <TreeView aria-label="Accordion Tree" allowMultiple={false}>
           <TreeView.Item id="1">
             Section 1
@@ -1692,55 +1693,25 @@ const Test = () => {
       <section className="p-5">
         <h1 className="text-display-sm text-primary-600">MenuItems:</h1>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outlined">Open</Button>
+          <DropdownMenuTrigger>
+          <Button> Open Menu </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" align="start">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                Profile
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Billing
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Settings
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Keyboard shortcuts
-                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+          <DropdownMenuContent className="w-64">
+            <DropdownMenuLabel>Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>Email</DropdownMenuItem>
-                  <DropdownMenuItem>Message</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>More...</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-              <DropdownMenuItem>
-                New Team
-                <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>More Options</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuLabel>Label One</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>GitHub</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuItem disabled>API</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              Log out
-              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-            </DropdownMenuItem>
+            <DropdownMenuItem>Menu One</DropdownMenuItem>
+            <DropdownMenuItem>Menu Two</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </section>
@@ -1748,14 +1719,13 @@ const Test = () => {
         {/* Top-Left */}
         <div className="flex justify-center">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger>
               <Button variant="outlined">Top</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className="w-56"
               // align="start"
               // side="top"
-              sideOffset={5}
             >
               <DropdownMenuLabel>Top Position</DropdownMenuLabel>
               <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -1774,15 +1744,10 @@ const Test = () => {
 
           <div className="flex justify-center">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="outlined">Bottom</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-56"
-                align="start"
-                side="bottom"
-                sideOffset={5}
-              >
+              <DropdownMenuContent className="w-56" align="start">
                 <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -1801,15 +1766,10 @@ const Test = () => {
 
           <div className="flex justify-center">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="outlined">Left</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-56"
-                align="start"
-                side="left"
-                sideOffset={5}
-              >
+              <DropdownMenuContent className="w-56" align="left">
                 <DropdownMenuLabel>Left Position</DropdownMenuLabel>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -1828,15 +1788,10 @@ const Test = () => {
 
           <div className="flex justify-center">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="outlined">Right</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-56"
-                align="start"
-                side="right"
-                sideOffset={5}
-              >
+              <DropdownMenuContent className="w-56" align="right">
                 <DropdownMenuLabel>Right Position</DropdownMenuLabel>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -1855,15 +1810,10 @@ const Test = () => {
 
           <div className="flex justify-center">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="outlined">Center</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-56"
-                align="center"
-                side="bottom"
-                sideOffset={5}
-              >
+              <DropdownMenuContent className="w-56" align="center">
                 <DropdownMenuLabel>Center Aligned</DropdownMenuLabel>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -1882,15 +1832,10 @@ const Test = () => {
 
           <div className="flex justify-center">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="outlined">End</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-56"
-                align="end"
-                side="bottom"
-                sideOffset={5}
-              >
+              <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuLabel>End Aligned</DropdownMenuLabel>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -1909,15 +1854,10 @@ const Test = () => {
 
           <div className="flex justify-center">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="outlined">Large Offset</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-56"
-                align="start"
-                side="bottom"
-                sideOffset={20}
-              >
+              <DropdownMenuContent className="w-56" align="start">
                 <DropdownMenuLabel>Large Offset (20px)</DropdownMenuLabel>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -1936,15 +1876,10 @@ const Test = () => {
 
           <div className="flex justify-center">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="outlined">Wide Menu</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-80"
-                align="start"
-                side="bottom"
-                sideOffset={5}
-              >
+              <DropdownMenuContent className="w-80" align="start">
                 <DropdownMenuLabel>Wide Menu (320px)</DropdownMenuLabel>
                 <DropdownMenuItem>Profile with very long text</DropdownMenuItem>
                 <DropdownMenuItem>Settings with extra content</DropdownMenuItem>
@@ -3019,6 +2954,55 @@ const Test = () => {
             </AccordionItem>
           </Accordion>
         </div>
+        <h1>Collapse all / Open all:-</h1>
+        <div className="my-5">
+          <section className="my-5 flex gap-4 items-center">
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            >
+              {isExpanded ? "Collapse All" : "Expand All"}
+            </button>
+          </section>
+
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full space-y-2"
+            expanded={isExpanded}
+          >
+            <AccordionItem value="item-1">
+              <AccordionTrigger defaultOpen={true}>
+                <p className="">
+                  What is your favorite template from BRIX Templates?
+                </p>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="p-6 border">
+                  {` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-2">
+              <AccordionTrigger defaultOpen={true}>
+                Is it easy to customize the templates?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Yes, all our templates are built with customization in mind. They use modern CSS and are structured for easy modifications.`}
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-3">
+              <AccordionTrigger defaultOpen={true}>
+                Are the templates responsive?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Absolutely! All BRIX Templates are fully responsive and work perfectly on desktop, tablet, and mobile devices.`}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
       </section>
       {/* Global Navigation */}
       <section className="my-5">
@@ -3176,7 +3160,7 @@ const Test = () => {
       <div className="relative flex gap-3 bg-white">
         <section className=" bg-white">
           <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
-            <Sidebar.Header>
+            <Sidebar.Header dense={true}>
               <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
             </Sidebar.Header>
             <Sidebar.Menu
@@ -3215,14 +3199,20 @@ const Test = () => {
         </section>
       </div>
 
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
-        <Sidebar.Header>
+      <Sidebar dense={true} collapsed={collapsed} setCollapsed={setCollapsed}>
+        <Sidebar.Header dense={true}>
           <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
         </Sidebar.Header>
 
-        <Sidebar.Menu scroll collapsed={collapsed} navItems={navWithSubMenuItems} />
+        <Sidebar.Menu
+          dense={true}
+          scroll
+          collapsed={collapsed}
+          navItems={navWithSubMenuItems}
+        />
 
         <Sidebar.Footer
+          dense={true}
           collapsed={collapsed}
           setCollapsed={setCollapsed}
           navItems={footerItems}
