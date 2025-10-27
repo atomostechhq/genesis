@@ -87,6 +87,7 @@ import {
 import TreeView from "./components/TreeView";
 import Spinner from "./components/Spinner";
 import OTPInput from "./components/OTPInput";
+import TextInputWithLabel from "./components/TextInputWithLabel";
 
 interface Option {
   label: string | number;
@@ -595,6 +596,7 @@ const Test = () => {
   }, [progress]);
 
   const [otp, setOtp] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
 
   return (
     <div className="m-5 space-y-5">
@@ -1145,6 +1147,17 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <section className="space-y-2 w-1/2 ">
+        <h1 className="text-display-sm whitespace-nowrap text-primary-600">
+          Text Input With Label:
+        </h1>
+        <TextInputWithLabel
+          tags={tags}
+          setTags={setTags}
+          placeholder="Add tags"
+          intent="primary"
+        />
+      </section>
       {/* OTP */}
       <section className="space-y-4">
         <h1 className="text-display-sm text-primary-600">OTP Input Field:</h1>
@@ -1571,7 +1584,6 @@ const Test = () => {
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-600">Dropdown</h1>
-
       <section className="flex items-start gap-10">
         <div>
           <h1 className="">Dropdown with icon</h1>
