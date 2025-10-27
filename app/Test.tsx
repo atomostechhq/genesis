@@ -492,13 +492,13 @@ const Test = () => {
           subItems: [
             {
               label: "Subteam 1",
-              href: "/pages/team/sub1",
-              icon: <RiCircleFill size={16} />,
+              // href: "/pages/team/sub1",
+              // icon: <RiCircleFill size={16} />,
             },
             {
               label: "Subteam 2",
-              href: "/pages/team/sub2",
-              icon: <RiCircleFill size={16} />,
+              // href: "/pages/team/sub2",
+              // icon: <RiCircleFill size={16} />,
             },
           ],
         },
