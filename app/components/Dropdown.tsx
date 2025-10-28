@@ -8,16 +8,11 @@ import React, {
   useRef,
   useImperativeHandle,
 } from "react";
-import {
-  RiArrowDownSLine,
-  RiSearchLine,
-  RiErrorWarningLine,
-} from "@remixicon/react";
+import { RiArrowDownSLine, RiSearchLine } from "@remixicon/react";
 import { cn } from "../utils/utils";
 import Input from "./Input";
 import Label from "./Label";
 import Checkbox from "./Checkbox";
-import Tooltip from "./Tooltip";
 
 type Option = {
   label: string | number;
@@ -53,7 +48,6 @@ interface DropdownProps {
   addInfo?: string | number;
   tooltipContent?: string;
   width?: string;
-  // dropDownTooltip?: boolean | undefined;
   dropdownFooter?: boolean | undefined;
   disabled?: boolean;
   labelTextColor?: string;
@@ -80,7 +74,6 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       position = "top",
       width,
       info,
-      // dropDownTooltip = false,
       dropdownFooter = false,
       onApply,
       disabled = false,
@@ -213,7 +206,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           }}
           className={cn(
             "w-full hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-text-sm cursor-pointer",
-            dropdownMenu ? "border border-gray-300" : "border border-gray-200",
+            dropdownMenu
+              ? "border border-primary-600"
+              : "border border-gray-200",
             disabled && "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
           )}
         >
@@ -236,8 +231,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           aria-multiselectable={multiple}
           aria-labelledby={`${id}-label`}
           className={cn(
-            "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in border border-gray-300",
+            "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
             position === "top" ? "top-10" : "bottom-10",
+            dropdownMenu
+              ? "border border-primary-600"
+              : "border border-gray-200",
             dropdownMenu &&
               "max-h-[360px] h-fit opacity-[1] transition-all ease-in duration-150"
           )}
@@ -383,28 +381,12 @@ export const MenuItem: React.FC<MenuItemProps> = ({ label, children }) => {
   return <p className="break-all">{label || children}</p>;
 };
 
-// interface DropdownTooltipProps {
-//   tooltipContent?: string | undefined;
-// }
-
-// const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
-//   tooltipContent,
-// }) => {
-//   const content = tooltipContent || "";
-//   return content ? (
-//     <Tooltip position="right" className="" content={content}>
-//       <RiErrorWarningLine color="#98A2B3" size={14} />
-//     </Tooltip>
-//   ) : null;
-// };
-
 interface DropdownFooterProps {
   onApply?: (() => void) | undefined;
   setDropdownMenu?: (value: boolean) => void;
 }
 
 export const DropdownFooter: React.FC<DropdownFooterProps> = ({
-  // onReset,
   onApply,
   setDropdownMenu,
 }) => {

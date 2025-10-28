@@ -56,7 +56,6 @@ interface DropdownProps {
   addInfo?: string | number;
   tooltipContent?: string;
   width?: string;
-  // dropDownTooltip?: boolean | undefined;
   dropdownFooter?: boolean;
   disabled?: boolean;
   labelTextColor?: string;
@@ -83,7 +82,6 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
       position = "top",
       width,
       info,
-      // dropDownTooltip = false,
       dropdownFooter = false,
       onApply,
       disabled = false,
@@ -223,6 +221,9 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
           tabIndex={-1}
           className={cn(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
+            dropdownMenu
+              ? "border border-primary-600"
+              : "border border-gray-200",
             position === "top"
               ? "top-10"
               : position === "bottom"
@@ -249,7 +250,7 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
               aria-label="Search options"
               value={searchQuery}
               onChange={handleSearchChange}
-              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
+              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3 border-none"
               endIcon={<RiSearchLine size={18} />}
             />
           )}

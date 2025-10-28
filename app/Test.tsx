@@ -1717,15 +1717,14 @@ const Test = () => {
       </section>
       <div className="grid grid-cols-2 gap-4 p-8">
         {/* Top-Left */}
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-6">
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button variant="outlined">Top</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className="w-56"
-              // align="start"
-              // side="top"
+              align="top"
             >
               <DropdownMenuLabel>Top Position</DropdownMenuLabel>
               <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -1747,7 +1746,7 @@ const Test = () => {
               <DropdownMenuTrigger>
                 <Button variant="outlined">Bottom</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="start">
+              <DropdownMenuContent className="w-56" align="bottom">
                 <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -1815,50 +1814,6 @@ const Test = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="center">
                 <DropdownMenuLabel>Center Aligned</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">End</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end">
-                <DropdownMenuLabel>End Aligned</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Large Offset</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="start">
-                <DropdownMenuLabel>Large Offset (20px)</DropdownMenuLabel>
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuSub>
