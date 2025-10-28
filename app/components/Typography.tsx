@@ -17,7 +17,6 @@ interface TypographyProps
 const typographyVariant = cva("text-dark", {
   variants: {
     variant: {
-      // Your original heading variants
       h1: "text-8xl leading-[144px] font-bold",
       h2: "text-7xl leading-[90px] font-bold",
       h3: "text-5xl leading-[72px] font-bold",
@@ -25,7 +24,6 @@ const typographyVariant = cva("text-dark", {
       h5: "text-2xl leading-9 font-bold",
       h6: "text-xl leading-[30px] font-semibold",
 
-      // Text variants (renamed as b1, b2, etc.) - using actual Tailwind classes
       b1: "text-xl font-normal leading-7", // 20px
       b2: "text-lg font-normal leading-6", // 18px
       b3: "text-base font-normal leading-5", // 16px
@@ -54,7 +52,6 @@ const Typography = ({
   className,
   ...props
 }: TypographyProps) => {
-  // Use p tag for b1-b5 variants, otherwise use the provided as prop or variant
   const Component =
     as || (variant?.startsWith("b") ? "p" : (variant as ElementType));
   return (
