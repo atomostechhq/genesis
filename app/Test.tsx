@@ -20,11 +20,9 @@ import {
   RiInformationLine,
   RiCloseLine,
   RiUpload2Line,
-  RiFolderFill,
   RiFileLine,
   RiAddLine,
   RiEditLine,
-  RiFolderOpenLine,
   RiFolderOpenFill,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
@@ -70,7 +68,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./components/MenuItem";
+} from "./components/DropdownMenu";
 import Drawer from "./components/Drawer";
 import FileSelector from "./components/FileSelector";
 import {
@@ -86,6 +84,7 @@ import TreeView from "./components/TreeView";
 import Spinner from "./components/Spinner";
 import OTPInput from "./components/OTPInput";
 import TextInputWithLabel from "./components/TextInputWithLabel";
+import Typography from "./components/Typography";
 
 interface Option {
   label: string | number;
@@ -665,30 +664,29 @@ const Test = () => {
       </section>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
-        <section>
-          <h1 className="text-primary-600 border-b border-primary-900 w-fit">
-            Typography - Font Size
-          </h1>
-          <h1 className="text-display-2xl">Display 2xl</h1>
-          <h1 className="text-display-xl">Display xl</h1>
-          <h1 className="text-display-lg">Display lg</h1>
-          <h1 className="text-display-md">Display md</h1>
-          <h1 className="text-display-sm">Display sm</h1>
-          <h1 className="text-display-xs">Display xs</h1>
-          <h1 className="text-text-xl">Text Xl</h1>
-          <h1 className="text-text-lg">Text Lg</h1>
-          <h1 className="text-text-md">Text Md</h1>
-          <h1 className="text-text-sm">Text Sm</h1>
-          <h1 className="text-text-xs">Text Xs</h1>
-        </section>
-        <section>
-          <h1 className="text-primary-600 border-b border-primary-900 w-fit">
-            Typography - Font Weight
-          </h1>
-          <h1 className="font-regular">Regular</h1>
-          <h1 className="font-medium">Medium</h1>
-          <h1 className="font-semibold">Semi Bold</h1>
-          <h1 className="font-bold">Bold</h1>
+        <section className="space-y-3">
+          <Typography variant="h6">Typography</Typography>
+          <Typography variant="h1">H1 Headline</Typography>
+          <Typography variant="h2">H2 Headline</Typography>
+          <Typography variant="h3">H3 Headline</Typography>
+          <Typography variant="h4">H4 Headline</Typography>
+          <Typography variant="h5">H5 Headline</Typography>
+          <Typography variant="h6">H6 Headline</Typography>
+          <Typography variant="b1" intent="primary">
+            Body 1 - Primary
+          </Typography>
+          <Typography variant="b2" intent="success">
+            Body 2 - Success
+          </Typography>
+          <Typography variant="b3" intent="error">
+            Body 3 - Error
+          </Typography>
+          <Typography variant="b4" intent="warning">
+            Body 4 - Warning
+          </Typography>
+          <Typography variant="b5" intent="default">
+            Body 5 - Default
+          </Typography>
         </section>
       </div>
       {/* Buttons  */}
@@ -1694,7 +1692,7 @@ const Test = () => {
         <h1 className="text-display-sm text-primary-600">MenuItems:</h1>
         <DropdownMenu>
           <DropdownMenuTrigger>
-          <Button> Open Menu </Button>
+            <Button> Open Menu </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-64">
             <DropdownMenuLabel>Account</DropdownMenuLabel>
@@ -1722,10 +1720,7 @@ const Test = () => {
             <DropdownMenuTrigger>
               <Button variant="outlined">Top</Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="w-56"
-              align="top"
-            >
+            <DropdownMenuContent className="w-56" align="top">
               <DropdownMenuLabel>Top Position</DropdownMenuLabel>
               <DropdownMenuItem>Profile</DropdownMenuItem>
               <DropdownMenuItem>Settings</DropdownMenuItem>

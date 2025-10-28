@@ -222,11 +222,6 @@ const config: Config = {
         "display-md": "2.25rem", // 36px
         "display-sm": "1.875rem", // 30px
         "display-xs": "1.5rem", // 24px
-        "text-xl": "1.25rem", // 20px
-        "text-lg": "1.125rem", // 18px
-        "text-md": "1rem", // 16px
-        "text-sm": "0.875rem", // 14px
-        "text-xs": "0.75rem", // 12px
       },
       fontWeight: {
         regular: "400",
