@@ -600,68 +600,6 @@ const Test = () => {
 
   return (
     <div className="m-5 space-y-5">
-      <section className="flex gap-6 items-center">
-        <h1 className="text-lg">Dropdown with icon</h1>
-        <Dropdown
-          options={multiOptions}
-          selected={dropdownMenuOption}
-          setSelected={setDropdownMenuOption}
-          search={true}
-          multiple={true}
-          width="200px"
-          id="dropdownMenuOptionOne"
-          dropdownFooter={true}
-          onApply={() => {
-            alert("Apply button clicked");
-          }}
-          footerAction={
-            <div className="flex justify-end items-center">
-              <Button
-                size="sm"
-                className="h-[30px]"
-                onClick={() => {
-                  alert("Apply button clicked");
-                }}
-              >
-                Custom Action
-              </Button>
-            </div>
-          }
-        />
-        <DropdownWithIcon
-          options={multiOptions}
-          selected={dropdownMenuOptionTwo}
-          setSelected={setDropdownMenuOptionTwo}
-          search={true}
-          multiple={true}
-          width="200px"
-          id="dropdownMenuOptionTwo"
-          trigger={
-            <RiFilterLine
-              className="hover:bg-gray-200 rounded"
-              cursor="pointer"
-              size={14}
-            />
-          }
-          dropdownFooter={true}
-          onApply={() => {
-            alert("Apply button clicked");
-          }}
-          footerAction={
-            <div className="flex justify-end items-center">
-              <Button
-                size="sm"
-                className="h-[30px]"
-                onClick={() => {
-                  alert("Apply button clicked");
-                }}
-              >
-                Custom Action
-              </Button>
-            </div>
-          }
-        />
-      </section>
       {/* Typography */}
       <div className="mt-10 flex gap-10">
         <section className="space-y-3">
@@ -901,51 +839,6 @@ const Test = () => {
           <Chip intent="orange">orange</Chip>
         </section>
       </div>
-      {/* cards */}
-      <div className="space-y-5">
-        <Card>
-          <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-            <CardAction>
-              <Button>Action Button</Button>
-            </CardAction>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
-        </Card>
-      </div>
-      <div>
-        <h1>Customised card</h1>
-        <Card className="w-96 p-0 bg-yellow-50 text-green-600 rounded-2xl">
-          <CardHeader>
-            <CardTitle className="text-red-600">Project Dashboard</CardTitle>
-            <CardDescription>
-              Manage your projects and tasks efficiently
-            </CardDescription>
-            <CardAction>
-              <Button variant="outlined">Create New</Button>
-            </CardAction>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <p>Active Projects: 12</p>
-              <p>Completed Tasks: 45</p>
-              <p>Pending Reviews: 3</p>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <div className="flex justify-between items-center w-full">
-              <span className="text-sm text-gray-500">Last updated: Today</span>
-              <Button size="sm">View All</Button>
-            </div>
-          </CardFooter>
-        </Card>
-      </div>
       {/* Toggle  */}
       <div className="flex flex-col gap-5">
         <h1 className="text-display-sm text-primary-600">Toggle:</h1>
@@ -1146,27 +1039,7 @@ const Test = () => {
           </div>
         </section>
       </div>
-      <section className="space-y-2 w-1/2 ">
-        <h1 className="text-display-sm whitespace-nowrap text-primary-600">
-          Text Input With Label:
-        </h1>
-        <TextInputWithLabel
-          tags={tags}
-          setTags={setTags}
-          placeholder="Add tags"
-          intent="primary"
-        />
-      </section>
-      {/* OTP */}
-      <section className="space-y-4">
-        <h1 className="text-display-sm text-primary-600">OTP Input Field:</h1>
-        <div className="space-y-2">
-          <OTPInput type="text" length={4} onChange={setOtp} />
-          <OTPInput type="number" length={5} onChange={setOtp} />
-          <OTPInput type="password" length={6} onChange={setOtp} />
-          <p className="mt-4 text-gray-700">Your OTP: {otp}</p>
-        </div>
-      </section>
+
       {/* Textarea */}
       <section className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-600">Textarea</h1>
@@ -1248,279 +1121,6 @@ const Test = () => {
           onChange={(e) => handleSliderChange(Number(e.target.value))}
         />
       </div>
-      {/* tree view */}
-      <section className="my-5 w-1/2 border p-5">
-        <h1 className="text-display-sm text-primary-600">Tree View:</h1>
-        <TreeView aria-label="Project files" defaultExpandedIds={["frontend"]}>
-          {/* FRONTEND SECTION */}
-          <TreeView.Item
-            id="frontend"
-            onSelect={setSelected}
-            selected={selected === "frontend"}
-          >
-            <TreeView.LeadingVisual>
-              <RiAlertFill />{" "}
-            </TreeView.LeadingVisual>{" "}
-            Frontend
-            <TreeView.SubTree>
-              <TreeView.Item
-                id="frontend-react"
-                onSelect={setSelected}
-                selected={selected === "frontend-react"}
-              >
-                React App
-                <TreeView.SubTree>
-                  <TreeView.Item
-                    id="frontend-react-components"
-                    onSelect={setSelected}
-                    selected={selected === "frontend-react-components"}
-                  >
-                    <TreeView.LeadingVisual>
-                      <RiAlertFill />{" "}
-                    </TreeView.LeadingVisual>{" "}
-                    Components
-                    <TreeView.SubTree>
-                      <TreeView.Item
-                        id="frontend-react-components-button"
-                        onSelect={setSelected}
-                        selected={
-                          selected === "frontend-react-components-button"
-                        }
-                      >
-                        <Button
-                          onClick={() => {
-                            alert("clicked");
-                          }}
-                        >
-                          Click
-                        </Button>
-                      </TreeView.Item>
-                      <TreeView.Item
-                        id="frontend-react-components-modal"
-                        onSelect={setSelected}
-                        selected={
-                          selected === "frontend-react-components-modal"
-                        }
-                      >
-                        Modal
-                      </TreeView.Item>
-                    </TreeView.SubTree>
-                  </TreeView.Item>
-
-                  <TreeView.Item
-                    id="frontend-react-hooks"
-                    onSelect={setSelected}
-                    selected={selected === "frontend-react-hooks"}
-                  >
-                    Hooks
-                  </TreeView.Item>
-                  <TreeView.Item
-                    id="frontend-react-context"
-                    onSelect={setSelected}
-                    selected={selected === "frontend-react-context"}
-                  >
-                    Context
-                  </TreeView.Item>
-                </TreeView.SubTree>
-              </TreeView.Item>
-
-              <TreeView.Item
-                id="frontend-next"
-                onSelect={setSelected}
-                selected={selected === "frontend-next"}
-              >
-                Next.js App
-                <TreeView.SubTree>
-                  <TreeView.Item
-                    id="frontend-next-pages"
-                    onSelect={setSelected}
-                    selected={selected === "frontend-next-pages"}
-                  >
-                    Pages
-                  </TreeView.Item>
-                  <TreeView.Item
-                    id="frontend-next-api"
-                    onSelect={setSelected}
-                    selected={selected === "frontend-next-api"}
-                  >
-                    API Routes
-                  </TreeView.Item>
-                </TreeView.SubTree>
-              </TreeView.Item>
-            </TreeView.SubTree>
-          </TreeView.Item>
-
-          {/* BACKEND SECTION */}
-          <TreeView.Item
-            id="backend"
-            onSelect={setSelected}
-            selected={selected === "backend"}
-          >
-            Backend
-            <TreeView.SubTree>
-              <TreeView.Item
-                id="backend-api"
-                onSelect={setSelected}
-                selected={selected === "backend-api"}
-              >
-                API Routes
-                <TreeView.SubTree>
-                  <TreeView.Item
-                    id="backend-api-auth"
-                    onSelect={setSelected}
-                    selected={selected === "backend-api-auth"}
-                  >
-                    Auth
-                  </TreeView.Item>
-                  <TreeView.Item
-                    id="backend-api-users"
-                    onSelect={setSelected}
-                    selected={selected === "backend-api-users"}
-                  >
-                    Users
-                  </TreeView.Item>
-                  <TreeView.Item
-                    id="backend-api-products"
-                    onSelect={setSelected}
-                    selected={selected === "backend-api-products"}
-                  >
-                    Products
-                  </TreeView.Item>
-                </TreeView.SubTree>
-              </TreeView.Item>
-
-              <TreeView.Item
-                id="backend-database"
-                onSelect={setSelected}
-                selected={selected === "backend-database"}
-              >
-                Database
-                <TreeView.SubTree>
-                  <TreeView.Item
-                    id="backend-database-models"
-                    onSelect={setSelected}
-                    selected={selected === "backend-database-models"}
-                  >
-                    Models
-                  </TreeView.Item>
-                  <TreeView.Item
-                    id="backend-database-migrations"
-                    onSelect={setSelected}
-                    selected={selected === "backend-database-migrations"}
-                  >
-                    Migrations
-                  </TreeView.Item>
-                  <TreeView.Item
-                    id="backend-database-seeds"
-                    onSelect={setSelected}
-                    selected={selected === "backend-database-seeds"}
-                  >
-                    Seeds
-                  </TreeView.Item>
-                </TreeView.SubTree>
-              </TreeView.Item>
-            </TreeView.SubTree>
-          </TreeView.Item>
-        </TreeView>
-      </section>
-      <Divider />
-      <section>
-        <TreeView aria-label="Files changed" defaultExpandedIds={["src"]}>
-          <TreeView.Item
-            id="src"
-            onSelect={setSelected}
-            selected={selected === "src"}
-          >
-            <TreeView.LeadingVisual>
-              <RiFolderOpenFill color="#1765dc" size={16} />
-            </TreeView.LeadingVisual>
-            src
-            <TreeView.SubTree>
-              <TreeView.Item
-                id="src/Avatar.tsx"
-                onSelect={setSelected}
-                selected={selected === "src/Avatar.tsx"}
-              >
-                <TreeView.LeadingVisual>
-                  <RiFileLine size={16} />
-                </TreeView.LeadingVisual>
-                Avatar.tsx
-                <TreeView.TrailingVisual label="Added">
-                  <RiAddLine size={16} />
-                </TreeView.TrailingVisual>
-              </TreeView.Item>
-
-              <TreeView.Item
-                id="src/Button.tsx"
-                onSelect={setSelected}
-                selected={selected === "src/Button.tsx"}
-              >
-                <TreeView.LeadingVisual>
-                  <RiFileLine size={16} />
-                </TreeView.LeadingVisual>
-                Button.tsx
-                <TreeView.TrailingVisual label="Modified">
-                  <RiEditLine size={16} />
-                </TreeView.TrailingVisual>
-              </TreeView.Item>
-            </TreeView.SubTree>
-          </TreeView.Item>
-
-          <TreeView.Item
-            id="package.json"
-            onSelect={setSelected}
-            selected={selected === "package.json"}
-          >
-            <TreeView.LeadingVisual>
-              <RiFileLine size={16} />
-            </TreeView.LeadingVisual>
-            package.json
-            <TreeView.TrailingVisual label="Modified">
-              <RiEditLine size={16} />
-            </TreeView.TrailingVisual>
-          </TreeView.Item>
-        </TreeView>
-      </section>
-      <section className="my-5">
-        <h1>Allow multiple expanded (default)</h1>
-        <TreeView aria-label="Example Tree" expandTopLevelByDefault>
-          <TreeView.Item id="1">
-            Parent 1
-            <TreeView.SubTree>
-              <TreeView.Item id="1.1">Child 1</TreeView.Item>
-              <TreeView.Item id="1.2">Child 2</TreeView.Item>
-            </TreeView.SubTree>
-          </TreeView.Item>
-
-          <TreeView.Item id="2">
-            Parent 2
-            <TreeView.SubTree>
-              <TreeView.Item id="2.1">Child A</TreeView.Item>
-              <TreeView.Item id="2.2">Child B</TreeView.Item>
-            </TreeView.SubTree>
-          </TreeView.Item>
-        </TreeView>
-      </section>
-      <Divider />
-      <section className="my-5">
-        <h1>Treeview Mode (only one expanded)</h1>
-        <TreeView aria-label="Accordion Tree" allowMultiple={false}>
-          <TreeView.Item id="1">
-            Section 1
-            <TreeView.SubTree>
-              <TreeView.Item id="1.1">Item A</TreeView.Item>
-            </TreeView.SubTree>
-          </TreeView.Item>
-          <TreeView.Item id="2">
-            Section 2
-            <TreeView.SubTree>
-              <TreeView.Item id="2.1">Item B</TreeView.Item>
-            </TreeView.SubTree>
-          </TreeView.Item>
-        </TreeView>
-      </section>
-      <Divider />
-
       {/* table */}
       <section className="my-5">
         <h1 className="text-display-sm text-primary-600">
@@ -1551,35 +1151,6 @@ const Test = () => {
             </Tooltip>
           </div>
         </Modal>
-      </section>
-      {/* Drawer */}
-      <section className="my-5 space-y-4">
-        <h1 className="text-display-sm text-primary-600">Drawer:</h1>
-
-        <div className="flex gap-3 flex-wrap">
-          {positions.map((pos) => (
-            <Button key={pos} onClick={() => setOpenPosition(pos)}>
-              Show {pos} Drawer
-            </Button>
-          ))}
-        </div>
-
-        {positions.map((pos) => (
-          <Drawer
-            key={pos}
-            isOpen={openPosition === pos}
-            setIsOpen={(isOpen) => {
-              if (!isOpen) setOpenPosition(undefined);
-            }}
-            closeOnOutsideClick={false}
-            position={pos}
-            width={pos === "left" || pos === "right" ? "w-[500px]" : undefined}
-            height={pos === "top" || pos === "bottom" ? "h-[500px]" : undefined}
-          >
-            <p>This is a {pos} drawer.</p>
-            <p>You can change its position, width, and height using props.</p>
-          </Drawer>
-        ))}
       </section>
       {/* Dropdown  */}
       <h1 className="text-display-sm text-primary-600">Dropdown</h1>
@@ -1687,179 +1258,68 @@ const Test = () => {
           />
         </div>
       </section>
-      {/* Menu Items */}
-      <section className="p-5">
-        <h1 className="text-display-sm text-primary-600">MenuItems:</h1>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button> Open Menu </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-64">
-            <DropdownMenuLabel>Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>More Options</DropdownMenuSubTrigger>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
-            <DropdownMenuLabel>Label One</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Menu One</DropdownMenuItem>
-            <DropdownMenuItem>Menu Two</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <section className="flex gap-6 items-center">
+        <h1 className="text-lg">Dropdown with icon</h1>
+        <Dropdown
+          options={multiOptions}
+          selected={dropdownMenuOption}
+          setSelected={setDropdownMenuOption}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionOne"
+          dropdownFooter={true}
+          onApply={() => {
+            alert("Apply button clicked");
+          }}
+          footerAction={
+            <div className="flex justify-end items-center">
+              <Button
+                size="sm"
+                className="h-[30px]"
+                onClick={() => {
+                  alert("Apply button clicked");
+                }}
+              >
+                Custom Action
+              </Button>
+            </div>
+          }
+        />
+        <DropdownWithIcon
+          options={multiOptions}
+          selected={dropdownMenuOptionTwo}
+          setSelected={setDropdownMenuOptionTwo}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionTwo"
+          trigger={
+            <RiFilterLine
+              className="hover:bg-gray-200 rounded"
+              cursor="pointer"
+              size={14}
+            />
+          }
+          dropdownFooter={true}
+          onApply={() => {
+            alert("Apply button clicked");
+          }}
+          footerAction={
+            <div className="flex justify-end items-center">
+              <Button
+                size="sm"
+                className="h-[30px]"
+                onClick={() => {
+                  alert("Apply button clicked");
+                }}
+              >
+                Custom Action
+              </Button>
+            </div>
+          }
+        />
       </section>
-      <div className="grid grid-cols-2 gap-4 p-8">
-        {/* Top-Left */}
-        <div className="flex justify-center gap-6">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outlined">Top</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="top">
-              <DropdownMenuLabel>Top Position</DropdownMenuLabel>
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>Email</DropdownMenuItem>
-                  <DropdownMenuItem>Message</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>More...</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Bottom</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="bottom">
-                <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Left</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="left">
-                <DropdownMenuLabel>Left Position</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Right</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="right">
-                <DropdownMenuLabel>Right Position</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Center</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="center">
-                <DropdownMenuLabel>Center Aligned</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Wide Menu</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-80" align="start">
-                <DropdownMenuLabel>Wide Menu (320px)</DropdownMenuLabel>
-                <DropdownMenuItem>Profile with very long text</DropdownMenuItem>
-                <DropdownMenuItem>Settings with extra content</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>
-                    Invite users with long text
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email invitation</DropdownMenuItem>
-                    <DropdownMenuItem>Message invitation</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More options...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>
-                    Invite users with long text
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email invitation</DropdownMenuItem>
-                    <DropdownMenuItem>Message invitation</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More options...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </div>
       {/* Tabs */}
       <div>
         <h1 className="text-display-sm text-primary-600">Tabs</h1>
@@ -2149,115 +1609,6 @@ const Test = () => {
             text="60%"
             textClassName="text-primary-600 font-semibold"
           />
-        </div>
-      </section>
-      {/* Callout */}
-      <section className="my-5 space-y-4">
-        <h1 className="text-display-sm text-primary-600">Callout:</h1>
-        <div className="space-y-3">
-          <h1 className="text-display-xs text-primary-600">Filled:</h1>
-          <Callout
-            size={"xs"}
-            startIcon={<RiInformationLine size={18} />}
-            endIcon={<RiCloseLine size={18} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <Callout
-            size={"sm"}
-            intent={"warning"}
-            startIcon={<RiInformationLine size={18} />}
-            endIcon={<RiCloseLine size={18} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <Callout
-            size={"md"}
-            intent={"error"}
-            startIcon={<RiInformationLine size={20} />}
-            endIcon={<RiCloseLine size={20} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <Callout
-            size={"lg"}
-            intent={"success"}
-            startIcon={<RiInformationLine size={20} />}
-            endIcon={<RiCloseLine size={20} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <Callout
-            size={"lg"}
-            intent={"default"}
-            startIcon={<RiInformationLine size={20} />}
-            endIcon={<RiCloseLine size={20} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <h1 className="text-display-xs text-primary-600">Outlined:</h1>
-          <Callout
-            size={"xs"}
-            variant={"outlined"}
-            startIcon={<RiInformationLine size={18} />}
-            endIcon={<RiCloseLine size={18} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <Callout
-            size={"sm"}
-            variant={"outlined"}
-            intent={"warning"}
-            startIcon={<RiInformationLine size={18} />}
-            endIcon={<RiCloseLine size={18} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <Callout
-            size={"md"}
-            variant={"outlined"}
-            intent={"error"}
-            startIcon={<RiInformationLine size={20} />}
-            endIcon={<RiCloseLine size={20} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <Callout
-            size={"lg"}
-            variant={"outlined"}
-            intent={"success"}
-            startIcon={<RiInformationLine size={20} />}
-            endIcon={
-              <Button
-                size={"sm"}
-                intent={"success"}
-                className="whitespace-nowrap"
-              >
-                Contact Admin
-              </Button>
-            }
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
-          <Callout
-            size={"lg"}
-            variant={"outlined"}
-            intent={"default"}
-            startIcon={<RiInformationLine size={20} />}
-            endIcon={<RiCloseLine size={20} />}
-          >
-            Access denied. Please contact the network administrator to view this
-            page.
-          </Callout>
         </div>
       </section>
       {/* Tooltip */}
@@ -3148,7 +2499,7 @@ const Test = () => {
           </p>
         </section>
       </div>
-
+      <h1 className="text-primary-500 font-medium text-3xl">Sidebar(Dense)</h1>
       <Sidebar dense={true} collapsed={collapsed} setCollapsed={setCollapsed}>
         <Sidebar.Header dense={true}>
           <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
@@ -3191,12 +2542,6 @@ const Test = () => {
         </div>
       </section>
       {/* Loading State */}
-      <section className="flex items-center gap-6">
-        <h1 className="text-display-sm text-primary-600">Spinner: </h1>
-        <Spinner size="sm" />
-        <Spinner size="md" />
-        <Spinner size="lg" />
-      </section>
       <section className="flex flex-col items-center justify-center gap-2">
         <h1 className="text-display-sm text-primary-600">Loading</h1>
         <Loading width="50px" height="50px" loaderColor="green" />
@@ -3210,6 +2555,663 @@ const Test = () => {
         <Button variant="outlined">
           Loading <Loading width="15px" height="15px" variant="heavy" />
         </Button>
+      </section>
+      <section className="flex items-center gap-6">
+        <h1 className="text-display-sm text-primary-600">Spinner: </h1>
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" />
+      </section>
+      <Divider />
+      {/* cards */}
+      <div className="space-y-5">
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+            <CardAction>
+              <Button>Action Button</Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
+      </div>
+      <div>
+        <h1>Customised card</h1>
+        <Card className="w-96 p-0 bg-yellow-50 text-green-600 rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-red-600">Project Dashboard</CardTitle>
+            <CardDescription>
+              Manage your projects and tasks efficiently
+            </CardDescription>
+            <CardAction>
+              <Button variant="outlined">Create New</Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <p>Active Projects: 12</p>
+              <p>Completed Tasks: 45</p>
+              <p>Pending Reviews: 3</p>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <div className="flex justify-between items-center w-full">
+              <span className="text-sm text-gray-500">Last updated: Today</span>
+              <Button size="sm">View All</Button>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
+      {/* Text input with label */}
+      <section className="space-y-2 w-1/2 ">
+        <h1 className="text-display-sm whitespace-nowrap text-primary-600">
+          Text Input With Label:
+        </h1>
+        <TextInputWithLabel
+          tags={tags}
+          setTags={setTags}
+          placeholder="Add tags"
+          intent="primary"
+        />
+      </section>
+      {/* OTP */}
+      <section className="space-y-4">
+        <h1 className="text-display-sm text-primary-600">OTP Input Field:</h1>
+        <div className="space-y-2">
+          <OTPInput type="text" length={4} onChange={setOtp} />
+          <OTPInput type="number" length={5} onChange={setOtp} />
+          <OTPInput type="password" length={6} onChange={setOtp} />
+          <p className="mt-4 text-gray-700">Your OTP: {otp}</p>
+        </div>
+      </section>
+      {/* tree view */}
+      <section className="my-5 w-1/2 border p-5">
+        <h1 className="text-display-sm text-primary-600">Tree View:</h1>
+        <TreeView aria-label="Project files" defaultExpandedIds={["frontend"]}>
+          {/* FRONTEND SECTION */}
+          <TreeView.Item
+            id="frontend"
+            onSelect={setSelected}
+            selected={selected === "frontend"}
+          >
+            <TreeView.LeadingVisual>
+              <RiAlertFill />{" "}
+            </TreeView.LeadingVisual>{" "}
+            Frontend
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="frontend-react"
+                onSelect={setSelected}
+                selected={selected === "frontend-react"}
+              >
+                React App
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="frontend-react-components"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-react-components"}
+                  >
+                    <TreeView.LeadingVisual>
+                      <RiAlertFill />{" "}
+                    </TreeView.LeadingVisual>{" "}
+                    Components
+                    <TreeView.SubTree>
+                      <TreeView.Item
+                        id="frontend-react-components-button"
+                        onSelect={setSelected}
+                        selected={
+                          selected === "frontend-react-components-button"
+                        }
+                      >
+                        <Button
+                          onClick={() => {
+                            alert("clicked");
+                          }}
+                        >
+                          Click
+                        </Button>
+                      </TreeView.Item>
+                      <TreeView.Item
+                        id="frontend-react-components-modal"
+                        onSelect={setSelected}
+                        selected={
+                          selected === "frontend-react-components-modal"
+                        }
+                      >
+                        Modal
+                      </TreeView.Item>
+                    </TreeView.SubTree>
+                  </TreeView.Item>
+
+                  <TreeView.Item
+                    id="frontend-react-hooks"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-react-hooks"}
+                  >
+                    Hooks
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="frontend-react-context"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-react-context"}
+                  >
+                    Context
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+
+              <TreeView.Item
+                id="frontend-next"
+                onSelect={setSelected}
+                selected={selected === "frontend-next"}
+              >
+                Next.js App
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="frontend-next-pages"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-next-pages"}
+                  >
+                    Pages
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="frontend-next-api"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-next-api"}
+                  >
+                    API Routes
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+
+          {/* BACKEND SECTION */}
+          <TreeView.Item
+            id="backend"
+            onSelect={setSelected}
+            selected={selected === "backend"}
+          >
+            Backend
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="backend-api"
+                onSelect={setSelected}
+                selected={selected === "backend-api"}
+              >
+                API Routes
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="backend-api-auth"
+                    onSelect={setSelected}
+                    selected={selected === "backend-api-auth"}
+                  >
+                    Auth
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="backend-api-users"
+                    onSelect={setSelected}
+                    selected={selected === "backend-api-users"}
+                  >
+                    Users
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="backend-api-products"
+                    onSelect={setSelected}
+                    selected={selected === "backend-api-products"}
+                  >
+                    Products
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+
+              <TreeView.Item
+                id="backend-database"
+                onSelect={setSelected}
+                selected={selected === "backend-database"}
+              >
+                Database
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="backend-database-models"
+                    onSelect={setSelected}
+                    selected={selected === "backend-database-models"}
+                  >
+                    Models
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="backend-database-migrations"
+                    onSelect={setSelected}
+                    selected={selected === "backend-database-migrations"}
+                  >
+                    Migrations
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="backend-database-seeds"
+                    onSelect={setSelected}
+                    selected={selected === "backend-database-seeds"}
+                  >
+                    Seeds
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+        </TreeView>
+      </section>
+      <Divider />
+      <section>
+        <TreeView aria-label="Files changed" defaultExpandedIds={["src"]}>
+          <TreeView.Item
+            id="src"
+            onSelect={setSelected}
+            selected={selected === "src"}
+          >
+            <TreeView.LeadingVisual>
+              <RiFolderOpenFill color="#1765dc" size={16} />
+            </TreeView.LeadingVisual>
+            src
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="src/Avatar.tsx"
+                onSelect={setSelected}
+                selected={selected === "src/Avatar.tsx"}
+              >
+                <TreeView.LeadingVisual>
+                  <RiFileLine size={16} />
+                </TreeView.LeadingVisual>
+                Avatar.tsx
+                <TreeView.TrailingVisual label="Added">
+                  <RiAddLine size={16} />
+                </TreeView.TrailingVisual>
+              </TreeView.Item>
+
+              <TreeView.Item
+                id="src/Button.tsx"
+                onSelect={setSelected}
+                selected={selected === "src/Button.tsx"}
+              >
+                <TreeView.LeadingVisual>
+                  <RiFileLine size={16} />
+                </TreeView.LeadingVisual>
+                Button.tsx
+                <TreeView.TrailingVisual label="Modified">
+                  <RiEditLine size={16} />
+                </TreeView.TrailingVisual>
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+
+          <TreeView.Item
+            id="package.json"
+            onSelect={setSelected}
+            selected={selected === "package.json"}
+          >
+            <TreeView.LeadingVisual>
+              <RiFileLine size={16} />
+            </TreeView.LeadingVisual>
+            package.json
+            <TreeView.TrailingVisual label="Modified">
+              <RiEditLine size={16} />
+            </TreeView.TrailingVisual>
+          </TreeView.Item>
+        </TreeView>
+      </section>
+      <section className="my-5">
+        <h1>Allow multiple expanded (default)</h1>
+        <TreeView aria-label="Example Tree" expandTopLevelByDefault>
+          <TreeView.Item id="1">
+            Parent 1
+            <TreeView.SubTree>
+              <TreeView.Item id="1.1">Child 1</TreeView.Item>
+              <TreeView.Item id="1.2">Child 2</TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+
+          <TreeView.Item id="2">
+            Parent 2
+            <TreeView.SubTree>
+              <TreeView.Item id="2.1">Child A</TreeView.Item>
+              <TreeView.Item id="2.2">Child B</TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+        </TreeView>
+      </section>
+      <Divider />
+      <section className="my-5">
+        <h1>Treeview Mode (only one expanded)</h1>
+        <TreeView aria-label="Accordion Tree" allowMultiple={false}>
+          <TreeView.Item id="1">
+            Section 1
+            <TreeView.SubTree>
+              <TreeView.Item id="1.1">Item A</TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+          <TreeView.Item id="2">
+            Section 2
+            <TreeView.SubTree>
+              <TreeView.Item id="2.1">Item B</TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+        </TreeView>
+      </section>
+      <Divider />
+      {/* Drawer */}
+      <section className="my-5 space-y-4">
+        <h1 className="text-display-sm text-primary-600">Drawer:</h1>
+
+        <div className="flex gap-3 flex-wrap">
+          {positions.map((pos) => (
+            <Button key={pos} onClick={() => setOpenPosition(pos)}>
+              Show {pos} Drawer
+            </Button>
+          ))}
+        </div>
+
+        {positions.map((pos) => (
+          <Drawer
+            key={pos}
+            isOpen={openPosition === pos}
+            setIsOpen={(isOpen) => {
+              if (!isOpen) setOpenPosition(undefined);
+            }}
+            closeOnOutsideClick={false}
+            position={pos}
+            width={pos === "left" || pos === "right" ? "w-[500px]" : undefined}
+            height={pos === "top" || pos === "bottom" ? "h-[500px]" : undefined}
+          >
+            <p>This is a {pos} drawer.</p>
+            <p>You can change its position, width, and height using props.</p>
+          </Drawer>
+        ))}
+      </section>
+      {/* Menu Items */}
+      <section className="p-5">
+        <h1 className="text-display-sm text-primary-600">MenuItems:</h1>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button> Open Menu </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-64">
+            <DropdownMenuLabel>Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>More Options</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuLabel>Label One</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Menu One</DropdownMenuItem>
+            <DropdownMenuItem>Menu Two</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </section>
+      <div className="grid grid-cols-2 gap-4 p-8">
+        {/* Top-Left */}
+        <div className="flex justify-center gap-6">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Top</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="top">
+              <DropdownMenuLabel>Top Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <div className="flex justify-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button variant="outlined">Bottom</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="bottom">
+                <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="flex justify-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button variant="outlined">Left</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="left">
+                <DropdownMenuLabel>Left Position</DropdownMenuLabel>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="flex justify-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button variant="outlined">Right</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="right">
+                <DropdownMenuLabel>Right Position</DropdownMenuLabel>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="flex justify-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button variant="outlined">Center</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="center">
+                <DropdownMenuLabel>Center Aligned</DropdownMenuLabel>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="flex justify-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button variant="outlined">Wide Menu</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-80" align="start">
+                <DropdownMenuLabel>Wide Menu (320px)</DropdownMenuLabel>
+                <DropdownMenuItem>Profile with very long text</DropdownMenuItem>
+                <DropdownMenuItem>Settings with extra content</DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    Invite users with long text
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email invitation</DropdownMenuItem>
+                    <DropdownMenuItem>Message invitation</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More options...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    Invite users with long text
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email invitation</DropdownMenuItem>
+                    <DropdownMenuItem>Message invitation</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More options...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </div>
+      {/* Callout */}
+      <section className="my-5 space-y-4">
+        <h1 className="text-display-sm text-primary-600">Callout:</h1>
+        <div className="space-y-3">
+          <h1 className="text-display-xs text-primary-600">Filled:</h1>
+          <Callout
+            size={"xs"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"sm"}
+            intent={"warning"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"md"}
+            intent={"error"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            intent={"success"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            intent={"default"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <h1 className="text-display-xs text-primary-600">Outlined:</h1>
+          <Callout
+            size={"xs"}
+            variant={"outlined"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"sm"}
+            variant={"outlined"}
+            intent={"warning"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"md"}
+            variant={"outlined"}
+            intent={"error"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            variant={"outlined"}
+            intent={"success"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={
+              <Button
+                size={"sm"}
+                intent={"success"}
+                className="whitespace-nowrap"
+              >
+                Contact Admin
+              </Button>
+            }
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            variant={"outlined"}
+            intent={"default"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+        </div>
       </section>
     </div>
   );
