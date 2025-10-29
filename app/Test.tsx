@@ -2619,6 +2619,7 @@ const Test = () => {
           placeholder="Add tags"
           intent="primary"
         />
+        <HelperText>Note: Paste comma separated values</HelperText>
       </section>
       {/* OTP */}
       <section className="space-y-4">
@@ -2627,8 +2628,9 @@ const Test = () => {
           <OTPInput type="text" length={4} onChange={setOtp} />
           <OTPInput type="number" length={5} onChange={setOtp} />
           <OTPInput type="password" length={6} onChange={setOtp} />
-          <p className="mt-4 text-gray-700">Your OTP: {otp}</p>
+          {/* <p className="mt-4 text-gray-700">Your OTP: {otp}</p> */}
         </div>
+        <HelperText>Note: you can also paste values</HelperText>
       </section>
       {/* tree view */}
       <section className="my-5 w-1/2 border p-5">
