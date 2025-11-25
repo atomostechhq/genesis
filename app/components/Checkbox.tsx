@@ -35,13 +35,18 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           type="checkbox"
           ref={ref}
           id={id}
-          aria-checked={checked}
-          role="checkbox"
+          // aria-checked={checked}
+          // role="checkbox"
           {...props}
           disabled={disabled}
           checked={checked}
+          // className={cn(
+          //   checkboxVariant({ className, size })
+          // )}
           className={cn(
-            checkboxVariant({ className, size })
+            "peer",
+            checkboxVariant({ className, size }),
+            "focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
           )}
         />
         <span

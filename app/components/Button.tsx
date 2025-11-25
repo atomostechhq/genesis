@@ -14,7 +14,8 @@ interface ButtonProps
 }
 
 const buttonVariants = cva(
-  "rounded-lg disabled:select-none font-semibold cursor-pointer transition-colors duration-300 ease-in-out",
+  // "rounded-lg disabled:select-none font-semibold cursor-pointer transition-colors duration-300 ease-in-out",
+  "rounded-lg disabled:select-none font-semibold cursor-pointer transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2",
   {
     variants: {
       variant: {
@@ -105,20 +106,35 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   return (
+    // <button
+    //   {...props}
+    //   disabled={disabled}
+    //   type={type}
+    //   aria-disabled={disabled}
+    //   className={cn(
+    //     fullWidth && "w-full",
+    //     buttonVariants({ intent, className, variant, size }),
+    //     "flex items-center text-center justify-center gap-2"
+    //   )}
+    // >
+    //   {startIcon}
+    //   {children}
+    //   {endIcon}
+    // </button>
     <button
       {...props}
       disabled={disabled}
-      type={type}
       aria-disabled={disabled}
+      type={type}
       className={cn(
         fullWidth && "w-full",
         buttonVariants({ intent, className, variant, size }),
         "flex items-center text-center justify-center gap-2"
       )}
     >
-      {startIcon}
+      {startIcon && <span aria-hidden="true">{startIcon}</span>}
       {children}
-      {endIcon}
+      {endIcon && <span aria-hidden="true">{endIcon}</span>}
     </button>
   );
 };

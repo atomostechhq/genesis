@@ -779,6 +779,11 @@ const Test = () => {
           </Button>
         </section>
       </div>
+      <Link target="_blank" href="/pages/button">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Button
+        </Button>
+      </Link>
       {/* Chips  */}
       <div className="space-y-5">
         <h1 className="text-display-sm text-primary-600">Chip:</h1>
@@ -839,6 +844,11 @@ const Test = () => {
           <Chip intent="orange">orange</Chip>
         </section>
       </div>
+      <Link target="_blank" href="/pages/chip">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Chip
+        </Button>
+      </Link>
       {/* Toggle  */}
       <div className="flex flex-col gap-5">
         <h1 className="text-display-sm text-primary-600">Toggle:</h1>
@@ -865,6 +875,11 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <Link target="_blank" href="/pages/toggle">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Toggle
+        </Button>
+      </Link>
       {/* checkbox */}
       <div className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-600">Checkbox:</h1>
@@ -914,6 +929,11 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <Link target="_blank" href="/pages/checkbox">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Checkbox
+        </Button>
+      </Link>
       {/* Radio */}
       <div className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-600">Radio:</h1>
@@ -971,6 +991,11 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <Link target="_blank" href="/pages/radio">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Radio
+        </Button>
+      </Link>
       {/* <Input /> */}
       <div className="flex flex-col gap-1">
         <h1 className="text-display-sm text-primary-600">Input Field:</h1>
