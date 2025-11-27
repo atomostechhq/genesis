@@ -1129,7 +1129,7 @@ const Test = () => {
         />
       </section>
 
-      <section className="test">
+      <section className="">
         <Link target="_blank" href="/pages/razorpay-fileupload">
           <Button endIcon={<RiExternalLinkLine />} className="my-5">
             Razor Pay File Upload
