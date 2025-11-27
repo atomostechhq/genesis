@@ -253,6 +253,7 @@ import { useState } from "react";
 // Usage Example
 export default function SimpleFileUploadExample() {
   const [items, setItems] = useState<UploadItem[]>([]);
+  console.log("items", items);
 
   const handleAddFiles = (files: File[]) => {
     const newItems: UploadItem[] = files.map((file) => ({
@@ -318,21 +319,22 @@ export default function SimpleFileUploadExample() {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h1 className="text-xl font-bold mb-4">File Upload</h1>
-      <ImageUploadControlled
-        items={items}
-        onAddFiles={handleAddFiles}
-        onUpdateItem={handleUpdateItem}
-        onDelete={handleDelete}
-        onUpload={handleUpload}
-        onPreview={handlePreview}
-        multiple={true}
-        accept="image/*, .pdf, .doc, .docx"
-        maxSizeMB={15}
-        hintText="Drag and drop files or click to upload"
-        disabled
-      />
-    </div>
+    <>
+      <div className="w-full mx-auto">
+        <h1 className="text-xl font-bold mb-4">File Upload</h1>
+        <ImageUploadControlled
+          items={items}
+          onAddFiles={handleAddFiles}
+          onUpdateItem={handleUpdateItem}
+          onDelete={handleDelete}
+          onUpload={handleUpload}
+          onPreview={handlePreview}
+          multiple={true}
+          accept="image/*, .pdf, .doc, .docx, .xlsx, .mp3"
+          maxSizeMB={15}
+          hintText="Drag and drop files or click to upload"
+        />
+      </div>
+    </>
   );
 }

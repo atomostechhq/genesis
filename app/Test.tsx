@@ -85,6 +85,7 @@ import Spinner from "./components/Spinner";
 import OTPInput from "./components/OTPInput";
 import TextInputWithLabel from "./components/TextInputWithLabel";
 import Typography from "./components/Typography";
+import SplitButton from "./components/SplitButton";
 
 interface Option {
   label: string | number;
@@ -778,6 +779,52 @@ const Test = () => {
             Custom Button
           </Button>
         </section>
+      </div>
+      <div className="flex gap-10 items-center">
+        <SplitButton compact>
+          <Button className="rounded-r-none">Split Button Compact</Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button
+                startIcon={<RiAddLine />}
+                className="rounded-l-none border-l border-l-primary-200"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-48" align="right">
+              <DropdownMenuLabel>Save Options</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Save as draft</DropdownMenuItem>
+              <DropdownMenuItem>Save and publish</DropdownMenuItem>
+              <DropdownMenuItem>Save as template</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SplitButton>
+        <SplitButton>
+          <Button
+            variant="outlined"
+            intent="default-outlined"
+            className="rounded-r-none"
+          >
+            Split Button
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button
+                variant="outlined"
+                intent="default-outlined"
+                startIcon={<RiAddLine />}
+                className="rounded-l-none border-l border-l-gray-300"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-48" align="left">
+              <DropdownMenuLabel>Save Options</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Save as draft</DropdownMenuItem>
+              <DropdownMenuItem>Save and publish</DropdownMenuItem>
+              <DropdownMenuItem>Save as template</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SplitButton>
       </div>
       <Link target="_blank" href="/pages/button">
         <Button endIcon={<RiExternalLinkLine />} className="my-5">
@@ -2291,12 +2338,9 @@ const Test = () => {
         <h1>Collapse all / Open all:-</h1>
         <div className="my-5">
           <section className="my-5 flex gap-4 items-center">
-            <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-            >
+            <Button onClick={() => setIsExpanded(!isExpanded)}>
               {isExpanded ? "Collapse All" : "Expand All"}
-            </button>
+            </Button>
           </section>
 
           <Accordion
@@ -2355,33 +2399,6 @@ const Test = () => {
           >
             <GlobalNavigationComponent />
           </GlobalNavigation>
-          {/* <GlobalNavigation
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            postion="top-left"
-            trigger={<Avatar type="text" border rounded text="John Doe" />}
-            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
-          >
-            <GlobalNavigationComponent />
-          </GlobalNavigation>
-          <GlobalNavigation
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            postion="bottom-right"
-            trigger={<Avatar type="text" border rounded text="John Doe" />}
-            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
-          >
-            <GlobalNavigationComponent />
-          </GlobalNavigation>
-          <GlobalNavigation
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            postion="top-right"
-            trigger={<Avatar type="text" border rounded text="John Doe" />}
-            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
-          >
-            <GlobalNavigationComponent />
-          </GlobalNavigation> */}
         </div>
       </section>
       {/* skeleton */}
@@ -2992,7 +3009,7 @@ const Test = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </section>
-      <div className="grid grid-cols-2 gap-4 p-8">
+      <div className="grid grid-cols-2 gap-4 p-8 w-full whitespace-nowrap">
         {/* Top-Left */}
         <div className="flex justify-center gap-6">
           <DropdownMenu>
@@ -3014,129 +3031,114 @@ const Test = () => {
               </DropdownMenuSub>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Bottom</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="bottom">
-                <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Left</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="left">
-                <DropdownMenuLabel>Left Position</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Right</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="right">
-                <DropdownMenuLabel>Right Position</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Center</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="center">
-                <DropdownMenuLabel>Center Aligned</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email</DropdownMenuItem>
-                    <DropdownMenuItem>Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outlined">Wide Menu</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-80" align="start">
-                <DropdownMenuLabel>Wide Menu (320px)</DropdownMenuLabel>
-                <DropdownMenuItem>Profile with very long text</DropdownMenuItem>
-                <DropdownMenuItem>Settings with extra content</DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>
-                    Invite users with long text
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email invitation</DropdownMenuItem>
-                    <DropdownMenuItem>Message invitation</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More options...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>
-                    Invite users with long text
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>Email invitation</DropdownMenuItem>
-                    <DropdownMenuItem>Message invitation</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>More options...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Bottom</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="bottom">
+              <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Left</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="left">
+              <DropdownMenuLabel>Left Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Right</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="right">
+              <DropdownMenuLabel>Right Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Center</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="center">
+              <DropdownMenuLabel>Center Aligned</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Wide Menu</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-80" align="end">
+              <DropdownMenuLabel>Wide Menu (320px)</DropdownMenuLabel>
+              <DropdownMenuItem>Profile with very long text</DropdownMenuItem>
+              <DropdownMenuItem>Settings with extra content</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  Invite users with long text
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email invitation</DropdownMenuItem>
+                  <DropdownMenuItem>Message invitation</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More options...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  Invite users with long text
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email invitation</DropdownMenuItem>
+                  <DropdownMenuItem>Message invitation</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More options...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
       {/* Callout */}

@@ -1,34 +1,9 @@
-// import React from "react";
-// import { cn } from "../utils/utils";
-
-// interface SpinnerProps {
-//   size?: "sm" | "md" | "lg";
-// }
-
-// const Spinner = ({ size = "md" }: SpinnerProps) => {
-//   const sizeClass = cn({
-//     "w-6": size === "sm",
-//     "w-10": size === "md",
-//     "w-16": size === "lg",
-//   });
-//   return (
-//     <div
-//       className={cn(
-//         "spinner relative grid aspect-square rounded-full before:content-[''] after:content-['']",
-//         sizeClass
-//       )}
-//     />
-//   );
-// };
-
-// export default Spinner;
-
 import React from "react";
 import { cn } from "../utils/utils";
 
 interface SpinnerProps {
   size?: "xs" | "sm" | "md" | "lg";
-  color?: "primary" | "white" | "black" | "gray";
+  color?: "primary" | "black" | "gray" | string;
 }
 
 const colorVars: Record<string, { c1: string; c2: string }> = {
@@ -36,17 +11,13 @@ const colorVars: Record<string, { c1: string; c2: string }> = {
     c1: "var(--primary-500)",
     c2: "var(--primary-200)",
   },
-  white: {
-    c1: "rgba(255, 255, 255, 1)",
-    c2: "rgba(255, 255, 255, 0.5)",
-  },
   black: {
     c1: "rgba(0, 0, 0, 1)",
     c2: "rgba(0, 0, 0, 0.5)",
   },
   gray: {
     c1: "var(--gray-500)",
-    c2: "var(--gray-200)",
+    c2: "var(--gray-300)",
   },
 };
 
@@ -58,14 +29,31 @@ const Spinner = ({ size = "md", color = "primary" }: SpinnerProps) => {
     "w-16 h-16": size === "lg",
   });
 
+  const getColorValues = (color: string) => {
+    if (colorVars[color]) {
+      return colorVars[color];
+    }
+    if (color.startsWith('#')) {
+      return {
+        c1: color,
+        c2: `${color}80` 
+      };
+    }
+    return colorVars.primary;
+  };
+
+  const colorValues = getColorValues(color);
+
   return (
-    <div
-      className={cn("spinner", sizeClass)}
-      style={{
-        ["--spinner-color-1" as any]: colorVars[color].c1,
-        ["--spinner-color-2" as any]: colorVars[color].c2,
-      }}
-    />
+    <div className={cn("relative", sizeClass)}>
+      <div
+        className="spinner"
+        style={{
+          ["--spinner-color-1" as any]: colorValues.c1,
+          ["--spinner-color-2" as any]: colorValues.c2,
+        }}
+      />
+    </div>
   );
 };
 

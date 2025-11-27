@@ -21,6 +21,8 @@ import Spinner from "./Spinner";
 import Button from "./Button";
 import Label from "./Label";
 import { cn } from "../utils/utils";
+import Image from "next/image";
+import ProgressBar from "./Progress";
 
 // Types
 export type UploadStatus = "idle" | "uploading" | "success" | "error";
@@ -197,14 +199,27 @@ export default function ImageUploadControlled({
     }
   };
 
+  // const getProgressColor = (status?: UploadStatus) => {
+  //   switch (status) {
+  //     case "uploading":
+  //       return "bg-blue-500";
+  //     case "success":
+  //       return "bg-green-600";
+  //     case "error":
+  //       return "bg-red-500";
+  //     default:
+  //       return "bg-gray-300";
+  //   }
+  // };
+
   const getProgressColor = (status?: UploadStatus) => {
     switch (status) {
       case "uploading":
         return "bg-blue-500";
       case "success":
-        return "bg-green-600";
+        return "bg-green-600"; // or "bg-success-500" if you have success colors
       case "error":
-        return "bg-red-500";
+        return "bg-red-500"; // or "bg-danger-500" if you have danger colors
       default:
         return "bg-gray-300";
     }
@@ -218,40 +233,43 @@ export default function ImageUploadControlled({
   };
 
   // Handle upload with progress
-  const handleUpload = async (item: UploadItem) => {
-    if (!item.file || !onUpload) return;
+  const handleUpload = React.useCallback(
+    async (item: UploadItem) => {
+      if (!item.file || !onUpload) return;
 
-    try {
-      // Update status to uploading
-      if (onUpdateItem) {
-        onUpdateItem(item.id, { status: "uploading", progress: 0 });
-      }
-
-      // Call the provided upload function with progress callback
-      const previewUrl = await onUpload(item.file, (progress: number) => {
-        // Update progress locally and via callback
-        uploadProgress.current.set(item.id, progress);
-
+      try {
+        // Update status to uploading
         if (onUpdateItem) {
-          onUpdateItem(item.id, { progress, status: "uploading" });
+          onUpdateItem(item.id, { status: "uploading", progress: 0 });
         }
-      });
 
-      // Update item with success status and preview URL
-      if (onUpdateItem) {
-        onUpdateItem(item.id, {
-          progress: 100,
-          status: "success",
-          previewUrl,
+        // Call the provided upload function with progress callback
+        const previewUrl = await onUpload(item.file, (progress: number) => {
+          // Update progress locally and via callback
+          uploadProgress.current.set(item.id, progress);
+
+          if (onUpdateItem) {
+            onUpdateItem(item.id, { progress, status: "uploading" });
+          }
         });
+
+        // Update item with success status and preview URL
+        if (onUpdateItem) {
+          onUpdateItem(item.id, {
+            progress: 100,
+            status: "success",
+            previewUrl,
+          });
+        }
+      } catch (error) {
+        // Update item with error status
+        if (onUpdateItem) {
+          onUpdateItem(item.id, { progress: 0, status: "error" });
+        }
       }
-    } catch (error) {
-      // Update item with error status
-      if (onUpdateItem) {
-        onUpdateItem(item.id, { progress: 0, status: "error" });
-      }
-    }
-  };
+    },
+    [onUpload, onUpdateItem]
+  ); // Add dependencies
 
   // Get current progress for an item
   const getCurrentProgress = (item: UploadItem) => {
@@ -345,14 +363,13 @@ export default function ImageUploadControlled({
         }
       });
     }
-  }, [items, autoUpload, onUpload]);
+  }, [items, autoUpload, onUpload, handleUpload]);
 
   // Cleanup object URLs on unmount
   React.useEffect(() => {
+    const previews = localPreviews?.current;
     return () => {
-      localPreviews?.current?.forEach((url: string) =>
-        URL?.revokeObjectURL(url)
-      );
+      previews?.forEach((url: string) => URL?.revokeObjectURL(url));
     };
   }, []);
 
@@ -379,7 +396,7 @@ export default function ImageUploadControlled({
         disabled={disabled}
         aria-label={`Upload ${multiple ? "images" : "an image"}`}
         className={cn(
-          "w-[500px] bg-white py-4 flex items-center justify-center rounded-lg border cursor-pointer transition-all",
+          "max-w-[564px] w-full bg-white py-4 flex items-center justify-center rounded-lg border cursor-pointer transition-all",
           isDragging
             ? "border-blue-500 bg-blue-50"
             : "border-gray-300 bg-white hover:bg-gray-50",
@@ -404,44 +421,41 @@ export default function ImageUploadControlled({
 
       {/* Upload Items */}
       <div className="flex flex-col gap-4 mt-4">
-        {items.map((item: UploadItem) => {
+        {items?.map((item: UploadItem) => {
           const previewUrl = getPreviewUrl(item);
           const progress = getCurrentProgress(item);
           const statusInfo = getStatusDisplay(item.status);
-          const progressColor = getProgressColor(item.status);
+          const progressColor = getProgressColor(item?.status);
           const fileIcon = getItemFileIcon(item);
-
           return (
             <div
-              key={item.id}
-              className="flex items-center gap-4 bg-white p-4 rounded-lg border border-gray-200"
+              key={item?.id}
+              className="flex items-center gap-4 bg-white max-w-[564px] w-full p-4 rounded-lg border border-gray-200"
             >
               <div className="w-14 h-14 flex-shrink-0 rounded-md overflow-hidden relative">
-                <img
+                <Image
                   src="/fileImg.svg"
                   className="absolute inset-0 w-full h-full object-contain"
-                  alt=""
+                  fill
+                  alt="file"
                 />
                 <div className="relative z-10 mt-2 -ml-[2px] flex items-center justify-center w-full h-full text-white">
                   {fileIcon}
                 </div>
               </div>
-
               {/* File Info & Progress */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-2 mb-3">
+                <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="min-w-0">
                     <h4 className="text-sm font-medium text-gray-900 truncate">
-                      {item?.name || item.file?.name || "Unnamed file"} Lorem,
-                      ipsum dolor sit amet consectetur adipisicing elit.
-                      Expedita, assumenda.
+                      {item?.name || item.file?.name || "Unnamed file"}
                     </h4>
                     {showSizeText && (
                       <div className="text-xs text-gray-500 mt-1 flex items-center gap-1">
                         {formatSize(item?.size || item.file?.size)}
                         {statusInfo.text && (
                           <div className="ml-2 font-medium flex items-center gap-1">
-                            {statusInfo.showSpinner ? (
+                            {statusInfo?.showSpinner ? (
                               // For uploading - just show spinner without circle
                               <>
                                 {statusInfo.icon}
@@ -454,17 +468,17 @@ export default function ImageUploadControlled({
                               <>
                                 <div
                                   className={`w-4 h-4 rounded-full flex justify-center items-center ${
-                                    statusInfo.color === "text-red-600"
+                                    statusInfo?.color === "text-red-600"
                                       ? "bg-red-600"
-                                      : statusInfo.color === "text-green-600"
+                                      : statusInfo?.color === "text-green-600"
                                       ? "bg-green-600"
                                       : "bg-gray-400"
                                   }`}
                                 >
-                                  {statusInfo.icon}
+                                  {statusInfo?.icon}
                                 </div>
                                 <span className={statusInfo.color}>
-                                  {statusInfo.text}
+                                  {statusInfo?.text}
                                 </span>
                               </>
                             )}
@@ -487,19 +501,37 @@ export default function ImageUploadControlled({
                           <RiEyeLine size={16} />
                         </button>
                       )}
-                      {/* Try Again Button - Show when failed */}
-                      {item.status === "error" && (
-                        <Button
-                          variant="outlined"
-                          intent="primary-outlined"
-                          type="button"
-                          size="sm"
-                          onClick={() => handleRetry(item.id)}
-                          className="whitespace-nowrap h-[30px]"
-                        >
-                          <RiRefreshLine size={16} />
-                          Try Again
-                        </Button>
+                      {item?.status === "error" && (
+                        <>
+                          {/* Desktop: full button */}
+                          <span className="hidden sm:inline-block">
+                            <Button
+                              variant="outlined"
+                              intent="primary-outlined"
+                              type="button"
+                              size="sm"
+                              onClick={() => handleRetry(item?.id)}
+                              className="whitespace-nowrap h-[30px]"
+                            >
+                              <RiRefreshLine size={16} />
+                              Try Again
+                            </Button>
+                          </span>
+
+                          {/* Mobile: icon only */}
+                          <span className="sm:hidden">
+                            <Button
+                              variant="outlined"
+                              intent="primary-outlined"
+                              type="button"
+                              size="sm"
+                              onClick={() => handleRetry(item?.id)}
+                              className="h-[30px] px-1 py-1"
+                            >
+                              <RiRefreshLine size={16} />
+                            </Button>
+                          </span>
+                        </>
                       )}
 
                       {/* Delete button - always shown */}
@@ -514,15 +546,12 @@ export default function ImageUploadControlled({
                     </div>
                   </div>
                 </div>
-
                 {/* Progress Bar */}
                 <div className="flex items-center gap-4">
-                  <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full transition-all duration-300 ${progressColor}`}
-                      style={{
-                        width: `${Math.max(0, Math.min(100, progress))}%`,
-                      }}
+                  <div className="flex-1">
+                    <ProgressBar
+                      progressColor={progressColor}
+                      progress={progress}
                     />
                   </div>
                   <div className="text-xs text-gray-500 w-12 text-right">
