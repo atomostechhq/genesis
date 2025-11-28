@@ -7,15 +7,16 @@ interface InputProps
   startIcon?: JSX.Element;
   endIcon?: JSX.Element;
   disabled?: boolean;
+  error?: boolean;
   type:
-    | "text"
-    | "url"
-    | "email"
-    | "password"
-    | "number"
-    | "tel"
-    | "search"
-    | "time";
+  | "text"
+  | "url"
+  | "email"
+  | "password"
+  | "number"
+  | "tel"
+  | "search"
+  | "time";
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -25,7 +26,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       startIcon,
       endIcon,
       className,
-      type,
+      type, error,
       disabled,
       id,
       "aria-label": ariaLabel,
@@ -41,8 +42,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           size === "sm"
             ? "w-[320px] h-10"
             : size === "lg"
-            ? "w-[313px] h-11"
-            : "w-full h-10",
+              ? "w-[313px] h-11"
+              : "w-full h-10",
+          error && "border-error-500 hover:border-error-600 focus-within:border-error-500 focus-within:hover:border-error-500",
           className
         )}
       >
@@ -51,7 +53,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-hidden="true"
             className={cn(
               "group-hover:text-gray-600 group-focus-within:text-gray-600",
-              disabled && "text-gray-900"
+              disabled && "text-gray-900", error && "text-error-500"
             )}
           >
             {startIcon}

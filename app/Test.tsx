@@ -1101,10 +1101,9 @@ const Test = () => {
               endIcon={
                 <RiListCheck
                   size={16}
-                  className={cn(error && "text-error-500")}
                 />
               }
-              className={cn(error && "focus-within:border-error-500")}
+              error={Boolean(error)}
               placeholder="olivia@untitledui.com"
             />
             {error && <HelperText error>{error}</HelperText>}
@@ -1252,8 +1251,8 @@ const Test = () => {
                 size={14}
               />
             }
-            // dropdownMenu={dropdownMenu}
-            // setDropdownMenu={setDropdownMenu}
+          // dropdownMenu={dropdownMenu}
+          // setDropdownMenu={setDropdownMenu}
           />
         </div>
         <div>
@@ -2495,13 +2494,13 @@ const Test = () => {
           </Link>
           <Link
             href="/pages/dashboard"
-            // style={{ textDecoration: "none", color: "inherit" }}
+          // style={{ textDecoration: "none", color: "inherit" }}
           >
             Dashboard
           </Link>
           <Link
             href="/pages/team"
-            // className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
+          // className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
           >
             Team
           </Link>
