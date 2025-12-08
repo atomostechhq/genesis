@@ -253,7 +253,6 @@ import { useState } from "react";
 // Usage Example
 export default function SimpleFileUploadExample() {
   const [items, setItems] = useState<UploadItem[]>([]);
-  console.log("items", items);
 
   const handleAddFiles = (files: File[]) => {
     const newItems: UploadItem[] = files.map((file) => ({
