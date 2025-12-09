@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 
 interface RadioProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "size">,
-    VariantProps<typeof radioVariants> {
+  VariantProps<typeof radioVariants> {
   size?: "sm" | "lg";
   disabled?: boolean;
   checked?: boolean;
@@ -34,6 +34,8 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
           name={name}
           checked={checked}
           disabled={disabled}
+          role="radio"
+          aria-checked={checked}
           type="radio"
           className={cn(
             "peer relative cursor-pointer appearance-none rounded-full border border-gray-300 hover:border-primary-600 hover:bg-primary-50 transition-all checked:border-primary-600 checked:bg-primary-50 disabled:opacity-30 disabled:pointer-events-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2",
