@@ -14,7 +14,6 @@ interface ButtonProps
 }
 
 const buttonVariants = cva(
-  // "rounded-lg disabled:select-none font-semibold cursor-pointer transition-colors duration-300 ease-in-out",
   "rounded-lg disabled:select-none font-semibold cursor-pointer transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2",
   {
     variants: {
