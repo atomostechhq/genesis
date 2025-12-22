@@ -2202,6 +2202,7 @@ const Test = () => {
               rounded: true,
               border: true,
               borderWidth: "2px",
+              onClick: () => alert("Clicked"),
               borderColor: "var(--primary-500)",
             },
             {
@@ -2486,13 +2487,13 @@ const Test = () => {
           </Link>
           <Link
             href="/pages/dashboard"
-          // style={{ textDecoration: "none", color: "inherit" }}
+            // style={{ textDecoration: "none", color: "inherit" }}
           >
             Dashboard
           </Link>
           <Link
             href="/pages/team"
-          // className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
+            // className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
           >
             Team
           </Link>
