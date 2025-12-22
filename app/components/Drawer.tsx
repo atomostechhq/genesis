@@ -1,5 +1,5 @@
 "use client";
-import {
+import React, {
   Dispatch,
   FC,
   ReactNode,
@@ -73,13 +73,13 @@ const Drawer: FC<DrawerProps> = ({
           position === "top" && `top-0 left-0 w-full ${height}`,
           position === "bottom" && `bottom-0 left-0 w-full ${height}`,
           !isOpen &&
-            (position === "right"
-              ? "translate-x-full"
-              : position === "left"
+          (position === "right"
+            ? "translate-x-full"
+            : position === "left"
               ? "-translate-x-full"
               : position === "top"
-              ? "-translate-y-full"
-              : "translate-y-full"),
+                ? "-translate-y-full"
+                : "translate-y-full"),
           isOpen && "translate-x-0 translate-y-0",
           className
         )}

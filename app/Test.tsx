@@ -58,8 +58,7 @@ import Accordion, {
   AccordionTrigger,
 } from "./components/Accordion";
 import Callout from "./components/Callout";
-import {
-  DropdownMenu,
+import DropdownMenu, {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -71,8 +70,7 @@ import {
 } from "./components/DropdownMenu";
 import Drawer from "./components/Drawer";
 import FileSelector from "./components/FileSelector";
-import {
-  Card,
+import Card, {
   CardAction,
   CardContent,
   CardDescription,
@@ -1098,11 +1096,7 @@ const Test = () => {
               value={inputValue}
               type="text"
               onChange={handleChange}
-              endIcon={
-                <RiListCheck
-                  size={16}
-                />
-              }
+              endIcon={<RiListCheck size={16} />}
               error={Boolean(error)}
               placeholder="olivia@untitledui.com"
             />

@@ -32,7 +32,7 @@ const DropdownContext = React.createContext<DropdownContextType | null>(null);
 // ─────────────────────────────
 // Root DropdownMenu
 // ─────────────────────────────
-export function DropdownMenu({ children }: { children: React.ReactNode }) {
+export default function DropdownMenu({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -219,10 +219,10 @@ export function DropdownMenuContent({
     align === "left" || align === "start"
       ? "right-0"
       : align === "right" || align === "end"
-      ? "left-0"
-      : align === "center"
-      ? "left-1/2 -translate-x-1/2"
-      : "";
+        ? "left-0"
+        : align === "center"
+          ? "left-1/2 -translate-x-1/2"
+          : "";
 
   return (
     <div
