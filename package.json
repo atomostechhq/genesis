@@ -1,6 +1,6 @@
 {
-  "name": "atomos_next_genesis",
-  "version": "0.0.8",
+  "name": "@atomos_tech/genesis",
+  "version": "1.0.3",
   "private": false,
   "description": "list of components for your project",
   "keywords": [
