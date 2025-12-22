@@ -8,12 +8,11 @@ import React, {
   useRef,
   useImperativeHandle,
 } from "react";
-import { RiErrorWarningLine, RiSearchLine } from "@remixicon/react";
+import { RiSearchLine } from "@remixicon/react";
 import { cn } from "../utils/utils";
 import Input from "./Input";
 import Label from "./Label";
 import Checkbox from "./Checkbox";
-import Tooltip from "./Tooltip";
 
 type Option = {
   label: string | number;
