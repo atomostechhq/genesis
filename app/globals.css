@@ -15,7 +15,7 @@
 @layer base {
   :root {
     /* Theme Primary Colors */
-    .theme-primary {
+    /* .theme-primary {
       --primary-25: #f5faff;
       --primary-50: #eff8ff;
       --primary-100: #d1e9ff;
@@ -27,7 +27,7 @@
       --primary-700: #175cd3;
       --primary-800: #1849a9;
       --primary-900: #194185;
-    }
+    } */
 
     /* .theme-primary {
       --primary-25: #fafaff;
@@ -43,7 +43,7 @@
       --primary-900: #3e1c96;
     } */
 
-    /* .theme-primary {
+    .theme-primary {
       --primary-25: #ffffff;
       --primary-50: #fff8e4;
       --primary-100: #ffecba;
@@ -55,7 +55,7 @@
       --primary-700: #ffa33a;
       --primary-800: #fd9438;
       --primary-900: #f97835;
-    } */
+    }
 
     /* Gray Colors */
     --gray-25: #fff;

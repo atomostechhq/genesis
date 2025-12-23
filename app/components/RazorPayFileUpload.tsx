@@ -1,5 +1,5 @@
-'use client';
-import React, { useRef, useState } from 'react';
+"use client";
+import React, { useRef, useState } from "react";
 import {
   RiDeleteBin6Line,
   RiRefreshLine,
@@ -15,14 +15,74 @@ import {
   RiFileExcel2Line,
   RiMusic2Line,
   RiEyeLine,
-} from '@remixicon/react';
-import Spinner from './Spinner';
-import { cn } from '../utils/utils';
-import Label from './Label';
-import Button from './Button';
+} from "@remixicon/react";
+import Spinner from "./Spinner";
+import { cn } from "../utils/utils";
+import Label from "./Label";
+import Button from "./Button";
+
+const fileSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="40"
+      height="55"
+      viewBox="0 0 36 47"
+      fill="none"
+    >
+      <path
+        d="M0 8.72494C0 5.48487 2.6266 2.85828 5.86667 2.85828H20.5333L33 15.8583V40.9916C33 44.2317 30.3734 46.8583 27.1333 46.8583H5.86667C2.6266 46.8583 0 44.2317 0 40.9916V8.72494Z"
+        fill="var(--primary-600)"
+      />
+      <g filter="url(#filter0_d_5101_541)">
+        <path
+          d="M20.5334 13.4052V2.85828L33 15.8582L22.974 15.8482C21.6257 15.8469 20.5334 14.7535 20.5334 13.4052Z"
+          fill="var(--primary-300)"
+        />
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_5101_541"
+          x="14.7435"
+          y="-2.98023e-05"
+          width="21.1148"
+          height="21.6482"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dx="-1.4658" dy="1.4658" />
+          <feGaussianBlur stdDeviation="2.16205" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.0417487 0 0 0 0 0.107741 0 0 0 0 0.401705 0 0 0 0.07 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_5101_541"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_5101_541"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+};
 
 // Types
-export type UploadStatus = 'idle' | 'uploading' | 'success' | 'error';
+export type UploadStatus = "idle" | "uploading" | "success" | "error";
 
 export interface UploadItem {
   id: string;
@@ -58,68 +118,68 @@ export interface ImageUploadControlledProps {
 
 // Default file icon function (MATCHED with getIconForMimeType)
 const defaultGetFileIcon = (fileName: string, fileType: string) => {
-  const extension = fileName.split('.').pop()?.toLowerCase() || '';
+  const extension = fileName.split(".").pop()?.toLowerCase() || "";
 
   // IMAGE FILES
   if (
-    fileType.startsWith('image/') ||
-    ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'bmp'].includes(extension)
+    fileType.startsWith("image/") ||
+    ["jpg", "jpeg", "png", "gif", "svg", "webp", "bmp"].includes(extension)
   ) {
-    return <RiImageLine className="w-6 h-6 text-white" />;
+    return <RiImageLine className="w-5 h-5 text-white" />;
   }
 
   // AUDIO FILES
   if (
-    fileType.startsWith('audio/') ||
-    ['mp3', 'wav', 'ogg', 'm4a'].includes(extension)
+    fileType.startsWith("audio/") ||
+    ["mp3", "wav", "ogg", "m4a"].includes(extension)
   ) {
-    return <RiMusic2Line className="w-6 h-6 text-white" />;
+    return <RiMusic2Line className="w-5 h-5 text-white" />;
   }
 
   // VIDEO FILES
   if (
-    fileType.startsWith('video/') ||
-    ['mp4', 'avi', 'mkv', 'mov', 'wmv'].includes(extension)
+    fileType.startsWith("video/") ||
+    ["mp4", "avi", "mkv", "mov", "wmv"].includes(extension)
   ) {
-    return <RiVideoLine className="w-6 h-6 text-white" />;
+    return <RiVideoLine className="w-5 h-5 text-white" />;
   }
 
   // EXCEL / SPREADSHEET FILES
   if (
-    fileType.includes('excel') ||
-    ['xls', 'xlsx', 'csv', 'txt', 'ods'].includes(extension)
+    fileType.includes("excel") ||
+    ["xls", "xlsx", "csv", "txt", "ods"].includes(extension)
   ) {
-    return <RiFileExcel2Line className="w-6 h-6 text-white" />;
+    return <RiFileExcel2Line className="w-5 h-5 text-white" />;
   }
 
   // WORD DOCUMENTS
   if (
-    fileType.includes('word') ||
-    ['doc', 'docx', 'odt', 'xml'].includes(extension)
+    fileType.includes("word") ||
+    ["doc", "docx", "odt", "xml"].includes(extension)
   ) {
-    return <RiFileWord2Line className="w-6 h-6 text-white" />;
+    return <RiFileWord2Line className="w-5 h-5 text-white" />;
   }
 
   // POWERPOINT FILES
-  if (['pptx', 'pptm', 'xps', 'ppsx'].includes(extension)) {
-    return <RiFilePpt2Line className="w-6 h-6 text-white" />;
+  if (["pptx", "pptm", "xps", "ppsx"].includes(extension)) {
+    return <RiFilePpt2Line className="w-5 h-5 text-white" />;
   }
 
   // ZIP / ARCHIVE FILES
   if (
-    fileType.includes('zip') ||
-    ['zip', 'rar', '7z', 'tar', 'gz'].includes(extension)
+    fileType.includes("zip") ||
+    ["zip", "rar", "7z", "tar", "gz"].includes(extension)
   ) {
-    return <RiFileZipLine className="w-6 h-6 text-white" />;
+    return <RiFileZipLine className="w-5 h-5 text-white" />;
   }
 
   // PDF FILES
-  if (fileType === 'application/pdf' || extension === 'pdf') {
-    return <RiFilePdf2Line className="w-6 h-6 text-white" />;
+  if (fileType === "application/pdf" || extension === "pdf") {
+    return <RiFilePdf2Line className="w-5 h-5 text-white" />;
   }
 
   // DEFAULT ICON
-  return <RiFileLine className="w-6 h-6 text-white" />;
+  return <RiFileLine className="w-5 h-5 text-white" />;
 };
 
 export default function ImageUploadControlled({
@@ -131,9 +191,9 @@ export default function ImageUploadControlled({
   onPreview,
   onUpload,
   multiple = true,
-  accept = 'image/*',
+  accept = "image/*",
   maxSizeMB = 15,
-  className = '',
+  className = "",
   hintText,
   showSizeText = true,
   getFileIcon = defaultGetFileIcon,
@@ -146,7 +206,7 @@ export default function ImageUploadControlled({
   const uploadProgress = useRef<Map<string, number>>(new Map());
 
   const formatSize = (bytes?: number) => {
-    if (!bytes) return '0 KB';
+    if (!bytes) return "0 KB";
     return `${Math.round(bytes / 1024)} KB`;
   };
 
@@ -161,34 +221,34 @@ export default function ImageUploadControlled({
 
   const getStatusDisplay = (status?: UploadStatus) => {
     switch (status) {
-      case 'uploading':
+      case "uploading":
         return {
-          text: 'Uploading',
-          color: 'text-blue-600',
+          text: "Uploading",
+          color: "text-blue-600",
           showSpinner: true,
-          icon: <Spinner size='xs' color='gray' />,
+          icon: <Spinner size="xs" color="gray" />,
           canPreview: false,
         };
-      case 'success':
+      case "success":
         return {
-          text: 'Completed',
-          color: 'text-green-600',
+          text: "Completed",
+          color: "text-green-600",
           showSpinner: false,
           icon: <RiCheckLine className="w-3 h-3 text-white" />,
           canPreview: true,
         };
-      case 'error':
+      case "error":
         return {
-          text: 'Failed',
-          color: 'text-red-600',
+          text: "Failed",
+          color: "text-red-600",
           showSpinner: false,
           icon: <RiCloseLine className="w-3 h-3 text-white" />,
           canPreview: false,
         };
       default:
         return {
-          text: '',
-          color: '',
+          text: "",
+          color: "",
           showSpinner: false,
           icon: null,
           canPreview: false,
@@ -198,35 +258,40 @@ export default function ImageUploadControlled({
 
   const getProgressColor = (status?: UploadStatus) => {
     switch (status) {
-      case 'uploading':
-        return 'bg-blue-500';
-      case 'success':
-        return 'bg-green-600';
-      case 'error':
-        return 'bg-red-500';
+      case "uploading":
+        return "bg-blue-500";
+      case "success":
+        return "bg-green-600";
+      case "error":
+        return "bg-red-500";
       default:
-        return 'bg-gray-300';
+        return "bg-gray-300";
     }
   };
 
   // Get file icon for an item
   const getItemFileIcon = (item: UploadItem) => {
-    const fileName = item.name || item.file?.name || '';
-    const fileType = item.file?.type || '';
+    const fileName = item.name || item.file?.name || "";
+    const fileType = item.file?.type || "";
     return getFileIcon(fileName, fileType);
   };
 
   // Handle upload with progress
   const handleUpload = React.useCallback(
     async (item: UploadItem) => {
-      if (!item.file || !onUpload || item.status === 'success' || item.status === 'uploading') {
+      if (
+        !item.file ||
+        !onUpload ||
+        item.status === "success" ||
+        item.status === "uploading"
+      ) {
         return;
       }
 
       try {
         // Start with 0% progress
         if (onUpdateItem) {
-          onUpdateItem(item.id, { status: 'uploading', progress: 0 });
+          onUpdateItem(item.id, { status: "uploading", progress: 0 });
         }
 
         // Clear any existing progress
@@ -241,7 +306,7 @@ export default function ImageUploadControlled({
           if (onUpdateItem) {
             onUpdateItem(item.id, {
               progress: clampedProgress,
-              status: 'uploading',
+              status: "uploading",
             });
           }
         });
@@ -250,7 +315,7 @@ export default function ImageUploadControlled({
         if (onUpdateItem) {
           onUpdateItem(item.id, {
             progress: 100,
-            status: 'success',
+            status: "success",
             previewUrl,
           });
         }
@@ -258,11 +323,11 @@ export default function ImageUploadControlled({
         // Clear progress tracking
         uploadProgress.current.delete(item.id);
       } catch (error) {
-        console.error('Upload error:', error);
+        console.error("Upload error:", error);
         if (onUpdateItem) {
           onUpdateItem(item.id, {
             progress: 0,
-            status: 'error',
+            status: "error",
           });
         }
         uploadProgress.current.delete(item.id);
@@ -274,11 +339,11 @@ export default function ImageUploadControlled({
   // Get current progress for an item
   const getCurrentProgress = (item: UploadItem) => {
     // If status is success, always show 100%
-    if (item.status === 'success') return 100;
-    
+    if (item.status === "success") return 100;
+
     // If status is error, show 0%
-    if (item.status === 'error') return 0;
-    
+    if (item.status === "error") return 0;
+
     // Use local progress if available, otherwise use item progress
     return uploadProgress.current.get(item.id) ?? item.progress ?? 0;
   };
@@ -324,7 +389,7 @@ export default function ImageUploadControlled({
     if (validFiles.length === 0) return;
 
     onAddFiles(multiple ? validFiles : [validFiles[0]]);
-    e.target.value = '';
+    e.target.value = "";
   };
 
   // Simple drag handlers
@@ -354,7 +419,7 @@ export default function ImageUploadControlled({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       triggerInput();
     }
@@ -364,7 +429,7 @@ export default function ImageUploadControlled({
   React.useEffect(() => {
     if (autoUpload && onUpload) {
       items.forEach((item: UploadItem) => {
-        if (item.status === 'idle' && item.file) {
+        if (item.status === "idle" && item.file) {
           handleUpload(item);
         }
       });
@@ -400,13 +465,13 @@ export default function ImageUploadControlled({
         tabIndex={0}
         role="button"
         disabled={disabled}
-        aria-label={`Upload ${multiple ? 'images' : 'an image'}`}
+        aria-label={`Upload ${multiple ? "images" : "an image"}`}
         className={cn(
-          'max-w-[564px] w-full bg-white py-4 flex items-center justify-center rounded-lg border cursor-pointer transition-all',
+          "max-w-[564px] w-full bg-white py-4 flex items-center justify-center rounded-lg border cursor-pointer transition-all",
           isDragging
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-gray-300 bg-white hover:bg-gray-50',
-          disabled && 'pointer-events-none cursor-not-allowed'
+            ? "border-blue-500 bg-blue-50"
+            : "border-gray-300 bg-white hover:bg-gray-50",
+          disabled && "pointer-events-none cursor-not-allowed"
         )}
       >
         <div className="flex items-center gap-3 text-center">
@@ -415,7 +480,7 @@ export default function ImageUploadControlled({
               Drag files here or
               <span className="text-primary-600 font-semibold ml-1">
                 Upload
-              </span>{' '}
+              </span>{" "}
               <br />
             </p>
           </div>
@@ -438,12 +503,10 @@ export default function ImageUploadControlled({
               className="flex items-center gap-4 bg-white max-w-[564px] w-full p-4 rounded-lg border border-gray-200"
             >
               <div className="w-14 h-14 flex-shrink-0 rounded-md overflow-hidden relative">
-                <img
-                  src="/fileImg.svg"
-                  className="absolute inset-0 w-full h-full object-contain"
-                  alt="file"
-                />
-                <div className="relative z-10 mt-2 -ml-[2px] flex items-center justify-center w-full h-full text-white">
+                <div className="absolute inset-0 w-full h-full object-contain">
+                  {fileSvg()}
+                </div>
+                <div className="relative z-10 top-2 -left-2.5  flex items-center justify-center w-full h-full text-white">
                   {fileIcon}
                 </div>
               </div>
@@ -452,7 +515,7 @@ export default function ImageUploadControlled({
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="min-w-0">
                     <h4 className="text-sm font-medium text-gray-900 truncate">
-                      {item?.name || item.file?.name || 'Unnamed file'}
+                      {item?.name || item.file?.name || "Unnamed file"}
                     </h4>
                     {showSizeText && (
                       <div className="text-xs text-gray-500 mt-1 flex items-center gap-1">
@@ -470,11 +533,11 @@ export default function ImageUploadControlled({
                               <>
                                 <div
                                   className={`w-4 h-4 rounded-full flex justify-center items-center ${
-                                    statusInfo?.color === 'text-red-600'
-                                      ? 'bg-red-600'
-                                      : statusInfo?.color === 'text-green-600'
-                                      ? 'bg-green-600'
-                                      : 'bg-gray-400'
+                                    statusInfo?.color === "text-red-600"
+                                      ? "bg-red-600"
+                                      : statusInfo?.color === "text-green-600"
+                                      ? "bg-green-600"
+                                      : "bg-gray-400"
                                   }`}
                                 >
                                   {statusInfo?.icon}
@@ -493,7 +556,7 @@ export default function ImageUploadControlled({
                     {/* Actions */}
                     <div className="flex items-center gap-2">
                       {/* Preview Button - Show when upload is successful */}
-                      {onPreview && item?.status === 'success' && (
+                      {onPreview && item?.status === "success" && (
                         <button
                           type="button"
                           onClick={() => onPreview(item.id)}
@@ -503,7 +566,7 @@ export default function ImageUploadControlled({
                           <RiEyeLine size={16} />
                         </button>
                       )}
-                      {item?.status === 'error' && (
+                      {item?.status === "error" && (
                         <>
                           {/* Desktop: full button */}
                           <span className="hidden sm:inline-block">
@@ -559,10 +622,10 @@ export default function ImageUploadControlled({
                     </div>
                   </div>
                   <div className="text-xs text-gray-500 w-12 text-right">
-                    {item.status === 'error'
-                      ? '--%'
-                      : item.status === 'success'
-                      ? '100%'
+                    {item.status === "error"
+                      ? "--%"
+                      : item.status === "success"
+                      ? "100%"
                       : `${Math.round(progress)}%`}
                   </div>
                 </div>
