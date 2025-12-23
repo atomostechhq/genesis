@@ -72,7 +72,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     <div
       ref={ref}
       className={cn(
-        "relative -z-10 ",
+        "relative",
         rounded && "rounded-full",
         border && "border border-gray-200",
         disabled && "opacity-50 pointer-events-none select-none",
@@ -87,7 +87,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
       {type === "image" && (
         <div
           className={cn(
-            "relative -z-10 flex items-center justify-center",
+            "relative flex items-center justify-center",
             sizes[size],
             className
           )}
