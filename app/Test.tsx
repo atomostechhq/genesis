@@ -58,8 +58,7 @@ import Accordion, {
   AccordionTrigger,
 } from "./components/Accordion";
 import Callout from "./components/Callout";
-import {
-  DropdownMenu,
+import DropdownMenu, {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -71,8 +70,7 @@ import {
 } from "./components/DropdownMenu";
 import Drawer from "./components/Drawer";
 import FileSelector from "./components/FileSelector";
-import {
-  Card,
+import Card, {
   CardAction,
   CardContent,
   CardDescription,
@@ -1098,11 +1096,7 @@ const Test = () => {
               value={inputValue}
               type="text"
               onChange={handleChange}
-              endIcon={
-                <RiListCheck
-                  size={16}
-                />
-              }
+              endIcon={<RiListCheck size={16} />}
               error={Boolean(error)}
               placeholder="olivia@untitledui.com"
             />
@@ -2208,6 +2202,7 @@ const Test = () => {
               rounded: true,
               border: true,
               borderWidth: "2px",
+              onClick: () => alert("Clicked"),
               borderColor: "var(--primary-500)",
             },
             {
@@ -2492,13 +2487,13 @@ const Test = () => {
           </Link>
           <Link
             href="/pages/dashboard"
-          // style={{ textDecoration: "none", color: "inherit" }}
+            // style={{ textDecoration: "none", color: "inherit" }}
           >
             Dashboard
           </Link>
           <Link
             href="/pages/team"
-          // className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
+            // className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
           >
             Team
           </Link>
