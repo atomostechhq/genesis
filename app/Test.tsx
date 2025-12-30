@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Button from "./components/Button";
 import Toggle from "./components/Toggle";
 import Chip from "./components/Chip";
@@ -15,9 +15,15 @@ import {
   RiFilterLine,
   RiStackLine,
   RiExternalLinkLine,
-  RiAddLine,
   RiCheckLine,
   RiTimeFill,
+  RiInformationLine,
+  RiCloseLine,
+  RiUpload2Line,
+  RiFileLine,
+  RiAddLine,
+  RiEditLine,
+  RiFolderOpenFill,
 } from "@remixicon/react";
 import { TabsContainer, TabList, Tab, TabPanel } from "./components/Tabs";
 import Tooltip from "./components/Tooltip";
@@ -44,8 +50,6 @@ import Breadcrumbs from "./components/Breadcrumb";
 import CircularProgress from "./components/CircularProgress";
 import Slider from "./components/Slider";
 import GlobalNavigation from "./components/GlobalNavigation";
-import MenuDropdown, { MenuItem, MenuSubItem } from "./components/MenuItem";
-import ListItem from "./components/ListItem";
 import Avatar from "./components/Avatar";
 import AvatarGroup from "./components/AvatarGroup";
 import Accordion, {
@@ -53,10 +57,47 @@ import Accordion, {
   AccordionItem,
   AccordionTrigger,
 } from "./components/Accordion";
+import Callout from "./components/Callout";
+import DropdownMenu, {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "./components/DropdownMenu";
+import Drawer from "./components/Drawer";
+import FileSelector from "./components/FileSelector";
+import Card, {
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./components/Card";
+import TreeView from "./components/TreeView";
+import Spinner from "./components/Spinner";
+import OTPInput from "./components/OTPInput";
+import TextInputWithLabel from "./components/TextInputWithLabel";
+import Typography from "./components/Typography";
+import SplitButton from "./components/SplitButton";
 
 interface Option {
-  label: string;
-  value: string;
+  label: string | number;
+  value: string | number;
+}
+
+interface DropdownOption {
+  label: string | number;
+  value: string | number;
+  info?: string;
+  addInfo?: string;
+  tooltipContent?: string;
+  disabledOption?: boolean;
+  labelTextColor?: string;
 }
 
 const GlobalNavigationComponent = () => {
@@ -86,6 +127,9 @@ const GlobalNavigationComponent = () => {
         size={"sm"}
         fullWidth
         startIcon={<RiLogoutBoxRLine size={20} />}
+        onClick={() => {
+          alert("Logout button clicked");
+        }}
       >
         Logout
       </Button>
@@ -133,8 +177,11 @@ const Test = () => {
       setSelectedSingleFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-  const handleDeleteFileSingle = (file: string | File) => {
-    setSelectedSingleFiles((prevFiles) => prevFiles.filter((f) => f !== file));
+
+  const handleDeleteFileSingle = (index: number) => {
+    setSelectedSingleFiles((prevFiles) =>
+      prevFiles.filter((_, i) => i !== index)
+    );
   };
 
   // multiple file upload
@@ -149,8 +196,23 @@ const Test = () => {
     }
   };
 
-  const handleDeleteFile = (file: string | File) => {
-    setSelectedFiles((prevFiles) => prevFiles.filter((f) => f !== file));
+  const handleDeleteFile = (index: number) => {
+    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+
+  const fileRef = useRef<HTMLInputElement>(null);
+  const fileMultiRef = useRef<HTMLInputElement>(null);
+
+  const handleSingleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      console.log("Selected file:", e.target.files[0]);
+    }
+  };
+
+  const handleMultipleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      console.log("Selected files:", Array.from(e.target.files));
+    }
   };
 
   // tabs
@@ -212,42 +274,53 @@ const Test = () => {
   // dropdown
 
   const [multiSelect, setMultiSelect] = useState<Option[]>([]);
-  // console.log("multiSelect", multiSelect)
 
   const [singleSelect, setSingleSelect] = useState<Option[]>([]);
-  // console.log("singleSelect", singleSelect);
 
-  const [dropdownMenuOption, setDropdownMenuOption] = useState<Option[]>([]);
+  const [dropdownMenuOption, setDropdownMenuOption] = useState<
+    DropdownOption[]
+  >([]);
 
   const [dropdownMenuOptionTwo, setDropdownMenuOptionTwo] = useState<Option[]>(
     []
   );
 
+  // accordion
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const singleOptions = [
-    { label: "Option 1", value: "1" },
-    { label: "Option 2", value: "2" },
-    { label: "Option 3", value: "3" },
+    { label: "Option 1", value: 1 },
+    { label: "Option 2", value: 2 },
+    { label: "Option 3", value: 3 },
   ];
 
-  const multiOptions = [
+  const multiOptions: DropdownOption[] = [
     {
-      label:
-        "appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee appleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      value: "apple",
-      info: "Modals",
-      addInfo: "Be a direct child descendent of the modal.",
+      label: "appleeeee appleeeee",
+      value: 1,
       tooltipContent: "hjsghjwg",
+      disabledOption: true,
     },
-    { label: "banana", value: "banana", addInfo: "jdhjaldh" },
-    { label: "strawberry", value: "strawberry" },
-    { label: "kiwi", value: "kiwi", info: "info4" },
     {
-      label: "orangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      value: "orange",
-      tooltipContent: "lower-level components:",
+      label: "banana",
+      value: 2,
+      addInfo: "jdhjaldh",
+      labelTextColor: "#1765dc",
     },
-    { label: "grapes", value: "grapes" },
-    { label: "melon", value: "melon" },
+    {
+      label: "strawberry",
+      value: 3,
+      labelTextColor: "oklch(49.6% 0.265 301.924)",
+    },
+    { label: "kiwi", value: 4, info: "info4" },
+    {
+      label: "orange",
+      value: 5,
+      tooltipContent: "lower-level components:",
+      info: "info5",
+    },
+    { label: "grapes", value: 6 },
+    { label: "melon", value: 7 },
     { label: "mango", value: "mango" },
   ];
 
@@ -276,11 +349,20 @@ const Test = () => {
   // modal
   const [showModal, setShowModal] = useState(false);
 
+  // drawer
+  type DrawerPosition = "top" | "right" | "bottom" | "left" | undefined;
+  const [openPosition, setOpenPosition] = useState<DrawerPosition>(undefined);
+
+  const positions: DrawerPosition[] = ["top", "right", "bottom", "left"];
+
   // sidebar
   const [collapsed, setCollapsed] = useState(true);
 
   // progress bar
   const [progress, setProgress] = useState(0);
+
+  // tree view
+  const [selected, setSelected] = useState<string | null>(null);
 
   const navItems = [
     {
@@ -395,6 +477,99 @@ const Test = () => {
     },
   ];
 
+  const navWithSubMenuItems = [
+    {
+      label: "Pages",
+      items: [
+        {
+          label: "Home",
+          href: "/",
+          icon: <RiCircleFill size={18} />,
+        },
+        {
+          label: "Team",
+          icon: <RiAlertFill size={18} />,
+          subItems: [
+            {
+              label: "Subteam 1",
+              // href: "/pages/team/sub1",
+              // icon: <RiCircleFill size={16} />,
+            },
+            {
+              label: "Subteam 2",
+              // href: "/pages/team/sub2",
+              // icon: <RiCircleFill size={16} />,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      label: "Dashboard",
+      items: [
+        {
+          label: "Analytics",
+          href: "/dashboard/analytics",
+          icon: <RiCircleFill size={18} />,
+        },
+        {
+          label: "Reports",
+          icon: <RiAlertFill size={18} />,
+          subItems: [
+            {
+              label: "Monthly",
+              href: "/dashboard/reports/monthly",
+              icon: <RiCircleFill size={16} />,
+            },
+            {
+              label: "Yearly",
+              icon: <RiCircleFill size={16} />,
+              subItems: [
+                {
+                  label: "2023",
+                  href: "/dashboard/reports/yearly/2023",
+                  icon: <RiCircleFill size={14} />,
+                },
+                {
+                  label: "2024",
+                  href: "/dashboard/reports/yearly/2024",
+                  icon: <RiCircleFill size={14} />,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "Reports",
+          icon: <RiAlertFill size={18} />,
+          subItems: [
+            {
+              label: "Monthly",
+              href: "/dashboard/reports/monthly",
+              icon: <RiCircleFill size={16} />,
+            },
+            {
+              label: "Yearly",
+              icon: <RiCircleFill size={16} />,
+              subItems: [
+                {
+                  label: "2023",
+                  href: "/dashboard/reports/yearly/2023",
+                  icon: <RiCircleFill size={14} />,
+                },
+                {
+                  label: "2024",
+                  href: "/dashboard/reports/yearly/2024",
+                  icon: <RiCircleFill size={14} />,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
   const footerItems = [
     {
       label: "Footer Item 1",
@@ -419,39 +594,41 @@ const Test = () => {
     return () => clearTimeout(timer);
   }, [progress]);
 
+  const [otp, setOtp] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+
   return (
     <div className="m-5 space-y-5">
       {/* Typography */}
       <div className="mt-10 flex gap-10">
-        <section>
-          <h1 className="text-primary-400 border-b border-primary-900 w-fit">
-            Typography - Font Size
-          </h1>
-          <h1 className="text-display-2xl">Display 2xl</h1>
-          <h1 className="text-display-xl">Display xl</h1>
-          <h1 className="text-display-lg">Display lg</h1>
-          <h1 className="text-display-md">Display md</h1>
-          <h1 className="text-display-sm">Display sm</h1>
-          <h1 className="text-display-xs">Display xs</h1>
-          <h1 className="text-text-xl">Text Xl</h1>
-          <h1 className="text-text-lg">Text Lg</h1>
-          <h1 className="text-text-md">Text Md</h1>
-          <h1 className="text-text-sm">Text Sm</h1>
-          <h1 className="text-text-xs">Text Xs</h1>
-        </section>
-        <section>
-          <h1 className="text-primary-400 border-b border-primary-900 w-fit">
-            Typography - Font Weight
-          </h1>
-          <h1 className="font-regular">Regular</h1>
-          <h1 className="font-medium">Medium</h1>
-          <h1 className="font-semibold">Semi Bold</h1>
-          <h1 className="font-bold">Bold</h1>
+        <section className="space-y-3">
+          <Typography variant="h6">Typography</Typography>
+          <Typography variant="h1">H1 Headline</Typography>
+          <Typography variant="h2">H2 Headline</Typography>
+          <Typography variant="h3">H3 Headline</Typography>
+          <Typography variant="h4">H4 Headline</Typography>
+          <Typography variant="h5">H5 Headline</Typography>
+          <Typography variant="h6">H6 Headline</Typography>
+          <Typography variant="b1" intent="primary">
+            Body 1 - Primary
+          </Typography>
+          <Typography variant="b2" intent="success">
+            Body 2 - Success
+          </Typography>
+          <Typography variant="b3" intent="error">
+            Body 3 - Error
+          </Typography>
+          <Typography variant="b4" intent="warning">
+            Body 4 - Warning
+          </Typography>
+          <Typography variant="b5" intent="default">
+            Body 5 - Default
+          </Typography>
         </section>
       </div>
       {/* Buttons  */}
       <div className="flex flex-col gap-5">
-        <h1 className="text-display-sm text-primary-400">Button:</h1>
+        <h1 className="text-display-sm text-primary-600">Button:</h1>
         <section className="my-2">
           <h1>Full width:</h1>
           <Button variant="filled" fullWidth>
@@ -487,7 +664,7 @@ const Test = () => {
             Submit
           </Button>
         </section>
-        <section className="flex items-center gap-4">
+        <section className="flex items-center gap-2">
           <h1>States Filled:</h1>
           <Button variant="filled" intent={"default"}>
             Default
@@ -504,8 +681,35 @@ const Test = () => {
           <Button variant="filled" intent={"warning"}>
             Warning
           </Button>
+          <Button variant="filled" intent={"blue"}>
+            Blue
+          </Button>
+          <Button variant="filled" intent={"bluegray"}>
+            Bluegray
+          </Button>
+          <Button variant="filled" intent={"bluelight"}>
+            Bluelight
+          </Button>
+          <Button variant="filled" intent={"indigo"}>
+            Indigo
+          </Button>
+          <Button variant="filled" intent={"purple"}>
+            Purple
+          </Button>
+          <Button variant="filled" intent={"violet"}>
+            Violet
+          </Button>
+          <Button variant="filled" intent={"pink"}>
+            Pink
+          </Button>
+          <Button variant="filled" intent={"rose"}>
+            Rose
+          </Button>
+          <Button variant="filled" intent={"orange"}>
+            Orange
+          </Button>
         </section>
-        <section className="flex items-center gap-4">
+        <section className="flex items-center gap-2">
           <h1>States Outlined:</h1>
           <Button variant="outlined" intent="default-outlined">
             Default
@@ -521,6 +725,33 @@ const Test = () => {
           </Button>
           <Button variant="outlined" intent="warning-outlined">
             Warning
+          </Button>
+          <Button variant="outlined" intent={"blue-outlined"}>
+            Blue
+          </Button>
+          <Button variant="outlined" intent={"bluegray-outlined"}>
+            Bluegray
+          </Button>
+          <Button variant="outlined" intent={"bluelight-outlined"}>
+            Bluelight
+          </Button>
+          <Button variant="outlined" intent={"indigo-outlined"}>
+            Indigo
+          </Button>
+          <Button variant="outlined" intent={"purple-outlined"}>
+            Purple
+          </Button>
+          <Button variant="outlined" intent={"violet-outlined"}>
+            Violet
+          </Button>
+          <Button variant="outlined" intent={"pink-outlined"}>
+            Pink
+          </Button>
+          <Button variant="outlined" intent={"rose-outlined"}>
+            Rose
+          </Button>
+          <Button variant="outlined" intent={"orange-outlined"}>
+            Orange
           </Button>
         </section>
         <section className="flex items-center gap-4">
@@ -547,9 +778,60 @@ const Test = () => {
           </Button>
         </section>
       </div>
+      <div className="flex gap-10 items-center">
+        <SplitButton compact>
+          <Button className="rounded-r-none">Split Button Compact</Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button
+                startIcon={<RiAddLine />}
+                className="rounded-l-none border-l border-l-primary-200"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-48" align="right">
+              <DropdownMenuLabel>Save Options</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Save as draft</DropdownMenuItem>
+              <DropdownMenuItem>Save and publish</DropdownMenuItem>
+              <DropdownMenuItem>Save as template</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SplitButton>
+        <SplitButton>
+          <Button
+            variant="outlined"
+            intent="default-outlined"
+            className="rounded-r-none"
+          >
+            Split Button
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button
+                variant="outlined"
+                intent="default-outlined"
+                startIcon={<RiAddLine />}
+                className="rounded-l-none border-l border-l-gray-300"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-48" align="left">
+              <DropdownMenuLabel>Save Options</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Save as draft</DropdownMenuItem>
+              <DropdownMenuItem>Save and publish</DropdownMenuItem>
+              <DropdownMenuItem>Save as template</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SplitButton>
+      </div>
+      <Link target="_blank" href="/pages/button">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Button
+        </Button>
+      </Link>
       {/* Chips  */}
       <div className="space-y-5">
-        <h1 className="text-display-sm text-primary-400">Chip:</h1>
+        <h1 className="text-display-sm text-primary-600">Chip:</h1>
         <section className="flex items-center gap-4">
           <p>Chips with sizes</p>
           <Chip intent="primary" size={"sm"}>
@@ -558,7 +840,11 @@ const Test = () => {
           <Chip intent="primary" size={"md"}>
             Size md
           </Chip>
-          <Chip intent="primary" size={"lg"}>
+          <Chip
+            intent="primary"
+            size={"lg"}
+            endIcon={<RiInformationLine size={18} />}
+          >
             Size lg
           </Chip>
         </section>
@@ -583,13 +869,19 @@ const Test = () => {
         <section className="flex flex-wrap items-center gap-4">
           <p>Chips without dot</p>
           <Chip intent="primary">primary</Chip>
-          <Chip intent="warning">warning</Chip>
+          <Chip intent="warning" endIcon={<RiInformationLine size={18} />}>
+            warning
+          </Chip>
           <Chip intent="success">success</Chip>
           <Chip intent="error">error</Chip>
           <Chip intent="default">default</Chip>
           <Chip intent="bluegray">bluegray</Chip>
-          <Chip intent="bluelight">bluelight</Chip>
-          <Chip intent="violet">violet</Chip>
+          <Chip intent="bluelight" endIcon={<RiInformationLine size={18} />}>
+            bluelight
+          </Chip>
+          <Chip intent="violet" startIcon={<RiInformationLine size={18} />}>
+            violet
+          </Chip>
           <Chip intent="indigo">indigo</Chip>
           <Chip intent="purple">purple</Chip>
           <Chip intent="pink">pink</Chip>
@@ -597,9 +889,14 @@ const Test = () => {
           <Chip intent="orange">orange</Chip>
         </section>
       </div>
+      <Link target="_blank" href="/pages/chip">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Chip
+        </Button>
+      </Link>
       {/* Toggle  */}
       <div className="flex flex-col gap-5">
-        <h1 className="text-display-sm text-primary-400">Toggle:</h1>
+        <h1 className="text-display-sm text-primary-600">Toggle:</h1>
         <section className="flex items-center gap-4">
           <h1>Size:</h1>
           <Toggle size="sm" />
@@ -623,11 +920,20 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <Link target="_blank" href="/pages/toggle">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Toggle
+        </Button>
+      </Link>
       {/* checkbox */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-display-sm text-primary-400">Checkbox:</h1>
+        <h1 className="text-display-sm text-primary-600">Checkbox:</h1>
         <section className="flex items-center gap-4">
           <h1>Size with Text:</h1>
+          <div className="flex items-center gap-2">
+            <Checkbox id="xl" size="xl" />
+            <Label htmlFor="xl">XL</Label>
+          </div>
           <div className="flex items-center gap-2">
             <Checkbox id="large" size="lg" />
             <Label htmlFor="large">Large</Label>
@@ -668,11 +974,26 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <Link target="_blank" href="/pages/checkbox">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Checkbox
+        </Button>
+      </Link>
       {/* Radio */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-display-sm text-primary-400">Radio:</h1>
+        <h1 className="text-display-sm text-primary-600">Radio:</h1>
         <section className="flex items-center gap-4">
           <h1>Size with Text:</h1>
+          <div role="radiogroup" aria-label="Options">
+            <Label htmlFor="option1" className="flex items-center gap-2">
+              <Radio id="option1" name="options" />
+              Option 1
+            </Label>
+            <Label htmlFor="option2" className="flex items-center gap-2">
+              <Radio id="option2" name="options" />
+              Option 2
+            </Label>
+          </div>
           <div className="flex items-center gap-2">
             <Radio id="radioTextLarge" size="lg" />
             <Label htmlFor="radioTextLarge" required>
@@ -715,11 +1036,28 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <Link target="_blank" href="/pages/radio">
+        <Button endIcon={<RiExternalLinkLine />} className="my-5">
+          Radio
+        </Button>
+      </Link>
       {/* <Input /> */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-display-sm text-primary-400">Input Field:</h1>
+        <h1 className="text-display-sm text-primary-600">Input Field:</h1>
         <section className="flex items-center gap-4">
           <h1>Size with Text:</h1>
+          <div>
+            <Label htmlFor="email">Email address</Label>
+            <Input
+              id="email"
+              type="email"
+              aria-describedby="email-hint"
+              placeholder="Enter your email"
+            />
+            <p id="email-hint" className="text-sm text-gray-500">
+              {"We'll never share your email."}
+            </p>
+          </div>
           <div className="w-[500px]">
             <Label required htmlFor="">
               Email
@@ -758,22 +1096,89 @@ const Test = () => {
               value={inputValue}
               type="text"
               onChange={handleChange}
-              endIcon={
-                <RiListCheck
-                  size={16}
-                  className={cn(error && "text-error-500")}
-                />
-              }
-              className={cn(error && "focus-within:border-error-500")}
+              endIcon={<RiListCheck size={16} />}
+              error={Boolean(error)}
               placeholder="olivia@untitledui.com"
             />
             {error && <HelperText error>{error}</HelperText>}
           </div>
         </section>
       </div>
+
+      {/* Textarea */}
+      <section className="flex flex-col gap-1">
+        <h1 className="text-display-sm text-primary-600">Textarea</h1>
+        <section className="flex items-center gap-4">
+          <h1>States</h1>
+          <Textarea
+            placeholder="This is a placeholder"
+            rows={4}
+            size="lg"
+          ></Textarea>
+          <Textarea
+            placeholder="This is a placeholder"
+            size="sm"
+            disabled
+          ></Textarea>
+        </section>
+      </section>
+      {/* File Upload */}
+      <section className="max-w-lg space-y-3">
+        <h1 className="text-display-sm text-primary-600">File Upload</h1>
+        <FileUpload
+          id="single"
+          selectedFile={selectedSingleFiles}
+          setSelectedFile={setSelectedSingleFiles}
+          onChange={handleFileChangeSingle}
+          onDelete={handleDeleteFileSingle}
+          title="SVG, PNG, JPG or GIF (max. 800x400px)"
+        >
+          <ProgressBar progressColor="bg-primary-600" progress={50} />
+        </FileUpload>
+        <FileUpload
+          multiple
+          id="multiple"
+          selectedFile={selectedFiles}
+          setSelectedFile={setSelectedFiles}
+          onChange={handleFileChangeMultiple}
+          onDelete={handleDeleteFile}
+          title="SVG, PNG, JPG or GIF (max. 800x400px)"
+          filePreviewClassName="grid grid-cols-2 gap-2"
+        />
+        <FileSelector
+          ref={fileRef}
+          id="singleselect"
+          component={
+            <Button
+              size={"sm"}
+              variant={"outlined"}
+              endIcon={<RiUpload2Line size={18} />}
+            >
+              Upload Single File
+            </Button>
+          }
+          onChange={handleSingleChange}
+        />
+        <br />
+        <FileSelector
+          ref={fileMultiRef}
+          id="multiselect"
+          component={<Button>Upload Multiple Files</Button>}
+          multiple
+          onChange={handleMultipleChange}
+        />
+      </section>
+
+      <section className="">
+        <Link target="_blank" href="/pages/razorpay-fileupload">
+          <Button endIcon={<RiExternalLinkLine />} className="my-5">
+            Razor Pay File Upload
+          </Button>
+        </Link>
+      </section>
       {/* Slider */}
       <div className="space-y-6">
-        <h1 className="text-display-sm text-primary-400">Slider:</h1>
+        <h1 className="text-display-sm text-primary-600">Slider:</h1>
         <Slider
           value={sliderValue}
           min={10}
@@ -791,7 +1196,7 @@ const Test = () => {
       </div>
       {/* table */}
       <section className="my-5">
-        <h1 className="text-display-sm text-primary-400">
+        <h1 className="text-display-sm text-primary-600">
           <Link href="/pages/tables" className="flex items-center gap-2">
             Go to Table component <RiExternalLinkLine />
           </Link>
@@ -799,58 +1204,29 @@ const Test = () => {
       </section>
       {/* Modal */}
       <section className="my-5">
+        <h1 className="text-display-sm text-primary-600">Modal:</h1>
         <Button onClick={() => setShowModal(true)}>Show Modal</Button>
         <Modal
           showModal={showModal}
           setShowModal={setShowModal}
           closeModal={true}
           closeOnOutsideClick={true}
-          width="500px"
+          width="60%"
         >
-          Content
+          <div className="max-w-[500px]">
+            Content
+            <Tooltip
+              position="right"
+              className="text-success-500 max-w-[900px]"
+              content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
+            >
+              Top
+            </Tooltip>
+          </div>
         </Modal>
       </section>
       {/* Dropdown  */}
-      <h1 className="text-display-sm text-primary-400">Dropdown</h1>
-      <section className="flex gap-6 items-center">
-        <h1 className="text-lg">Dropdown with icon</h1>
-        <DropdownWithIcon
-          options={multiOptions}
-          selected={dropdownMenuOption}
-          setSelected={setDropdownMenuOption}
-          search={true}
-          multiple={true}
-          width="200px"
-          id="dropdownMenuOptionOne"
-          trigger={
-            <RiFilterLine
-              className="hover:bg-gray-200 rounded"
-              cursor="pointer"
-              size={14}
-            />
-          }
-          dropdownFooter={true}
-          onApply={() => {
-            alert("Apply button clicked");
-          }}
-        />
-        <DropdownWithIcon
-          options={multiOptions}
-          selected={dropdownMenuOptionTwo}
-          setSelected={setDropdownMenuOptionTwo}
-          search={true}
-          multiple={true}
-          width="200px"
-          id="dropdownMenuOptionTwo"
-          trigger={
-            <RiFilterLine
-              className="hover:bg-gray-200 rounded"
-              cursor="pointer"
-              size={14}
-            />
-          }
-        />
-      </section>
+      <h1 className="text-display-sm text-primary-600">Dropdown</h1>
       <section className="flex items-start gap-10">
         <div>
           <h1 className="">Dropdown with icon</h1>
@@ -862,6 +1238,7 @@ const Test = () => {
             multiple={true}
             dropdownText={`Selected ${multiSelect?.length} items`}
             width="200px"
+            height="100px"
             trigger={
               <RiFilterLine
                 className="hover:bg-gray-200 rounded"
@@ -869,8 +1246,6 @@ const Test = () => {
                 size={14}
               />
             }
-            // dropdownMenu={dropdownMenu}
-            // setDropdownMenu={setDropdownMenu}
           />
         </div>
         <div>
@@ -903,6 +1278,7 @@ const Test = () => {
             selected={multiSelect}
             setSelected={setMultiSelect}
             width="300px"
+            height="100px"
             icon={<RiGlobalLine size={16} />}
             dropdownText="Test Test"
             multiple
@@ -917,7 +1293,7 @@ const Test = () => {
         <div>
           <h1 className="text-lg">Single Dropdown Language</h1>
           <Dropdown
-            options={multiOptions}
+            options={singleOptions}
             selected={singleSelect}
             icon={<RiGlobalLine size={16} />}
             setSelected={setSingleSelect}
@@ -955,48 +1331,71 @@ const Test = () => {
           />
         </div>
       </section>
-      {/* Menu Items */}
-      <section>
-        <h1 className="text-display-sm text-primary-400">MenuItems:</h1>
-        <MenuDropdown
-          className=""
+      <section className="flex gap-6 items-center">
+        <h1 className="text-lg">Dropdown with icon</h1>
+        <Dropdown
+          options={multiOptions}
+          selected={dropdownMenuOption}
+          setSelected={setDropdownMenuOption}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionOne"
+          dropdownFooter={true}
+          onApply={() => {
+            alert("Apply button clicked");
+          }}
+          footerAction={
+            <div className="flex justify-end items-center">
+              <Button
+                size="sm"
+                className="h-[30px]"
+                onClick={() => {
+                  alert("Apply button clicked");
+                }}
+              >
+                Custom Action
+              </Button>
+            </div>
+          }
+        />
+        <DropdownWithIcon
+          options={multiOptions}
+          selected={dropdownMenuOptionTwo}
+          setSelected={setDropdownMenuOptionTwo}
+          search={true}
+          multiple={true}
+          width="200px"
+          id="dropdownMenuOptionTwo"
           trigger={
-            <ListItem
-              as="button"
-              title="Products"
-              icon={<RiAddLine size={20} />}
-              className="w-max bg-primary-100 hover:bg-primary-200 rounded-full border border-primary-400"
+            <RiFilterLine
+              className="hover:bg-gray-200 rounded"
+              cursor="pointer"
+              size={14}
             />
           }
-        >
-          <Link
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
-            target="_blank"
-          >
-            <MenuSubItem label="Inertia" />
-          </Link>
-          <MenuItem content={<h6>Blaze</h6>}>
-            <MenuSubItem label="Flames" onClick={() => alert("clicked")} />
-            <MenuSubItem label="Blaze" onClick={() => alert("click")} />
-            <MenuSubItem label="Admin" onClick={() => alert("click")} />
-          </MenuItem>
-          <Link
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
-            target="_blank"
-          >
-            <MenuSubItem label="Qiwi" />
-          </Link>
-          <Link
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULcmljayBuIHJvbGw%3D"
-            target="_blank"
-          >
-            <MenuSubItem label="Audit" />
-          </Link>
-        </MenuDropdown>
+          dropdownFooter={true}
+          onApply={() => {
+            alert("Apply button clicked");
+          }}
+          footerAction={
+            <div className="flex justify-end items-center">
+              <Button
+                size="sm"
+                className="h-[30px]"
+                onClick={() => {
+                  alert("Apply button clicked");
+                }}
+              >
+                Custom Action
+              </Button>
+            </div>
+          }
+        />
       </section>
       {/* Tabs */}
       <div>
-        <h1 className="text-display-sm text-primary-400">Tabs</h1>
+        <h1 className="text-display-sm text-primary-600">Tabs</h1>
         <section className="my-5">
           <h1 className="text-lg">Default Tabs</h1>
           <TabsContainer value={value}>
@@ -1037,6 +1436,44 @@ const Test = () => {
             </TabPanel>
           </TabsContainer>
         </section>
+
+        <section>
+          <TabsContainer
+            value={value}
+            position="vertical"
+            className="flex gap-4"
+          >
+            <TabList
+              onChange={handleTabChange}
+              ariaLabel="Vertical tabs example"
+              position="vertical"
+              className="w-48"
+            >
+              <Tab
+                label="Item One"
+                value="1"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+                position="vertical"
+              />
+              <Tab
+                label="Item Two"
+                value="2"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+                position="vertical"
+              />
+            </TabList>
+            <div className="flex-1">
+              <TabPanel value="1" currentValue={value}>
+                Item One Content
+              </TabPanel>
+              <TabPanel value="2" currentValue={value}>
+                Item Two Content
+              </TabPanel>
+            </div>
+          </TabsContainer>
+        </section>
         <section className="my-5">
           <h1 className="text-lg">Tab with box variant</h1>
           <TabsContainer value={value}>
@@ -1044,6 +1481,46 @@ const Test = () => {
               onChange={handleTabChange}
               ariaLabel="lab API tabs example"
               box={true}
+            >
+              <Tab
+                label="Item One"
+                value="1"
+                content="(12)"
+                icon={<RiSearch2Line size={16} />}
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Two"
+                value="2"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+              <Tab
+                label="Item Three"
+                value="3"
+                onChange={handleTabChange}
+                selectedTabValue={value}
+              />
+            </TabList>
+            <TabPanel value="1" currentValue={value}>
+              Item One Content
+            </TabPanel>
+            <TabPanel value="2" currentValue={value}>
+              Item Two Content
+            </TabPanel>
+            <TabPanel value="3" currentValue={value}>
+              Item Three Content
+            </TabPanel>
+          </TabsContainer>
+        </section>
+        <section className="my-5">
+          <h1 className="text-lg">Tab with pill variant</h1>
+          <TabsContainer value={value}>
+            <TabList
+              onChange={handleTabChange}
+              ariaLabel="lab API tabs example"
+              pill={true}
             >
               <Tab
                 label="Item One"
@@ -1120,10 +1597,25 @@ const Test = () => {
       </div>
       {/* notice */}
       <section className="flex flex-col w-fit">
-        <h1 className="text-display-sm text-primary-400">Notice:</h1>
+        <h1 className="text-display-sm text-primary-600">Notice:</h1>
         <Button variant="filled" onClick={() => setOpen(true)}>
           Show Notice
         </Button>
+        <Notice
+          open={open}
+          setOpen={setOpen}
+          variant="warning"
+          noticeTitle="Notice Header"
+          position="center"
+        >
+          This is a success Alert with an encouraging title and both icons.
+          <section className="flex gap-2 items-center mt-3">
+            <Button variant="outlined" intent="error-outlined">
+              Cancel
+            </Button>
+            <Button>Apply</Button>
+          </section>
+        </Notice>
         <Notice
           open={open}
           setOpen={setOpen}
@@ -1149,33 +1641,9 @@ const Test = () => {
           This is a success Alert with an encouraging title and both icons.
         </Notice>
       </section>
-      {/* File Upload */}
-      <section className="max-w-lg space-y-3">
-        <h1 className="text-display-sm text-primary-400">File Upload</h1>
-        <FileUpload
-          id="single"
-          selectedFile={selectedSingleFiles}
-          setSelectedFile={setSelectedSingleFiles}
-          onChange={handleFileChangeSingle}
-          onDelete={() => handleDeleteFileSingle(selectedSingleFiles[0])}
-          title="SVG, PNG, JPG or GIF (max. 800x400px)"
-        >
-          <ProgressBar progressColor="bg-primary-600" progress={50} />
-        </FileUpload>
-        <FileUpload
-          multiple
-          id="multiple"
-          selectedFile={selectedFiles}
-          setSelectedFile={setSelectedFiles}
-          onChange={handleFileChangeMultiple}
-          onDelete={() => handleDeleteFile(selectedFiles[0])}
-          title="SVG, PNG, JPG or GIF (max. 800x400px)"
-          filePreviewClassName="grid grid-cols-2 gap-2"
-        />
-      </section>
       {/* progress */}
       <section className="my-5 w-[500px]">
-        <h1 className="text-display-sm text-primary-400">Progress:</h1>
+        <h1 className="text-display-sm text-primary-600">Progress:</h1>
         <ProgressBar
           progressColor="bg-success-600"
           progress={progress}
@@ -1203,7 +1671,7 @@ const Test = () => {
       </section>
       {/* Circular Progress */}
       <section className="my-5">
-        <h1 className="text-display-sm text-primary-400">Circular Progress:</h1>
+        <h1 className="text-display-sm text-primary-600">Circular Progress:</h1>
         <div className="flex items-center gap-5 py-10">
           <CircularProgress size={50} strokeWidth={4} percentage={50} />
           <CircularProgress size={90} strokeWidth={10} percentage={70} />
@@ -1218,10 +1686,10 @@ const Test = () => {
       </section>
       {/* Tooltip */}
       <section className="flex items-center gap-5 my-5">
-        <h1 className="text-display-sm text-primary-400">Tooltip:</h1>
+        <h1 className="text-display-sm text-primary-600">Tooltip:</h1>
         <Tooltip
           position="top"
-          className="text-success-500"
+          className="text-success-500 max-w-[900px]"
           content="Tooltips are used to describe or identify an element. In most scenarios, tooltips help the user understand the meaning, function or alt-text of an element."
         >
           Top
@@ -1229,19 +1697,19 @@ const Test = () => {
         <Tooltip
           position="right"
           content=" Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Laborum incidunt perferendis
-                sapiente eos? Error aut accusamus odio officiis eaque
-                consectetur obcaecati doloribus, inventore ut reiciendis maiores
-                facere veritatis, corrupti autem illo deleniti eveniet
-                repudiandae iste harum. Voluptate minima ab tenetur veritatis
-                neque dolorem voluptates, praesentium a, velit doloremque
-                impedit facilis vel exercitationem assumenda. Esse labore
-                mollitia enim beatae officia? Delectus exercitationem voluptatem
-                consectetur quae veniam odit ut explicabo voluptas. Doloremque
-                nesciunt deleniti aliquam quibusdam nulla ipsa repudiandae
-                aspernatur placeat fuga officia. Natus itaque inventore eligendi
-                eveniet, nemo saepe voluptatum et ducimus provident suscipit
-                dolore, incidunt esse est iusto consequatur reprehenderit."
+          consectetur adipisicing elit. Laborum incidunt perferendis
+          sapiente eos? Error aut accusamus odio officiis eaque
+          consectetur obcaecati doloribus, inventore ut reiciendis maiores
+          facere veritatis, corrupti autem illo deleniti eveniet
+          repudiandae iste harum. Voluptate minima ab tenetur veritatis
+          neque dolorem voluptates, praesentium a, velit doloremque
+          impedit facilis vel exercitationem assumenda. Esse labore
+          mollitia enim beatae officia? Delectus exercitationem voluptatem
+          consectetur quae veniam odit ut explicabo voluptas. Doloremque
+          nesciunt deleniti aliquam quibusdam nulla ipsa repudiandae
+          aspernatur placeat fuga officia. Natus itaque inventore eligendi
+          eveniet, nemo saepe voluptatum et ducimus provident suscipit
+          dolore, incidunt esse est iusto consequatur reprehenderit."
         >
           Right
         </Tooltip>
@@ -1272,7 +1740,7 @@ const Test = () => {
       </section>
       {/* Avatar */}
       <section className="my-10 space-y-2">
-        <h1 className="text-display-sm text-primary-400">Avatar:</h1>
+        <h1 className="text-display-sm text-primary-600">Avatar:</h1>
         <div className="flex items-center gap-5">
           <Avatar
             type="text"
@@ -1348,11 +1816,11 @@ const Test = () => {
             statusPosition="bottom-right"
           />
         </div>
-        <h1 className="text-display-sm text-primary-400">
+        <h1 className="text-display-sm text-primary-600">
           Avatar Positions/Size:
         </h1>
         <div className="flex items-center gap-5">
-          <h2 className="text-display-sm text-primary-400">Avatar Small:</h2>
+          <h2 className="text-display-sm text-primary-600">Avatar Small:</h2>
           <Avatar
             type="text"
             text="AV"
@@ -1477,7 +1945,7 @@ const Test = () => {
           />
         </div>
         <div className="flex items-center gap-5">
-          <h2 className="text-display-sm text-primary-400">Avatar Medium:</h2>
+          <h2 className="text-display-sm text-primary-600">Avatar Medium:</h2>
           <Avatar
             type="text"
             text="AV"
@@ -1602,7 +2070,7 @@ const Test = () => {
           />
         </div>
         <div className="flex items-center gap-5">
-          <h2 className="text-display-sm text-primary-400">Avatar Large:</h2>
+          <h2 className="text-display-sm text-primary-600">Avatar Large:</h2>
           <Avatar
             type="icon"
             size="lg"
@@ -1736,6 +2204,7 @@ const Test = () => {
               rounded: true,
               border: true,
               borderWidth: "2px",
+              onClick: () => alert("Clicked"),
               borderColor: "var(--primary-500)",
             },
             {
@@ -1783,11 +2252,11 @@ const Test = () => {
           max={4}
         />
       </section>
-      {/* Accordian */}
+      {/* Accordion */}
       <section className="space-y-5">
-        <h1 className="text-display-sm text-primary-400">Accordian:</h1>
+        <h1 className="text-display-sm text-primary-600">Accordion:</h1>
         <div className="space-y-2">
-          <h2>Accordian Single</h2>
+          <h2>Accordion Single</h2>
           <Accordion type="single" collapsible className="w-full space-y-2">
             <AccordionItem value="item-1">
               <AccordionTrigger defaultOpen={true}>
@@ -1826,7 +2295,7 @@ const Test = () => {
           </Accordion>
         </div>
         <div className="space-y-2">
-          <h2>Accordian Multiple</h2>
+          <h2>Accordion Multiple</h2>
           <Accordion type="multiple" collapsible className="w-full space-y-2">
             <AccordionItem value="item-1">
               <AccordionTrigger
@@ -1860,43 +2329,66 @@ const Test = () => {
             </AccordionItem>
           </Accordion>
         </div>
+        <h1>Collapse all / Open all:-</h1>
+        <div className="my-5">
+          <section className="my-5 flex gap-4 items-center">
+            <Button onClick={() => setIsExpanded(!isExpanded)}>
+              {isExpanded ? "Collapse All" : "Expand All"}
+            </Button>
+          </section>
+
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full space-y-2"
+            expanded={isExpanded}
+          >
+            <AccordionItem value="item-1">
+              <AccordionTrigger defaultOpen={true}>
+                <p className="">
+                  What is your favorite template from BRIX Templates?
+                </p>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="p-6 border">
+                  {` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-2">
+              <AccordionTrigger defaultOpen={true}>
+                Is it easy to customize the templates?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Yes, all our templates are built with customization in mind. They use modern CSS and are structured for easy modifications.`}
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-3">
+              <AccordionTrigger defaultOpen={true}>
+                Are the templates responsive?
+              </AccordionTrigger>
+              <AccordionContent>
+                {` Absolutely! All BRIX Templates are fully responsive and work perfectly on desktop, tablet, and mobile devices.`}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
       </section>
       {/* Global Navigation */}
       <section className="my-5">
-        <h1 className="text-display-sm text-primary-400">Global Navigation:</h1>
+        <h1 className="text-display-sm text-primary-600">Global Navigation:</h1>
         <div className="flex items-center w-full justify-evenly">
           <GlobalNavigation
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             postion="bottom-left"
-            trigger={<Avatar type="text" border rounded text="John Doe" />}
-            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
-          >
-            <GlobalNavigationComponent />
-          </GlobalNavigation>
-          <GlobalNavigation
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            postion="top-left"
-            trigger={<Avatar type="text" border rounded text="John Doe" />}
-            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
-          >
-            <GlobalNavigationComponent />
-          </GlobalNavigation>
-          <GlobalNavigation
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            postion="bottom-right"
-            trigger={<Avatar type="text" border rounded text="John Doe" />}
-            className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
-          >
-            <GlobalNavigationComponent />
-          </GlobalNavigation>
-          <GlobalNavigation
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            postion="top-right"
-            trigger={<Avatar type="text" border rounded text="John Doe" />}
+            trigger={
+              <p className="h-14 w-14 rounded-full text-lg border flex justify-center items-center">
+                JD
+              </p>
+            }
             className="max-w-[270px] p-4 flex flex-col gap-4 justify-center items-center"
           >
             <GlobalNavigationComponent />
@@ -1905,7 +2397,7 @@ const Test = () => {
       </section>
       {/* skeleton */}
       <section className="my-5">
-        <h1 className="text-display-sm text-primary-400">Skeleton:</h1>
+        <h1 className="text-display-sm text-primary-600">Skeleton:</h1>
         <div className="flex flex-col gap-2">
           {/* Fluid rectangle skeleton */}
           <div className="w-full h-auto aspect-[2/1]">
@@ -1929,7 +2421,7 @@ const Test = () => {
       </section>
       {/* stepper */}
       <section>
-        <h1 className="text-display-sm text-primary-400">Stepper:</h1>
+        <h1 className="text-display-sm text-primary-600">Stepper:</h1>
         <div className="mx-auto w-full">
           <Stepper
             stepsConfig={stepsConfig}
@@ -1978,7 +2470,7 @@ const Test = () => {
       </section>
       {/* Breadcrumbs */}
       <section className="my-5">
-        <h1 className="text-display-sm text-primary-400">Breadcrumbs</h1>
+        <h1 className="text-display-sm text-primary-600">Breadcrumbs</h1>
         {/* <Breadcrumb
           homeElement={<RiHome2Line size={18} />}
           separator={
@@ -2013,13 +2505,13 @@ const Test = () => {
       <div className="relative flex gap-3 bg-white">
         <section className=" bg-white">
           <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}>
-            <Sidebar.Header collapsed={collapsed} setCollapsed={setCollapsed}>
+            <Sidebar.Header dense={true}>
               <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
             </Sidebar.Header>
             <Sidebar.Menu
               scroll
               collapsed={collapsed}
-              setCollapsed={setCollapsed}
+              // setCollapsed={setCollapsed}
               navItems={navItems}
             />
             <Sidebar.Footer
@@ -2051,26 +2543,39 @@ const Test = () => {
           </p>
         </section>
       </div>
-      {/* Textarea */}
-      <section className="flex flex-col gap-1">
-        <h1 className="text-display-sm text-primary-400">Textarea</h1>
-        <section className="flex items-center gap-4">
-          <h1>States</h1>
-          <Textarea
-            placeholder="This is a placeholder"
-            rows={4}
-            size="lg"
-          ></Textarea>
-          <Textarea
-            placeholder="This is a placeholder"
-            size="sm"
-            disabled
-          ></Textarea>
-        </section>
-      </section>
+      <h1 className="text-primary-500 font-medium text-3xl">Sidebar(Dense)</h1>
+      <Sidebar dense={true} collapsed={collapsed} setCollapsed={setCollapsed}>
+        <Sidebar.Header dense={true}>
+          <span onClick={() => setCollapsed((prev) => !prev)}>Logo</span>
+        </Sidebar.Header>
+
+        <Sidebar.Menu
+          dense={true}
+          scroll
+          collapsed={collapsed}
+          navItems={navWithSubMenuItems}
+        />
+
+        <Sidebar.Footer
+          dense={true}
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          navItems={footerItems}
+        >
+          <Divider className="mb-3" />
+          <Button
+            className="w-full"
+            variant="outlined"
+            intent="default-outlined"
+            startIcon={<RiLogoutBoxRLine size={20} />}
+          >
+            {!collapsed ? "" : "Logout"}
+          </Button>
+        </Sidebar.Footer>
+      </Sidebar>
       {/* Divider */}
       <section>
-        <h1 className="text-display-sm text-primary-400">Divider</h1>
+        <h1 className="text-display-sm text-primary-600">Divider</h1>
         <div className="w-[50%] border border-primary-600 p-5 flex justify-center gap-6 items-center">
           <Divider
             position="vertical"
@@ -2082,7 +2587,7 @@ const Test = () => {
       </section>
       {/* Loading State */}
       <section className="flex flex-col items-center justify-center gap-2">
-        <h1 className="text-display-sm text-primary-400">Loading</h1>
+        <h1 className="text-display-sm text-primary-600">Loading</h1>
         <Loading width="50px" height="50px" loaderColor="green" />
         <span className="font-bold">Hold On ...</span>
         <p className="text-sm text-gray-500">
@@ -2094,6 +2599,650 @@ const Test = () => {
         <Button variant="outlined">
           Loading <Loading width="15px" height="15px" variant="heavy" />
         </Button>
+      </section>
+      <section className="flex items-center gap-6">
+        <h1 className="text-display-sm text-primary-600">Spinner: </h1>
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" />
+      </section>
+      <Divider />
+      {/* cards */}
+      <div className="space-y-5">
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+            <CardAction>
+              <Button>Action Button</Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
+      </div>
+      <div>
+        <h1>Customised card</h1>
+        <Card className="w-96 p-0 bg-yellow-50 text-green-600 rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-red-600">Project Dashboard</CardTitle>
+            <CardDescription>
+              Manage your projects and tasks efficiently
+            </CardDescription>
+            <CardAction>
+              <Button variant="outlined">Create New</Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <p>Active Projects: 12</p>
+              <p>Completed Tasks: 45</p>
+              <p>Pending Reviews: 3</p>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <div className="flex justify-between items-center w-full">
+              <span className="text-sm text-gray-500">Last updated: Today</span>
+              <Button size="sm">View All</Button>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
+      {/* Text input with label */}
+      <section className="space-y-2 w-1/2 ">
+        <h1 className="text-display-sm whitespace-nowrap text-primary-600">
+          Text Input With Label:
+        </h1>
+        <TextInputWithLabel
+          tags={tags}
+          setTags={setTags}
+          placeholder="Add tags"
+          intent="primary"
+        />
+        <HelperText>Note: Paste comma separated values</HelperText>
+      </section>
+      {/* OTP */}
+      <section className="space-y-4">
+        <h1 className="text-display-sm text-primary-600">OTP Input Field:</h1>
+        <div className="space-y-2">
+          <OTPInput type="text" length={4} onChange={setOtp} />
+          <OTPInput type="number" length={5} onChange={setOtp} />
+          <OTPInput type="password" length={6} onChange={setOtp} />
+          {/* <p className="mt-4 text-gray-700">Your OTP: {otp}</p> */}
+        </div>
+        <HelperText>Note: you can also paste values</HelperText>
+      </section>
+      {/* tree view */}
+      <section className="my-5 w-1/2 border p-5">
+        <h1 className="text-display-sm text-primary-600">Tree View:</h1>
+        <TreeView aria-label="Project files" defaultExpandedIds={["frontend"]}>
+          {/* FRONTEND SECTION */}
+          <TreeView.Item
+            id="frontend"
+            onSelect={setSelected}
+            selected={selected === "frontend"}
+          >
+            <TreeView.LeadingVisual>
+              <RiAlertFill />{" "}
+            </TreeView.LeadingVisual>{" "}
+            Frontend
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="frontend-react"
+                onSelect={setSelected}
+                selected={selected === "frontend-react"}
+              >
+                React App
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="frontend-react-components"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-react-components"}
+                  >
+                    <TreeView.LeadingVisual>
+                      <RiAlertFill />{" "}
+                    </TreeView.LeadingVisual>{" "}
+                    Components
+                    <TreeView.SubTree>
+                      <TreeView.Item
+                        id="frontend-react-components-button"
+                        onSelect={setSelected}
+                        selected={
+                          selected === "frontend-react-components-button"
+                        }
+                      >
+                        <Button
+                          onClick={() => {
+                            alert("clicked");
+                          }}
+                        >
+                          Click
+                        </Button>
+                      </TreeView.Item>
+                      <TreeView.Item
+                        id="frontend-react-components-modal"
+                        onSelect={setSelected}
+                        selected={
+                          selected === "frontend-react-components-modal"
+                        }
+                      >
+                        Modal
+                      </TreeView.Item>
+                    </TreeView.SubTree>
+                  </TreeView.Item>
+
+                  <TreeView.Item
+                    id="frontend-react-hooks"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-react-hooks"}
+                  >
+                    Hooks
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="frontend-react-context"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-react-context"}
+                  >
+                    Context
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+
+              <TreeView.Item
+                id="frontend-next"
+                onSelect={setSelected}
+                selected={selected === "frontend-next"}
+              >
+                Next.js App
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="frontend-next-pages"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-next-pages"}
+                  >
+                    Pages
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="frontend-next-api"
+                    onSelect={setSelected}
+                    selected={selected === "frontend-next-api"}
+                  >
+                    API Routes
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+
+          {/* BACKEND SECTION */}
+          <TreeView.Item
+            id="backend"
+            onSelect={setSelected}
+            selected={selected === "backend"}
+          >
+            Backend
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="backend-api"
+                onSelect={setSelected}
+                selected={selected === "backend-api"}
+              >
+                API Routes
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="backend-api-auth"
+                    onSelect={setSelected}
+                    selected={selected === "backend-api-auth"}
+                  >
+                    Auth
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="backend-api-users"
+                    onSelect={setSelected}
+                    selected={selected === "backend-api-users"}
+                  >
+                    Users
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="backend-api-products"
+                    onSelect={setSelected}
+                    selected={selected === "backend-api-products"}
+                  >
+                    Products
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+
+              <TreeView.Item
+                id="backend-database"
+                onSelect={setSelected}
+                selected={selected === "backend-database"}
+              >
+                Database
+                <TreeView.SubTree>
+                  <TreeView.Item
+                    id="backend-database-models"
+                    onSelect={setSelected}
+                    selected={selected === "backend-database-models"}
+                  >
+                    Models
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="backend-database-migrations"
+                    onSelect={setSelected}
+                    selected={selected === "backend-database-migrations"}
+                  >
+                    Migrations
+                  </TreeView.Item>
+                  <TreeView.Item
+                    id="backend-database-seeds"
+                    onSelect={setSelected}
+                    selected={selected === "backend-database-seeds"}
+                  >
+                    Seeds
+                  </TreeView.Item>
+                </TreeView.SubTree>
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+        </TreeView>
+      </section>
+      <Divider />
+      <section>
+        <TreeView aria-label="Files changed" defaultExpandedIds={["src"]}>
+          <TreeView.Item
+            id="src"
+            onSelect={setSelected}
+            selected={selected === "src"}
+          >
+            <TreeView.LeadingVisual>
+              <RiFolderOpenFill color="#1765dc" size={16} />
+            </TreeView.LeadingVisual>
+            src
+            <TreeView.SubTree>
+              <TreeView.Item
+                id="src/Avatar.tsx"
+                onSelect={setSelected}
+                selected={selected === "src/Avatar.tsx"}
+              >
+                <TreeView.LeadingVisual>
+                  <RiFileLine size={16} />
+                </TreeView.LeadingVisual>
+                Avatar.tsx
+                <TreeView.TrailingVisual label="Added">
+                  <RiAddLine size={16} />
+                </TreeView.TrailingVisual>
+              </TreeView.Item>
+
+              <TreeView.Item
+                id="src/Button.tsx"
+                onSelect={setSelected}
+                selected={selected === "src/Button.tsx"}
+              >
+                <TreeView.LeadingVisual>
+                  <RiFileLine size={16} />
+                </TreeView.LeadingVisual>
+                Button.tsx
+                <TreeView.TrailingVisual label="Modified">
+                  <RiEditLine size={16} />
+                </TreeView.TrailingVisual>
+              </TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+
+          <TreeView.Item
+            id="package.json"
+            onSelect={setSelected}
+            selected={selected === "package.json"}
+          >
+            <TreeView.LeadingVisual>
+              <RiFileLine size={16} />
+            </TreeView.LeadingVisual>
+            package.json
+            <TreeView.TrailingVisual label="Modified">
+              <RiEditLine size={16} />
+            </TreeView.TrailingVisual>
+          </TreeView.Item>
+        </TreeView>
+      </section>
+      <section className="my-5">
+        <h1>Allow multiple expanded (default)</h1>
+        <TreeView aria-label="Example Tree" expandTopLevelByDefault>
+          <TreeView.Item id="1">
+            Parent 1
+            <TreeView.SubTree>
+              <TreeView.Item id="1.1">Child 1</TreeView.Item>
+              <TreeView.Item id="1.2">Child 2</TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+
+          <TreeView.Item id="2">
+            Parent 2
+            <TreeView.SubTree>
+              <TreeView.Item id="2.1">Child A</TreeView.Item>
+              <TreeView.Item id="2.2">Child B</TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+        </TreeView>
+      </section>
+      <Divider />
+      <section className="my-5">
+        <h1>Treeview Mode (only one expanded)</h1>
+        <TreeView aria-label="Accordion Tree" allowMultiple={false}>
+          <TreeView.Item id="1">
+            Section 1
+            <TreeView.SubTree>
+              <TreeView.Item id="1.1">Item A</TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+          <TreeView.Item id="2">
+            Section 2
+            <TreeView.SubTree>
+              <TreeView.Item id="2.1">Item B</TreeView.Item>
+            </TreeView.SubTree>
+          </TreeView.Item>
+        </TreeView>
+      </section>
+      <Divider />
+      {/* Drawer */}
+      <section className="my-5 space-y-4">
+        <h1 className="text-display-sm text-primary-600">Drawer:</h1>
+
+        <div className="flex gap-3 flex-wrap">
+          {positions.map((pos) => (
+            <Button key={pos} onClick={() => setOpenPosition(pos)}>
+              Show {pos} Drawer
+            </Button>
+          ))}
+        </div>
+
+        {positions.map((pos) => (
+          <Drawer
+            key={pos}
+            isOpen={openPosition === pos}
+            setIsOpen={(isOpen) => {
+              if (!isOpen) setOpenPosition(undefined);
+            }}
+            closeOnOutsideClick={false}
+            position={pos}
+            width={pos === "left" || pos === "right" ? "w-[500px]" : undefined}
+            height={pos === "top" || pos === "bottom" ? "h-[500px]" : undefined}
+          >
+            <p>This is a {pos} drawer.</p>
+            <p>You can change its position, width, and height using props.</p>
+          </Drawer>
+        ))}
+      </section>
+      {/* Menu Items */}
+      <section className="p-5">
+        <h1 className="text-display-sm text-primary-600">MenuItems:</h1>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button> Open Menu </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-64">
+            <DropdownMenuLabel>Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>More Options</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuLabel>Label One</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Menu One</DropdownMenuItem>
+            <DropdownMenuItem>Menu Two</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </section>
+      <div className="grid grid-cols-2 gap-4 p-8 w-full whitespace-nowrap">
+        {/* Top-Left */}
+        <div className="flex justify-center gap-6">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Top</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="top">
+              <DropdownMenuLabel>Top Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Bottom</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="bottom">
+              <DropdownMenuLabel>Bottom Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Left</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="left">
+              <DropdownMenuLabel>Left Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Right</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="right">
+              <DropdownMenuLabel>Right Position</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Center</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="center">
+              <DropdownMenuLabel>Center Aligned</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined">Wide Menu</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-80" align="end">
+              <DropdownMenuLabel>Wide Menu (320px)</DropdownMenuLabel>
+              <DropdownMenuItem>Profile with very long text</DropdownMenuItem>
+              <DropdownMenuItem>Settings with extra content</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  Invite users with long text
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email invitation</DropdownMenuItem>
+                  <DropdownMenuItem>Message invitation</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More options...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  Invite users with long text
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email invitation</DropdownMenuItem>
+                  <DropdownMenuItem>Message invitation</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More options...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+      {/* Callout */}
+      <section className="my-5 space-y-4">
+        <h1 className="text-display-sm text-primary-600">Callout:</h1>
+        <div className="space-y-3">
+          <h1 className="text-display-xs text-primary-600">Filled:</h1>
+          <Callout
+            size={"xs"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"sm"}
+            intent={"warning"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"md"}
+            intent={"error"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            intent={"success"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            intent={"default"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <h1 className="text-display-xs text-primary-600">Outlined:</h1>
+          <Callout
+            size={"xs"}
+            variant={"outlined"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"sm"}
+            variant={"outlined"}
+            intent={"warning"}
+            startIcon={<RiInformationLine size={18} />}
+            endIcon={<RiCloseLine size={18} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"md"}
+            variant={"outlined"}
+            intent={"error"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            variant={"outlined"}
+            intent={"success"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={
+              <Button
+                size={"sm"}
+                intent={"success"}
+                className="whitespace-nowrap"
+              >
+                Contact Admin
+              </Button>
+            }
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+          <Callout
+            size={"lg"}
+            variant={"outlined"}
+            intent={"default"}
+            startIcon={<RiInformationLine size={20} />}
+            endIcon={<RiCloseLine size={20} />}
+          >
+            Access denied. Please contact the network administrator to view this
+            page.
+          </Callout>
+        </div>
       </section>
     </div>
   );

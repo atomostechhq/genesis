@@ -29,30 +29,35 @@ const toggleVariants = cva("", {
 });
 
 const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
-  ({ size, className, intent, disabled, children, ...props }, ref) => {
+  ({ size, className, intent, disabled, children, id, ...props }, ref) => {
     return (
       <label
         className={cn(
           "inline-flex items-center cursor-pointer",
           disabled && "opacity-30 pointer-events-none"
         )}
+        htmlFor={id}
       >
         <input
           type="checkbox"
           disabled={disabled}
           ref={ref}
+          id={id}
+          role="switch"
+          aria-checked={props?.checked}
           {...props}
-          className="sr-only flex justify-center peer"
+          className="sr-only peer"
         />
         <span
           className={cn(
-            "relative w-11 h-7 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full  after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all",
+            "relative w-11 h-7 bg-gray-300 rounded-full peer peer-focus:ring-2 peer-focus:ring-primary-600 peer-focus:ring-offset-2 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all",
             toggleVariants({
               intent,
-              className,
               size,
-            })
+            }),
+            className
           )}
+          aria-hidden="true"
         >
           {children}
         </span>

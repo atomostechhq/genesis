@@ -8,29 +8,25 @@ import React, {
   useRef,
   useImperativeHandle,
 } from "react";
-import {
-  RiArrowDownSLine,
-  RiSearchLine,
-  RiErrorWarningLine,
-} from "@remixicon/react";
+import { RiArrowDownSLine, RiSearchLine } from "@remixicon/react";
 import { cn } from "../utils/utils";
 import Input from "./Input";
 import Label from "./Label";
 import Checkbox from "./Checkbox";
-import Tooltip from "./Tooltip";
 
 type Option = {
-  label: string;
-  value: string;
+  label: string | number;
+  value: string | number;
   info?: string;
   addInfo?: string;
   tooltipContent?: string;
   disabledOption?: boolean;
+  labelTextColor?: string;
 };
 
 interface MenuItemProps {
-  label?: string;
-  value: string;
+  label?: string | number;
+  value: string | number;
   children?: React.ReactNode;
 }
 
@@ -52,9 +48,11 @@ interface DropdownProps {
   addInfo?: string | number;
   tooltipContent?: string;
   width?: string;
-  dropDownTooltip?: boolean | undefined;
   dropdownFooter?: boolean | undefined;
   disabled?: boolean;
+  labelTextColor?: string;
+  footerAction?: React.ReactNode;
+  height?: string;
 }
 
 const defaultRenderItem = (option: Option) => {
@@ -77,11 +75,12 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       position = "top",
       width,
       info,
-      dropDownTooltip = false,
       dropdownFooter = false,
       onApply,
       disabled = false,
       onReset,
+      footerAction,
+      height = "200px",
     },
     ref
   ) => {
@@ -103,9 +102,12 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
     const memoizedFilteredOptions = useMemo(() => {
       if (!search) return filteredOptions;
-      return filteredOptions.filter((option) =>
-        option.label.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      return filteredOptions.filter((option) => {
+        if (typeof option.label === "string") {
+          return option.label.toLowerCase().includes(searchQuery.toLowerCase());
+        }
+        return option.label.toString().includes(searchQuery.toLowerCase());
+      });
     }, [search, searchQuery, filteredOptions]);
 
     const handleSearchChange = useCallback(
@@ -191,22 +193,30 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           width: width,
         }}
       >
-        <div
-          // onClick={() => setDropdownMenu((prev) => !prev)}
+        <button
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={dropdownMenu}
+          aria-labelledby={`${id}-label`}
+          disabled={disabled}
           onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              !disabled && setDropdownMenu((prev) => !prev);
+            }
+          }}
           className={cn(
-            "hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-text-sm cursor-pointer",
-            dropdownMenu ? "border border-gray-800" : "border border-gray-200",
+            "w-full hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-sm cursor-pointer",
+            dropdownMenu
+              ? "border border-primary-600"
+              : "border border-gray-200",
             disabled && "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
           )}
         >
-          <section
-            className={cn(
-              "flex items-center gap-2 text-ellipsis overflow-hidden"
-            )}
-          >
-            {icon && <span>{icon}</span>}
-            <p className="line-clamp-1 w-full">
+          <section className="flex items-center gap-2 text-ellipsis overflow-hidden">
+            {icon && <span aria-hidden="true">{icon}</span>}
+            <span id={`${id}-label`} className="line-clamp-1 w-full">
               {multiple
                 ? (selected?.length ?? 0) > 0
                   ? `${selected?.length} Selected`
@@ -214,16 +224,22 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 : selected?.[0]?.label
                 ? selected?.[0]?.label
                 : dropdownText}
-            </p>
+            </span>
           </section>
-          <RiArrowDownSLine size={18} />
-        </div>
+          <RiArrowDownSLine aria-hidden="true" size={18} />
+        </button>
         <ul
+          role="listbox"
+          aria-multiselectable={multiple}
+          aria-labelledby={`${id}-label`}
           className={cn(
-            "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-[16px] bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
+            "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-sm bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
             position === "top" ? "top-10" : "bottom-10",
+            dropdownMenu
+              ? "border border-primary-600"
+              : "border border-gray-200",
             dropdownMenu &&
-              "max-h-[320px] opacity-[1] transition-all ease-in duration-150"
+              "max-h-[360px] h-fit opacity-[1] transition-all ease-in duration-150"
           )}
         >
           {search && (
@@ -231,32 +247,39 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               id={`${id}-search`}
               type="text"
               placeholder="Search..."
+              aria-label="Search options"
               value={searchQuery}
               onChange={handleSearchChange}
-              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3"
+              className="rounded rounded-b-none text-gray-800 bg-white w-full h-[35px] pl-3 border-none"
               endIcon={<RiSearchLine size={18} />}
             />
           )}
           {multiple && (
             <section className="py-[6px] px-[14px] flex justify-between items-center">
-              <p
-                onClick={handleSelectAll}
-                className="text-text-sm  hover:text-primary-700 text-primary-600 cursor-pointer"
-              >
-                Select all
-              </p>
               <button
                 type="button"
-                className="text-text-sm text-warning-500 hover:text-warning-600"
+                aria-label="Select all"
+                onClick={handleSelectAll}
+                className="text-sm  hover:text-primary-700 text-primary-600 cursor-pointer"
+              >
+                Select all
+              </button>
+              <button
+                aria-label="Reset"
+                type="button"
+                className="text-sm text-warning-500 hover:text-warning-600"
                 onClick={handleReset}
               >
                 Reset
               </button>
             </section>
           )}
-          <section className="max-h-[200px] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll">
+          <section
+            style={{ maxHeight: height }}
+            className="z-[1000] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll"
+          >
             {options
-              ? memoizedFilteredOptions.map((option, i) => (
+              ? memoizedFilteredOptions?.map((option, i) => (
                   <React.Fragment key={i}>
                     {multiple ? (
                       <Label
@@ -281,23 +304,31 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                               disabled={option?.disabledOption}
                             />
                             <div className="flex items-center gap-1">
-                              <span>{renderItem(option)}</span>
-                              {dropDownTooltip && (
-                                <DropdownTooltip
-                                  tooltipContent={option?.tooltipContent}
-                                />
-                              )}
+                              <div
+                                style={{
+                                  color: option?.disabledOption
+                                    ? "#D1D5DB"
+                                    : option.labelTextColor,
+                                }}
+                                className={cn(
+                                  "break-words",
+                                  option?.disabledOption && "text-gray-300"
+                                )}
+                              >
+                                {renderItem(option)}
+                              </div>
                             </div>
                           </div>
                           <span className="text-gray-500">{option?.info}</span>
                         </section>
-                        <span className="pt-[2px] text-text-sm text-gray-500">
+                        <span className="pt-[2px] text-sm text-gray-500">
                           {option?.addInfo}
                         </span>
                       </Label>
                     ) : (
                       <Label
                         key={i}
+                        htmlFor={`${id}-checkbox-${option.value}`}
                         className={cn(
                           "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
                           {
@@ -311,13 +342,18 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                           !option?.disabledOption && toggleOption(option)
                         }
                       >
-                        <div className="flex items-center gap-1">
-                          <span>{renderItem(option)}</span>
-                          {dropDownTooltip && (
-                            <DropdownTooltip
-                              tooltipContent={option?.tooltipContent}
-                            />
+                        <div
+                          style={{
+                            color: option?.disabledOption
+                              ? "#D1D5DB"
+                              : option.labelTextColor,
+                          }}
+                          className={cn(
+                            "break-words",
+                            option?.disabledOption && "text-gray-300"
                           )}
+                        >
+                          {renderItem(option)}
                         </div>
                         <span className="text-gray-500">{info}</span>
                       </Label>
@@ -326,6 +362,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 ))
               : children}
           </section>
+          {footerAction && (
+            <div className="py-2 mt-1 px-2 border-t">{footerAction}</div>
+          )}
           {dropdownFooter && (
             <DropdownFooter
               setDropdownMenu={setDropdownMenu}
@@ -342,33 +381,17 @@ export const MenuItem: React.FC<MenuItemProps> = ({ label, children }) => {
   return <p className="break-all">{label || children}</p>;
 };
 
-interface DropdownTooltipProps {
-  tooltipContent?: string | undefined;
-}
-
-const DropdownTooltip: React.FC<DropdownTooltipProps> = ({
-  tooltipContent,
-}) => {
-  const content = tooltipContent || "";
-  return content ? (
-    <Tooltip position="right" content={content}>
-      <RiErrorWarningLine color="#98A2B3" size={14} />
-    </Tooltip>
-  ) : null;
-};
-
 interface DropdownFooterProps {
   onApply?: (() => void) | undefined;
   setDropdownMenu?: (value: boolean) => void;
 }
 
 export const DropdownFooter: React.FC<DropdownFooterProps> = ({
-  // onReset,
   onApply,
   setDropdownMenu,
 }) => {
   return (
-    <div className="flex justify-end border-t border-gray-200 px-[14px] py-[8px] text-text-sm">
+    <div className="flex justify-end border-t border-gray-200 px-[14px] py-[8px] text-sm">
       <button
         type="button"
         className="text-primary-600 hover:text-primary-700"

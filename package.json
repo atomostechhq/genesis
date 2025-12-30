@@ -1,7 +1,7 @@
 {
   "name": "@atomos_tech/genesis",
   "description": "list of components for your project",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -16,6 +16,12 @@
     "nextjs",
     "typescript"
   ],
+  "homepage": "https://github.com/atomostechhq/genesis#readme",
+  "bugs": {
+    "url": "https://github.com/atomostechhq/genesis/issues"
+  },
+  "license": "MIT",
+  "author": "riya",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -27,6 +33,9 @@
       "require": "./dist/index.css"
     }
   },
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "dev": "next dev",
     "build:css": "postcss app/globals.css -o dist/index.css",
@@ -36,7 +45,6 @@
     "clean": "rm -rf dist",
     "build": "tsup && npm run build:css"
   },
-  "license": "MIT",
   "dependencies": {
     "@remixicon/react": "^4.2.0",
     "class-variance-authority": "^0.7.0",
@@ -48,13 +56,6 @@
     "tailwind-merge": "^2.2.2",
     "tsup": "^8.0.2"
   },
-  "peerDependencies": {
-    "react": "^18",
-    "react-dom": "^18"
-  },
-  "files": [
-    "dist/**/*"
-  ],
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/preset-env": "^7.24.5",
@@ -76,9 +77,8 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5"
   },
-  "author": "riya",
-  "bugs": {
-    "url": "https://github.com/atomostechhq/genesis/issues"
-  },
-  "homepage": "https://github.com/atomostechhq/genesis#readme"
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  }
 }

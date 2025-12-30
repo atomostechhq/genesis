@@ -89,6 +89,19 @@ const config: Config = {
           800: "var(--success-800)",
           900: "var(--success-900)",
         },
+        blue: {
+          25: "#f5faff",
+          50: "#eff8ff",
+          100: "#d1e9ff",
+          200: "#b2ddff",
+          300: "#84caff",
+          400: "#53b1fd",
+          500: "#2e90fa",
+          600: "#1570ef",
+          700: "#175cd3",
+          800: "#1849a9",
+          900: "#194185",
+        },
 
         bluegray: {
           25: "#fcfcfd",
@@ -209,11 +222,6 @@ const config: Config = {
         "display-md": "2.25rem", // 36px
         "display-sm": "1.875rem", // 30px
         "display-xs": "1.5rem", // 24px
-        "text-xl": "1.25rem", // 20px
-        "text-lg": "1.125rem", // 18px
-        "text-md": "1rem", // 16px
-        "text-sm": "0.875rem", // 14px
-        "text-xs": "0.75rem", // 12px
       },
       fontWeight: {
         regular: "400",
@@ -226,6 +234,7 @@ const config: Config = {
         md: "1px 2px 12px 0px rgba(112, 112, 112, 0.25)",
         lg: "0px 4px 12px 0px rgba(16, 24, 40, 0.25)",
         table: "inset -3px 0px 0px 0px #EAECF0",
+        tableRight: "inset 3px 0px 0px 0px #EAECF0",
       },
       animation: {
         "slide-in-top": "slide-in-top 0.5s ease forwards",

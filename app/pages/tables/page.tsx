@@ -16,7 +16,7 @@ const tables = () => {
         Tables
       </h1>
       <div className="space-y-2">
-        <h1>Table With Fixed Column and top and bottom navigation</h1>
+        <h1>Table With Fixed Columns and top and bottom navigation</h1>
         <TableFixedColumn />
       </div>
       <div className="space-y-2">

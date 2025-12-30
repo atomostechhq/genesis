@@ -14,6 +14,7 @@ import Button from "../Button";
 import Pagination from "../Pagination";
 import { RiInformation2Line } from "@remixicon/react";
 import Tooltip from "../Tooltip";
+import ListPagination from "../ListPagination";
 
 const TableFixedColumn = () => {
   const [data, setdata] = useState(tableData);
@@ -34,6 +35,19 @@ const TableFixedColumn = () => {
   const endIndex = (page + 1) * rowsPerPage;
 
   const currentPageData = data?.slice(startIndex, endIndex);
+  // const rowsPerPage = 1; // fixed value
+
+  // const [page, setPage] = useState(0);
+
+  // const handleChangePage = (newPage: number) => {
+  //   setPage(newPage);
+  // };
+
+  // const startIndex = page * rowsPerPage;
+  // const endIndex = startIndex + rowsPerPage;
+
+  // const currentPageData = tableData?.slice(startIndex, endIndex);
+
   return (
     <div>
       <Pagination
@@ -67,22 +81,7 @@ const TableFixedColumn = () => {
                         <p className="font-normal text-xs">
                           Tooltips are used to describe or identify an element.
                           In most scenarios, tooltips help the user understand
-                          the meaning, function or alt-text of an element. Lorem
-                          ipsum dolor sit amet, consectetur adipisicing elit.
-                          Error quo totam voluptatibus incidunt recusandae, quas
-                          obcaecati sequi quia id, delectus temporibus optio
-                          commodi maiores aperiam laborum, quis exercitationem
-                          mollitia tenetur! Temporibus similique, facilis
-                          tempore nostrum placeat dolorem amet modi possimus.
-                          Incidunt animi quas deserunt recusandae ipsam, nemo
-                          quos nobis exercitationem fugit officiis atque error
-                          repellat omnis adipisci dicta magni! Ratione odit id
-                          neque corrupti mollitia iusto, harum quia expedita
-                          ipsam facilis. Eum eaque tempora itaque illo minus
-                          ratione quam ipsam corrupti vitae dolorum sit omnis
-                          molestiae fugit enim quidem animi nesciunt,
-                          dignissimos in beatae nemo qui. Laudantium ipsum
-                          repellat quia?
+                          the meaning, function or alt-text of an element.
                         </p>
                       </div>
                     }
@@ -105,7 +104,9 @@ const TableFixedColumn = () => {
               <TableHeadCell>Visits Extra</TableHeadCell>
               <TableHeadCell>Progress Extra</TableHeadCell>
               <TableHeadCell>Status Extra</TableHeadCell>
-              <TableHeadCell>Visits Extra</TableHeadCell>
+              <TableHeadCell sticky right="0px" shadowRight>
+                Visits Extra
+              </TableHeadCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -120,47 +121,45 @@ const TableFixedColumn = () => {
                   <TableDataCell>{item.age}</TableDataCell>
                   <TableDataCell>{item.progress}</TableDataCell>
                   <TableDataCell>
-                    <Chip intent={"primary"} size={"md"}>
+                    <Chip dot intent={"primary"} size={"sm"}>
                       {item.status}
                     </Chip>
                   </TableDataCell>
                   <TableDataCell>{item.visits}</TableDataCell>
                   <TableDataCell>{item.progress}</TableDataCell>
                   <TableDataCell>
-                    <Chip intent={"primary"} size={"md"}>
+                    <Chip intent={"primary"} size={"sm"}>
                       {item.status}
                     </Chip>
                   </TableDataCell>
                   <TableDataCell>{item.visits}</TableDataCell>
                   <TableDataCell>{item.progress}</TableDataCell>
                   <TableDataCell>
-                    <Chip intent={"primary"} size={"md"}>
+                    <Chip intent={"primary"} size={"sm"}>
                       {item.status}
                     </Chip>
                   </TableDataCell>
                   <TableDataCell>{item.visits}</TableDataCell>
                   <TableDataCell>{item.progress}</TableDataCell>
                   <TableDataCell>
-                    <Chip intent={"primary"} size={"md"}>
+                    <Chip intent={"primary"} size={"sm"}>
                       {item.status}
                     </Chip>
                   </TableDataCell>
-                  <TableDataCell>{item.visits}</TableDataCell>
+                  <TableDataCell sticky right="0px" shadowRight>
+                    {item.visits}
+                  </TableDataCell>
                 </TableRow>
               );
             })}
           </TableBody>
         </Table>
       </div>
-      <Pagination
+      <ListPagination
         count={tableData?.length}
         page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
         onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        className="rounded-b-xl"
-        variant="primary"
+        rowsPerPage={rowsPerPage}
       />
     </div>
   );
