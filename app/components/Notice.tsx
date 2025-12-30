@@ -74,7 +74,7 @@ const noticeVariants = cva("p-4 w-fit rounded-[6px]", {
     position: {
       top: "top-4 transition-all duration-700 m-auto left-0 right-0",
       bottom: "bottom-4 transition-all duration-700 right-4",
-      center: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 test",
+      center: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
     },
   },
 });

@@ -1238,6 +1238,7 @@ const Test = () => {
             multiple={true}
             dropdownText={`Selected ${multiSelect?.length} items`}
             width="200px"
+            height="100px"
             trigger={
               <RiFilterLine
                 className="hover:bg-gray-200 rounded"
@@ -1277,6 +1278,7 @@ const Test = () => {
             selected={multiSelect}
             setSelected={setMultiSelect}
             width="300px"
+            height="100px"
             icon={<RiGlobalLine size={16} />}
             dropdownText="Test Test"
             multiple

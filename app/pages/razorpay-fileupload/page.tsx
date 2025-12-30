@@ -1,12 +1,11 @@
 "use client";
 
-import ImageUploadControlled, {
+import FileUploadControl, {
   UploadItem,
-} from "@/app/components/RazorPayFileUpload";
-import Spinner from "@/app/components/Spinner";
+} from "@/app/components/FileUploadControl";
 import { useState } from "react";
 
-// import ImageUploadControlled, { UploadItem } from "@/app/components/RazorPayFileUpload";
+// import FileUploadControl, { UploadItem } from "@/app/components/RazorPayFileUpload";
 // import React, { useState } from "react";
 
 // export default function SingleFileApiExample() {
@@ -110,7 +109,7 @@ import { useState } from "react";
 //   return (
 //     <div className="p-6 max-w-2xl mx-auto">
 //       <h1 className="text-xl font-bold mb-4">Single File Upload</h1>
-//       <ImageUploadControlled
+//       <FileUploadControl
 //         items={items}
 //         onAddFiles={handleAddFiles}
 //         onDelete={handleDelete}
@@ -127,7 +126,7 @@ import { useState } from "react";
 
 // "use client";
 
-// import ImageUploadControlled, { UploadItem } from "@/app/components/RazorPayFileUpload";
+// import FileUploadControl, { UploadItem } from "@/app/components/RazorPayFileUpload";
 // import React, { useState } from "react";
 
 // export default function MultipleFilesApiExample() {
@@ -235,7 +234,7 @@ import { useState } from "react";
 //   return (
 //     <div className="p-6 max-w-2xl mx-auto">
 //       <h1 className="text-xl font-bold mb-4">Multiple Files Upload</h1>
-//       <ImageUploadControlled
+//       <FileUploadControl
 //         items={items}
 //         onAddFiles={handleAddFiles}
 //         onDelete={handleDelete}
@@ -321,7 +320,7 @@ export default function SimpleFileUploadExample() {
     <>
       <div className="w-full mx-auto">
         <h1 className="text-xl font-bold mb-4">File Upload</h1>
-        <ImageUploadControlled
+        <FileUploadControl
           items={items}
           onAddFiles={handleAddFiles}
           onUpdateItem={handleUpdateItem}
