@@ -23,13 +23,14 @@ const GlobalNavigation = forwardRef<HTMLDivElement, GlobalNavigationProps>(
     },
     ref
   ) => {
-    const popoverRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
         if (
-          popoverRef.current &&
-          !popoverRef.current.contains(event.target as Node)
+          !triggerRef.current?.contains(event.target as Node) &&
+          !contentRef.current?.contains(event.target as Node)
         ) {
           setIsOpen(false);
         }
@@ -38,19 +39,20 @@ const GlobalNavigation = forwardRef<HTMLDivElement, GlobalNavigationProps>(
       document.addEventListener("mousedown", handleClickOutside);
       return () =>
         document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+    }, [setIsOpen]);
 
     return (
       <div className="relative w-max" ref={ref}>
         <div
           className="cursor-pointer"
-          ref={popoverRef}
+          ref={triggerRef}
           onClick={() => setIsOpen(!isOpen)}
         >
           {trigger}
         </div>
         {isOpen && (
           <div
+            ref={contentRef}
             className={cn(
               "absolute z-10 bg-white rounded-lg shadow-sm border min-w-[200px] p-4 transition-all duration-300 ease-in-out",
               postion === "bottom-left" && "left-0 top-4/4",

@@ -5,7 +5,7 @@ import { cva, VariantProps } from "class-variance-authority";
 interface CheckboxProps
   extends Omit<HTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof checkboxVariant> {
-  size?: "sm" | "lg";
+  size?: "sm" | "lg" | "xl";
   disabled?: boolean;
   checked?: boolean;
   children?: never;
@@ -18,6 +18,7 @@ const checkboxVariant = cva(
       size: {
         sm: "h-3 w-3",
         lg: "h-3.5 w-3.5",
+        xl: "h-4 w-4",
       },
     },
     defaultVariants: {
@@ -27,18 +28,31 @@ const checkboxVariant = cva(
 );
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ disabled, checked, size, className, children, ...props }, ref) => {
+  ({ disabled, checked, size, className, children, id, ...props }, ref) => {
     return (
       <div className="inline-flex relative items-center">
         <input
           type="checkbox"
           ref={ref}
+          id={id}
+          // aria-checked={checked}
+          // role="checkbox"
           {...props}
           disabled={disabled}
           checked={checked}
-          className={cn(checkboxVariant({ className, size }))}
+          // className={cn(
+          //   checkboxVariant({ className, size })
+          // )}
+          className={cn(
+            "peer",
+            checkboxVariant({ className, size }),
+            "focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+          )}
         />
-        <span className="absolute text-primary-600 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+        <span
+          aria-hidden="true"
+          className="absolute text-primary-600 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-2.5 h-2.5"

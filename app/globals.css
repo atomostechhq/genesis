@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .test {
-  border: 1px solid red;
-} */
 
 * {
   box-sizing: border-box;
@@ -28,20 +25,6 @@
       --primary-800: #1849a9;
       --primary-900: #194185;
     }
-
-    /* .theme-primary {
-      --primary-25: #fafaff;
-      --primary-50: #f4f3ff;
-      --primary-100: #ebe9fe;
-      --primary-200: #d9d6fe;
-      --primary-300: #bdb4fe;
-      --primary-400: #9b8afb;
-      --primary-500: #7a5af8;
-      --primary-600: #6938ef;
-      --primary-700: #5925dc;
-      --primary-800: #4a1fb8;
-      --primary-900: #3e1c96;
-    } */
 
     /* Gray Colors */
     --gray-25: #fff;
@@ -97,39 +80,6 @@
   }
 }
 
-/* .skeleton {
-  border-radius: 2px;
-  display: inline-block;
-  line-height: 100%;
-  width: 100%;
-  background-color: #fff;
-  background-size: 1000px 1000px;
-  background-image: linear-gradient(
-    100deg,
-    #e8e8e8 20%,
-    #fafafa 50%,
-    #e8e8e8 60%
-  );
-  animation: placeholderShimmer 1.5s linear infinite forwards;
-}
-
-@keyframes placeholderShimmer {
-  0% {
-    background-position: -500px 0;
-  }
-  100% {
-    background-position: 500px 0;
-  }
-}
-
-.skeleton.circle {
-  border-radius: 50%;
-}
-
-.handle {
-  cursor: grabbing;
-} */
-
 .skeleton {
   border-radius: 2px;
   display: block;
@@ -171,9 +121,9 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.4), 
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
     transparent
   );
   transform: translateX(-100%);
@@ -292,4 +242,51 @@ input[type="number"] {
   background-color: #000;
   border-radius: 0;
   cursor: pointer;
+}
+
+.spinner {
+  --spinner-color-1: var(--primary-500);
+  --spinner-color-2: var(--primary-200);
+
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: 
+    linear-gradient(
+      0deg,
+      var(--spinner-color-1) 30%,
+      transparent 30% 70%,
+      var(--spinner-color-1) 70%
+    ) 50% / 8% 100%,
+    linear-gradient(
+      90deg,
+      var(--spinner-color-2) 30%,
+      transparent 30% 70%,
+      var(--spinner-color-2) 70%
+    ) 50% / 100% 8%;
+  background-repeat: no-repeat;
+  animation: l23 2s infinite steps(12);
+  position: relative;
+}
+
+.spinner::before,
+.spinner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.915;
+  transform: rotate(30deg);
+}
+
+.spinner::after {
+  opacity: 0.83;
+  transform: rotate(60deg);
+}
+
+@keyframes l23 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
