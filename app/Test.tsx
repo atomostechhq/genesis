@@ -3002,6 +3002,23 @@ const Test = () => {
             <DropdownMenuItem>Menu Two</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <button>Open Menu</button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => console.log("Clicked")}>
+              Item 1
+            </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>Sub Item 1</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </section>
       <div className="grid grid-cols-2 gap-4 p-8 w-full whitespace-nowrap">
         {/* Top-Left */}

@@ -15,20 +15,6 @@ type DropdownAlignment =
   | "start"
   | "end";
 
-interface DropdownContextType {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-  triggerRef: React.RefObject<HTMLDivElement>;
-  contentRef: React.RefObject<HTMLDivElement>;
-  focusedIndex: number;
-  setFocusedIndex: (index: number) => void;
-  itemsCount: number;
-  registerItem: () => number;
-  menuItemsRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
-}
-
-const DropdownContext = React.createContext<DropdownContextType | null>(null);
-
 // ─────────────────────────────
 // Root DropdownMenu
 // ─────────────────────────────
@@ -121,40 +107,53 @@ export default function DropdownMenu({ children }: { children: React.ReactNode }
     if (el) el.focus();
   }, [focusedIndex, isOpen]);
 
-  const contextValue: DropdownContextType = {
-    isOpen,
-    setIsOpen,
-    triggerRef,
-    contentRef,
-    focusedIndex,
-    setFocusedIndex,
-    itemsCount: itemsCountRef.current,
-    registerItem,
-    menuItemsRef,
-  };
+  // Clone children with dropdown props
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, {
+        dropdownProps: {
+          isOpen,
+          setIsOpen,
+          triggerRef,
+          contentRef,
+          focusedIndex,
+          setFocusedIndex,
+          itemsCount: itemsCountRef.current,
+          registerItem,
+          menuItemsRef,
+        }
+      });
+    }
+    return child;
+  });
 
   return (
-    <DropdownContext.Provider value={contextValue}>
-      <div className="relative inline-block text-left">{children}</div>
-    </DropdownContext.Provider>
+    <div className="relative inline-block text-left">{childrenWithProps}</div>
   );
 }
 
 // ─────────────────────────────
 // Trigger
 // ─────────────────────────────
+interface DropdownMenuTriggerProps {
+  children: React.ReactNode;
+  isOpen?: boolean;
+  setIsOpen?: (open: boolean) => void;
+  dropdownProps?: {
+    isOpen: boolean;
+    setIsOpen: (open: boolean) => void;
+    triggerRef: React.RefObject<HTMLDivElement>;
+  };
+}
+
 export function DropdownMenuTrigger({
   children,
   isOpen,
   setIsOpen,
-}: {
-  children: React.ReactNode;
-  isOpen?: boolean;
-  setIsOpen?: (open: boolean) => void;
-}) {
-  const ctx = React.useContext(DropdownContext);
-  const actualIsOpen = ctx?.isOpen ?? isOpen;
-  const actualSetIsOpen = ctx?.setIsOpen ?? setIsOpen;
+  dropdownProps,
+}: DropdownMenuTriggerProps) {
+  const actualIsOpen = dropdownProps?.isOpen ?? isOpen;
+  const actualSetIsOpen = dropdownProps?.setIsOpen ?? setIsOpen;
 
   const handleKey = (e: React.KeyboardEvent) => {
     switch (e.key) {
@@ -176,7 +175,7 @@ export function DropdownMenuTrigger({
 
   return (
     <div
-      ref={ctx?.triggerRef}
+      ref={dropdownProps?.triggerRef}
       tabIndex={0}
       role="button"
       aria-haspopup="menu"
@@ -193,19 +192,25 @@ export function DropdownMenuTrigger({
 // ─────────────────────────────
 // Content
 // ─────────────────────────────
+interface DropdownMenuContentProps {
+  children: React.ReactNode;
+  isOpen?: boolean;
+  className?: string;
+  align?: DropdownAlignment;
+  dropdownProps?: {
+    isOpen: boolean;
+    contentRef: React.RefObject<HTMLDivElement>;
+  };
+}
+
 export function DropdownMenuContent({
   children,
   isOpen,
   align = "right",
   className = "",
-}: {
-  children: React.ReactNode;
-  isOpen?: boolean;
-  className?: string;
-  align?: DropdownAlignment;
-}) {
-  const ctx = React.useContext(DropdownContext);
-  const actualIsOpen = ctx?.isOpen ?? isOpen;
+  dropdownProps,
+}: DropdownMenuContentProps) {
+  const actualIsOpen = dropdownProps?.isOpen ?? isOpen;
   const [visible, setVisible] = useState(actualIsOpen);
 
   useEffect(() => {
@@ -226,7 +231,7 @@ export function DropdownMenuContent({
 
   return (
     <div
-      ref={ctx?.contentRef}
+      ref={dropdownProps?.contentRef}
       role="menu"
       className={cn(
         "absolute w-56 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 transition-all",
@@ -243,6 +248,20 @@ export function DropdownMenuContent({
 // ─────────────────────────────
 // Internal Item Wrapper
 // ─────────────────────────────
+interface DropdownMenuItemWrapperProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
+  disabled?: boolean;
+  isSubTrigger?: boolean;
+  className?: string;
+  "aria-expanded"?: boolean;
+  dropdownProps?: {
+    registerItem: () => number;
+    menuItemsRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  };
+}
+
 function DropdownMenuItemWrapper({
   children,
   onClick,
@@ -251,16 +270,16 @@ function DropdownMenuItemWrapper({
   isSubTrigger,
   className,
   "aria-expanded": ariaExpanded,
-}: any) {
-  const ctx = React.useContext(DropdownContext);
-  const [index] = useState(() => ctx?.registerItem() ?? -1);
+  dropdownProps,
+}: DropdownMenuItemWrapperProps) {
+  const [index] = useState(() => dropdownProps?.registerItem() ?? -1);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (ctx && index >= 0) {
-      ctx.menuItemsRef.current[index] = ref.current;
+    if (dropdownProps && index >= 0) {
+      dropdownProps.menuItemsRef.current[index] = ref.current;
     }
-  }, [index, ctx]);
+  }, [index, dropdownProps]);
 
   const handleKey = (e: React.KeyboardEvent) => {
     if (onKeyDown) onKeyDown(e);
@@ -294,25 +313,38 @@ function DropdownMenuItemWrapper({
 // ─────────────────────────────
 // Item
 // ─────────────────────────────
+interface DropdownMenuItemProps {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  shortcut?: string;
+  dropdownProps?: {
+    setIsOpen: (open: boolean) => void;
+    registerItem: () => number;
+    menuItemsRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  };
+}
+
 export function DropdownMenuItem({
   children,
   className = "",
   onClick,
   disabled,
   shortcut,
-}: any) {
-  const ctx = React.useContext(DropdownContext);
-
+  dropdownProps,
+}: DropdownMenuItemProps) {
   return (
     <DropdownMenuItemWrapper
       disabled={disabled}
       onClick={() => {
         if (!disabled) {
           onClick?.();
-          ctx?.setIsOpen(false);
+          dropdownProps?.setIsOpen(false);
         }
       }}
       className={className}
+      dropdownProps={dropdownProps}
     >
       <span>{children}</span>
       {shortcut && <kbd className="text-xs text-gray-400">{shortcut}</kbd>}
@@ -323,7 +355,7 @@ export function DropdownMenuItem({
 // ─────────────────────────────
 // Label
 // ─────────────────────────────
-export function DropdownMenuLabel({ children }: any) {
+export function DropdownMenuLabel({ children }: { children: React.ReactNode }) {
   return (
     <div className="px-4 py-2 text-sm font-semibold text-gray-700">
       {children}
@@ -341,45 +373,65 @@ export function DropdownMenuSeparator() {
 // ─────────────────────────────
 // Submenu
 // ─────────────────────────────
-const SubmenuContext = React.createContext<any>(null);
-
-export function DropdownMenuSub({ children }: any) {
+export function DropdownMenuSub({ children }: { children: React.ReactNode }) {
   const [isSubOpen, setIsSubOpen] = useState(false);
-  return (
-    <SubmenuContext.Provider value={{ isSubOpen, setIsSubOpen }}>
-      <div className="relative">{children}</div>
-    </SubmenuContext.Provider>
-  );
+  
+  // Clone children with submenu props
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, {
+        submenuProps: { isSubOpen, setIsSubOpen }
+      });
+    }
+    return child;
+  });
+
+  return <div className="relative">{childrenWithProps}</div>;
 }
 
 // ─────────────────────────────
 // Sub Trigger
 // ─────────────────────────────
-export function DropdownMenuSubTrigger({ children }: any) {
-  const sub = React.useContext(SubmenuContext);
+interface DropdownMenuSubTriggerProps {
+  children: React.ReactNode;
+  submenuProps?: {
+    isSubOpen: boolean;
+    setIsSubOpen: (open: boolean) => void;
+  };
+  dropdownProps?: {
+    registerItem: () => number;
+    menuItemsRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  };
+}
 
+export function DropdownMenuSubTrigger({
+  children,
+  submenuProps,
+  dropdownProps,
+}: DropdownMenuSubTriggerProps) {
   const handleKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") {
       e.preventDefault();
-      sub.setIsSubOpen(true);
+      submenuProps?.setIsSubOpen(true);
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
-      sub.setIsSubOpen(false);
+      submenuProps?.setIsSubOpen(false);
     }
   };
 
   return (
     <DropdownMenuItemWrapper
       isSubTrigger
-      aria-expanded={sub.isSubOpen}
-      onClick={() => sub.setIsSubOpen(!sub.isSubOpen)}
+      aria-expanded={submenuProps?.isSubOpen}
+      onClick={() => submenuProps?.setIsSubOpen(!submenuProps?.isSubOpen)}
       onKeyDown={handleKey}
+      dropdownProps={dropdownProps}
     >
       <span className="flex-1">{children}</span>
       <RiArrowDownSLine
         className={cn(
           "w-4 h-4 transition-transform",
-          sub.isSubOpen && "rotate-180"
+          submenuProps?.isSubOpen && "rotate-180"
         )}
       />
     </DropdownMenuItemWrapper>
@@ -389,14 +441,22 @@ export function DropdownMenuSubTrigger({ children }: any) {
 // ─────────────────────────────
 // Sub Content
 // ─────────────────────────────
-export function DropdownMenuSubContent({ children }: any) {
-  const sub = React.useContext(SubmenuContext);
+interface DropdownMenuSubContentProps {
+  children: React.ReactNode;
+  submenuProps?: {
+    isSubOpen: boolean;
+  };
+}
 
+export function DropdownMenuSubContent({
+  children,
+  submenuProps,
+}: DropdownMenuSubContentProps) {
   return (
     <div
       className={cn(
         "overflow-hidden bg-gray-50 transition-all",
-        sub.isSubOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
+        submenuProps?.isSubOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
       )}
     >
       {children}
