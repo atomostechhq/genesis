@@ -1,18 +1,36 @@
-import { defineConfig } from "tsup";
-import esbuildCssModulesPlugin from 'esbuild-css-modules-plugin';
+// import { defineConfig } from "tsup";
+// import esbuildCssModulesPlugin from 'esbuild-css-modules-plugin';
 
+
+// export default defineConfig({
+//   format: ["cjs", "esm"],
+//   entry: ["./app/index.ts"],
+//   dts: true,
+//   splitting: false,
+//   sourcemap: true,
+//   shims: true,
+//   skipNodeModulesBundle: true,
+//   clean: true,
+//   outDir: 'dist',
+//   plugins: [
+//     esbuildCssModulesPlugin()
+//   ]
+// });
+
+
+import { defineConfig } from "tsup";
 
 export default defineConfig({
-  format: ["cjs", "esm"],
-  entry: ["./app/index.ts"],
+  entry: ["app/index.ts"],
+  format: ["esm", "cjs"],
   dts: true,
-  splitting: false,
   sourcemap: true,
-  shims: true,
-  skipNodeModulesBundle: true,
+  splitting: false,
   clean: true,
-  outDir: 'dist',
-  plugins: [
-    esbuildCssModulesPlugin()
+  outDir: "dist",
+
+  external: [
+    "react",
+    "react-dom"
   ]
 });
