@@ -1,22 +1,18 @@
 import { defineConfig } from "tsup";
+import esbuildCssModulesPlugin from 'esbuild-css-modules-plugin';
+
 
 export default defineConfig({
-  entry: ["app/index.ts"],
-  format: ["esm", "cjs"],
+  format: ["cjs", "esm"],
+  entry: ["./app/index.ts"],
   dts: true,
-  sourcemap: true,
   splitting: false,
+  sourcemap: true,
+  shims: true,
+  skipNodeModulesBundle: true,
   clean: true,
-  outDir: "dist",
-
-  // 👇 correct place
-  esbuildOptions(options) {
-    options.jsx = "automatic";
-  },
-
-  external: [
-    "react",
-    "react-dom",
-    "react/jsx-runtime"
+  outDir: 'dist',
+  plugins: [
+    esbuildCssModulesPlugin()
   ]
 });

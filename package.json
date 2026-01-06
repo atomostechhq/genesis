@@ -3,77 +3,82 @@
   "description": "list of components for your project",
   "version": "1.0.7",
   "private": false,
-
-  "type": "module",
-
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-
+  "type": "module",
+  "repository": {
+    "url": "git+https://github.com/atomostechhq/genesis.git"
+  },
+  "keywords": [
+    "component",
+    "library",
+    "nextjs",
+    "typescript"
+  ],
+  "homepage": "https://github.com/atomostechhq/genesis#readme",
+  "bugs": {
+    "url": "https://github.com/atomostechhq/genesis/issues"
+  },
+  "license": "MIT",
+  "author": "riya, kajal",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
     },
     "./style": {
       "import": "./dist/index.css",
       "require": "./dist/index.css"
     }
   },
-
-  "files": ["dist"],
-
-  "repository": {
-    "url": "git+https://github.com/atomostechhq/genesis.git"
-  },
-
-  "homepage": "https://github.com/atomostechhq/genesis#readme",
-
-  "bugs": {
-    "url": "https://github.com/atomostechhq/genesis/issues"
-  },
-
-  "keywords": ["component", "library", "nextjs", "typescript"],
-
-  "license": "MIT",
-  "author": "riya, kajal",
-
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "npm run clean && tsup && npm run build:css",
+    "dev": "next dev",
     "build:css": "postcss app/globals.css -o dist/index.css",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "start": "next start",
+    "lint": "next lint",
+    "clean": "rm -rf dist",
+    "build": "tsup && npm run build:css"
   },
-
   "dependencies": {
     "@remixicon/react": "^4.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "tailwind-merge": "^2.2.2"
-  },
-
-  "peerDependencies": {
-    "react": ">=17 <20",
-    "react-dom": ">=17 <20"
-  },
-
-  "devDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "esbuild-css-modules-plugin": "^3.1.2",
     "next": "^14.2.3",
-
-    "typescript": "^5",
-    "tsup": "^8.0.2",
-
-    "tailwindcss": "^3.4.3",
-    "postcss": "^8.4.38",
-    "postcss-cli": "^11.0.0",
-    "autoprefixer": "^10.4.19",
-
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwind-merge": "^2.2.2",
+    "tsup": "^8.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/node": "^20",
-    "eslint": "^8"
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.1",
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
   }
 }
