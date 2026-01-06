@@ -1,7 +1,15 @@
 "use client";
 
 import { RiArrowDownSLine } from "@remixicon/react";
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  Children,
+  isValidElement,
+  cloneElement,
+} from "react";
 import { cn } from "../utils/utils";
 
 /* ─────────────────────────────
@@ -15,6 +23,29 @@ type DropdownAlignment =
   | "center"
   | "start"
   | "end";
+
+interface DropdownProps {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  triggerRef: React.RefObject<HTMLDivElement>;
+  contentRef: React.RefObject<HTMLDivElement>;
+  registerItem: () => number;
+  menuItemsRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  closeMenu: () => void;
+}
+
+interface SubmenuProps {
+  isSubOpen: boolean;
+  setIsSubOpen: (open: boolean) => void;
+}
+
+// Helper function to check component type
+const isComponentType = (
+  child: any,
+  component: React.ComponentType<any>
+): boolean => {
+  return child.type === component;
+};
 
 /* ─────────────────────────────
    Root DropdownMenu
@@ -38,9 +69,19 @@ export default function DropdownMenu({
     return idx;
   }, []);
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setIsOpen(false);
     setFocusedIndex(-1);
+  }, []);
+
+  const dropdownProps: DropdownProps = {
+    isOpen,
+    setIsOpen,
+    triggerRef,
+    contentRef,
+    registerItem,
+    menuItemsRef,
+    closeMenu,
   };
 
   /* Outside click */
@@ -60,7 +101,7 @@ export default function DropdownMenu({
 
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, [isOpen]);
+  }, [isOpen, closeMenu]);
 
   /* Keyboard navigation */
   useEffect(() => {
@@ -76,16 +117,12 @@ export default function DropdownMenu({
 
         case "ArrowDown":
           e.preventDefault();
-          setFocusedIndex((p) =>
-            p < itemsCountRef.current - 1 ? p + 1 : 0
-          );
+          setFocusedIndex((p) => (p < itemsCountRef.current - 1 ? p + 1 : 0));
           break;
 
         case "ArrowUp":
           e.preventDefault();
-          setFocusedIndex((p) =>
-            p > 0 ? p - 1 : itemsCountRef.current - 1
-          );
+          setFocusedIndex((p) => (p > 0 ? p - 1 : itemsCountRef.current - 1));
           break;
 
         case "Home":
@@ -102,7 +139,7 @@ export default function DropdownMenu({
     setFocusedIndex(0);
 
     return () => document.removeEventListener("keydown", handler);
-  }, [isOpen]);
+  }, [isOpen, closeMenu]);
 
   /* Focus active item */
   useEffect(() => {
@@ -110,30 +147,37 @@ export default function DropdownMenu({
     menuItemsRef.current[focusedIndex]?.focus();
   }, [focusedIndex, isOpen]);
 
-  /* Clone children with dropdownProps */
-  const childrenWithProps = React.Children.map(children, (child) => {
-    if (!React.isValidElement(child)) return child;
+  /* Enhance children with dropdown props */
+  const enhancedChildren = Children.map(children, (child) => {
+    if (!isValidElement(child)) return child;
 
-    return React.cloneElement(child as React.ReactElement<any>, {
-      dropdownProps: {
-        isOpen,
-        setIsOpen,
-        triggerRef,
-        contentRef,
-        registerItem,
-        menuItemsRef,
-      },
+    // Add displayName for identification
+    const childWithDisplayName = cloneElement(child as React.ReactElement, {
+      ...child.props,
+      dropdownProps,
     });
+
+    return childWithDisplayName;
   });
 
-  return <div className="relative inline-block">{childrenWithProps}</div>;
+  return <div className="relative inline-block">{enhancedChildren}</div>;
 }
 
 /* ─────────────────────────────
    Trigger
 ───────────────────────────── */
-export function DropdownMenuTrigger({ children, dropdownProps }: any) {
-  const { isOpen, setIsOpen, triggerRef } = dropdownProps ?? {};
+export function DropdownMenuTrigger({
+  children,
+  dropdownProps,
+}: {
+  children: React.ReactNode;
+  dropdownProps?: DropdownProps;
+}) {
+  const { isOpen, setIsOpen, triggerRef } = dropdownProps || {};
+
+  if (!dropdownProps) {
+    throw new Error("DropdownMenuTrigger must be used inside DropdownMenu");
+  }
 
   return (
     <div
@@ -149,6 +193,7 @@ export function DropdownMenuTrigger({ children, dropdownProps }: any) {
     </div>
   );
 }
+DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
 
 /* ─────────────────────────────
    Content
@@ -158,63 +203,113 @@ export function DropdownMenuContent({
   align = "right",
   className,
   dropdownProps,
-}: any) {
-  const { isOpen, contentRef } = dropdownProps ?? {};
-  const [visible, setVisible] = useState(isOpen);
+}: {
+  children: React.ReactNode;
+  align?: DropdownAlignment;
+  className?: string;
+  dropdownProps?: DropdownProps;
+}) {
+  const { isOpen, contentRef } = dropdownProps || {};
+  const [visible, setVisible] = useState(false);
+
+  if (!dropdownProps) {
+    throw new Error("DropdownMenuContent must be used inside DropdownMenu");
+  }
 
   useEffect(() => {
-    if (isOpen) setVisible(true);
-    else setTimeout(() => setVisible(false), 150);
+    if (isOpen) {
+      setVisible(true);
+    } else {
+      const timer = setTimeout(() => setVisible(false), 150);
+      return () => clearTimeout(timer);
+    }
   }, [isOpen]);
 
   if (!visible) return null;
 
-  const pos =
-    align === "left" || align === "start"
-      ? "right-0"
-      : align === "right" || align === "end"
-      ? "left-0"
-      : align === "center"
-      ? "left-1/2 -translate-x-1/2"
-      : "";
+  const positionClasses = {
+    left: "right-0",
+    right: "left-0",
+    start: "right-0",
+    end: "left-0",
+    center: "left-1/2 -translate-x-1/2",
+    top: "bottom-full mb-2",
+    bottom: "top-full mt-2",
+  };
+
+  // Function to recursively inject dropdownProps
+  const injectPropsToChildren = (
+    children: React.ReactNode
+  ): React.ReactNode => {
+    return Children.map(children, (child) => {
+      if (!isValidElement(child)) return child;
+
+      // Check if this is a menu item or submenu
+      const isMenuItem = isComponentType(child, DropdownMenuItem);
+      const isSubMenu = isComponentType(child, DropdownMenuSub);
+      if (isMenuItem || isSubMenu) {
+        return cloneElement(child as React.ReactElement, {
+          ...child.props,
+          dropdownProps,
+        });
+      }
+
+      // If it has children, recursively inject props
+      if (child.props.children) {
+        return cloneElement(child as React.ReactElement, {
+          ...child.props,
+          children: injectPropsToChildren(child.props.children),
+        });
+      }
+
+      return child;
+    });
+  };
 
   return (
     <div
       ref={contentRef}
       role="menu"
       className={cn(
-        "absolute mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 z-50 transition-all",
-        isOpen ? "opacity-100" : "opacity-0 -translate-y-2",
-        pos,
+        "absolute mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 z-50 transition-all duration-150",
+        isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95",
+        positionClasses[align] || positionClasses.right,
         className
       )}
     >
-      {children}
+      {injectPropsToChildren(children)}
     </div>
   );
 }
+DropdownMenuContent.displayName = "DropdownMenuContent";
 
 /* ─────────────────────────────
    Label
 ───────────────────────────── */
 export function DropdownMenuLabel({
   children,
+  className,
 }: {
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <div className="px-4 py-2 text-sm font-semibold text-gray-700">
+    <div
+      className={cn("px-4 py-2 text-sm font-semibold text-gray-700", className)}
+    >
       {children}
     </div>
   );
 }
+DropdownMenuLabel.displayName = "DropdownMenuLabel";
 
 /* ─────────────────────────────
    Separator
 ───────────────────────────── */
 export function DropdownMenuSeparator() {
-  return <div className="my-1 border-t border-gray-100" />;
+  return <div className="border-t border-gray-100" />;
 }
+DropdownMenuSeparator.displayName = "DropdownMenuSeparator";
 
 /* ─────────────────────────────
    Item Wrapper
@@ -222,12 +317,20 @@ export function DropdownMenuSeparator() {
 function DropdownMenuItemWrapper({
   children,
   onClick,
-  onKeyDown,
   disabled,
   className,
   dropdownProps,
-  "aria-expanded": ariaExpanded,
-}: any) {
+  closeOnClick = true,
+  ariaExpanded,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
+  className?: string;
+  dropdownProps?: DropdownProps;
+  closeOnClick?: boolean;
+  ariaExpanded?: boolean;
+}) {
   const [index] = useState(() => dropdownProps?.registerItem?.() ?? -1);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -237,6 +340,14 @@ function DropdownMenuItemWrapper({
     }
   }, [index, dropdownProps]);
 
+  const handleClick = () => {
+    if (disabled) return;
+    onClick?.();
+    if (closeOnClick) {
+      dropdownProps?.closeMenu();
+    }
+  };
+
   return (
     <div
       ref={ref}
@@ -244,11 +355,12 @@ function DropdownMenuItemWrapper({
       tabIndex={disabled ? -1 : 0}
       aria-expanded={ariaExpanded}
       aria-disabled={disabled}
-      onClick={() => !disabled && onClick?.()}
-      onKeyDown={onKeyDown}
+      onClick={handleClick}
       className={cn(
-        "px-4 py-2 text-sm flex justify-between cursor-pointer rounded",
-        disabled ? "text-gray-400" : "hover:bg-gray-100",
+        "px-4 py-2 text-sm flex items-center justify-between cursor-pointer rounded outline-none focus:bg-gray-50",
+        disabled
+          ? "text-gray-400 cursor-not-allowed"
+          : "text-gray-700 hover:bg-gray-100",
         className
       )}
     >
@@ -265,74 +377,163 @@ export function DropdownMenuItem({
   onClick,
   disabled,
   dropdownProps,
-}: any) {
+  className,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
+  className?: string;
+  dropdownProps?: DropdownProps;
+}) {
   return (
     <DropdownMenuItemWrapper
+      className={className}
       disabled={disabled}
-      onClick={() => {
-        onClick?.();
-        dropdownProps?.setIsOpen(false);
-      }}
+      onClick={onClick}
+      closeOnClick={true}
       dropdownProps={dropdownProps}
     >
       {children}
     </DropdownMenuItemWrapper>
   );
 }
+DropdownMenuItem.displayName = "DropdownMenuItem";
 
 /* ─────────────────────────────
    Submenu
 ───────────────────────────── */
-export function DropdownMenuSub({ children }: any) {
+export function DropdownMenuSub({
+  children,
+  dropdownProps,
+}: {
+  children: React.ReactNode;
+  dropdownProps?: DropdownProps;
+}) {
   const [isSubOpen, setIsSubOpen] = useState(false);
 
-  const childrenWithProps = React.Children.map(children, (child) => {
-    if (!React.isValidElement(child)) return child;
+  const submenuProps: SubmenuProps = {
+    isSubOpen,
+    setIsSubOpen,
+  };
 
-    return React.cloneElement(child as React.ReactElement<any>, {
-      submenuProps: { isSubOpen, setIsSubOpen },
+  // Function to inject both dropdownProps and submenuProps
+  const injectPropsToChildren = (
+    children: React.ReactNode
+  ): React.ReactNode => {
+    return Children.map(children, (child) => {
+      if (!isValidElement(child)) return child;
+
+      const isSubTrigger = isComponentType(child, DropdownMenuSubTrigger);
+      const isSubContent = isComponentType(child, DropdownMenuSubContent);
+      const isMenuItem = isComponentType(child, DropdownMenuItem);
+      const isNestedSubMenu = isComponentType(child, DropdownMenuSub);
+
+      if (isSubTrigger || isSubContent || isMenuItem || isNestedSubMenu) {
+        return cloneElement(child as React.ReactElement, {
+          ...child.props,
+          dropdownProps, // Always pass dropdownProps
+          ...(isSubTrigger || isSubContent ? { submenuProps } : {}),
+        });
+      }
+
+      // If it has children, recursively inject props
+      if (child.props.children) {
+        return cloneElement(child as React.ReactElement, {
+          ...child.props,
+          children: injectPropsToChildren(child.props.children),
+        });
+      }
+
+      return child;
     });
-  });
+  };
 
-  return <div className="relative">{childrenWithProps}</div>;
+  return <div className="relative">{injectPropsToChildren(children)}</div>;
 }
+DropdownMenuSub.displayName = "DropdownMenuSub";
 
 export function DropdownMenuSubTrigger({
   children,
   submenuProps,
   dropdownProps,
-}: any) {
+  className,
+}: {
+  children: React.ReactNode;
+  submenuProps?: SubmenuProps;
+  dropdownProps?: DropdownProps;
+  className?: string;
+}) {
   return (
     <DropdownMenuItemWrapper
       dropdownProps={dropdownProps}
       aria-expanded={submenuProps?.isSubOpen}
       onClick={() => submenuProps?.setIsSubOpen(!submenuProps?.isSubOpen)}
+      closeOnClick={false}
+      className={className}
     >
       <span>{children}</span>
       <RiArrowDownSLine
         className={cn(
-          "w-4 h-4 transition-transform",
-          submenuProps?.isSubOpen && "rotate-180"
+          "w-4 h-4 transition-transform duration-200",
+          submenuProps?.isSubOpen ? "rotate-180" : "rotate-0"
         )}
       />
     </DropdownMenuItemWrapper>
   );
 }
+DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger";
 
 export function DropdownMenuSubContent({
   children,
   submenuProps,
-}: any) {
+  dropdownProps,
+}: {
+  children: React.ReactNode;
+  submenuProps?: SubmenuProps;
+  dropdownProps?: DropdownProps;
+}) {
+  // Function to inject dropdownProps to all nested components
+  const injectPropsToChildren = (
+    children: React.ReactNode
+  ): React.ReactNode => {
+    return Children.map(children, (child) => {
+      if (!isValidElement(child)) return child;
+
+      const isMenuItem = isComponentType(child, DropdownMenuItem);
+      const isSubMenu = isComponentType(child, DropdownMenuSub);
+
+      if (isMenuItem || isSubMenu) {
+        return cloneElement(child as React.ReactElement, {
+          ...child.props,
+          dropdownProps,
+        });
+      }
+
+      // If it has children, recursively inject props
+      if (child.props.children) {
+        return cloneElement(child as React.ReactElement, {
+          ...child.props,
+          children: injectPropsToChildren(child.props.children),
+        });
+      }
+
+      return child;
+    });
+  };
+
   return (
     <div
       className={cn(
-        "overflow-hidden transition-all",
+        "pl-4 overflow-hidden transition-all duration-200",
         submenuProps?.isSubOpen
-          ? "max-h-[300px] opacity-100"
+          ? "max-h-[500px] opacity-100"
           : "max-h-0 opacity-0"
       )}
     >
-      {children}
+      {injectPropsToChildren(children)}
     </div>
   );
 }
+DropdownMenuSubContent.displayName = "DropdownMenuSubContent"
+
+DropdownMenu.displayName = "DropdownMenu";
