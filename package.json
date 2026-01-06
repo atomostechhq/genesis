@@ -25,7 +25,6 @@
   "files": ["dist"],
 
   "repository": {
-    "type": "git",
     "url": "git+https://github.com/atomostechhq/genesis.git"
   },
 
@@ -35,23 +34,15 @@
     "url": "https://github.com/atomostechhq/genesis/issues"
   },
 
-  "keywords": [
-    "component",
-    "ui-library",
-    "react",
-    "typescript",
-    "tailwind"
-  ],
+  "keywords": ["component", "library", "nextjs", "typescript"],
 
   "license": "MIT",
-
   "author": "riya, kajal",
 
   "scripts": {
-    "dev": "next dev",
+    "clean": "rm -rf dist",
     "build": "npm run clean && tsup && npm run build:css",
     "build:css": "postcss app/globals.css -o dist/index.css",
-    "clean": "rm -rf dist",
     "prepare": "npm run build"
   },
 
@@ -73,10 +64,6 @@
     "next": "^14.2.3",
 
     "typescript": "^5",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@types/node": "^20",
-
     "tsup": "^8.0.2",
 
     "tailwindcss": "^3.4.3",
@@ -84,6 +71,9 @@
     "postcss-cli": "^11.0.0",
     "autoprefixer": "^10.4.19",
 
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/node": "^20",
     "eslint": "^8"
   }
 }

@@ -1,23 +1,3 @@
-// import { defineConfig } from "tsup";
-// import esbuildCssModulesPlugin from 'esbuild-css-modules-plugin';
-
-
-// export default defineConfig({
-//   format: ["cjs", "esm"],
-//   entry: ["./app/index.ts"],
-//   dts: true,
-//   splitting: false,
-//   sourcemap: true,
-//   shims: true,
-//   skipNodeModulesBundle: true,
-//   clean: true,
-//   outDir: 'dist',
-//   plugins: [
-//     esbuildCssModulesPlugin()
-//   ]
-// });
-
-
 import { defineConfig } from "tsup";
 
 export default defineConfig({
@@ -29,8 +9,14 @@ export default defineConfig({
   clean: true,
   outDir: "dist",
 
+  // 👇 correct place
+  esbuildOptions(options) {
+    options.jsx = "automatic";
+  },
+
   external: [
     "react",
-    "react-dom"
+    "react-dom",
+    "react/jsx-runtime"
   ]
 });
