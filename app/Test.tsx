@@ -161,9 +161,19 @@ const Test = () => {
 
   // tabs
   const [value, setValue] = useState("1");
+  const [urlTab, setUrlTab] = useState("1");
+  const [localStorageTab, setLocalStorageTab] = useState("1");
 
   const handleTabChange = (newValue: string) => {
     setValue(newValue);
+  };
+
+  const handleURLTabChange = (newValue: string) => {
+    setUrlTab(newValue);
+  };
+
+  const handleLocalStorageTabChange = (newValue: string) => {
+    setLocalStorageTab(newValue);
   };
 
   // single file upload
@@ -180,7 +190,7 @@ const Test = () => {
 
   const handleDeleteFileSingle = (index: number) => {
     setSelectedSingleFiles((prevFiles) =>
-      prevFiles.filter((_, i) => i !== index)
+      prevFiles.filter((_, i) => i !== index),
     );
   };
 
@@ -282,7 +292,7 @@ const Test = () => {
   >([]);
 
   const [dropdownMenuOptionTwo, setDropdownMenuOptionTwo] = useState<Option[]>(
-    []
+    [],
   );
 
   // accordion
@@ -1369,50 +1379,49 @@ const Test = () => {
         />
       </section>
       {/* Tabs */}
-      <div>
+      <section>
         <h1 className="text-display-sm text-primary-600">Tabs</h1>
-        <section className="my-5">
-          <h1 className="text-lg">Default Tabs</h1>
-          <TabsContainer value={value}>
+        <div className="my-5">
+          <h1 className="text-lg">Default Tabs with URL in Params</h1>
+          <TabsContainer value={urlTab}>
             <TabList
-              onChange={handleTabChange}
+              onChange={handleURLTabChange}
               ariaLabel="lab API tabs example"
               box={false}
+              persist="url"
+              persistKey="urlValues"
             >
               <Tab
                 label="Item One"
                 content="(12)"
                 icon={<RiSearch2Line size={16} />}
                 value="1"
-                onChange={handleTabChange}
-                selectedTabValue={value}
+                onChange={handleURLTabChange}
+                selectedTabValue={urlTab}
               />
               <Tab
                 label="Item Two"
                 value="2"
-                onChange={handleTabChange}
-                selectedTabValue={value}
+                onChange={handleURLTabChange}
+                selectedTabValue={urlTab}
               />
               <Tab
                 label="Item Three"
                 value="3"
-                onChange={handleTabChange}
-                selectedTabValue={value}
+                onChange={handleURLTabChange}
+                selectedTabValue={urlTab}
               />
             </TabList>
-            <TabPanel value="1" currentValue={value}>
+            <TabPanel value="1" currentValue={urlTab}>
               Item One Content
             </TabPanel>
-            <TabPanel value="2" currentValue={value}>
+            <TabPanel value="2" currentValue={urlTab}>
               Item Two Content
             </TabPanel>
-            <TabPanel value="3" currentValue={value}>
+            <TabPanel value="3" currentValue={urlTab}>
               Item Three Content
             </TabPanel>
           </TabsContainer>
-        </section>
-
-        <section>
           <TabsContainer
             value={value}
             position="vertical"
@@ -1448,48 +1457,52 @@ const Test = () => {
               </TabPanel>
             </div>
           </TabsContainer>
-        </section>
-        <section className="my-5">
-          <h1 className="text-lg">Tab with box variant</h1>
-          <TabsContainer value={value}>
+        </div>
+        <div className="my-5">
+          <h1 className="text-lg my-2">
+            Box Variant Tab with value in local storage
+          </h1>
+          <TabsContainer value={localStorageTab}>
             <TabList
-              onChange={handleTabChange}
+              onChange={handleLocalStorageTabChange}
               ariaLabel="lab API tabs example"
               box={true}
+              persist="localStorage"
+              persistKey="localTabValue"
             >
               <Tab
                 label="Item One"
                 value="1"
                 content="(12)"
                 icon={<RiSearch2Line size={16} />}
-                onChange={handleTabChange}
-                selectedTabValue={value}
+                onChange={handleLocalStorageTabChange}
+                selectedTabValue={localStorageTab}
               />
               <Tab
                 label="Item Two"
                 value="2"
-                onChange={handleTabChange}
-                selectedTabValue={value}
+                onChange={handleLocalStorageTabChange}
+                selectedTabValue={localStorageTab}
               />
               <Tab
                 label="Item Three"
                 value="3"
-                onChange={handleTabChange}
-                selectedTabValue={value}
+                onChange={handleLocalStorageTabChange}
+                selectedTabValue={localStorageTab}
               />
             </TabList>
-            <TabPanel value="1" currentValue={value}>
+            <TabPanel value="1" currentValue={localStorageTab}>
               Item One Content
             </TabPanel>
-            <TabPanel value="2" currentValue={value}>
+            <TabPanel value="2" currentValue={localStorageTab}>
               Item Two Content
             </TabPanel>
-            <TabPanel value="3" currentValue={value}>
+            <TabPanel value="3" currentValue={localStorageTab}>
               Item Three Content
             </TabPanel>
           </TabsContainer>
-        </section>
-        <section className="my-5">
+        </div>
+        <div className="my-5">
           <h1 className="text-lg">Tab with pill variant</h1>
           <TabsContainer value={value}>
             <TabList
@@ -1528,8 +1541,8 @@ const Test = () => {
               Item Three Content
             </TabPanel>
           </TabsContainer>
-        </section>
-        <section className="my-5">
+        </div>
+        <div className="my-5">
           <h1 className="text-lg">Custom styling for Tabs:</h1>
           <TabsContainer value={value}>
             <TabList
@@ -1568,8 +1581,8 @@ const Test = () => {
               Item Three Content
             </TabPanel>
           </TabsContainer>
-        </section>
-      </div>
+        </div>
+      </section>
       {/* notice */}
       <section className="flex flex-col w-fit">
         <h1 className="text-display-sm text-primary-600">Notice:</h1>
@@ -2953,7 +2966,6 @@ const Test = () => {
         ))}
       </section>
 
-
       <section className="p-5">
         <h1 className="text-display-sm text-primary-600">Dropdown Examples:</h1>
 
@@ -3013,7 +3025,7 @@ const Test = () => {
           <h2 className="text-lg font-medium mb-2">Left Aligned Menu</h2>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button variant="outlined">  Open Left Menu</Button>
+              <Button variant="outlined"> Open Left Menu</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="left">
               <DropdownMenuItem onClick={() => alert("Item 1 clicked")}>
@@ -3036,9 +3048,7 @@ const Test = () => {
           <h2 className="text-lg font-medium mb-2">Center Aligned Menu</h2>
           <DropdownMenu>
             <DropdownMenuTrigger>
-             <Button intent="success">
-                Open Center Menu
-                </Button>
+              <Button intent="success">Open Center Menu</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center">
               <DropdownMenuItem>Center Item 1</DropdownMenuItem>
@@ -3101,9 +3111,7 @@ const Test = () => {
           <h2 className="text-lg font-medium mb-2">Custom Styled Menu</h2>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button intent="warning">
-                Styled Menu
-              </Button>
+              <Button intent="warning">Styled Menu</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 bg-gray-900 text-white">
               <DropdownMenuLabel className="text-gray-300">
