@@ -3,7 +3,8 @@ import React, { LabelHTMLAttributes, ReactNode } from "react";
 import { cn } from "../utils/utils";
 
 interface LabelProps
-  extends LabelHTMLAttributes<HTMLLabelElement>,
+  extends
+    LabelHTMLAttributes<HTMLLabelElement>,
     VariantProps<typeof labelVariants> {
   htmlFor?: string;
   children: ReactNode;
@@ -41,12 +42,12 @@ const Label = ({
         labelVariants({ className, size }),
         disabled === true
           ? "opacity-30 select-none pointer-events-none"
-          : "opacity-100"
+          : "opacity-100",
       )}
       aria-disabled={disabled}
       {...props}
     >
-      <span className="flex items-center gap-1">
+      <div className="flex items-center gap-1">
         {children}
         {required && (
           <span
@@ -58,7 +59,7 @@ const Label = ({
             *
           </span>
         )}
-      </span>
+      </div>
     </label>
   );
 };

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { cn } from "../utils/utils";
 
@@ -21,6 +22,8 @@ interface TabListProps extends Partial<TabItem> {
   pill?: boolean;
   className?: string;
   position?: "horizontal" | "vertical";
+  persist?: "url" | "localStorage";
+  persistKey?: string;
 }
 
 interface TabProps extends TabItem {
@@ -64,9 +67,45 @@ export const TabList: React.FC<TabListProps> = ({
   pill = false,
   className,
   position = "horizontal",
+  persist,
+  persistKey,
 }) => {
   const [focusIndex, setFocusIndex] = React.useState(0);
   const tabRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
+
+  React.useEffect(() => {
+    if (!persist || !persistKey || typeof window === "undefined") return;
+
+    let storedValue: string | null = null;
+
+    if (persist === "url") {
+      storedValue = new URLSearchParams(window.location.search).get(persistKey);
+    } else if (persist === "localStorage") {
+      storedValue = window.localStorage.getItem(persistKey);
+    }
+
+    if (storedValue) {
+      onChange(storedValue);
+    }
+  }, [persist, persistKey, onChange]);
+
+  const handleChange = React.useCallback(
+    (value: string) => {
+      if (persist === "url" && persistKey && typeof window !== "undefined") {
+        const url = new URL(window.location.href);
+        url.searchParams.set(persistKey, value);
+        window.history.replaceState({}, "", url.toString());
+      } else if (
+        persist === "localStorage" &&
+        persistKey &&
+        typeof window !== "undefined"
+      ) {
+        window.localStorage.setItem(persistKey, value);
+      }
+      onChange(value);
+    },
+    [persist, persistKey, onChange],
+  );
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
     const tabCount = React.Children.count(children);
@@ -127,13 +166,13 @@ export const TabList: React.FC<TabListProps> = ({
         box
           ? "bg-gray-50 rounded-lg border border-gray-200"
           : pill
-          ? position === "horizontal"
-            ? "bg-transparent rounded-lg"
-            : "bg-gray-100 rounded-full p-1"
-          : position === "horizontal"
-          ? "border-b border-gray-200"
-          : "border-r border-gray-200",
-        className
+            ? position === "horizontal"
+              ? "bg-transparent rounded-lg"
+              : "bg-gray-100 rounded-full p-1"
+            : position === "horizontal"
+              ? "border-b border-gray-200"
+              : "border-r border-gray-200",
+        className,
       )}
       role="tablist"
       aria-label={ariaLabel}
@@ -142,7 +181,7 @@ export const TabList: React.FC<TabListProps> = ({
       {React.Children.map(children, (child, index) => {
         if (React.isValidElement(child)) {
           const childProps = {
-            onChange,
+            onChange: handleChange,
             box,
             pill, // Add this line to pass pill prop to Tab
             position,
@@ -187,7 +226,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
       tabIndex,
       position = "horizontal",
     },
-    ref
+    ref,
   ) => {
     const isSelected = value === selectedTabValue;
 
@@ -208,8 +247,8 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
               isSelected && position === "horizontal"
                 ? "text-primary-600 border-b-2 border-primary-600"
                 : isSelected && position === "vertical"
-                ? "text-primary-600 border-r-2 border-primary-600"
-                : "border-transparent text-gray-700",
+                  ? "text-primary-600 border-r-2 border-primary-600"
+                  : "border-transparent text-gray-700",
             ],
           // Box variant
           box && [
@@ -244,7 +283,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
           position === "vertical" && !box && !pill && !isSelected
             ? "border-r-2"
             : "",
-          className
+          className,
         )}
         onClick={() => onChange(value)}
       >
@@ -253,7 +292,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
         {content && <span aria-hidden="true">{content}</span>}
       </button>
     );
-  }
+  },
 );
 
 export const TabPanel: React.FC<TabPanelProps> = ({

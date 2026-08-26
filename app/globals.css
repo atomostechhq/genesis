@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+.test {
+  border: 1px solid red;
 }
 
 @layer base {
@@ -251,19 +254,21 @@ input[type="number"] {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: 
+  background:
     linear-gradient(
-      0deg,
-      var(--spinner-color-1) 30%,
-      transparent 30% 70%,
-      var(--spinner-color-1) 70%
-    ) 50% / 8% 100%,
+        0deg,
+        var(--spinner-color-1) 30%,
+        transparent 30% 70%,
+        var(--spinner-color-1) 70%
+      )
+      50% / 8% 100%,
     linear-gradient(
-      90deg,
-      var(--spinner-color-2) 30%,
-      transparent 30% 70%,
-      var(--spinner-color-2) 70%
-    ) 50% / 100% 8%;
+        90deg,
+        var(--spinner-color-2) 30%,
+        transparent 30% 70%,
+        var(--spinner-color-2) 70%
+      )
+      50% / 100% 8%;
   background-repeat: no-repeat;
   animation: l23 2s infinite steps(12);
   position: relative;
