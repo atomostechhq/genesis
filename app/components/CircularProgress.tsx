@@ -1,5 +1,5 @@
-import { cn } from "../utils/utils";
 import React from "react";
+import { cn } from "../utils/utils";
 
 interface CircularProgressBarProps {
   strokeWidth?: number;
@@ -9,7 +9,7 @@ interface CircularProgressBarProps {
   textClassName?: string;
 }
 
-const CircularProgressBar = ({
+const CircularProgress = ({
   percentage,
   size = 160,
   strokeWidth = 8,
@@ -19,7 +19,10 @@ const CircularProgressBar = ({
   const radius = (size - strokeWidth) / 2;
   const viewBox = `0 0 ${size} ${size}`;
   const dashArray = radius * Math.PI * 2;
-  const dashOffset = dashArray - (dashArray * (percentage || 0)) / 100;
+
+  const normalizedPercentage = Math.min(Math.max(percentage || 0, 0), 100);
+
+  const dashOffset = dashArray - (dashArray * normalizedPercentage) / 100;
 
   return (
     <svg width={size} height={size} viewBox={viewBox}>
@@ -28,21 +31,27 @@ const CircularProgressBar = ({
         cx={size / 2}
         cy={size / 2}
         r={radius}
-        strokeWidth={`${strokeWidth}px`}
+        strokeWidth={strokeWidth}
       />
+
       <circle
-        className="fill-none stroke-primary-600 transition-all delay-200 ease-in"
+        className="circular-progress fill-none stroke-primary-600"
         cx={size / 2}
         cy={size / 2}
         r={radius}
         strokeLinecap="round"
-        strokeWidth={`${strokeWidth}px`}
+        strokeWidth={strokeWidth}
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        style={{
-          strokeDasharray: dashArray,
-          strokeDashoffset: dashOffset,
-        }}
+        style={
+          {
+            strokeDasharray: dashArray,
+            strokeDashoffset: dashOffset,
+            "--dash-array": dashArray,
+            "--dash-offset": dashOffset,
+          } as React.CSSProperties
+        }
       />
+
       <text
         x="50%"
         y="50%"
@@ -57,4 +66,4 @@ const CircularProgressBar = ({
   );
 };
 
-export default CircularProgressBar;
+export default CircularProgress;
