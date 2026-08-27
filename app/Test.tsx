@@ -1154,13 +1154,6 @@ const Test = () => {
         />
       </section>
 
-      <section className="">
-        <Link target="_blank" href="/pages/razorpay-fileupload">
-          <Button endIcon={<RiExternalLinkLine />} className="my-5">
-            File Upload Contron
-          </Button>
-        </Link>
-      </section>
       {/* Slider */}
       <div className="space-y-6">
         <h1 className="text-display-sm text-primary-600">Slider:</h1>

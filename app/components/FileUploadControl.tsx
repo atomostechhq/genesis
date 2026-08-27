@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useId, useRef, useState } from "react";
 import {
   RiDeleteBin6Line,
   RiRefreshLine,
@@ -21,7 +21,7 @@ import { cn } from "../utils/utils";
 import Label from "./Label";
 import Button from "./Button";
 
-const fileSvg = () => {
+const FileSvgIcon = React.memo(function FileSvgIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ const fileSvg = () => {
       </defs>
     </svg>
   );
-};
+});
 
 // Types
 export type UploadStatus = "idle" | "uploading" | "success" | "error";
@@ -98,12 +98,13 @@ export interface FileUploadControlProps {
   items: UploadItem[];
   onAddFiles: (files: File[]) => void;
   onUpdateItem?: (id: string, updates: Partial<UploadItem>) => void;
+  onRejectFiles?: (rejected: { file: File; reason: string }[]) => void;
   onDelete?: (id: string) => void;
   onRetry?: (id: string) => void;
   onPreview?: (id: string) => void;
   onUpload?: (
     file: File,
-    onProgress: (progress: number) => void
+    onProgress: (progress: number) => void,
   ) => Promise<string>;
   multiple?: boolean;
   accept?: string;
@@ -186,6 +187,7 @@ export default function FileUploadControl({
   items,
   onAddFiles,
   onUpdateItem,
+  onRejectFiles,
   onDelete,
   onRetry,
   onPreview,
@@ -201,22 +203,15 @@ export default function FileUploadControl({
   disabled,
 }: FileUploadControlProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const inputId = useId();
   const [isDragging, setIsDragging] = useState(false);
   const localPreviews = useRef<Map<string, string>>(new Map());
   const uploadProgress = useRef<Map<string, number>>(new Map());
+  const dragCounter = useRef(0);
 
   const formatSize = (bytes?: number) => {
     if (!bytes) return "0 KB";
     return `${Math.round(bytes / 1024)} KB`;
-  };
-
-  const getPreviewUrl = (item: UploadItem) => {
-    if (item.previewUrl) return item.previewUrl;
-    if (item.file && !localPreviews.current.has(item.id)) {
-      const url = URL.createObjectURL(item.file);
-      localPreviews.current.set(item.id, url);
-    }
-    return localPreviews.current.get(item.id);
   };
 
   const getStatusDisplay = (status?: UploadStatus) => {
@@ -333,7 +328,7 @@ export default function FileUploadControl({
         uploadProgress.current.delete(item.id);
       }
     },
-    [onUpload, onUpdateItem]
+    [onUpload, onUpdateItem],
   );
 
   // Get current progress for an item
@@ -379,17 +374,48 @@ export default function FileUploadControl({
   // Event handlers
   const triggerInput = () => inputRef.current?.click();
 
+  const partitionFiles = (files: File[]) => {
+    const valid: File[] = [];
+    const rejected: { file: File; reason: string }[] = [];
+    for (const file of files) {
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        rejected.push({ file, reason: `Exceeds ${maxSizeMB}MB limit` });
+      } else {
+        valid.push(file);
+      }
+    }
+    return { valid, rejected };
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
-    const validFiles = files.filter(
-      (file: File) => file.size <= maxSizeMB * 1024 * 1024
-    );
-    if (validFiles.length === 0) return;
-
-    onAddFiles(multiple ? validFiles : [validFiles[0]]);
+    const { valid, rejected } = partitionFiles(files);
+    if (rejected.length > 0) onRejectFiles?.(rejected);
+    if (valid.length > 0) onAddFiles(multiple ? valid : [valid[0]]);
     e.target.value = "";
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    dragCounter.current = 0;
+    setIsDragging(false);
+    if (disabled) return;
+
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length === 0) return;
+
+    const { valid, rejected } = partitionFiles(files);
+    if (rejected.length > 0) onRejectFiles?.(rejected);
+    if (valid.length > 0) onAddFiles(multiple ? valid : [valid[0]]);
+  };
+
+  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    if (disabled) return;
+    dragCounter.current += 1;
+    setIsDragging(true);
   };
 
   // Simple drag handlers
@@ -398,23 +424,12 @@ export default function FileUploadControl({
     if (!disabled) setIsDragging(true);
   };
 
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
-    setIsDragging(false);
-    if (disabled) return;
-
-    const files = Array.from(e.dataTransfer.files);
-    if (files.length === 0) return;
-
-    const validFiles = files.filter(
-      (file: File) => file.size <= maxSizeMB * 1024 * 1024
-    );
-    if (validFiles.length > 0) {
-      onAddFiles(multiple ? validFiles : [validFiles[0]]);
+    dragCounter.current -= 1;
+    if (dragCounter.current <= 0) {
+      dragCounter.current = 0;
+      setIsDragging(false);
     }
   };
 
@@ -448,6 +463,7 @@ export default function FileUploadControl({
     <div className={`w-full ${className}`}>
       <input
         ref={inputRef}
+        id={inputId}
         type="file"
         accept={accept}
         multiple={multiple}
@@ -456,7 +472,8 @@ export default function FileUploadControl({
         disabled={disabled}
       />
       <Label
-        htmlFor={inputRef?.current?.id}
+        htmlFor={inputId}
+        onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -471,7 +488,7 @@ export default function FileUploadControl({
           isDragging
             ? "border-blue-500 bg-blue-50"
             : "border-gray-300 bg-white hover:bg-gray-50",
-          disabled && "pointer-events-none cursor-not-allowed"
+          disabled && "pointer-events-none cursor-not-allowed",
         )}
       >
         <div className="flex items-center gap-3 text-center">
@@ -504,7 +521,7 @@ export default function FileUploadControl({
             >
               <div className="w-14 h-14 flex-shrink-0 rounded-md overflow-hidden relative">
                 <div className="absolute inset-0 w-full h-full object-contain">
-                  {fileSvg()}
+                  <FileSvgIcon />
                 </div>
                 <div className="relative z-10 top-2 -left-2.5  flex items-center justify-center w-full h-full text-white">
                   {fileIcon}
@@ -518,7 +535,10 @@ export default function FileUploadControl({
                       {item?.name || item.file?.name || "Unnamed file"}
                     </h4>
                     {showSizeText && (
-                      <div className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                      <div
+                        className="text-xs text-gray-500 mt-1 flex items-center gap-1"
+                        aria-live="polite"
+                      >
                         {formatSize(item?.size || item.file?.size)}
                         {statusInfo.text && (
                           <div className="ml-2 font-medium flex items-center gap-1">
@@ -536,8 +556,8 @@ export default function FileUploadControl({
                                     statusInfo?.color === "text-red-600"
                                       ? "bg-red-600"
                                       : statusInfo?.color === "text-green-600"
-                                      ? "bg-green-600"
-                                      : "bg-gray-400"
+                                        ? "bg-green-600"
+                                        : "bg-gray-400"
                                   }`}
                                 >
                                   {statusInfo?.icon}
@@ -625,8 +645,8 @@ export default function FileUploadControl({
                     {item.status === "error"
                       ? "--%"
                       : item.status === "success"
-                      ? "100%"
-                      : `${Math.round(progress)}%`}
+                        ? "100%"
+                        : `${Math.round(progress)}%`}
                   </div>
                 </div>
               </div>
