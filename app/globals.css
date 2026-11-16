@@ -295,3 +295,17 @@ input[type="number"] {
     transform: rotate(1turn);
   }
 }
+
+.circular-progress {
+  animation: circular-progress-animation 1s ease-in-out forwards;
+}
+
+@keyframes circular-progress-animation {
+  from {
+    stroke-dashoffset: var(--dash-array);
+  }
+
+  to {
+    stroke-dashoffset: var(--dash-offset);
+  }
+}

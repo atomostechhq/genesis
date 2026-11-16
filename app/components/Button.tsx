@@ -3,7 +3,8 @@ import { cn } from "../utils/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
 interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   children?: ReactNode;
   startIcon?: JSX.Element;
@@ -79,6 +80,7 @@ const buttonVariants = cva(
           "border-orange-600 text-orange-600 hover:bg-orange-50 hover:border-orange-700 hover:text-orange-700 active:bg-orange-100 active:text-orange-900 active:border-orange-900",
       },
       size: {
+        xs: "text-xs px-2 py-1",
         sm: "text-sm px-3.5 py-2",
         md: "text-sm px-4 py-2.5",
         lg: "text-base px-[18px] py-2.5",
@@ -88,7 +90,7 @@ const buttonVariants = cva(
       variant: "filled",
       size: "sm",
     },
-  }
+  },
 );
 
 const Button = ({
@@ -128,7 +130,7 @@ const Button = ({
       className={cn(
         fullWidth && "w-full",
         buttonVariants({ intent, className, variant, size }),
-        "flex items-center text-center justify-center gap-2"
+        "flex items-center text-center justify-center gap-2",
       )}
     >
       {startIcon && <span aria-hidden="true">{startIcon}</span>}

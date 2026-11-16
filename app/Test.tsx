@@ -661,6 +661,9 @@ const Test = () => {
         </section>
         <section className="flex items-center gap-4">
           <h1>Size:</h1>
+          <Button variant="filled" intent={"success"} size="xs">
+            Size xs
+          </Button>
           <Button variant="filled" intent={"default"} size="sm">
             Size sm
           </Button>
