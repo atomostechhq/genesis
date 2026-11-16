@@ -15,28 +15,33 @@ const checkboxVariant = cva(
     defaultVariants: {
       size: "lg",
     },
-  }
+  },
 );
 
 interface CheckboxProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
+  extends
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof checkboxVariant> {
   size?: "sm" | "lg" | "xl";
 }
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ size, className, checked, ...props }, ref) => {
+  ({ size, className, checked, onChange, readOnly, ...props }, ref) => {
+    const isControlled = checked !== undefined;
+    // Controlled with no handler: treat as read-only so React doesn't warn
+    const isReadOnly = readOnly ?? (isControlled && !onChange);
     return (
       <div className="inline-flex relative items-center">
         <input
           ref={ref}
           type="checkbox"
-          {...(checked !== undefined ? { checked } : {})}
+          {...(isControlled ? { checked } : {})}
+          onChange={onChange}
+          readOnly={isReadOnly}
           {...props}
           className={cn(
-            "peer",
             checkboxVariant({ size, className }),
-            "focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+            "focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2",
           )}
         />
         <span
@@ -58,7 +63,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         </span>
       </div>
     );
-  }
+  },
 );
 
 Checkbox.displayName = "Checkbox";

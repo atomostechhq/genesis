@@ -65,7 +65,7 @@ export const TreeView: React.FC<TreeViewProps> & {
   // Extract all top-level IDs if needed for default expansion
   const topLevelIds = React.Children.toArray(children)
     .map((child) =>
-      React.isValidElement<TreeViewItemProps>(child) ? child.props.id : null
+      React.isValidElement<TreeViewItemProps>(child) ? child.props.id : null,
     )
     .filter(Boolean) as string[];
 
@@ -75,9 +75,9 @@ export const TreeView: React.FC<TreeViewProps> & {
         defaultExpandedIds.length
           ? defaultExpandedIds
           : expandTopLevelByDefault
-          ? topLevelIds
-          : []
-      )
+            ? topLevelIds
+            : [],
+      ),
   );
 
   const expandedNodes = expandedIds ? new Set(expandedIds) : internalExpanded;
@@ -108,21 +108,30 @@ export const TreeView: React.FC<TreeViewProps> & {
 
   const handleSelect = (id: string) => setSelectedId(id);
 
-  // Recursively enhance children
   const enhanceChildren = (
     nodes: React.ReactNode,
-    level = 0
+    level = 0,
   ): React.ReactNode =>
     React.Children.map(nodes, (child) => {
-      if (React.isValidElement<TreeViewItemProps>(child)) {
-        return React.cloneElement(child, {
+      if (!React.isValidElement(child)) return child;
+
+      if (child.type === TreeViewItem) {
+        const item = child as React.ReactElement<TreeViewItemProps>;
+        return React.cloneElement(item, {
           level,
-          expanded: expandedNodes.has(child.props.id),
+          expanded: expandedNodes.has(item.props.id),
           onToggle: toggleNode,
           onSelect: handleSelect,
-          selected: selectedId === child.props.id,
+          selected: selectedId === item.props.id,
           flat,
-          children: enhanceChildren(child.props.children, level + 1),
+          children: enhanceChildren(item.props.children, level + 1),
+        });
+      }
+
+      if (child.type === TreeViewSubTree) {
+        const sub = child as React.ReactElement<TreeViewSubTreeProps>;
+        return React.cloneElement(sub, {
+          children: enhanceChildren(sub.props.children, level),
         });
       }
       return child;
@@ -223,7 +232,7 @@ const TreeViewItem: React.FC<TreeViewItemProps> = ({
           "flex items-center gap-2 px-2 py-1 cursor-pointer select-none rounded transition-colors duration-150",
           selected && "bg-blue-50 text-blue-600 font-medium",
           "hover:bg-gray-100",
-          className
+          className,
         )}
         style={{ paddingLeft: `${level * 16 + 8}px` }}
         onClick={handleClick}
@@ -273,7 +282,7 @@ const TreeViewSubTree: React.FC<TreeViewSubTreeProps> = ({
       className={cn(
         "list-none m-0 pl-0 overflow-hidden transition-all duration-300 ease-in-out",
         expanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
-        className
+        className,
       )}
     >
       {children}
