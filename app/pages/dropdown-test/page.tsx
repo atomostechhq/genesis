@@ -1,5 +1,6 @@
 "use client";
 
+import { DropdownWithIcon } from "@/app/components";
 import Dropdown, { Option } from "@/app/components/Dropdown";
 import React, {
   Profiler,
@@ -66,7 +67,12 @@ function Stats({
   wrapRef: React.RefObject<HTMLDivElement>;
   total: number;
 }) {
-  const [s, setS] = useState({ commits: 0, scrolls: 0, mounted: 0, setSize: 0 });
+  const [s, setS] = useState({
+    commits: 0,
+    scrolls: 0,
+    mounted: 0,
+    setSize: 0,
+  });
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -86,8 +92,8 @@ function Stats({
     <div className="rounded border border-gray-300 p-3 text-xs flex flex-col gap-1">
       <p className="font-medium text-sm">Live stats (multi select)</p>
       <p>
-        Rows in DOM: <b>{s.mounted}</b> of {s.setSize || total} matching
-        (total options: {total.toLocaleString()})
+        Rows in DOM: <b>{s.mounted}</b> of {s.setSize || total} matching (total
+        options: {total.toLocaleString()})
       </p>
       <p>
         Scroll events: <b>{s.scrolls}</b> | Dropdown commits: <b>{s.commits}</b>
@@ -97,8 +103,8 @@ function Stats({
       </p>
       <p className="text-gray-500">
         Commits come from React&apos;s Profiler, so they only count in dev
-        builds. Scroll slowly: commits should be well below scroll events
-        (a render only happens when a row boundary is crossed).
+        builds. Scroll slowly: commits should be well below scroll events (a
+        render only happens when a row boundary is crossed).
       </p>
       <button
         type="button"
@@ -143,7 +149,10 @@ function TestPanel({ wrapRef }: { wrapRef: React.RefObject<HTMLDivElement> }) {
       setResults((prev) => [r, ...prev].slice(0, 10));
     } catch (e) {
       setResults((prev) =>
-        [{ name: "Error", status: "fail" as const, detail: String(e) }, ...prev].slice(0, 10),
+        [
+          { name: "Error", status: "fail" as const, detail: String(e) },
+          ...prev,
+        ].slice(0, 10),
       );
     } finally {
       setBusy(false);
@@ -160,14 +169,21 @@ function TestPanel({ wrapRef }: { wrapRef: React.RefObject<HTMLDivElement> }) {
   const measureRows = () =>
     run(async () => {
       const lb = await ensureOpen();
-      if (!lb) return { name: "Measure rows", status: "skip", detail: "No listbox found." };
-      const hs = Array.from(
-        lb.querySelectorAll<HTMLElement>('[role="option"]'),
-      )
+      if (!lb)
+        return {
+          name: "Measure rows",
+          status: "skip",
+          detail: "No listbox found.",
+        };
+      const hs = Array.from(lb.querySelectorAll<HTMLElement>('[role="option"]'))
         .map((r) => r.getBoundingClientRect().height)
         .sort((a, b) => a - b);
       if (!hs.length)
-        return { name: "Measure rows", status: "skip", detail: "No rows rendered." };
+        return {
+          name: "Measure rows",
+          status: "skip",
+          detail: "No rows rendered.",
+        };
       const med = hs[Math.floor(hs.length / 2)];
       return {
         name: "Measure rows",
@@ -181,12 +197,18 @@ function TestPanel({ wrapRef }: { wrapRef: React.RefObject<HTMLDivElement> }) {
   const layoutCheck = () =>
     run(async () => {
       const lb = await ensureOpen();
-      if (!lb) return { name: "Layout sweep", status: "skip", detail: "No listbox found." };
+      if (!lb)
+        return {
+          name: "Layout sweep",
+          status: "skip",
+          detail: "No listbox found.",
+        };
       if (!virtualRows(lb).length)
         return {
           name: "Layout sweep",
           status: "skip",
-          detail: "List is not virtualized. Use 1,000+ options with Virtualize on.",
+          detail:
+            "List is not virtualized. Use 1,000+ options with Virtualize on.",
         };
 
       const problems: string[] = [];
@@ -199,13 +221,17 @@ function TestPanel({ wrapRef }: { wrapRef: React.RefObject<HTMLDivElement> }) {
           const ia = Number(rows[i].dataset.index);
           const ib = Number(rows[i + 1].dataset.index);
           if (ib !== ia + 1) {
-            problems.push(`index jump ${ia} -> ${ib} at scrollTop ${Math.round(lb.scrollTop)}`);
+            problems.push(
+              `index jump ${ia} -> ${ib} at scrollTop ${Math.round(lb.scrollTop)}`,
+            );
             continue;
           }
           const a = rows[i].getBoundingClientRect();
           const b = rows[i + 1].getBoundingClientRect();
           if (Math.abs(a.bottom - b.top) > 1.5) {
-            problems.push(`rows ${ia} -> ${ib}: ${(b.top - a.bottom).toFixed(1)}px gap/overlap`);
+            problems.push(
+              `rows ${ia} -> ${ib}: ${(b.top - a.bottom).toFixed(1)}px gap/overlap`,
+            );
           }
         }
         if (rows.length) {
@@ -215,9 +241,13 @@ function TestPanel({ wrapRef }: { wrapRef: React.RefObject<HTMLDivElement> }) {
           const atStart = lb.scrollTop <= 0.5;
           const atEnd = lb.scrollTop + lb.clientHeight >= lb.scrollHeight - 1;
           if (!atStart && top > box.top + 1)
-            problems.push(`blank area at top, scrollTop ${Math.round(lb.scrollTop)}`);
+            problems.push(
+              `blank area at top, scrollTop ${Math.round(lb.scrollTop)}`,
+            );
           if (!atEnd && bottom < box.bottom - 1)
-            problems.push(`blank area at bottom, scrollTop ${Math.round(lb.scrollTop)}`);
+            problems.push(
+              `blank area at bottom, scrollTop ${Math.round(lb.scrollTop)}`,
+            );
         }
       };
 
@@ -249,12 +279,18 @@ function TestPanel({ wrapRef }: { wrapRef: React.RefObject<HTMLDivElement> }) {
   const anchorCheck = () =>
     run(async () => {
       const lb = await ensureOpen();
-      if (!lb) return { name: "Scroll anchoring", status: "skip", detail: "No listbox found." };
+      if (!lb)
+        return {
+          name: "Scroll anchoring",
+          status: "skip",
+          detail: "No listbox found.",
+        };
       if (!virtualRows(lb).length)
         return {
           name: "Scroll anchoring",
           status: "skip",
-          detail: "List is not virtualized. Use 1,000+ options with Virtualize on.",
+          detail:
+            "List is not virtualized. Use 1,000+ options with Virtualize on.",
         };
 
       lb.scrollTop = lb.scrollHeight / 2;
@@ -282,7 +318,9 @@ function TestPanel({ wrapRef }: { wrapRef: React.RefObject<HTMLDivElement> }) {
         lb.scrollTop = before - STEP;
         const applied = before - lb.scrollTop; // may be clamped at 0
         await sleep(90);
-        const el = lb.querySelector<HTMLElement>(`[role="option"][data-index="${idx}"]`);
+        const el = lb.querySelector<HTMLElement>(
+          `[role="option"][data-index="${idx}"]`,
+        );
         if (!el) continue;
         const drift = el.getBoundingClientRect().top - t0 - applied;
         measured++;
@@ -308,12 +346,17 @@ function TestPanel({ wrapRef }: { wrapRef: React.RefObject<HTMLDivElement> }) {
       return {
         name: `Jump to ${Math.round(fraction * 100)}%`,
         status: "pass",
-        detail: "Now scroll up/down by hand and watch for jumps or blank areas.",
+        detail:
+          "Now scroll up/down by hand and watch for jumps or blank areas.",
       };
     });
 
   const badge = (s: Result["status"]) =>
-    s === "pass" ? "text-green-700" : s === "fail" ? "text-red-600" : "text-gray-500";
+    s === "pass"
+      ? "text-green-700"
+      : s === "fail"
+        ? "text-red-600"
+        : "text-gray-500";
 
   return (
     <div className="rounded border border-gray-300 p-3 text-xs flex flex-col gap-2">
@@ -380,8 +423,7 @@ export default function DropdownTest() {
   const handleSetSingle: React.Dispatch<React.SetStateAction<Option[]>> = (
     action,
   ) => {
-    const next =
-      typeof action === "function" ? action(singleSelected) : action;
+    const next = typeof action === "function" ? action(singleSelected) : action;
     setPriority(next[0] ? String(next[0].value) : null);
   };
 
@@ -419,7 +461,9 @@ export default function DropdownTest() {
 
   const pill = (active: boolean) =>
     `px-3 py-1 rounded border ${
-      active ? "bg-primary-600 text-white border-primary-600" : "border-gray-300"
+      active
+        ? "bg-primary-600 text-white border-primary-600"
+        : "border-gray-300"
     }`;
 
   return (
@@ -511,7 +555,7 @@ export default function DropdownTest() {
         </p>
         <div ref={multiWrapRef}>
           <Profiler id="multi-dropdown" onRender={onRender}>
-            <Dropdown
+            <DropdownWithIcon
               options={options}
               search
               multiple
@@ -534,7 +578,7 @@ export default function DropdownTest() {
         <p className="mb-1 text-sm font-medium">
           Single select, string | null state (value: {String(priority)})
         </p>
-        <Dropdown
+        <DropdownWithIcon
           options={options}
           search
           selected={singleSelected}
@@ -551,7 +595,7 @@ export default function DropdownTest() {
           Small list, single select, dropdown-level info=&quot;fallback&quot;
           (never virtualized)
         </p>
-        <Dropdown
+        <DropdownWithIcon
           options={smallOptions}
           selected={smallSel}
           setSelected={setSmallSel}
@@ -562,9 +606,10 @@ export default function DropdownTest() {
 
       <div>
         <p className="mb-1 text-sm font-medium">
-          Numeric label 0 (trigger should read &quot;0&quot;, not &quot;Select&quot;)
+          Numeric label 0 (trigger should read &quot;0&quot;, not
+          &quot;Select&quot;)
         </p>
-        <Dropdown
+        <DropdownWithIcon
           options={NUMERIC}
           selected={numSel}
           setSelected={setNumSel}
@@ -574,17 +619,41 @@ export default function DropdownTest() {
 
       <ul className="text-xs text-gray-600 list-disc pl-5 flex flex-col gap-1">
         <li>Scroll fast: no overlapping rows or gaps (mixed row heights).</li>
-        <li>Search &quot;Option 99&quot; or &quot;Low&quot;: list jumps to top, results filter.</li>
+        <li>
+          Search &quot;Option 99&quot; or &quot;Low&quot;: list jumps to top,
+          results filter.
+        </li>
         <li>Close and reopen the menu: the search box is empty again.</li>
-        <li>Press Escape with the menu open: it closes and focus returns to the trigger.</li>
+        <li>
+          Press Escape with the menu open: it closes and focus returns to the
+          trigger.
+        </li>
         <li>Select all: only matching, enabled rows get selected.</li>
-        <li>Every 7th option is disabled and cannot be picked (click and checkbox).</li>
-        <li>Single select rows show their own info; rows without one show &quot;fallback&quot; in the small list.</li>
+        <li>
+          Every 7th option is disabled and cannot be picked (click and
+          checkbox).
+        </li>
+        <li>
+          Single select rows show their own info; rows without one show
+          &quot;fallback&quot; in the small list.
+        </li>
         <li>Wrapped rows show addInfo in both single and multi select.</li>
-        <li>Switch Virtualize off at 10,000: &quot;Rows in DOM&quot; jumps to 10,000 even while closed.</li>
-        <li>Fixed mode: with the right rowHeight, the scrollbar thumb never changes size while scrolling.</li>
-        <li>Dynamic mode, estimate 20 or 60: run &quot;Scroll anchoring&quot; and scroll up by hand from the middle; nothing should jump.</li>
-        <li>Screen reader / devtools: listbox is the scroll area, each row has role=option with setsize and posinset.</li>
+        <li>
+          Switch Virtualize off at 10,000: &quot;Rows in DOM&quot; jumps to
+          10,000 even while closed.
+        </li>
+        <li>
+          Fixed mode: with the right rowHeight, the scrollbar thumb never
+          changes size while scrolling.
+        </li>
+        <li>
+          Dynamic mode, estimate 20 or 60: run &quot;Scroll anchoring&quot; and
+          scroll up by hand from the middle; nothing should jump.
+        </li>
+        <li>
+          Screen reader / devtools: listbox is the scroll area, each row has
+          role=option with setsize and posinset.
+        </li>
       </ul>
     </div>
   );
