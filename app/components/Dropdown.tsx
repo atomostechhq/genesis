@@ -1,6 +1,7 @@
 "use client";
 import React, {
   useEffect,
+  useLayoutEffect,
   useState,
   useMemo,
   useCallback,
@@ -34,7 +35,8 @@ interface MenuItemProps {
 interface DropdownProps {
   id?: string;
   icon?: JSX.Element;
-  options: Option[];
+  /** Optional: when omitted, `children` is rendered inside the menu instead. */
+  options?: Option[];
   selected?: Option[];
   setSelected?: React.Dispatch<React.SetStateAction<Option[]>>;
   onApply?: () => void;
@@ -45,12 +47,16 @@ interface DropdownProps {
   renderItem?: (option: Option) => React.ReactNode;
   children?: React.ReactNode;
   position?: "top" | "bottom";
+  /** Fallback `info` for single-select rows whose option has no `info` of its own. */
   info?: string | number;
+  /** @deprecated Not used by the component. Use `Option.addInfo` instead. */
   addInfo?: string | number;
+  /** @deprecated Not used by the component. Use `Option.tooltipContent` instead. */
   tooltipContent?: string;
   width?: string;
   dropdownFooter?: boolean | undefined;
   disabled?: boolean;
+  /** @deprecated Not used by the component. Use `Option.labelTextColor` instead. */
   labelTextColor?: string;
   footerAction?: React.ReactNode;
   height?: string;
@@ -59,42 +65,133 @@ interface DropdownProps {
    * Below it, all rows render normally. Pass Infinity to disable virtualization.
    */
   virtualizeThreshold?: number;
-  /** Estimated row height in px, used before a row is measured. */
+  /**
+   * Estimated row height in px, used before a row is measured.
+   * Set this close to your real row height to avoid layout recalculations.
+   */
   estimatedRowHeight?: number;
+  /**
+   * Fast path for uniform lists. When set, every row is forced to exactly this
+   * height (px), and the list skips measuring entirely: no ResizeObserver,
+   * no offsets table, no scrollbar jitter. Rows taller than this get clipped.
+   */
+  rowHeight?: number;
 }
 
 // -------------------- Virtual list (dependency-free) --------------------
 
-type VirtualItem = { index: number; key: string | number; start: number };
+type VirtualItem = { index: number; key: string; start: number };
+
+// useLayoutEffect warns during SSR (this file is "use client" but still SSR'd in Next)
+const useIsoLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+/** Index of the first row whose bottom edge is below `top`. O(1) fixed, O(log n) dynamic. */
+function findFirstIndex(
+  top: number,
+  count: number,
+  fixedSize: number | undefined,
+  offsets: Float64Array | null,
+) {
+  if (count <= 0) return 0;
+  if (fixedSize) {
+    return Math.min(count - 1, Math.max(0, Math.floor(top / fixedSize)));
+  }
+  const o = offsets as Float64Array;
+  let lo = 0;
+  let hi = count - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (o[mid + 1] <= top) lo = mid + 1;
+    else hi = mid;
+  }
+  return lo;
+}
 
 /**
- * Minimal windowing hook with dynamic row heights.
- * Rows report their real height through a shared ResizeObserver; until a row
- * is measured, `estimateSize` is used. Only rows near the viewport are returned.
+ * Minimal windowing hook.
+ *
+ * - Dynamic mode (default): rows report their real height through a shared
+ *   ResizeObserver; until measured, `estimateSize` is used. Offsets are kept in
+ *   a cumulative Float64Array and searched with a binary search.
+ * - Fixed mode (`fixedSize` set): everything is arithmetic, nothing is measured.
+ *
+ * State holds only the index of the first visible row (not raw scrollTop), so
+ * scroll events that don't cross a row boundary cause no re-render.
  */
 function useVirtualList({
   enabled,
   active,
   count,
+  keys,
   estimateSize,
+  fixedSize,
   overscan,
-  getKey,
   scrollRef,
 }: {
   enabled: boolean;
   /** Only produce rows while true (e.g. while the dropdown is open). */
   active: boolean;
   count: number;
+  /** Stable string key per row, computed once per list (not per offsets rebuild). */
+  keys: string[];
   estimateSize: number;
+  fixedSize?: number;
   overscan: number;
-  getKey: (index: number) => string | number;
   scrollRef: React.RefObject<HTMLElement>;
 }) {
+  const isFixed = !!fixedSize && fixedSize > 0;
+
   const sizes = useRef(new Map<string, number>());
   const observerRef = useRef<ResizeObserver | null>(null);
+  const nodesRef = useRef(new Set<HTMLElement>());
+  const pendingDelta = useRef(0); // height change of rows above the viewport
   const [tick, setTick] = useState(0); // bumps when a row height changes
-  const [scrollTop, setScrollTop] = useState(0);
+  const [first, setFirst] = useState(0); // first visible row index
   const [viewport, setViewport] = useState(360);
+
+  // Cumulative offsets: offsets[i] is the top of row i, offsets[count] the total height.
+  // Not needed in fixed mode.
+  const offsets = useMemo(() => {
+    if (isFixed) return null;
+    const arr = new Float64Array(count + 1);
+    const map = sizes.current;
+    for (let i = 0; i < count; i++) {
+      arr[i + 1] = arr[i] + (map.get(keys[i]) ?? estimateSize);
+    }
+    return arr;
+    // `tick` is the invalidation signal for sizes.current (a ref)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count, keys, estimateSize, isFixed, tick]);
+
+  // Latest layout, readable from event handlers without re-subscribing
+  const layoutRef = useRef({
+    count,
+    fixedSize: isFixed ? fixedSize : undefined,
+    offsets,
+    first,
+    estimateSize,
+  });
+  layoutRef.current = {
+    count,
+    fixedSize: isFixed ? fixedSize : undefined,
+    offsets,
+    first,
+    estimateSize,
+  };
+
+  const offsetAt = (i: number) =>
+    isFixed ? i * (fixedSize as number) : (offsets as Float64Array)[i];
+
+  // Recompute the first visible index from the real scroll position.
+  // Bails out (no re-render) when the index is unchanged.
+  const sync = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { count, fixedSize, offsets } = layoutRef.current;
+    const f = findFirstIndex(el.scrollTop, count, fixedSize, offsets);
+    setFirst((prev) => (prev === f ? prev : f));
+  }, [scrollRef]);
 
   // Track scroll position and viewport height of the scroll container
   useEffect(() => {
@@ -106,13 +203,13 @@ function useVirtualList({
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
-        setScrollTop(el.scrollTop);
+        sync();
       });
     };
     const ro = new ResizeObserver(() => setViewport(el.clientHeight));
 
-    setScrollTop(el.scrollTop);
     setViewport(el.clientHeight);
+    sync();
     el.addEventListener("scroll", onScroll, { passive: true });
     ro.observe(el);
 
@@ -121,11 +218,22 @@ function useVirtualList({
       el.removeEventListener("scroll", onScroll);
       ro.disconnect();
     };
-  }, [enabled, scrollRef]);
+  }, [enabled, scrollRef, sync]);
+
+  // After layout changes (new measurements, new list, menu opened):
+  //  1. keep the visible content anchored if rows ABOVE the viewport changed size
+  //  2. re-sync the first visible index (it may have shifted or exceed the new count)
+  useIsoLayoutEffect(() => {
+    const el = scrollRef.current;
+    if (el && pendingDelta.current !== 0) {
+      el.scrollTop += pendingDelta.current;
+    }
+    pendingDelta.current = 0;
+    if (enabled && active) sync();
+  }, [offsets, count, enabled, active, sync, scrollRef]);
 
   // Shared row observer, created lazily so rows can attach during commit
-  const measureRef = useCallback((node: HTMLElement | null) => {
-    if (!node) return;
+  const getObserver = useCallback(() => {
     if (!observerRef.current) {
       observerRef.current = new ResizeObserver((entries) => {
         let changed = false;
@@ -140,6 +248,13 @@ function useVirtualList({
           if (h <= 0) continue;
           const prev = sizes.current.get(k);
           if (prev === undefined || Math.abs(prev - h) > 0.5) {
+            // A row above the first visible one changed: remember the delta so
+            // the scroll position can be corrected and content doesn't jump.
+            const index = Number(target.dataset.index);
+            if (index < layoutRef.current.first) {
+              pendingDelta.current +=
+                h - (prev ?? layoutRef.current.estimateSize);
+            }
             sizes.current.set(k, h);
             changed = true;
           }
@@ -147,60 +262,74 @@ function useVirtualList({
         if (changed) setTick((t) => t + 1);
       });
     }
-    observerRef.current.observe(node);
+    return observerRef.current;
   }, []);
 
-  useEffect(
-    () => () => {
-      observerRef.current?.disconnect();
-      observerRef.current = null;
+  const measureRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (!node) return;
+      const nodes = nodesRef.current;
+      // Keep the registry from growing as rows scroll in and out
+      if (nodes.size > 200) {
+        nodes.forEach((n) => {
+          if (!n.isConnected) nodes.delete(n);
+        });
+      }
+      nodes.add(node);
+      getObserver().observe(node);
     },
-    [],
+    [getObserver],
   );
 
-  // Cumulative offsets: offsets[i] is the top of row i, offsets[count] the total height
-  const offsets = useMemo(() => {
-    const arr = new Float64Array(count + 1);
-    for (let i = 0; i < count; i++) {
-      arr[i + 1] =
-        arr[i] + (sizes.current.get(String(getKey(i))) ?? estimateSize);
-    }
-    return arr;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count, getKey, estimateSize, tick]);
+  // (Re)attach observers after mount. This also covers React Strict Mode's
+  // simulated unmount/remount, which disconnects the observer without
+  // re-running row ref callbacks.
+  useEffect(() => {
+    const nodes = nodesRef.current;
+    const ro = getObserver();
+    nodes.forEach((n) => {
+      if (n.isConnected) ro.observe(n);
+      else nodes.delete(n);
+    });
+    return () => {
+      ro.disconnect();
+      observerRef.current = null;
+    };
+  }, [getObserver]);
 
-  const totalSize = offsets[count] ?? 0;
+  const totalSize =
+    count > 0 ? (isFixed ? count * (fixedSize as number) : offsetAt(count)) : 0;
 
   const items: VirtualItem[] = [];
   if (enabled && active && count > 0) {
-    // First row whose bottom edge is below scrollTop
-    let lo = 0;
-    let hi = count - 1;
-    while (lo < hi) {
-      const mid = (lo + hi) >> 1;
-      if (offsets[mid + 1] <= scrollTop) lo = mid + 1;
-      else hi = mid;
-    }
-    const first = lo;
+    const f = Math.min(first, count - 1);
 
-    // Last row whose top edge is above the viewport bottom
-    const bottom = scrollTop + viewport;
-    let last = first;
-    while (last < count - 1 && offsets[last + 1] < bottom) last++;
+    // Safe upper bound for the viewport bottom: scrollTop is somewhere inside row f,
+    // so it is never beyond the bottom edge of row f.
+    const bottom = offsetAt(f + 1) + viewport;
+    let last = f;
+    while (last < count - 1 && offsetAt(last + 1) < bottom) last++;
 
-    const from = Math.max(0, first - overscan);
+    const from = Math.max(0, f - overscan);
     const to = Math.min(count - 1, last + overscan);
     for (let i = from; i <= to; i++) {
-      items.push({ index: i, key: getKey(i), start: offsets[i] });
+      items.push({ index: i, key: keys[i], start: offsetAt(i) });
     }
   }
 
-  return { items, totalSize, measureRef };
+  return {
+    items,
+    totalSize,
+    // No measuring needed in fixed mode
+    measureRef: isFixed ? undefined : measureRef,
+  };
 }
 
 const defaultRenderItem = (option: Option) => {
   return <MenuItem label={option.label} value={option.value} />;
 };
+
+const DISABLED_COLOR = "#D1D5DB";
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
   (
@@ -226,6 +355,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       height = "200px",
       virtualizeThreshold = 50,
       estimatedRowHeight = 34,
+      rowHeight,
     },
     ref,
   ) => {
@@ -236,6 +366,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [dropdownMenu, setDropdownMenu] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
     const scrollRef = useRef<HTMLElement>(null);
 
     useImperativeHandle(ref, () => dropdownRef.current!);
@@ -261,8 +392,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     const shouldVirtualize =
       !!options && memoizedFilteredOptions.length > virtualizeThreshold;
 
-    const getKey = useCallback(
-      (index: number) => memoizedFilteredOptions[index]?.value ?? index,
+    // String keys computed once per filtered list, reused by the hook
+    const keys = useMemo(
+      () => memoizedFilteredOptions.map((option) => String(option.value)),
       [memoizedFilteredOptions],
     );
 
@@ -274,9 +406,10 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       enabled: shouldVirtualize,
       active: dropdownMenu, // no rows while the menu is closed
       count: memoizedFilteredOptions.length,
+      keys,
       estimateSize: estimatedRowHeight,
+      fixedSize: rowHeight,
       overscan: 8,
-      getKey,
       scrollRef,
     });
 
@@ -284,6 +417,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     useEffect(() => {
       scrollRef.current?.scrollTo({ top: 0 });
     }, [searchQuery]);
+
+    // Don't show a stale filter when the menu is reopened
+    useEffect(() => {
+      if (!dropdownMenu) setSearchQuery("");
+    }, [dropdownMenu]);
 
     // -------------------- Handlers --------------------
 
@@ -294,15 +432,17 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       [],
     );
 
+    // One handler for both modes
     const toggleOption = useCallback(
       (option: Option) => {
-        if (multiple && setSelected) {
+        if (!setSelected || option.disabledOption) return;
+        if (multiple) {
           setSelected((prevSelected) =>
             prevSelected.some((item) => item.value === option.value)
               ? prevSelected.filter((item) => item.value !== option.value)
               : [...prevSelected, option],
           );
-        } else if (setSelected) {
+        } else {
           setSelected([option]);
           setDropdownMenu(false);
         }
@@ -310,22 +450,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       [multiple, setSelected],
     );
 
-    const handleCheckboxChange = useCallback(
-      (option: Option) => {
-        if (multiple && setSelected) {
-          setSelected((prevSelected) =>
-            prevSelected.some((item) => item.value === option.value)
-              ? prevSelected.filter((item) => item.value !== option.value)
-              : [...prevSelected, option],
-          );
-        } else if (setSelected) {
-          setSelected([option]);
-        }
-      },
-      [multiple, setSelected],
-    );
-
-    // Works on the rows currently visible (respects search) and skips disabled options
+    // Works on the rows currently matching the search and skips disabled options
     const handleSelectAll = () => {
       if (!setSelected) return;
       const selectable = memoizedFilteredOptions.filter(
@@ -353,7 +478,16 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
         onReset();
       }
       setSelected?.([]);
+      scrollRef.current?.scrollTo({ top: 0 });
       setDropdownMenu(false);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Escape" && dropdownMenu) {
+        e.stopPropagation();
+        setDropdownMenu(false);
+        triggerRef.current?.focus();
+      }
     };
 
     useEffect(() => {
@@ -373,12 +507,15 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
     // -------------------- Row --------------------
 
+    const optionColor = (option: Option) =>
+      option.disabledOption ? DISABLED_COLOR : option.labelTextColor;
+
     const renderRow = (option: Option) =>
       multiple ? (
         <Label
           className={cn(
             "has-[:checked]:bg-primary-50 has-[:checked]:border-primary-600 hover:bg-gray-50 flex flex-col py-[6px] px-[14px] cursor-pointer border-l-4 border-transparent",
-            option?.disabledOption &&
+            option.disabledOption &&
               "opacity-50 cursor-not-allowed hover:bg-white text-gray-300 select-none",
           )}
           htmlFor={`${id}-checkbox-${option.value}`}
@@ -388,64 +525,84 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               <Checkbox
                 id={`${id}-checkbox-${option.value}`}
                 checked={selectedValues.has(option.value)}
-                onChange={() => handleCheckboxChange(option)}
-                disabled={option?.disabledOption}
+                onChange={() => toggleOption(option)}
+                disabled={option.disabledOption}
               />
               <div className="flex items-center gap-1">
                 <div
-                  style={{
-                    color: option?.disabledOption
-                      ? "#D1D5DB"
-                      : option.labelTextColor,
-                  }}
+                  style={{ color: optionColor(option) }}
                   className={cn(
                     "break-words",
-                    option?.disabledOption && "text-gray-300",
+                    option.disabledOption && "text-gray-300",
                   )}
                 >
                   {renderItem(option)}
                 </div>
               </div>
             </div>
-            <span className="text-gray-500">{option?.info}</span>
+            <span className="text-gray-500">{option.info}</span>
           </section>
-          <span className="pt-[2px] text-sm text-gray-500">
-            {option?.addInfo}
-          </span>
+          {option.addInfo && (
+            <span className="pt-[2px] text-sm text-gray-500">
+              {option.addInfo}
+            </span>
+          )}
         </Label>
       ) : (
+        // No htmlFor: there is no control to point at in single-select mode
         <Label
-          htmlFor={`${id}-checkbox-${option.value}`}
           className={cn(
-            "flex justify-between py-[6px] px-[14px] hover:bg-gray-50 gap-2 items-center border-l-4 border-transparent cursor-pointer",
-            {
-              "bg-primary-50 border-primary-600":
-                selected && selected[0]?.value === option.value,
-              "opacity-50 cursor-not-allowed hover:bg-white text-gray-500":
-                option?.disabledOption,
-            },
+            "flex flex-col py-[6px] px-[14px] hover:bg-gray-50 border-l-4 border-transparent cursor-pointer",
+            selectedValues.has(option.value) &&
+              "bg-primary-50 border-primary-600",
+            option.disabledOption &&
+              "opacity-50 cursor-not-allowed hover:bg-white text-gray-500",
           )}
-          onClick={() => !option?.disabledOption && toggleOption(option)}
+          onClick={() => toggleOption(option)}
         >
-          <div
-            style={{
-              color: option?.disabledOption ? "#D1D5DB" : option.labelTextColor,
-            }}
-            className={cn(
-              "break-words",
-              option?.disabledOption && "text-gray-300",
-            )}
-          >
-            {renderItem(option)}
-          </div>
-          <span className="text-gray-500">{info}</span>
+          <section className="flex items-center justify-between gap-2 w-full">
+            <div
+              style={{ color: optionColor(option) }}
+              className={cn(
+                "break-words",
+                option.disabledOption && "text-gray-300",
+              )}
+            >
+              {renderItem(option)}
+            </div>
+            {/* Per-option info first, dropdown-level `info` as a fallback */}
+            <span className="text-gray-500">{option.info ?? info}</span>
+          </section>
+          {option.addInfo && (
+            <span className="pt-[2px] text-sm text-gray-500">
+              {option.addInfo}
+            </span>
+          )}
         </Label>
       );
+
+    // Same ARIA option semantics in both virtualized and plain rendering
+    const optionAria = (option: Option, index: number) => ({
+      role: "option" as const,
+      "aria-selected": selectedValues.has(option.value),
+      "aria-disabled": option.disabledOption || undefined,
+      "aria-setsize": memoizedFilteredOptions.length,
+      "aria-posinset": index + 1,
+    });
+
+    const triggerLabel = multiple
+      ? (selected?.length ?? 0) > 0
+        ? `${selected?.length} Selected`
+        : dropdownText
+      : selected?.[0]
+        ? selected[0].label
+        : dropdownText; // `0` is a valid label, so don't rely on truthiness
 
     return (
       <div
         id={id}
         ref={dropdownRef}
+        onKeyDown={handleKeyDown}
         className={cn(
           "relative bg-gray-25 shadow-[0px_1px_2px_0px_#1018280D] rounded-lg",
           !width && "w-full",
@@ -455,19 +612,16 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           width: width,
         }}
       >
+        {/* A native <button> already toggles on Enter/Space, so only onClick is needed */}
         <button
+          ref={triggerRef}
           type="button"
           aria-haspopup="listbox"
           aria-expanded={dropdownMenu}
+          aria-controls={`${id}-menu`}
           aria-labelledby={`${id}-label`}
           disabled={disabled}
           onClick={() => !disabled && setDropdownMenu((prev) => !prev)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              !disabled && setDropdownMenu((prev) => !prev);
-            }
-          }}
           className={cn(
             "w-full hover:bg-gray-50 py-2 px-[14px] rounded-lg flex justify-between items-center text-gray-900 bg-gray-25 text-sm cursor-pointer",
             dropdownMenu
@@ -479,21 +633,13 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           <section className="flex items-center gap-2 text-ellipsis overflow-hidden">
             {icon && <span aria-hidden="true">{icon}</span>}
             <span id={`${id}-label`} className="line-clamp-1 w-full">
-              {multiple
-                ? (selected?.length ?? 0) > 0
-                  ? `${selected?.length} Selected`
-                  : dropdownText
-                : selected?.[0]?.label
-                  ? selected?.[0]?.label
-                  : dropdownText}
+              {triggerLabel}
             </span>
           </section>
           <RiArrowDownSLine aria-hidden="true" size={18} />
         </button>
         <div
-          role="listbox"
-          aria-multiselectable={multiple}
-          aria-labelledby={`${id}-label`}
+          id={`${id}-menu`}
           aria-hidden={!dropdownMenu}
           className={cn(
             "max-h-0 opacity-0 overflow-hidden shadow-sm mt-1 rounded absolute text-sm bg-white z-[1000] w-full transition-all duration-75 delay-100 ease-in",
@@ -539,11 +685,19 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             </section>
           )}
 
-          {/* This section is the scroll container the list windowing watches */}
+          {/*
+            Scroll container the list windowing watches. It is also the listbox,
+            so the search input and Select all / Reset buttons are no longer
+            (invalid) children of role="listbox".
+            overflowAnchor: none, because we correct scroll position ourselves.
+          */}
           <section
             ref={scrollRef}
-            style={{ maxHeight: height }}
-            className="z-[1000] transition-all duration-75 delay-100 ease-in-out overflow-y-scroll"
+            role={options ? "listbox" : undefined}
+            aria-multiselectable={options ? multiple : undefined}
+            aria-labelledby={`${id}-label`}
+            style={{ maxHeight: height, overflowAnchor: "none" }}
+            className="customScroll z-[1000] transition-all duration-75 delay-100 ease-in-out overflow-y-auto"
           >
             {!options ? (
               children
@@ -560,21 +714,21 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                   if (!option) return null;
                   return (
                     <div
-                      key={String(virtualRow.key)}
-                      data-vkey={String(virtualRow.key)}
+                      key={virtualRow.key}
+                      data-vkey={virtualRow.key}
                       data-index={virtualRow.index}
-                      // Measures the real height, so rows with addInfo or wrapped text still work
+                      // Measures real height (undefined in fixed-height mode)
                       ref={measureRef}
-                      role="option"
-                      aria-selected={selectedValues.has(option.value)}
-                      aria-setsize={memoizedFilteredOptions.length}
-                      aria-posinset={virtualRow.index + 1}
+                      {...optionAria(option, virtualRow.index)}
                       style={{
                         position: "absolute",
                         top: 0,
                         left: 0,
                         width: "100%",
                         transform: `translateY(${virtualRow.start}px)`,
+                        ...(rowHeight
+                          ? { height: rowHeight, overflow: "hidden" }
+                          : null),
                       }}
                     >
                       {renderRow(option)}
@@ -584,9 +738,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               </div>
             ) : (
               memoizedFilteredOptions.map((option, i) => (
-                <React.Fragment key={`${option.value}-${i}`}>
+                <div key={`${option.value}-${i}`} {...optionAria(option, i)}>
                   {renderRow(option)}
-                </React.Fragment>
+                </div>
               ))
             )}
             {options && memoizedFilteredOptions.length === 0 && (
@@ -610,7 +764,8 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 );
 
 export const MenuItem: React.FC<MenuItemProps> = ({ label, children }) => {
-  return <p className="break-all">{label || children}</p>;
+  // `??` so a numeric label of 0 still renders
+  return <p className="break-all">{label ?? children}</p>;
 };
 
 interface DropdownFooterProps {
