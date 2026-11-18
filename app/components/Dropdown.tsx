@@ -376,8 +376,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       if (!options) return [];
       if (!search || !searchQuery) return options;
       const q = searchQuery.toLowerCase();
-      return options.filter((option) =>
-        String(option.label).toLowerCase().includes(q),
+      return options.filter(
+        (option) =>
+          String(option.label).toLowerCase().includes(q) ||
+          option.info?.toLowerCase().includes(q) ||
+          option.addInfo?.toLowerCase().includes(q),
       );
     }, [options, search, searchQuery]);
 

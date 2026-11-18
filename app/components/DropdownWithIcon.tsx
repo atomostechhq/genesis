@@ -384,13 +384,16 @@ const DropdownWithIcon = forwardRef<HTMLDivElement, DropdownProps>(
     useImperativeHandle(ref, () => localDropdownRef.current!);
 
     // Derived from props, no extra state or effect needed.
-    // String(label) so numeric labels are searchable (and not dropped) too.
+    // Matches label, info and addInfo; String(label) so numeric labels work too.
     const memoizedFilteredOptions = useMemo(() => {
       if (!options) return [];
       if (!search || !searchQuery) return options;
       const q = searchQuery.toLowerCase();
-      return options.filter((option) =>
-        String(option.label).toLowerCase().includes(q),
+      return options.filter(
+        (option) =>
+          String(option.label).toLowerCase().includes(q) ||
+          option.info?.toLowerCase().includes(q) ||
+          option.addInfo?.toLowerCase().includes(q),
       );
     }, [options, search, searchQuery]);
 
