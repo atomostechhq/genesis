@@ -226,6 +226,7 @@ const Test = () => {
   };
 
   // tabs
+  const [tab, setTab] = useState("all");
 
   // const router = useRouter();
   // const initialTab = router.query.tab;
@@ -1377,204 +1378,444 @@ const Test = () => {
       {/* Tabs */}
       <section>
         <h1 className="text-display-sm text-primary-600">Tabs</h1>
+        {/* ---------- HORIZONTAL ---------- */}
         <div className="my-5">
-          <h1 className="text-lg">Default Tabs with URL in Params</h1>
-          <TabsContainer value={urlTab}>
+          <h1 className="text-lg">
+            Horizontal · default (URL persist, icon + content)
+          </h1>
+          <TabsContainer value={tab}>
             <TabList
-              onChange={handleURLTabChange}
-              ariaLabel="lab API tabs example"
-              box={false}
+              onChange={setTab}
+              ariaLabel="Default tabs"
               persist="url"
-              persistKey="urlValues"
+              persistKey="tab"
             >
               <Tab
-                label="Item One"
+                label="All"
+                value="all"
                 content="(12)"
                 icon={<RiSearch2Line size={16} />}
-                value="1"
-                onChange={handleURLTabChange}
-                selectedTabValue={urlTab}
+                selectedTabValue={tab}
               />
-              <Tab
-                label="Item Two"
-                value="2"
-                onChange={handleURLTabChange}
-                selectedTabValue={urlTab}
-              />
-              <Tab
-                label="Item Three"
-                value="3"
-                onChange={handleURLTabChange}
-                selectedTabValue={urlTab}
-              />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
             </TabList>
-            <TabPanel value="1" currentValue={urlTab}>
-              Item One Content
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
             </TabPanel>
-            <TabPanel value="2" currentValue={urlTab}>
-              Item Two Content
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
             </TabPanel>
-            <TabPanel value="3" currentValue={urlTab}>
-              Item Three Content
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
             </TabPanel>
           </TabsContainer>
-          <TabsContainer
-            value={value}
-            position="vertical"
-            className="flex gap-4"
-          >
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Horizontal · default · dense</h1>
+          <TabsContainer value={tab}>
+            <TabList dense onChange={setTab} ariaLabel="Dense default tabs">
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Horizontal · box (localStorage persist)</h1>
+          <TabsContainer value={tab}>
             <TabList
-              onChange={handleTabChange}
-              ariaLabel="Vertical tabs example"
+              box
+              onChange={setTab}
+              ariaLabel="Box tabs"
+              persist="localStorage"
+              persistKey="tab"
+            >
+              <Tab
+                label="All"
+                value="all"
+                content="(12)"
+                icon={<RiSearch2Line size={16} />}
+                selectedTabValue={tab}
+              />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Horizontal · box · dense</h1>
+          <TabsContainer value={tab}>
+            <TabList box dense onChange={setTab} ariaLabel="Dense box tabs">
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Horizontal · pill</h1>
+          <TabsContainer value={tab}>
+            <TabList pill onChange={setTab} ariaLabel="Pill tabs">
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Horizontal · pill · dense</h1>
+          <TabsContainer value={tab}>
+            <TabList pill dense onChange={setTab} ariaLabel="Dense pill tabs">
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Horizontal · pillBox</h1>
+          <TabsContainer value={tab}>
+            <TabList pillBox onChange={setTab} ariaLabel="PillBox tabs">
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Horizontal · pillBox · dense</h1>
+          <TabsContainer value={tab}>
+            <TabList
+              pillBox
+              dense
+              onChange={setTab}
+              ariaLabel="Dense pillBox tabs"
+            >
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        {/* ---------- VERTICAL ---------- */}
+        {/* position goes on BOTH TabsContainer and TabList; panels are direct children */}
+
+        <div className="my-5">
+          <h1 className="text-lg">
+            Vertical · default (icon + content, fixed width)
+          </h1>
+          <TabsContainer value={tab} position="vertical">
+            <TabList
               position="vertical"
+              onChange={setTab}
+              ariaLabel="Vertical default tabs"
               className="w-48"
             >
               <Tab
-                label="Item One"
-                value="1"
-                onChange={handleTabChange}
-                selectedTabValue={value}
-                position="vertical"
-              />
-              <Tab
-                label="Item Two"
-                value="2"
-                onChange={handleTabChange}
-                selectedTabValue={value}
-                position="vertical"
-              />
-            </TabList>
-            <div className="flex-1">
-              <TabPanel value="1" currentValue={value}>
-                Item One Content
-              </TabPanel>
-              <TabPanel value="2" currentValue={value}>
-                Item Two Content
-              </TabPanel>
-            </div>
-          </TabsContainer>
-        </div>
-        <div className="my-5">
-          <h1 className="text-lg my-2">
-            Box Variant Tab with value in local storage
-          </h1>
-          <TabsContainer value={localStorageTab}>
-            <TabList
-              onChange={handleLocalStorageTabChange}
-              ariaLabel="lab API tabs example"
-              box={true}
-              persist="localStorage"
-              persistKey="localTabValue"
-            >
-              <Tab
-                label="Item One"
-                value="1"
+                label="All"
+                value="all"
                 content="(12)"
                 icon={<RiSearch2Line size={16} />}
-                onChange={handleLocalStorageTabChange}
-                selectedTabValue={localStorageTab}
+                selectedTabValue={tab}
               />
-              <Tab
-                label="Item Two"
-                value="2"
-                onChange={handleLocalStorageTabChange}
-                selectedTabValue={localStorageTab}
-              />
-              <Tab
-                label="Item Three"
-                value="3"
-                onChange={handleLocalStorageTabChange}
-                selectedTabValue={localStorageTab}
-              />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
             </TabList>
-            <TabPanel value="1" currentValue={localStorageTab}>
-              Item One Content
+            <TabPanel value="all" currentValue={tab}>
+              All content
             </TabPanel>
-            <TabPanel value="2" currentValue={localStorageTab}>
-              Item Two Content
+            <TabPanel value="paid" currentValue={tab}>
+              Paid content
             </TabPanel>
-            <TabPanel value="3" currentValue={localStorageTab}>
-              Item Three Content
+            <TabPanel value="unpaid" currentValue={tab}>
+              Unpaid content
             </TabPanel>
           </TabsContainer>
         </div>
+
         <div className="my-5">
-          <h1 className="text-lg">Tab with pill variant</h1>
-          <TabsContainer value={value}>
+          <h1 className="text-lg">Vertical · default · dense</h1>
+          <TabsContainer value={tab} position="vertical">
             <TabList
-              onChange={handleTabChange}
-              ariaLabel="lab API tabs example"
-              pill={true}
+              position="vertical"
+              dense
+              onChange={setTab}
+              ariaLabel="Vertical dense default tabs"
+            >
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab}>
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab}>
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab}>
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Vertical · box</h1>
+          <TabsContainer value={tab} position="vertical">
+            <TabList
+              position="vertical"
+              box
+              onChange={setTab}
+              ariaLabel="Vertical box tabs"
             >
               <Tab
-                label="Item One"
-                value="1"
+                label="All"
+                value="all"
                 content="(12)"
                 icon={<RiSearch2Line size={16} />}
-                onChange={handleTabChange}
-                selectedTabValue={value}
+                selectedTabValue={tab}
               />
-              <Tab
-                label="Item Two"
-                value="2"
-                onChange={handleTabChange}
-                selectedTabValue={value}
-              />
-              <Tab
-                label="Item Three"
-                value="3"
-                onChange={handleTabChange}
-                selectedTabValue={value}
-              />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
             </TabList>
-            <TabPanel value="1" currentValue={value}>
-              Item One Content
+            <TabPanel value="all" currentValue={tab}>
+              All content
             </TabPanel>
-            <TabPanel value="2" currentValue={value}>
-              Item Two Content
+            <TabPanel value="paid" currentValue={tab}>
+              Paid content
             </TabPanel>
-            <TabPanel value="3" currentValue={value}>
-              Item Three Content
+            <TabPanel value="unpaid" currentValue={tab}>
+              Unpaid content
             </TabPanel>
           </TabsContainer>
         </div>
+
         <div className="my-5">
-          <h1 className="text-lg">Custom styling for Tabs:</h1>
-          <TabsContainer value={value}>
+          <h1 className="text-lg">Vertical · box · dense</h1>
+          <TabsContainer value={tab} position="vertical">
             <TabList
-              onChange={handleTabChange}
-              ariaLabel="lab API tabs example"
-              className="border-none"
+              position="vertical"
+              box
+              dense
+              onChange={setTab}
+              ariaLabel="Vertical dense box tabs"
+            >
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab}>
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab}>
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab}>
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Vertical · pill</h1>
+          <TabsContainer value={tab} position="vertical">
+            <TabList
+              position="vertical"
+              pill
+              onChange={setTab}
+              ariaLabel="Vertical pill tabs"
+            >
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab}>
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab}>
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab}>
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Vertical · pill · dense</h1>
+          <TabsContainer value={tab} position="vertical">
+            <TabList
+              position="vertical"
+              pill
+              dense
+              onChange={setTab}
+              ariaLabel="Vertical dense pill tabs"
+            >
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab}>
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab}>
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab}>
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Vertical · pillBox</h1>
+          <TabsContainer value={tab} position="vertical">
+            <TabList
+              position="vertical"
+              pillBox
+              onChange={setTab}
+              ariaLabel="Vertical pillBox tabs"
+            >
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab}>
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab}>
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab}>
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        <div className="my-5">
+          <h1 className="text-lg">Vertical · pillBox · dense</h1>
+          <TabsContainer value={tab} position="vertical">
+            <TabList
+              position="vertical"
+              pillBox
+              dense
+              onChange={setTab}
+              ariaLabel="Vertical dense pillBox tabs"
+            >
+              <Tab label="All" value="all" selectedTabValue={tab} />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
+            </TabList>
+            <TabPanel value="all" currentValue={tab}>
+              All content
+            </TabPanel>
+            <TabPanel value="paid" currentValue={tab}>
+              Paid content
+            </TabPanel>
+            <TabPanel value="unpaid" currentValue={tab}>
+              Unpaid content
+            </TabPanel>
+          </TabsContainer>
+        </div>
+
+        {/* ---------- CUSTOM STYLING ---------- */}
+
+        <div className="my-5">
+          <h1 className="text-lg">Custom className on TabList and Tab</h1>
+          <TabsContainer value={tab}>
+            <TabList
+              onChange={setTab}
+              ariaLabel="Custom tabs"
+              className="border-none gap-2"
             >
               <Tab
-                label="Item One"
-                value="1"
-                // icon={<RiSearch2Line size={16} />}
-                onChange={handleTabChange}
-                selectedTabValue={value}
+                label="All"
+                value="all"
+                selectedTabValue={tab}
                 className="bg-primary-600 text-white rounded-2xl hover:bg-primary-100 hover:text-black border-b-0 hover:rounded-2xl"
               />
-              <Tab
-                label="Item Two"
-                value="2"
-                onChange={handleTabChange}
-                selectedTabValue={value}
-              />
-              <Tab
-                label="Item Three"
-                value="3"
-                onChange={handleTabChange}
-                selectedTabValue={value}
-              />
+              <Tab label="Paid" value="paid" selectedTabValue={tab} />
+              <Tab label="Unpaid" value="unpaid" selectedTabValue={tab} />
             </TabList>
-            <TabPanel value="1" currentValue={value}>
-              Item One Content
+            <TabPanel value="all" currentValue={tab} className="mt-4">
+              All content
             </TabPanel>
-            <TabPanel value="2" currentValue={value}>
-              Item Two Content
+            <TabPanel value="paid" currentValue={tab} className="mt-4">
+              Paid content
             </TabPanel>
-            <TabPanel value="3" currentValue={value}>
-              Item Three Content
+            <TabPanel value="unpaid" currentValue={tab} className="mt-4">
+              Unpaid content
             </TabPanel>
           </TabsContainer>
         </div>
