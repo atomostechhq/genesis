@@ -9,6 +9,7 @@ import React, {
   useRef,
   useId,
   useImperativeHandle,
+  useDeferredValue,
 } from "react";
 import { RiArrowDownSLine, RiSearchLine } from "@remixicon/react";
 import { cn } from "../utils/utils";
@@ -370,19 +371,26 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     const scrollRef = useRef<HTMLElement>(null);
 
     useImperativeHandle(ref, () => dropdownRef.current!);
+    const searchIndex = useMemo(
+      () =>
+        search && options
+          ? options.map((o) =>
+              `${o.label}\n${o.info ?? ""}\n${o.addInfo ?? ""}`.toLowerCase(),
+            )
+          : null,
+      [options, search],
+    );
+
+    const deferredQuery = useDeferredValue(searchQuery);
+    const isStale = searchQuery !== deferredQuery;
 
     // Derived from props, no extra state or effect needed
     const memoizedFilteredOptions = useMemo(() => {
       if (!options) return [];
-      if (!search || !searchQuery) return options;
-      const q = searchQuery.toLowerCase();
-      return options.filter(
-        (option) =>
-          String(option.label).toLowerCase().includes(q) ||
-          option.info?.toLowerCase().includes(q) ||
-          option.addInfo?.toLowerCase().includes(q),
-      );
-    }, [options, search, searchQuery]);
+      if (!search || !deferredQuery || !searchIndex) return options;
+      const q = deferredQuery.toLowerCase();
+      return options.filter((_, i) => searchIndex[i].includes(q));
+    }, [options, search, deferredQuery, searchIndex]);
 
     // O(1) "is selected" lookups instead of scanning `selected` for every row
     const selectedValues = useMemo(
@@ -699,8 +707,12 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             role={options ? "listbox" : undefined}
             aria-multiselectable={options ? multiple : undefined}
             aria-labelledby={`${id}-label`}
+            aria-busy={isStale}
             style={{ maxHeight: height, overflowAnchor: "none" }}
-            className="customScroll z-[1000] transition-all duration-75 delay-100 ease-in-out overflow-y-auto"
+            className={cn(
+              "customScroll z-[1000] transition-all duration-75 delay-100 ease-in-out overflow-y-auto",
+              isStale && "opacity-60",
+            )}
           >
             {!options ? (
               children
@@ -746,7 +758,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 </div>
               ))
             )}
-            {options && memoizedFilteredOptions.length === 0 && (
+            {options && !isStale && memoizedFilteredOptions.length === 0 && (
               <p className="py-[6px] px-[14px] text-gray-500">No options</p>
             )}
           </section>
