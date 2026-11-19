@@ -5,8 +5,8 @@ import React from "react";
 
 const tooltipVariants = cva(
   "bg-white shadow-lg rounded-lg absolute p-3 z-10 max-w-[328px] w-max whitespace-normal transform before:absolute " +
-    "invisible opacity-0 pointer-events-none group-hover:visible group-hover:opacity-100 group-hover:pointer-events-auto " +
-    "transition-[opacity,visibility] duration-150 ease-out delay-100 group-hover:delay-150",
+    "invisible opacity-0 pointer-events-none group-hover/tooltip:visible group-hover/tooltip:opacity-100 group-hover/tooltip:pointer-events-auto " +
+    "transition-[opacity,visibility] duration-150 ease-out delay-100 group-hover/tooltip:delay-150",
   {
     variants: {
       position: {
@@ -51,7 +51,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   ...props
 }) => {
   return (
-    <div {...props} className="relative cursor-pointer text-sm group w-fit">
+    <div {...props} className="relative cursor-pointer text-sm group/tooltip w-fit">
       <div>{children}</div>
       <div className={cn(tooltipVariants({ position }), className)}>
         {content}
