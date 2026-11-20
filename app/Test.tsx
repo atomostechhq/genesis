@@ -84,6 +84,7 @@ import OTPInput from "./components/OTPInput";
 import TextInputWithLabel from "./components/TextInputWithLabel";
 import Typography from "./components/Typography";
 import SplitButton from "./components/SplitButton";
+import StepProgress from "./components/ProgressStepper";
 
 interface Option {
   label: string | number;
@@ -146,6 +147,9 @@ const ImageSrc2 =
 const Test = () => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
+
+  // progress stepper
+  const [currentProgressStep, setCurrentProgressStep] = useState(1);
 
   // label
   const handleChange = (e: any) => {
@@ -2646,6 +2650,30 @@ const Test = () => {
       </section>
       {/* stepper */}
       <section>
+        <h1>Progress Stepper</h1>
+        <div className="max-w-xl mx-auto p-6">
+          <StepProgress totalSteps={4} currentStep={currentProgressStep} />
+
+          {currentProgressStep === 1 && <div>Step 1 content</div>}
+          {currentProgressStep === 2 && <div>Step 2 content</div>}
+          {currentProgressStep === 3 && <div>Step 3 content</div>}
+          {currentProgressStep === 4 && <div>Step 4 content</div>}
+
+          <div className="flex justify-between mt-6">
+            <button
+              disabled={currentProgressStep === 1}
+              onClick={() => setCurrentProgressStep((s) => s - 1)}
+            >
+              Back
+            </button>
+            <button
+              disabled={currentProgressStep === 4}
+              onClick={() => setCurrentProgressStep((s) => s + 1)}
+            >
+              Next
+            </button>
+          </div>
+        </div>
         <h1 className="text-display-sm text-primary-600">Stepper:</h1>
         <div className="mx-auto w-full">
           <Stepper
