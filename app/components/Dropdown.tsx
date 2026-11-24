@@ -425,9 +425,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     });
 
     // Jump back to the top whenever the search changes
-    useEffect(() => {
+    useIsoLayoutEffect(() => {
       scrollRef.current?.scrollTo({ top: 0 });
-    }, [searchQuery]);
+    }, [deferredQuery]);
 
     // Don't show a stale filter when the menu is reopened
     useEffect(() => {

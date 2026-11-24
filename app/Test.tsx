@@ -3232,7 +3232,9 @@ const Test = () => {
       </section>
 
       <section className="p-5">
-        <h1 className="text-display-sm text-primary-600">Dropdown Examples:</h1>
+        <h1 className="text-display-sm text-primary-600">
+          Dropdown Menu Examples:
+        </h1>
 
         {/* Example 1: Basic Dropdown */}
         <div className="mb-4">
@@ -3261,11 +3263,17 @@ const Test = () => {
             <DropdownMenuTrigger>
               <Button>Open Menu with Submenu</Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-64">
-              <DropdownMenuLabel>Account</DropdownMenuLabel>
+            <DropdownMenuContent className="w-52">
+              <DropdownMenuLabel>
+                <Button fullWidth onClick={() => console.log("account")}>Account</Button>
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Button fullWidth onClick={() => console.log("profile")}>Profile</Button>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Button fullWidth onClick={() => console.log("settings")}>Settings</Button>
+              </DropdownMenuItem>
 
               {/* Submenu Example */}
               <DropdownMenuSub>
@@ -3293,6 +3301,29 @@ const Test = () => {
               <Button variant="outlined"> Open Left Menu</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="left">
+              <DropdownMenuItem onClick={() => alert("Item 1 clicked")}>
+                Item 1
+              </DropdownMenuItem>
+              <DropdownMenuItem>Item 2</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Submenu</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Sub Item 1</DropdownMenuItem>
+                  <DropdownMenuItem>Sub Item 2</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* right alignment */}
+        <div className="mb-4">
+          <h2 className="text-lg font-medium mb-2">Right Aligned Menu</h2>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outlined"> Open Right Menu</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="right">
               <DropdownMenuItem onClick={() => alert("Item 1 clicked")}>
                 Item 1
               </DropdownMenuItem>
@@ -3490,38 +3521,6 @@ const Test = () => {
                   <DropdownMenuItem>Message</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>More...</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outlined">Wide Menu</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-80" align="end">
-              <DropdownMenuLabel>Wide Menu (320px)</DropdownMenuLabel>
-              <DropdownMenuItem>Profile with very long text</DropdownMenuItem>
-              <DropdownMenuItem>Settings with extra content</DropdownMenuItem>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  Invite users with long text
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>Email invitation</DropdownMenuItem>
-                  <DropdownMenuItem>Message invitation</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>More options...</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  Invite users with long text
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>Email invitation</DropdownMenuItem>
-                  <DropdownMenuItem>Message invitation</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>More options...</DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
             </DropdownMenuContent>

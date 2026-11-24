@@ -85,8 +85,8 @@ export const TabsContainer: React.FC<TabsContainerProps> = ({
 
 export const TabList: React.FC<TabListProps> = ({
   onChange,
-  ariaLabel,
   children,
+  ariaLabel,
   box = false,
   pill = false,
   pillBox = false,
@@ -197,6 +197,9 @@ export const TabList: React.FC<TabListProps> = ({
 
         className,
       )}
+      role="tablist"
+      aria-label={ariaLabel}
+      aria-orientation={position}
     >
       {tabs.map((child, index) => {
         const originalRef = (child as any).ref;
@@ -289,7 +292,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
           variant === "pill" &&
             (horizontal
               ? [
-                  dense ? "py-1 px-3 text-xs" : "py-2 px-4 text-sm",
+                  dense ? "py-1 px-3" : "py-2 px-4",
                   "transition-colors duration-200",
                   "border-l border-gray-300 first:border-l-0",
                   isSelected
@@ -297,7 +300,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
                     : "bg-white text-gray-700 hover:bg-gray-100",
                 ]
               : [
-                  dense ? "py-1 px-3 text-xs" : "py-2 px-4 text-sm",
+                  dense ? "py-1 px-3" : "py-2 px-4",
                   "rounded-full border transition-all duration-200",
                   isSelected
                     ? "bg-primary-600 border-primary-600 text-white shadow-sm hover:bg-primary-700"
@@ -306,7 +309,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
 
           variant === "pillBox" && [
             "rounded-full transition-colors duration-200",
-            dense ? "text-xs py-1 px-3" : "text-sm py-1.5 px-4",
+            dense ? "py-1 px-3" : "py-1.5 px-4",
             isSelected
               ? "bg-white text-primary-600 shadow-sm"
               : "text-gray-700 hover:bg-gray-200/60",
