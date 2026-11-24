@@ -142,7 +142,7 @@ const FileUploadTest = () => {
 
       {/* 7. accept filter */}
       <div className="space-y-2">
-        <h2 className="font-semibold">7. accept="image/png" only</h2>
+        <h2 className="font-semibold">{`7. accept="image/png" only`}</h2>
         <FileUpload
           id="accept-png"
           accept="image/png"
