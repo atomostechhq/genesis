@@ -84,7 +84,7 @@ import OTPInput from "./components/OTPInput";
 import TextInputWithLabel from "./components/TextInputWithLabel";
 import Typography from "./components/Typography";
 import SplitButton from "./components/SplitButton";
-import StepProgress from "./components/ProgressStepper";
+import StepProgress from "./components/StepProgress";
 
 interface Option {
   label: string | number;
@@ -2660,18 +2660,18 @@ const Test = () => {
           {currentProgressStep === 4 && <div>Step 4 content</div>}
 
           <div className="flex justify-between mt-6">
-            <button
+            <Button
               disabled={currentProgressStep === 1}
               onClick={() => setCurrentProgressStep((s) => s - 1)}
             >
               Back
-            </button>
-            <button
+            </Button>
+            <Button
               disabled={currentProgressStep === 4}
               onClick={() => setCurrentProgressStep((s) => s + 1)}
             >
               Next
-            </button>
+            </Button>
           </div>
         </div>
         <h1 className="text-display-sm text-primary-600">Stepper:</h1>

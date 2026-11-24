@@ -12,6 +12,12 @@ import {
 } from "@remixicon/react";
 import React, { ReactNode } from "react";
 
+type UploadedFile = {
+  name: string;
+  url: string;
+  index?: number;
+};
+
 interface FileUploadPreviewProps {
   index: number;
   file: File;
@@ -19,8 +25,11 @@ interface FileUploadPreviewProps {
   onDelete?: (index: number) => void;
 }
 
-const getIconForMimeType = (file: File) => {
-  const fileName = typeof file === "string" ? file : file.name;
+type FileUploadViewProps = {
+  files: UploadedFile[];
+};
+
+const getIconForMimeType = (fileName: string) => {
   const extension = fileName.split(".").pop()?.toLowerCase();
 
   let iconComponent: JSX.Element;
@@ -31,23 +40,17 @@ const getIconForMimeType = (file: File) => {
     case "gif":
     case "svg":
     case "webp":
-      iconComponent = (
-        <RiImageLine className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
-      );
+      iconComponent = <RiImageLine className="text-primary-600 w-12 h-12" />;
       break;
     case "mp3":
     case "wav":
     case "ogg":
-      iconComponent = (
-        <RiMusic2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
-      );
+      iconComponent = <RiMusic2Line className="text-primary-600 w-12 h-12" />;
       break;
     case "mp4":
     case "avi":
     case "mkv":
-      iconComponent = (
-        <RiVideoLine className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
-      );
+      iconComponent = <RiVideoLine className="text-primary-600 w-12 h-12" />;
       break;
     case "xls":
     case "xlsx":
@@ -55,7 +58,7 @@ const getIconForMimeType = (file: File) => {
     case "txt":
     case "ods":
       iconComponent = (
-        <RiFileExcel2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiFileExcel2Line className="text-primary-600 w-12 h-12" />
       );
       break;
     case "doc":
@@ -63,33 +66,24 @@ const getIconForMimeType = (file: File) => {
     case "odt":
     case "xml":
       iconComponent = (
-        <RiFileWord2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
+        <RiFileWord2Line className="text-primary-600 w-12 h-12" />
       );
       break;
     case "pptx":
     case "pptm":
     case "xps":
     case "ppsx":
-      iconComponent = (
-        <RiFilePpt2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
-      );
+      iconComponent = <RiFilePpt2Line className="text-primary-600 w-12 h-12" />;
       break;
     case "rar":
     case "zip":
-      iconComponent = (
-        <RiFileZipLine className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
-      );
+      iconComponent = <RiFileZipLine className="text-primary-600 w-12 h-12" />;
       break;
     case "pdf":
-      iconComponent = (
-        <RiFilePdf2Line className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
-      );
+      iconComponent = <RiFilePdf2Line className="text-primary-600 w-12 h-12" />;
       break;
     default:
-      // Return generic file icon
-      iconComponent = (
-        <RiFileLine className="text-primary-600 bg-primary-100 border-4 border-primary-50 w-8 h-8 p-1 rounded-full" />
-      );
+      iconComponent = <RiFileLine className="text-primary-600 w-12 h-12" />;
       break;
   }
   return iconComponent;
@@ -102,21 +96,16 @@ const FileUploadPreview = ({
   onDelete,
 }: FileUploadPreviewProps) => {
   return (
-    <div
-      key={index}
-      className="p-4 border border-gray-200 rounded-lg flex items-center justify-between gap-5"
-    >
+    <div className="px-4 py-3 border border-gray-300 rounded-lg flex items-center justify-between gap-5">
       <div className="flex items-center gap-2 w-full">
-        {getIconForMimeType(file)}
+        {getIconForMimeType(file.name)}
         <div className="flex flex-col gap-1 w-full">
-          <p className="text-sm line-clamp-2 break-all">
-            {typeof file === "string" ? file : file.name}{" "}
-          </p>
+          <p className="text-sm line-clamp-2 break-all text-gray-900 font-medium">{file.name}</p>
           {children && <div className="w-full">{children}</div>}
         </div>
       </div>
       <button type="button" onClick={() => onDelete?.(index)}>
-        <RiDeleteBinLine className="text-gray-500 w-5 h-5 cursor-pointer" />
+        <RiDeleteBinLine className="text-error-500 w-5 h-5 cursor-pointer" />
       </button>
     </div>
   );

@@ -1,12 +1,14 @@
 import DropdownTest from "./pages/dropdown-test/page";
+import FileUploadTest from "./pages/fileUpload/page";
 import Test from "./Test";
 
 export default async function Home() {
   return (
     <main className="min-h-screen">
       <h1 className="text-xl font-bold">ATOMOS GENESIS COMPONENT LIBRARY</h1>
-      <Test />
+      {/* <Test /> */}
       {/* <DropdownTest /> */}
+      <FileUploadTest/>
     </main>
   );
 }
