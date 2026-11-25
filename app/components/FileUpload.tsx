@@ -39,54 +39,108 @@ const getIconForMimeType = (file: File) => {
 
   let iconComponent: JSX.Element;
   switch (extension) {
+    // Images
     case "jpg":
     case "jpeg":
     case "png":
     case "gif":
     case "svg":
     case "webp":
+    case "bmp":
+    case "ico":
+    case "tif":
+    case "tiff":
+    case "heic":
+    case "heif":
+    case "avif":
       iconComponent = <RiImageLine className="text-primary-600 w-12 h-12" />;
       break;
+
+    // Audio
     case "mp3":
     case "wav":
     case "ogg":
+    case "m4a":
+    case "aac":
+    case "flac":
+    case "wma":
+    case "opus":
+    case "aiff":
       iconComponent = <RiMusic2Line className="text-primary-600 w-12 h-12" />;
       break;
+
+    // Video
     case "mp4":
     case "avi":
     case "mkv":
+    case "mov":
+    case "wmv":
+    case "flv":
+    case "webm":
+    case "m4v":
+    case "mpg":
+    case "mpeg":
+    case "3gp":
       iconComponent = <RiVideoLine className="text-primary-600 w-12 h-12" />;
       break;
+
+    // Spreadsheets / data
     case "xls":
     case "xlsx":
+    case "xlsm":
+    case "xlsb":
     case "csv":
+    case "tsv":
     case "txt":
     case "ods":
+    case "numbers":
       iconComponent = (
         <RiFileExcel2Line className="text-primary-600 w-12 h-12" />
       );
       break;
+
+    // Documents
     case "doc":
     case "docx":
+    case "dot":
+    case "dotx":
     case "odt":
+    case "rtf":
+    case "pages":
     case "xml":
       iconComponent = (
         <RiFileWord2Line className="text-primary-600 w-12 h-12" />
       );
       break;
+
+    // Presentations
+    case "ppt":
     case "pptx":
     case "pptm":
-    case "xps":
+    case "pps":
     case "ppsx":
+    case "potx":
+    case "odp":
+    case "key":
+    case "xps":
       iconComponent = <RiFilePpt2Line className="text-primary-600 w-12 h-12" />;
       break;
+
+    // Archives
     case "rar":
     case "zip":
+    case "7z":
+    case "tar":
+    case "gz":
+    case "tgz":
+    case "bz2":
       iconComponent = <RiFileZipLine className="text-primary-600 w-12 h-12" />;
       break;
+
     case "pdf":
       iconComponent = <RiFilePdf2Line className="text-primary-600 w-12 h-12" />;
       break;
+
     default:
       // Return generic file icon
       iconComponent = <RiFileLine className="text-primary-600 w-12 h-12" />;

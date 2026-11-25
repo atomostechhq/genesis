@@ -1,4 +1,3 @@
-"use client";
 import {
   Dispatch,
   FC,
@@ -36,7 +35,6 @@ const Drawer: FC<DrawerProps> = ({
 }) => {
   const handleClose = useCallback(() => setIsOpen(false), [setIsOpen]);
 
-  // Prevent body scroll when open, restore previous value on cleanup
   useEffect(() => {
     if (!isOpen) return;
     const prev = document.body.style.overflow;
@@ -46,7 +44,6 @@ const Drawer: FC<DrawerProps> = ({
     };
   }, [isOpen]);
 
-  // Close on Escape (listener only attached while open)
   useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -91,5 +88,4 @@ const Drawer: FC<DrawerProps> = ({
     </div>
   );
 };
-
 export default Drawer;

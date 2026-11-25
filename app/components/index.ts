@@ -53,8 +53,8 @@ export { default as ProgressBar } from "./Progress";
 export { default as Radio } from "./Radio";
 export {
   default as FileUploadControl,
-  defaultGetFileIcon,
 } from "./FileUploadControl";
+export { defaultGetFileIcon } from "../fileIcons";
 export { default as Sidebar } from "./Sidebar";
 export { default as Skeleton } from "./Skeleton";
 export { default as Slider } from "./Slider";

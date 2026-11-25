@@ -12,22 +12,12 @@ import {
 } from "@remixicon/react";
 import React, { ReactNode } from "react";
 
-type UploadedFile = {
-  name: string;
-  url: string;
-  index?: number;
-};
-
 interface FileUploadPreviewProps {
   index: number;
   file: File;
   children?: ReactNode;
   onDelete?: (index: number) => void;
 }
-
-type FileUploadViewProps = {
-  files: UploadedFile[];
-};
 
 const getIconForMimeType = (fileName: string) => {
   const extension = fileName.split(".").pop()?.toLowerCase();
@@ -100,7 +90,9 @@ const FileUploadPreview = ({
       <div className="flex items-center gap-2 w-full">
         {getIconForMimeType(file.name)}
         <div className="flex flex-col gap-1 w-full">
-          <p className="text-sm line-clamp-2 break-all text-gray-900 font-medium">{file.name}</p>
+          <p className="text-sm line-clamp-2 break-all text-gray-900 font-medium">
+            {file.name}
+          </p>
           {children && <div className="w-full">{children}</div>}
         </div>
       </div>
