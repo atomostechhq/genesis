@@ -259,9 +259,7 @@ export const Tab = React.forwardRef<HTMLButtonElement, TabProps>(
         onClick={() => onChange?.(value)}
         className={cn(
           "flex items-center font-medium cursor-pointer",
-          dense
-            ? "gap-1.5 px-2.5 py-1.5 text-text-xs"
-            : "gap-2 px-4 py-3 text-text-sm",
+          dense ? "gap-1.5 px-2.5 py-1.5 text-sm" : "gap-2 px-4 py-3 text-base",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1",
 
           variant === "default" && [

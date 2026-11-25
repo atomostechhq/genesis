@@ -3225,8 +3225,10 @@ const Test = () => {
             width={pos === "left" || pos === "right" ? "w-[500px]" : undefined}
             height={pos === "top" || pos === "bottom" ? "h-[500px]" : undefined}
           >
-            <p>This is a {pos} drawer.</p>
-            <p>You can change its position, width, and height using props.</p>
+            <div className="min-h-[150vh]">
+              <p>This is a {pos} drawer.</p>
+              <p>You can change its position, width, and height using props.</p>
+            </div>
           </Drawer>
         ))}
       </section>
@@ -3265,14 +3267,20 @@ const Test = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-52">
               <DropdownMenuLabel>
-                <Button fullWidth onClick={() => console.log("account")}>Account</Button>
+                <Button fullWidth onClick={() => console.log("account")}>
+                  Account
+                </Button>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Button fullWidth onClick={() => console.log("profile")}>Profile</Button>
+                <Button fullWidth onClick={() => console.log("profile")}>
+                  Profile
+                </Button>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Button fullWidth onClick={() => console.log("settings")}>Settings</Button>
+                <Button fullWidth onClick={() => console.log("settings")}>
+                  Settings
+                </Button>
               </DropdownMenuItem>
 
               {/* Submenu Example */}
