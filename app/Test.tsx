@@ -2652,12 +2652,20 @@ const Test = () => {
       <section>
         <h1>Progress Stepper</h1>
         <div className="max-w-xl mx-auto p-6">
-          <StepProgress totalSteps={4} currentStep={currentProgressStep} />
-
-          {currentProgressStep === 1 && <div>Step 1 content</div>}
-          {currentProgressStep === 2 && <div>Step 2 content</div>}
-          {currentProgressStep === 3 && <div>Step 3 content</div>}
-          {currentProgressStep === 4 && <div>Step 4 content</div>}
+          <StepProgress
+            totalSteps={4}
+            currentStep={currentProgressStep}
+            showLabel
+            progressColor="bg-success-600"
+            ariaLabel="Checkout progress"
+            className="mb-4"
+            contentClassName="mt-6"
+          >
+            {currentProgressStep === 1 && <div>Step 1 content</div>}
+            {currentProgressStep === 2 && <div>Step 2 content</div>}
+            {currentProgressStep === 3 && <div>Step 3 content</div>}
+            {currentProgressStep === 4 && <div>Step 4 content</div>}
+          </StepProgress>
 
           <div className="flex justify-between mt-6">
             <Button
