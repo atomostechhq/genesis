@@ -8,6 +8,7 @@ export { default as Avatar } from "./Avatar";
 export { default as AvatarGroup } from "./AvatarGroup";
 export { default as BreadCrumb } from "./Breadcrumb";
 export { default as Button } from "./Button";
+export type { ButtonProps } from './Button';
 export { default as Callout } from "./Callout";
 export {
   default as Card,
@@ -51,9 +52,7 @@ export { default as OTPInput } from "./OTPInput";
 export { default as Pagination } from "./Pagination";
 export { default as ProgressBar } from "./Progress";
 export { default as Radio } from "./Radio";
-export {
-  default as FileUploadControl,
-} from "./FileUploadControl";
+export { default as FileUploadControl } from "./FileUploadControl";
 export { defaultGetFileIcon } from "../fileIcons";
 export { default as Sidebar } from "./Sidebar";
 export { default as Skeleton } from "./Skeleton";
@@ -61,6 +60,7 @@ export { default as Slider } from "./Slider";
 export { default as Spinner } from "./Spinner";
 export { default as SplitButton } from "./SplitButton";
 export { default as Stepper } from "./Stepper";
+export { default as StepProgress } from "./StepProgress";
 export {
   default as Table,
   TableHead,

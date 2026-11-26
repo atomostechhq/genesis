@@ -163,23 +163,6 @@ const Test = () => {
     }
   };
 
-  // tabs
-  const [value, setValue] = useState("1");
-  const [urlTab, setUrlTab] = useState("1");
-  const [localStorageTab, setLocalStorageTab] = useState("1");
-
-  const handleTabChange = (newValue: string) => {
-    setValue(newValue);
-  };
-
-  const handleURLTabChange = (newValue: string) => {
-    setUrlTab(newValue);
-  };
-
-  const handleLocalStorageTabChange = (newValue: string) => {
-    setLocalStorageTab(newValue);
-  };
-
   // single file upload
   const [selectedSingleFiles, setSelectedSingleFiles] = useState<File[]>([]);
 
@@ -272,18 +255,16 @@ const Test = () => {
   ];
 
   const handleNext = () => {
-    setCurrentStep((prevStep) => {
-      if (prevStep === stepsConfig.length) {
-        setIsComplete(true);
-        return prevStep;
-      } else {
-        return prevStep + 1;
-      }
-    });
+    if (currentStep === stepsConfig.length) {
+      setIsComplete(true);
+    } else {
+      setCurrentStep((prev) => prev + 1);
+    }
   };
 
   const handlePrev = () => {
-    setCurrentStep((prevStep) => prevStep - 1);
+    setIsComplete(false);
+    setCurrentStep((prev) => Math.max(1, prev - 1));
   };
 
   // dropdown
@@ -2687,21 +2668,18 @@ const Test = () => {
           <Stepper
             stepsConfig={stepsConfig}
             currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
             isComplete={isComplete}
-            setIsComplete={setIsComplete}
-            // position="vertical"
             position="horizontal"
           />
           <section className="my-5 flex justify-end items-center gap-4">
             <Button
               variant="outlined"
               onClick={handlePrev}
-              disabled={currentStep === 1}
+              disabled={currentStep === 1 && !isComplete}
             >
               Prev
             </Button>
-            <Button variant="filled" onClick={handleNext}>
+            <Button variant="filled" onClick={handleNext} disabled={isComplete}>
               {currentStep === stepsConfig.length ? "Finish" : "Next"}
             </Button>
           </section>
@@ -2710,9 +2688,7 @@ const Test = () => {
           <Stepper
             stepsConfig={stepsConfig}
             currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
             isComplete={isComplete}
-            setIsComplete={setIsComplete}
             position="vertical"
           />
           <section className="my-5 flex justify-end items-center gap-4">
